@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block title %}AkılAkışı - Kontrol Paneli{% endblock %}
+{% block content %}
+<div class="max-w-[1280px] mx-auto px-xl py-xl">
+    <div class="mb-xl">
+        <h2 class="font-headline-xl text-headline-xl text-primary mb-xs">Kontrol Paneli</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">Sistem sağlığı ve mantıksal işlem hacminin gerçek zamanlı analizi.</p>
+    </div>
+
+    <!-- Quick Create Debate -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg mb-xl">
+        <h3 class="font-headline-md text-headline-md text-primary mb-md">Yeni Tartışma Başlat</h3>
+        <form id="create-debate-form" class="flex flex-col md:flex-row gap-md items-end">
+            <div class="flex-1 w-full">
+                <label class="block font-label-caps text-label-caps text-primary mb-sm">Konu</label>
+                <input type="text" id="debate-topic" required placeholder="Örn. Sentetik Biyolojinin Ekonomik Etkisi" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary transition-colors">
+            </div>
+            <div class="w-full md:w-48">
+                <label class="block font-label-caps text-label-caps text-primary mb-sm">Ajan 1</label>
+                <select id="agent-1" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md">
+                    {% for agent in agents %}
+                    <option value="{{ agent.id }}">{{ agent.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="w-full md:w-48">
+                <label class="block font-label-caps text-label-caps text-primary mb-sm">Ajan 2</label>
+                <select id="agent-2" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md">
+                    {% for agent in agents %}
+                    <option value="{{ agent.id }}" {% if loop.index == 2 %}selected{% endif %}>{{ agent.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="px-md py-sm bg-secondary text-on-secondary rounded font-label-caps text-label-caps hover:bg-secondary-container hover:text-on-secondary-container transition-colors w-full md:w-auto">
+                Tartışmayı Başlat
+            </button>
+        </form>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="grid grid-cols-12 gap-gutter mb-xl">
+        <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow">
+            <div class="flex items-start justify-between mb-md">
+                <span class="font-label-caps text-label-caps text-on-surface-variant">Aktif Tartışmalar</span>
+                <span class="material-symbols-outlined text-secondary">forum</span>
+            </div>
+            <div>
+                <div class="font-headline-xl text-headline-xl text-primary mb-unit">{{ stats.active_debates }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow">
+            <div class="flex items-start justify-between mb-md">
+                <span class="font-label-caps text-label-caps text-on-surface-variant">Toplam Tartışma</span>
+                <span class="material-symbols-outlined text-outline">format_list_numbered</span>
+            </div>
+            <div>
+                <div class="font-headline-xl text-headline-xl text-primary mb-unit">{{ stats.total_debates }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow">
+            <div class="flex items-start justify-between mb-md">
+                <span class="font-label-caps text-label-caps text-on-surface-variant">Aktif Ajanlar</span>
+                <span class="material-symbols-outlined text-outline">smart_toy</span>
+            </div>
+            <div>
+                <div class="font-headline-xl text-headline-xl text-primary mb-unit">{{ stats.total_agents }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow">
+            <div class="flex items-start justify-between mb-md">
+                <span class="font-label-caps text-label-caps text-on-surface-variant">Pipeline Durumu</span>
+                <span class="material-symbols-outlined text-outline">speed</span>
+            </div>
+            <div>
+                <div class="font-headline-xl text-headline-xl text-primary mb-unit">Gerçek</div>
+                <div class="flex items-center gap-xs font-label-caps text-label-caps">
+                    <div class="w-2 h-2 rounded-full bg-surface-tint"></div>
+                    <span class="text-on-surface-variant">ModernBERT</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Debate Logs Table -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+        <div class="p-lg border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+            <h3 class="font-headline-md text-headline-md text-primary">Son Tartışmalar</h3>
+        </div>
+        <div class="overflow-x-auto w-full">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low border-b border-outline-variant">
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">No</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant w-1/3">Konu</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Durum</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Ajanlar</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    {% for debate in debates %}
+                    <tr class="hover:bg-surface-container-lowest/50 transition-colors cursor-pointer group">
+                        <td class="p-md font-code-mono text-code-mono text-on-surface-variant">#AA-{{ "%03d"|format(debate.id) }}</td>
+                        <td class="p-md font-body-md text-body-md text-primary font-medium group-hover:text-secondary transition-colors">{{ debate.topic }}</td>
+                        <td class="p-md">
+                            {% if debate.status == 'active' %}
+                            <span class="inline-flex items-center gap-xs px-sm py-xs bg-secondary-container/10 text-secondary font-label-caps text-label-caps rounded-DEFAULT">
+                                <div class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></div> Aktif
+                            </span>
+                            {% elif debate.status == 'resolved' %}
+                            <span class="inline-flex items-center gap-xs px-sm py-xs border border-outline-variant text-on-surface-variant font-label-caps text-label-caps rounded-DEFAULT">Çözüldü</span>
+                            {% else %}
+                            <span class="inline-flex items-center gap-xs px-sm py-xs border border-outline-variant text-on-surface-variant font-label-caps text-label-caps rounded-DEFAULT">{{ debate.status|title }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="p-md">
+                            <div class="flex -space-x-2">
+                                {% for p in debate.participants %}
+                                <div class="w-6 h-6 rounded-full bg-surface-tint border border-surface-container-lowest flex items-center justify-center text-[10px] text-white font-bold">{{ p.agent.name[:2] }}</div>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td class="p-md text-right">
+                            <a href="{{ url_for('pages.live_arena', debate_id=debate.id) }}" class="text-secondary font-label-caps text-label-caps hover:text-primary transition-colors">Görüntüle</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="p-md text-center text-on-surface-variant font-body-md text-body-md">Henüz tartışma yok. Yukarıdan başlatın.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById('create-debate-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const topic = document.getElementById('debate-topic').value;
+    const agent1 = parseInt(document.getElementById('agent-1').value);
+    const agent2 = parseInt(document.getElementById('agent-2').value);
+    if (agent1 === agent2) { alert('Lütfen iki farklı ajan seçin'); return; }
+    const res = await fetch('/api/debates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic, agent_ids: [agent1, agent2], max_rounds: 5 })
+    });
+    const data = await res.json();
+    if (res.ok) {
+        await fetch(`/api/debates/${data.id}/start`, { method: 'POST' });
+        window.location.href = `/debate/${data.id}`;
+    } else {
+        alert(data.error || 'Tartışma oluşturulamadı');
+    }
+});
+</script>
+{% endblock %}

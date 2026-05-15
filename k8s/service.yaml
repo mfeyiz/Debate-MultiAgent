@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: logicflow-service
+  namespace: logicflow
+spec:
+  type: ClusterIP
+  selector:
+    app: logicflow
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http

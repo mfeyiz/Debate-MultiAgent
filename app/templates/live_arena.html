@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% block title %}AkılAkışı - Canlı Tartışma{% endblock %}
+{% block extra_head %}
+<style>
+    .connector-line {
+        position: absolute;
+        left: 16px;
+        top: -24px;
+        width: 2px;
+        height: 32px;
+        opacity: 0.5;
+        z-index: 0;
+    }
+    .message-card {
+        position: relative;
+    }
+    .version-diff .old { text-decoration: line-through; opacity: 0.6; }
+    .version-diff .new { background: rgba(0,88,190,0.1); padding: 0 2px; border-radius: 2px; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="max-w-[1280px] mx-auto w-full p-lg md:p-xl grid grid-cols-1 lg:grid-cols-12 gap-xl">
+    <!-- Debate Thread (Left Column) -->
+    <div class="lg:col-span-8 flex flex-col gap-lg">
+        <!-- Status Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-md pb-md border-b border-outline-variant">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">Tartışma Çözüm Protokolü</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-unit">Konu: {{ debate.topic }}</p>
+            </div>
+            <div class="flex items-center gap-sm">
+                <span id="pipeline-status" class="flex items-center gap-sm bg-surface-container px-md py-sm rounded-DEFAULT border border-outline-variant shadow-sm">
+                    <span class="material-symbols-outlined text-secondary text-[20px]">sync</span>
+                    <span class="font-label-caps text-label-caps text-secondary font-bold">Aktif</span>
+                </span>
+                <button id="advance-btn" class="px-md py-sm bg-secondary text-on-secondary rounded font-label-caps text-label-caps hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm">Sonraki Tur</button>
+                <button id="resolve-btn" class="px-md py-sm border border-outline-variant text-on-surface rounded font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">Çözümle</button>
+            </div>
+        </div>
+
+        <!-- Thread Container -->
+        <div id="thread-container" class="flex flex-col gap-md pt-sm">
+            {% for msg in messages %}
+            {% set cv = msg.current_version %}
+            {% set indent = msg.position * 32 if msg.position < 3 else 64 %}
+            {% set color = 'bg-secondary' if msg.message_type in ['claim','rebuttal'] else 'bg-error' if msg.message_type == 'attack' else 'bg-surface-tint' %}
+            <div class="message-card" style="margin-left: {{ indent }}px" data-message-id="{{ msg.id }}">
+                {% if msg.parent_id %}
+                <div class="connector-line {{ color }}"></div>
+                {% endif %}
+                <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter shadow-sm relative group hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow">
+                    <div class="absolute left-0 top-0 bottom-0 w-[2px] {{ color }} rounded-l-lg"></div>
+                    <div class="flex items-center gap-sm mb-md">
+                        <div class="w-6 h-6 rounded-sm bg-primary-container text-on-primary-container flex items-center justify-center">
+                            <span class="font-label-caps text-[10px]">{{ msg.agent.name[0] if msg.agent else 'S' }}</span>
+                        </div>
+                        <span class="font-label-caps text-label-caps text-primary">{{ msg.agent.name if msg.agent else 'System' }}</span>
+                        <span class="inline-flex items-center px-sm py-[2px] bg-surface-container text-on-surface-variant font-label-caps text-[10px] rounded-sm ml-sm">{{ msg.message_type|upper }}</span>
+                        {% if cv and cv.version_number > 1 %}
+                        <span class="inline-flex items-center px-sm py-[2px] bg-secondary-fixed text-on-secondary-fixed font-label-caps text-[10px] rounded-sm ml-sm">V{{ cv.version_number }}</span>
+                        {% endif %}
+                        <span class="font-body-md text-[12px] text-outline ml-auto">{{ msg.created_at.strftime('%H:%M') if msg.created_at else '' }}</span>
+                    </div>
+                    <div class="pl-sm">
+                        <p class="font-body-md text-body-md text-on-surface leading-relaxed content-text">{{ cv.content if cv else '' }}</p>
+                        {% if cv and cv.strength_score is not none %}
+                        <div class="mt-md flex items-center gap-sm">
+                            <span class="font-label-caps text-[10px] text-on-surface-variant">Güç</span>
+                            <div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+                                <div class="h-full {{ 'bg-secondary' if cv.strength_score >= 0.7 else 'bg-error' }} rounded-full" style="width: {{ (cv.strength_score * 100)|int }}%"></div>
+                            </div>
+                            <span class="font-code-mono text-code-mono text-[11px] {{ 'text-secondary' if cv.strength_score >= 0.7 else 'text-error' }}">{{ "%.0f"|format(cv.strength_score * 100) }}%</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <!-- Version toggle if multiple versions exist -->
+                    {% if msg.versions.count() > 1 %}
+                    <div class="mt-md border-t border-outline-variant pt-md">
+                        <div class="flex items-center gap-sm">
+                            <span class="font-label-caps text-[10px] text-on-surface-variant">Sürümler:</span>
+                            {% for v in msg.versions %}
+                            <button class="version-toggle px-sm py-[2px] rounded-sm font-label-caps text-[10px] {{ 'bg-secondary text-on-primary' if v.is_current else 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high' }} transition-colors" data-version-id="{{ v.id }}">{{ v.version_number }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Analysis Feedback (inline, shown after each analysis) -->
+        <div id="feedback-box" class="hidden bg-surface-container rounded-lg p-sm border border-outline-variant flex flex-col gap-sm mt-md shadow-inner">
+            <label class="font-label-caps text-[10px] text-on-surface-variant">MODERATÖR DEĞERLENDİRMESİ</label>
+            <p id="feedback-text" class="font-body-sm text-body-sm text-on-surface leading-relaxed"></p>
+        </div>
+    </div>
+
+    <!-- ModernBERT Analysis Sidebar (Right Column) -->
+    <div class="lg:col-span-4 h-full">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter sticky top-lg flex flex-col gap-lg shadow-sm h-[calc(100vh-144px)] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-outline-variant pb-sm">
+                <h3 class="font-headline-md text-headline-md text-primary">ModernBERT Analizi</h3>
+                <span class="material-symbols-outlined text-secondary text-[20px]">troubleshoot</span>
+            </div>
+            <div class="flex flex-col gap-md">
+                <h4 class="font-label-caps text-label-caps text-on-surface-variant">Canlı Argüman Duruşu</h4>
+                <div class="flex flex-col gap-xs">
+                    <div class="flex justify-between text-body-md font-body-md">
+                        <span class="text-on-surface">Ampirik Destek</span>
+                        <span id="emp-support-val" class="text-secondary font-bold">--</span>
+                    </div>
+                    <div class="w-full bg-surface-container h-xs rounded-full overflow-hidden">
+                        <div id="emp-support-bar" class="bg-secondary h-full rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-xs mt-sm">
+                    <div class="flex justify-between text-body-md font-body-md">
+                        <span class="text-on-surface">Mantıksal Çelişki Riski</span>
+                        <span id="fallacy-val" class="text-error font-bold">--</span>
+                    </div>
+                    <div class="w-full bg-surface-container h-xs rounded-full overflow-hidden">
+                        <div id="fallacy-bar" class="bg-error h-full rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-sm flex-1">
+                <h4 class="font-label-caps text-label-caps text-on-surface-variant pt-md border-t border-outline-variant">Çıkarılan Ontoloji</h4>
+                <div id="ontology-container" class="bg-surface rounded-DEFAULT border border-outline-variant p-sm flex flex-col gap-sm">
+                    <p class="font-body-md text-body-md text-on-surface-variant text-center py-md">Analiz bekleniyor...</p>
+                </div>
+            </div>
+            <div class="mt-auto pt-md border-t border-outline-variant">
+                <button onclick="forceResolve()" class="w-full py-sm bg-primary-container text-on-primary-container font-label-caps text-label-caps rounded-DEFAULT hover:bg-primary-container/90 transition-colors flex items-center justify-center gap-xs">
+                    <span class="material-symbols-outlined text-[18px]">gavel</span> Çözümü Zorla
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+const debateId = {{ debate.id }};
+let lastAnalysis = null;
+
+// SSE Connection
+const evtSource = new EventSource(`/stream/${debateId}`);
+evtSource.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+    if (data.type === 'heartbeat') return;
+    handleEvent(data);
+};
+
+function handleEvent(data) {
+    if (data.type === 'message') {
+        appendMessage(data.message);
+    } else if (data.type === 'analysis') {
+        lastAnalysis = data;
+        updateAnalysis(data);
+        showFeedback(data);
+    } else if (data.type === 'status') {
+        document.querySelector('#pipeline-status span:last-child').textContent = data.status.toUpperCase();
+    }
+}
+
+function appendMessage(msg) {
+    const container = document.getElementById('thread-container');
+    const cv = msg.current_version;
+    const indent = Math.min(msg.position * 32, 64);
+    const color = msg.message_type === 'attack' ? 'bg-error' : 'bg-secondary';
+    const html = `
+    <div class="message-card" style="margin-left: ${indent}px" data-message-id="${msg.id}">
+        ${msg.parent_id ? `<div class="connector-line ${color}"></div>` : ''}
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter shadow-sm relative group hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow">
+            <div class="absolute left-0 top-0 bottom-0 w-[2px] ${color} rounded-l-lg"></div>
+            <div class="flex items-center gap-sm mb-md">
+                <div class="w-6 h-6 rounded-sm bg-primary-container text-on-primary-container flex items-center justify-center">
+                    <span class="font-label-caps text-[10px]">${msg.agent_name ? msg.agent_name[0] : 'S'}</span>
+                </div>
+                <span class="font-label-caps text-label-caps text-primary">${msg.agent_name || 'System'}</span>
+                <span class="inline-flex items-center px-sm py-[2px] bg-surface-container text-on-surface-variant font-label-caps text-[10px] rounded-sm ml-sm">${msg.message_type.toUpperCase()}</span>
+                <span class="font-body-md text-[12px] text-outline ml-auto">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+            </div>
+            <div class="pl-sm">
+                <p class="font-body-md text-body-md text-on-surface leading-relaxed content-text">${cv ? cv.content : ''}</p>
+            </div>
+        </div>
+    </div>`;
+    container.insertAdjacentHTML('beforeend', html);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+function updateAnalysis(data) {
+    const strength = data.strength || 0;
+    const pct = Math.round(strength * 100);
+    document.getElementById('emp-support-val').textContent = pct + '%';
+    document.getElementById('emp-support-bar').style.width = pct + '%';
+    // Mock fallacy risk inverse
+    const fallacy = Math.max(0, Math.round((1 - strength) * 100));
+    document.getElementById('fallacy-val').textContent = fallacy + '%';
+    document.getElementById('fallacy-bar').style.width = fallacy + '%';
+
+    const ont = document.getElementById('ontology-container');
+    const rel = data.analysis.relation_type;
+    const relColor = rel === 'attack' ? 'text-error' : rel === 'support' ? 'text-secondary' : 'text-on-surface-variant';
+    const relBadge = rel === 'attack' ? 'bg-error-container text-on-error-container' : rel === 'support' ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-container text-on-surface-variant';
+    ont.innerHTML = `
+        <div class="flex items-start gap-sm">
+            <span class="material-symbols-outlined text-secondary text-[16px] mt-[2px]">adjust</span>
+            <div>
+                <p class="font-code-mono text-code-mono text-on-surface leading-tight">Hedef İddia</p>
+                <div class="flex gap-xs mt-xs">
+                    <span class="px-xs py-[2px] bg-surface-container border border-outline-variant rounded-sm font-label-caps text-[10px] text-on-surface-variant">NODE_A</span>
+                </div>
+            </div>
+        </div>
+        <div class="ml-[7px] w-[2px] h-md bg-outline-variant"></div>
+        <div class="flex items-start gap-sm">
+            <span class="material-symbols-outlined ${relColor} text-[16px] mt-[2px]">gavel</span>
+            <div>
+                <p class="font-code-mono text-code-mono text-on-surface leading-tight">Yanıt Bileşeni</p>
+                <div class="flex gap-xs mt-xs">
+                    <span class="px-xs py-[2px] ${relBadge} rounded-sm font-label-caps text-[10px]">${rel.toUpperCase()}</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function showFeedback(data) {
+    const box = document.getElementById('feedback-box');
+    const textEl = document.getElementById('feedback-text');
+    const analysis = data.analysis;
+    if (analysis && analysis.feedback_text) {
+        textEl.textContent = analysis.feedback_text;
+        box.classList.remove('hidden');
+        box.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+document.getElementById('advance-btn').addEventListener('click', async () => {
+    await fetch(`/api/debates/${debateId}/advance`, { method: 'POST' });
+});
+
+async function forceResolve() {
+    await fetch(`/api/debates/${debateId}/resolve`, { method: 'POST' });
+    window.location.reload();
+}
+</script>
+{% endblock %}

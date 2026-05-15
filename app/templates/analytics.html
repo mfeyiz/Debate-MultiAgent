@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}AkılAkışı - Pipeline Analizleri{% endblock %}
+{% block content %}
+<div class="max-w-[1280px] mx-auto px-xl py-xl space-y-xl">
+    <div>
+        <h2 class="font-headline-xl text-headline-xl text-on-surface mb-unit">ModernBERT Değerlendirme Mantığı</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Argüman yolları, güven eşikleri ve güç dağılımının derinlemesine teknik analizi.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+        <div class="col-span-1 md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-lg p-lg hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-300 flex flex-col">
+            <div class="flex justify-between items-center mb-lg">
+                <div>
+                    <h3 class="font-headline-md text-headline-md text-on-surface">Kanıt Gücü Dağılımı</h3>
+                    <p class="font-label-caps text-label-caps text-on-surface-variant mt-1">Ajanlar Arası Uzlaşma Haritalaması</p>
+                </div>
+                <span class="material-symbols-outlined text-outline-variant">bar_chart</span>
+            </div>
+            <div class="flex-1 flex items-end gap-sm h-48 mt-auto pt-lg border-b border-outline-variant relative">
+                {% set buckets = [0,0,0,0,0] %}
+                {% for a in analyses %}
+                    {% if a.confidence < 0.2 %}{% set _ = buckets.__setitem__(0, buckets[0]+1) %}
+                    {% elif a.confidence < 0.4 %}{% set _ = buckets.__setitem__(1, buckets[1]+1) %}
+                    {% elif a.confidence < 0.6 %}{% set _ = buckets.__setitem__(2, buckets[2]+1) %}
+                    {% elif a.confidence < 0.8 %}{% set _ = buckets.__setitem__(3, buckets[3]+1) %}
+                    {% else %}{% set _ = buckets.__setitem__(4, buckets[4]+1) %}
+                    {% endif %}
+                {% endfor %}
+                {% set max_count = [buckets|max, 1]|max %}
+                {% for bucket in buckets %}
+                <div class="flex-1 flex justify-center items-end h-full z-10 group relative">
+                    <div class="w-full max-w-[48px] bg-tertiary-fixed border border-tertiary/20 rounded-t transition-all duration-300 group-hover:bg-tertiary-fixed-dim" style="height: {{ (bucket / max_count * 100)|int }}%"></div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="flex justify-between mt-sm px-sm font-code-mono text-code-mono text-outline-variant">
+                <span>0.0-0.2</span>
+                <span>0.2-0.4</span>
+                <span>0.4-0.6</span>
+                <span>0.6-0.8</span>
+                <span>0.8-1.0</span>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-lg p-lg hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-300 flex flex-col justify-between">
+            <div class="mb-lg">
+                <div class="flex justify-between items-start mb-sm">
+                    <h3 class="font-headline-md text-headline-md text-on-surface">Zayıf Argüman Uyarıları</h3>
+                    {% set weak_count = analyses|selectattr('feedback_text')|list|length %}
+                    {% if weak_count > 5 %}
+                    <div class="bg-error-container text-on-error-container font-label-caps text-label-caps px-2 py-1 rounded">Yüksek Uyarı</div>
+                    {% else %}
+                    <div class="bg-secondary-container text-on-secondary-container font-label-caps text-label-caps px-2 py-1 rounded">Normal</div>
+                    {% endif %}
+                </div>
+                <p class="font-body-md text-body-md text-on-surface-variant">Geri bildirim üretilen zayıf argüman sayısı.</p>
+            </div>
+            <div>
+                <div class="flex items-baseline gap-sm mb-unit">
+                    <span class="font-headline-xl text-headline-xl text-on-surface font-bold">{{ weak_count }}</span>
+                    <span class="font-body-md text-body-md text-outline-variant">/ {{ analyses|length }} analiz</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-surface-bright border border-outline-variant rounded-lg overflow-hidden">
+        <div class="bg-surface-container-lowest border-b border-outline-variant px-lg py-md flex items-center justify-between">
+            <div class="flex items-center gap-md">
+                <span class="material-symbols-outlined text-primary">account_tree</span>
+                <h3 class="font-headline-md text-headline-md text-on-surface">Argüman Analiz Günlükleri</h3>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low border-b border-outline-variant">
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">No</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">İlişki</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Güven</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Güç</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Geri Bildirim</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant text-right">Durum</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    {% for a in analyses %}
+                    <tr class="hover:bg-surface-container-lowest/50 transition-colors">
+                        <td class="p-md font-code-mono text-code-mono text-on-surface-variant">#AN-{{ "%03d"|format(a.id) }}</td>
+                        <td class="p-md">
+                            <span class="inline-flex items-center gap-xs px-sm py-xs {{ 'bg-error-container/10 text-error' if a.relation_type == 'attack' else 'bg-secondary-container/10 text-secondary' if a.relation_type == 'support' else 'bg-surface-container text-on-surface-variant' }} font-label-caps text-label-caps rounded-DEFAULT">
+                                {{ a.relation_type|upper }}
+                            </span>
+                        </td>
+                        <td class="p-md font-code-mono text-code-mono text-on-surface">{{ "%.0f"|format(a.confidence * 100) }}%</td>
+                        <td class="p-md">
+                            <div class="flex items-center gap-sm">
+                                <div class="w-16 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+                                    <div class="h-full {{ 'bg-secondary' if (a.message_version.strength_score or 0) >= 0.7 else 'bg-error' }} rounded-full" style="width: {{ ((a.message_version.strength_score or 0) * 100)|int }}%"></div>
+                                </div>
+                                <span class="font-code-mono text-code-mono text-on-surface">{{ "%.0f"|format((a.message_version.strength_score or 0) * 100) }}%</span>
+                            </div>
+                        </td>
+                        <td class="p-md font-body-md text-body-md text-on-surface-variant max-w-xs truncate">{{ a.feedback_text or '--' }}</td>
+                        <td class="p-md text-right">
+                            {% set strength = a.message_version.strength_score or 0 %}
+                            {% if strength >= 0.65 %}
+                            <span class="inline-flex items-center gap-xs px-sm py-xs bg-secondary-container/10 text-secondary font-label-caps text-label-caps rounded-DEFAULT">Güçlü</span>
+                            {% elif strength >= 0.45 %}
+                            <span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container text-on-surface-variant font-label-caps text-label-caps rounded-DEFAULT">Orta</span>
+                            {% else %}
+                            <span class="inline-flex items-center gap-xs px-sm py-xs bg-error-container/10 text-error font-label-caps text-label-caps rounded-DEFAULT">Zayıf</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="p-md text-center text-on-surface-variant font-body-md text-body-md">Henüz analiz verisi yok. İçgörü oluşturmak için bir tartışma çalıştırın.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

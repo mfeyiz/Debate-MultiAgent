@@ -1,0 +1,8 @@
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: logicflow-frontend-config
+  namespace: logicflow
+spec:
+  redirectToHttps:
+    enabled: true

@@ -1,0 +1,56 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "-t"
+      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:${COMMIT_SHA}"
+      - "-t"
+      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:latest"
+      - "."
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "push"
+      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:${COMMIT_SHA}"
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "push"
+      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:latest"
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "gcloud"
+    args:
+      - "container"
+      - "clusters"
+      - "get-credentials"
+      - "${_CLUSTER}"
+      - "--region=${_REGION}"
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "kubectl"
+    args:
+      - "set"
+      - "image"
+      - "deployment/logicflow-app"
+      - "app=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:${COMMIT_SHA}"
+      - "-n"
+      - "logicflow"
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "kubectl"
+    args:
+      - "rollout"
+      - "status"
+      - "deployment/logicflow-app"
+      - "-n"
+      - "logicflow"
+      - "--timeout=300s"
+
+substitutions:
+  _REGION: us-central1
+  _REPO: logicflow
+  _CLUSTER: logicflow-cluster
+
+options:
+  logging: CLOUD_LOGGING_ONLY

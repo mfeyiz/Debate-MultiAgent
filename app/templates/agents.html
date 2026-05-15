@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}AkılAkışı - Ajan Yönetimi{% endblock %}
+{% block content %}
+<div class="max-w-[1280px] mx-auto h-full flex flex-col px-xl py-xl">
+    <div class="flex justify-between items-end mb-xl">
+        <div>
+            <h2 class="font-headline-lg text-headline-lg text-primary mb-sm">Ajan Yapılandırması</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Tartışma pipeline'ları için otonom mantık katılımcılarını tanımlayın ve yönetin.</p>
+        </div>
+        <button onclick="showAgentModal()" class="flex items-center gap-sm px-md py-sm bg-secondary text-on-secondary rounded font-label-caps text-label-caps hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">add</span> Yeni Ajan
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl flex-1 min-h-[600px]">
+        <!-- Agent List -->
+        <div class="lg:col-span-4 flex flex-col border border-outline-variant bg-surface-container-lowest rounded-lg overflow-hidden">
+            <div class="p-md border-b border-outline-variant bg-surface">
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                    <input type="text" id="agent-filter" placeholder="Ajanları filtrele..." class="w-full pl-[36px] pr-sm py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary transition-colors">
+                </div>
+            </div>
+            <div id="agent-list" class="flex-1 overflow-y-auto p-sm space-y-sm">
+                {% for agent in agents %}
+                <div class="agent-card p-md rounded border {% if loop.first %}border-secondary bg-surface-container shadow-sm{% else %}border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low{% endif %} cursor-pointer group transition-colors relative" data-agent-id="{{ agent.id }}">
+                    {% if loop.first %}<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-secondary rounded-l"></div>{% endif %}
+                    <div class="flex justify-between items-start mb-sm">
+                        <h3 class="font-headline-md text-headline-md text-primary agent-name">{{ agent.name }}</h3>
+                        <div class="flex {% if not loop.first %}opacity-0 group-hover:opacity-100{% endif %} transition-opacity">
+                            <button onclick="editAgent({{ agent.id }})" class="p-1 text-on-surface-variant hover:text-secondary transition-colors" title="Düzenle">
+                                <span class="material-symbols-outlined text-[18px]">edit</span>
+                            </button>
+                            <button onclick="deleteAgent({{ agent.id }})" class="p-1 text-on-surface-variant hover:text-error transition-colors" title="Sil">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-sm mb-md">
+                        <span class="font-label-caps text-label-caps px-sm py-xs border {% if agent.role == 'opponent' %}border-error text-error bg-error-container/10{% elif agent.role == 'proponent' %}border-secondary text-secondary bg-secondary-container/10{% else %}border-outline text-on-surface-variant{% endif %} rounded">{{ agent.role|title }}</span>
+                        <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                        <span class="font-code-mono text-code-mono text-on-surface-variant">{{ agent.model_name }}</span>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">{{ agent.system_prompt[:120] }}{% if agent.system_prompt|length > 120 %}...{% endif %}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Configuration Form -->
+        <div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-lg p-xl flex flex-col">
+            <div class="flex justify-between items-center mb-xl border-b border-outline-variant pb-md">
+                <div>
+                    <h3 id="form-title" class="font-headline-lg text-headline-lg text-primary">Yeni Ajan</h3>
+                    <span id="form-subtitle" class="font-label-caps text-label-caps text-on-surface-variant hidden">No: <span id="agent-id-display"></span></span>
+                </div>
+                <div class="flex gap-md">
+                    <button onclick="resetForm()" class="px-md py-sm border border-outline-variant rounded text-on-surface font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">Vazgeç</button>
+                    <button onclick="saveAgent()" class="px-md py-sm bg-primary text-on-primary rounded font-label-caps text-label-caps hover:bg-surface-tint transition-colors">Kaydet</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-xl flex-1">
+                <div class="space-y-lg">
+                    <div>
+                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Ajan Kimliği</label>
+                        <input type="text" id="agent-name" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
+                    </div>
+                    <div>
+                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Hesaplama Motoru (Model)</label>
+                        <div class="relative">
+                            <select id="agent-model" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md appearance-none focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
+                                <option value="openai/gpt-4o-mini">GPT-4o Mini (OpenRouter)</option>
+                                <option value="openai/gpt-4o">GPT-4o (OpenRouter)</option>
+                                <option value="anthropic/claude-3-opus">Claude 3 Opus (OpenRouter)</option>
+                                <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet (OpenRouter)</option>
+                                <option value="google/gemini-1.5-pro">Gemini 1.5 Pro (OpenRouter)</option>
+                            </select>
+                            <span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Tartışma Rolü</label>
+                        <div class="flex gap-sm">
+                            <button type="button" onclick="setRole('proponent')" class="role-btn flex-1 py-sm border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors" data-role="proponent">Savunucu</button>
+                            <button type="button" onclick="setRole('opponent')" class="role-btn flex-1 py-sm border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors" data-role="opponent">Karşıt</button>
+                            <button type="button" onclick="setRole('moderator')" class="role-btn flex-1 py-sm border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors" data-role="moderator">Moderatör</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Sıcaklık (Temperature)</label>
+                        <input type="number" id="agent-temp" min="0" max="2" step="0.1" value="0.7" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
+                    </div>
+                </div>
+                <div class="space-y-lg flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="flex justify-between items-end mb-sm">
+                            <label class="block font-label-caps text-label-caps text-primary">Sistem Kişiliği ve Kısıtlamalar</label>
+                        </div>
+                        <textarea id="agent-prompt" rows="12" placeholder="Sistem talimatlarını girin..." class="w-full flex-1 px-md py-sm border border-outline-variant rounded bg-surface font-code-mono text-code-mono text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all resize-none min-h-[200px]"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+let currentAgentId = null;
+let currentRole = 'proponent';
+
+function setRole(role) {
+    currentRole = role;
+    document.querySelectorAll('.role-btn').forEach(btn => {
+        if (btn.dataset.role === role) {
+            btn.className = 'role-btn flex-1 py-sm border border-primary bg-primary text-on-primary rounded font-label-caps text-label-caps transition-colors';
+        } else {
+            btn.className = 'role-btn flex-1 py-sm border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors';
+        }
+    });
+}
+
+function resetForm() {
+    currentAgentId = null;
+    document.getElementById('form-title').textContent = 'Yeni Ajan';
+    document.getElementById('form-subtitle').classList.add('hidden');
+    document.getElementById('agent-name').value = '';
+    document.getElementById('agent-model').value = 'openai/gpt-4o-mini';
+    document.getElementById('agent-temp').value = '0.7';
+    document.getElementById('agent-prompt').value = '';
+    setRole('proponent');
+}
+
+async function saveAgent() {
+    const payload = {
+        name: document.getElementById('agent-name').value,
+        model_name: document.getElementById('agent-model').value,
+        role: currentRole,
+        temperature: parseFloat(document.getElementById('agent-temp').value),
+        system_prompt: document.getElementById('agent-prompt').value,
+    };
+    const url = currentAgentId ? `/api/agents/${currentAgentId}` : '/api/agents';
+    const method = currentAgentId ? 'PUT' : 'POST';
+    const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+        window.location.reload();
+    } else {
+        const data = await res.json();
+        alert(data.error || 'Ajan kaydedilemedi');
+    }
+}
+
+async function editAgent(id) {
+    const res = await fetch(`/api/agents/${id}`);
+    const agent = await res.json();
+    currentAgentId = agent.id;
+    document.getElementById('form-title').textContent = `Ajanı Düzenle: ${agent.name}`;
+    document.getElementById('form-subtitle').classList.remove('hidden');
+    document.getElementById('agent-id-display').textContent = agent.id;
+    document.getElementById('agent-name').value = agent.name;
+    document.getElementById('agent-model').value = agent.model_name;
+    document.getElementById('agent-temp').value = agent.temperature;
+    document.getElementById('agent-prompt').value = agent.system_prompt;
+    setRole(agent.role);
+}
+
+async function deleteAgent(id) {
+    if (!confirm('Bu ajani silmek istediğinize emin misiniz?')) return;
+    await fetch(`/api/agents/${id}`, { method: 'DELETE' });
+    window.location.reload();
+}
+
+function showAgentModal() {
+    resetForm();
+    document.getElementById('agent-name').focus();
+}
+
+document.getElementById('agent-filter').addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    document.querySelectorAll('.agent-card').forEach(card => {
+        const name = card.querySelector('.agent-name').textContent.toLowerCase();
+        card.style.display = name.includes(term) ? '' : 'none';
+    });
+});
+
+setRole('proponent');
+</script>
+{% endblock %}
