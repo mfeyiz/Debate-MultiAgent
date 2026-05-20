@@ -1,56 +1,20 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-.venv/
-venv/
-ENV/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS
+.git
+.github
+.venv
+__pycache__
+**/__pycache__
+.pytest_cache
+.mypy_cache
+.ruff_cache
 .DS_Store
-Thumbs.db
-
-# Local data & secrets
-*.db
 .env
-*.env.*
-
-# Logs
+*.db
 *.log
+*.pid
 
-# Git
-.git/
-.gitignore
+Data-Debate
+extension
+tests
+debate_platform.db
 
-# Training artifacts (only final/ models are needed)
-models/component_extractor/phase1/
-models/component_extractor/phase2/
-models/relation_classifier/phase1/
-models/relation_classifier/phase2/
-
-# Data & training scripts
-data/
-train_*.py
-
-# Infrastructure (not needed in image)
-terraform/
-k8s/
-scripts/
-cloudbuild.yaml
-docs/
-
-# CI/CD & docs
-.github/
-README.md
-AGENTS.md
-
-# Flask-Migrate local
-migrations/
+models/.DS_Store

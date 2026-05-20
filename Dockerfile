@@ -12,11 +12,14 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 WORKDIR /app
 
 # Copy dependency metadata
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml uv.lock README.md ./
 
-# Install dependencies with CPU-only torch
+# Install locked production dependencies with CPU-only torch.
+# `uv pip install -e .` intentionally is not used here because it bypasses
+# uv.lock resolution and can pick incompatible newest transitive releases.
 ENV UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu
-RUN uv pip install --system -e .
+RUN uv sync --frozen --no-dev --no-install-project
+ENV PATH="/app/.venv/bin:$PATH"
 
 # Copy application code
 COPY app/ ./app/
