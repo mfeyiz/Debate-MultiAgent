@@ -1,57 +1,24 @@
 steps:
-  - name: "gcr.io/cloud-builders/docker"
+  # 0. CI tests
+  - name: "python:3.13"
+    entrypoint: "bash"
     args:
-      - "build"
-      - "-t"
-      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:${COMMIT_SHA}"
-      - "-t"
-      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:latest"
-      - "."
+      - "-c"
+      - "pip install uv && uv sync --frozen && uv run pytest -q"
 
-  - name: "gcr.io/cloud-builders/docker"
+  # 1. Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-west3-docker.pkg.dev/$PROJECT_ID/debate-repo/debate-app:$SHORT_SHA', '.']
+
+  # 2. Push image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west3-docker.pkg.dev/$PROJECT_ID/debate-repo/debate-app:$SHORT_SHA']
+
+  # 3. Deploy to GKE
+  - name: 'gcr.io/cloud-builders/gke-deploy'
     args:
-      - "push"
-      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:${COMMIT_SHA}"
-
-  - name: "gcr.io/cloud-builders/docker"
-    args:
-      - "push"
-      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:latest"
-
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: "gcloud"
-    args:
-      - "container"
-      - "clusters"
-      - "get-credentials"
-      - "${_CLUSTER}"
-      - "--region=${_REGION}"
-      - "--project=${PROJECT_ID}"
-
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: "kubectl"
-    args:
-      - "set"
-      - "image"
-      - "deployment/logicflow-app"
-      - "app=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/logicflow:${COMMIT_SHA}"
-      - "-n"
-      - "logicflow"
-
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: "kubectl"
-    args:
-      - "rollout"
-      - "status"
-      - "deployment/logicflow-app"
-      - "-n"
-      - "logicflow"
-      - "--timeout=600s"
-
-substitutions:
-  _REGION: us-central1
-  _REPO: logicflow
-  _CLUSTER: logicflow-cluster
-
-options:
-  logging: CLOUD_LOGGING_ONLY
+      - run
+      - --filename=kubernetes-manifests.yaml
+      - --image=europe-west3-docker.pkg.dev/$PROJECT_ID/debate-repo/debate-app:$SHORT_SHA
+      - --location=europe-west3
+      - --cluster=debate-cluster
