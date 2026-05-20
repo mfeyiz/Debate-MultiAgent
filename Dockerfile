@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 FROM python:3.13-slim
 
 # Install system dependencies
@@ -18,8 +16,7 @@ COPY pyproject.toml uv.lock ./
 
 # Install dependencies with CPU-only torch
 ENV UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system -e .
+RUN uv pip install --system -e .
 
 # Copy application code
 COPY app/ ./app/
