@@ -193,6 +193,14 @@ gcloud builds submit \
   --substitutions=_REGION=europe-west3,_ARTIFACT_REPOSITORY=debate-repo,_IMAGE_NAME=debate-app,_CLUSTER_NAME=debate-cluster,_CLUSTER_LOCATION=europe-west3,_NAMESPACE=logicflow
 ```
 
+For a minimal reference pipeline matching the single-file manifest approach, the repo also includes:
+
+```bash
+gcloud builds submit --config=cloudbuild.simple.yaml
+```
+
+That simple pipeline deploys `kubernetes-manifests.yaml` directly. The production path remains `cloudbuild.yaml` + `k8s/` because it also runs tests, verifies Git LFS model artifacts, avoids applying placeholder secrets, and waits for rollout.
+
 ### GitHub Actions
 
 Two workflows are included:
