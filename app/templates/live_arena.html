@@ -1,251 +1,1656 @@
 {% extends "base.html" %}
-{% block title %}AkılAkışı - Canlı Tartışma{% endblock %}
+{% block title %}logos - ModernBERT Argüman Kokpiti{% endblock %}
 {% block extra_head %}
 <style>
-    .connector-line {
-        position: absolute;
-        left: 16px;
-        top: -24px;
-        width: 2px;
-        height: 32px;
-        opacity: 0.5;
-        z-index: 0;
+    .arena-shell {
+        background: #f4f8f1;
     }
-    .message-card {
+
+    .glass-panel {
+        background: #ffffff;
+        border: 1px solid #c6d3cc;
+    }
+
+    .message-frame {
         position: relative;
+        border-left: 3px solid transparent;
     }
-    .version-diff .old { text-decoration: line-through; opacity: 0.6; }
-    .version-diff .new { background: rgba(0,88,190,0.1); padding: 0 2px; border-radius: 2px; }
+
+    .message-frame[data-type="claim"],
+    .message-frame[data-type="rebuttal"] {
+        border-left-color: #0c7c6b;
+    }
+
+    .message-frame[data-type="attack"] {
+        border-left-color: #b4473f;
+    }
+
+    .bert-mark {
+        position: relative;
+        border-radius: 5px;
+        padding: 1px 3px;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+        cursor: help;
+        transition: box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .bert-mark.dimmed {
+        opacity: 0.22;
+        background: rgba(118, 119, 125, 0.08);
+        box-shadow: none;
+    }
+
+    .bert-mark.selected {
+        outline: 2px solid #064848;
+        outline-offset: 2px;
+        background: rgba(12, 124, 107, 0.18);
+        box-shadow: inset 0 -2px 0 rgba(12, 124, 107, 0.78);
+    }
+
+    .bert-mark.claim {
+        background: rgba(12, 124, 107, 0.13);
+        box-shadow: inset 0 -2px 0 rgba(12, 124, 107, 0.35);
+    }
+
+    .bert-mark.evidence {
+        background: transparent;
+        box-shadow: inset 0 -1px 0 rgba(86, 94, 116, 0.22);
+    }
+
+    .bert-mark.neutral {
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .bert-mark.attack {
+        background: rgba(180, 71, 63, 0.20);
+        box-shadow: inset 0 -2px 0 rgba(180, 71, 63, 0.68);
+        color: #7f1d1d;
+    }
+
+    .bert-mark.topic-support,
+    .bert-mark.topic-attack,
+    .bert-mark.topic-neutral {
+        color: #17211f;
+    }
+
+    .bert-mark.pro-claim {
+        background: rgba(189, 233, 223, 0.72);
+        box-shadow: inset 0 -2px 0 rgba(12, 124, 107, 0.40);
+        color: #063f3f;
+    }
+
+    .bert-mark.pro-evidence {
+        background: rgba(47, 155, 117, 0.24);
+        box-shadow: inset 0 -2px 0 rgba(47, 155, 117, 0.58);
+        color: #063f3f;
+    }
+
+    .bert-mark.con-claim {
+        background: rgba(255, 224, 220, 0.78);
+        box-shadow: inset 0 -2px 0 rgba(180, 71, 63, 0.42);
+        color: #7f1d1d;
+    }
+
+    .bert-mark.con-evidence {
+        background: rgba(180, 71, 63, 0.22);
+        box-shadow: inset 0 -2px 0 rgba(180, 71, 63, 0.68);
+        color: #7f1d1d;
+    }
+
+    .bert-mark.support-focus {
+        background: rgba(20, 138, 86, 0.24);
+        box-shadow: inset 0 -2px 0 rgba(20, 138, 86, 0.76);
+    }
+
+    .bert-mark.attack-focus {
+        background: rgba(186, 26, 26, 0.24);
+        box-shadow: inset 0 -2px 0 rgba(186, 26, 26, 0.8);
+        color: #7f1111;
+    }
+
+    .bert-mark.selected {
+        outline: 2px solid #064848;
+        outline-offset: 2px;
+        background: rgba(0, 88, 190, 0.24);
+        box-shadow: inset 0 -2px 0 rgba(0, 88, 190, 0.78);
+    }
+
+    .bert-mark:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        left: 0;
+        bottom: calc(100% + 9px);
+        min-width: 210px;
+        max-width: 300px;
+        padding: 9px 11px;
+        border-radius: 8px;
+        background: #064848;
+        color: white;
+        font-size: 12px;
+        line-height: 1.35;
+        z-index: 30;
+        box-shadow: 0 16px 34px rgba(19, 27, 46, 0.22);
+    }
+
+    .bert-mark:hover::before {
+        content: "";
+        position: absolute;
+        left: 12px;
+        bottom: calc(100% + 3px);
+        border-width: 6px 6px 0 6px;
+        border-style: solid;
+        border-color: #064848 transparent transparent transparent;
+        z-index: 31;
+    }
+
+    #argument-graph {
+        height: 520px;
+        min-height: 360px;
+    }
+
+    #argument-graph-modal {
+        height: calc(100vh - 220px);
+        min-height: 560px;
+    }
+
+    .graph-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: rgba(19, 27, 46, 0.64);
+        backdrop-filter: blur(10px);
+    }
+
+    .graph-modal[hidden] {
+        display: none;
+    }
+
+    .graph-legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        display: inline-block;
+    }
+
+    .metric-tile {
+        min-height: 82px;
+    }
+    
+    /* Version controls and diff styling */
+    .version-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 150ms ease;
+        border: 1px solid #c6d3cc;
+        background-color: #f0f5ef;
+        color: #4c5a56;
+    }
+    .version-pill:hover {
+        background-color: #e7eee7;
+    }
+    .version-pill.active {
+        background-color: #0c7c6b;
+        color: white;
+        border-color: #0c7c6b;
+    }
+    .version-pill.active:hover {
+        background-color: #0a6b5c;
+    }
+    .version-pill.weak {
+        border-color: rgba(217, 107, 99, 0.4);
+    }
+    .version-pill.strong {
+        border-color: rgba(47, 155, 117, 0.4);
+    }
+    .diff-added {
+        background-color: rgba(47, 155, 117, 0.18);
+        color: #1a6045;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 3px;
+        padding: 1px 3px;
+    }
+    .diff-removed {
+        background-color: rgba(217, 107, 99, 0.18);
+        color: #842c26;
+        text-decoration: line-through;
+        border-radius: 3px;
+        padding: 1px 3px;
+    }
+    .feedback-bubble {
+        background: rgba(12, 124, 107, 0.04);
+        border: 1px dashed rgba(12, 124, 107, 0.3);
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-top: 8px;
+    }
 </style>
 {% endblock %}
 {% block content %}
-<div class="max-w-[1280px] mx-auto w-full p-lg md:p-xl grid grid-cols-1 lg:grid-cols-12 gap-xl">
-    <!-- Debate Thread (Left Column) -->
-    <div class="lg:col-span-8 flex flex-col gap-lg">
-        <!-- Status Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-md pb-md border-b border-outline-variant">
-            <div>
-                <h2 class="font-headline-lg text-headline-lg text-on-surface">Tartışma Çözüm Protokolü</h2>
-                <p class="font-body-md text-body-md text-on-surface-variant mt-unit">Konu: {{ debate.topic }}</p>
+<div class="arena-shell min-h-full">
+    <div class="max-w-[1500px] mx-auto w-full p-lg md:p-xl flex flex-col gap-lg">
+        <section class="glass-panel rounded-xl p-lg flex flex-col xl:flex-row xl:items-center gap-lg justify-between">
+            <div class="max-w-4xl">
+                <div class="flex items-center gap-sm mb-sm">
+                    <span class="material-symbols-outlined text-secondary">account_tree</span>
+                    <span class="font-label-caps text-label-caps text-secondary">ModernBERT Argüman Haritası</span>
+                </div>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">Akademik Münazara Analiz Kokpiti</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-xs leading-relaxed">Konu: {{ debate.topic }}</p>
             </div>
-            <div class="flex items-center gap-sm">
-                <span id="pipeline-status" class="flex items-center gap-sm bg-surface-container px-md py-sm rounded-DEFAULT border border-outline-variant shadow-sm">
-                    <span class="material-symbols-outlined text-secondary text-[20px]">sync</span>
-                    <span class="font-label-caps text-label-caps text-secondary font-bold">Aktif</span>
+            <div class="flex flex-wrap items-center gap-sm">
+                <span id="pipeline-status" class="inline-flex items-center gap-xs px-md py-sm rounded-lg bg-surface-container-lowest border border-outline-variant">
+                    <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">{{ debate.status|upper }}</span>
                 </span>
-                <button id="advance-btn" class="px-md py-sm bg-secondary text-on-secondary rounded font-label-caps text-label-caps hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm">Sonraki Tur</button>
-                <button id="resolve-btn" class="px-md py-sm border border-outline-variant text-on-surface rounded font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">Çözümle</button>
+                <button id="advance-btn" data-status="{{ debate.status }}" class="inline-flex items-center gap-xs px-md py-sm bg-secondary text-on-secondary rounded-lg font-label-caps text-label-caps hover:bg-secondary-container hover:text-on-secondary-container transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">{{ 'play_arrow' if debate.status == 'pending' else 'skip_next' }}</span>
+                    <span class="action-label">{{ 'Başlat' if debate.status == 'pending' else 'Sonraki Tur' }}</span>
+                </button>
+                <button id="run-full-btn" class="inline-flex items-center gap-xs px-md py-sm bg-tertiary text-on-tertiary rounded-lg font-label-caps text-label-caps hover:bg-tertiary-container hover:text-on-tertiary-container transition-colors" title="Tüm tartışmayı otomatik olarak ilerlet">
+                    <span class="material-symbols-outlined text-[18px]">fast_forward</span>
+                    Otomatik Çalıştır
+                </button>
+                <button id="resolve-btn" class="inline-flex items-center gap-xs px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-label-caps text-label-caps hover:opacity-90 transition-opacity">
+                    <span class="material-symbols-outlined text-[18px]">gavel</span>
+                    Çözümle
+                </button>
+                <button id="analyze-btn" class="inline-flex items-center gap-xs px-md py-sm border border-outline-variant text-on-surface rounded-lg font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">neurology</span>
+                    BERT Analizi
+                </button>
+                <label id="auto-advance-toggle" class="inline-flex items-center gap-xs px-md py-sm rounded-lg bg-surface-container-low border border-outline-variant cursor-pointer select-none" title="Her tur sonrası otomatik ilerle">
+                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">autoplay</span>
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">Oto-İlerle</span>
+                    <input type="checkbox" id="auto-advance-checkbox" class="sr-only" {% if debate.auto_advance %}checked{% endif %}>
+                    <span id="auto-advance-indicator" class="w-2 h-2 rounded-full {% if debate.auto_advance %}bg-secondary{% else %}bg-outline-variant{% endif %} transition-colors"></span>
+                </label>
             </div>
-        </div>
+        </section>
 
-        <!-- Thread Container -->
-        <div id="thread-container" class="flex flex-col gap-md pt-sm">
-            {% for msg in messages %}
-            {% set cv = msg.current_version %}
-            {% set indent = msg.position * 32 if msg.position < 3 else 64 %}
-            {% set color = 'bg-secondary' if msg.message_type in ['claim','rebuttal'] else 'bg-error' if msg.message_type == 'attack' else 'bg-surface-tint' %}
-            <div class="message-card" style="margin-left: {{ indent }}px" data-message-id="{{ msg.id }}">
-                {% if msg.parent_id %}
-                <div class="connector-line {{ color }}"></div>
-                {% endif %}
-                <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter shadow-sm relative group hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow">
-                    <div class="absolute left-0 top-0 bottom-0 w-[2px] {{ color }} rounded-l-lg"></div>
-                    <div class="flex items-center gap-sm mb-md">
-                        <div class="w-6 h-6 rounded-sm bg-primary-container text-on-primary-container flex items-center justify-center">
-                            <span class="font-label-caps text-[10px]">{{ msg.agent.name[0] if msg.agent else 'S' }}</span>
-                        </div>
-                        <span class="font-label-caps text-label-caps text-primary">{{ msg.agent.name if msg.agent else 'System' }}</span>
-                        <span class="inline-flex items-center px-sm py-[2px] bg-surface-container text-on-surface-variant font-label-caps text-[10px] rounded-sm ml-sm">{{ msg.message_type|upper }}</span>
-                        {% if cv and cv.version_number > 1 %}
-                        <span class="inline-flex items-center px-sm py-[2px] bg-secondary-fixed text-on-secondary-fixed font-label-caps text-[10px] rounded-sm ml-sm">V{{ cv.version_number }}</span>
-                        {% endif %}
-                        <span class="font-body-md text-[12px] text-outline ml-auto">{{ msg.created_at.strftime('%H:%M') if msg.created_at else '' }}</span>
+        <section class="grid grid-cols-1 xl:grid-cols-12 gap-lg">
+            <div class="xl:col-span-7 glass-panel rounded-xl p-lg">
+                <div class="flex items-center justify-between gap-md mb-lg">
+                    <div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Canlı Transcript</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Analiz tamamlanınca cümleler ModernBERT span çıktılarıyla renklendirilir.</p>
                     </div>
-                    <div class="pl-sm">
-                        <p class="font-body-md text-body-md text-on-surface leading-relaxed content-text">{{ cv.content if cv else '' }}</p>
-                        {% if cv and cv.strength_score is not none %}
-                        <div class="mt-md flex items-center gap-sm">
-                            <span class="font-label-caps text-[10px] text-on-surface-variant">Güç</span>
-                            <div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
-                                <div class="h-full {{ 'bg-secondary' if cv.strength_score >= 0.7 else 'bg-error' }} rounded-full" style="width: {{ (cv.strength_score * 100)|int }}%"></div>
+                    <div class="hidden md:flex flex-wrap items-center gap-xs text-[11px] font-label-caps text-on-surface-variant">
+                        <span class="w-3 h-3 rounded bg-[rgba(189,233,223,0.72)]"></span> Konu+ iddia
+                        <span class="w-3 h-3 rounded bg-[rgba(47,155,117,0.24)] ml-sm"></span> Konu+ kanıt
+                        <span class="w-3 h-3 rounded bg-[rgba(255,224,220,0.78)] ml-sm"></span> Konu- iddia
+                        <span class="w-3 h-3 rounded bg-[rgba(180,71,63,0.22)] ml-sm"></span> Konu- kanıt
+                    </div>
+                </div>
+                <div id="thread-container" class="flex flex-col gap-md">
+                    {% for msg in messages %}
+                    {% set cv = msg.current_version %}
+                    <article class="message-frame bg-surface-container-lowest rounded-lg p-md border border-outline-variant" data-message-id="{{ msg.id }}" data-type="{{ msg.message_type }}">
+                        <header class="flex items-center gap-sm mb-sm">
+                            <div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-label-caps text-[11px]">
+                                {{ msg.agent.name[:2] if msg.agent else 'SY' }}
                             </div>
-                            <span class="font-code-mono text-code-mono text-[11px] {{ 'text-secondary' if cv.strength_score >= 0.7 else 'text-error' }}">{{ "%.0f"|format(cv.strength_score * 100) }}%</span>
+                            <div>
+                                <div class="font-label-caps text-label-caps text-primary">{{ msg.agent.name if msg.agent else 'Sistem' }}</div>
+                                <div class="font-body-md text-[12px] text-on-surface-variant">Tur {{ (msg.position // 2) + 1 }} · {{ msg.message_type|upper }}</div>
+                            </div>
+                            {% if cv and cv.strength_score is not none %}
+                            <div class="ml-auto flex items-center gap-xs">
+                                <span class="font-label-caps text-[10px] text-on-surface-variant">BERT Gücü</span>
+                                <span class="font-code-mono text-code-mono text-secondary">{{ "%.0f"|format(cv.strength_score * 100) }}%</span>
+                            </div>
+                            {% endif %}
+                        </header>
+                        <p class="content-text font-body-md text-body-md text-on-surface leading-relaxed" data-raw="{{ cv.content if cv else '' }}">{{ cv.content if cv else '' }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="xl:col-span-5 flex flex-col gap-lg">
+                <div class="glass-panel rounded-xl p-lg">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-md">
+                        <div>
+                            <h3 class="font-headline-md text-headline-md text-on-surface">İnteraktif İlişki Ağı</h3>
+                            <p id="graph-subtitle" class="font-body-md text-body-md text-on-surface-variant">ModernBERT haritası bekleniyor.</p>
                         </div>
-                        {% endif %}
-                    </div>
-                    <!-- Version toggle if multiple versions exist -->
-                    {% if msg.versions.count() > 1 %}
-                    <div class="mt-md border-t border-outline-variant pt-md">
                         <div class="flex items-center gap-sm">
-                            <span class="font-label-caps text-[10px] text-on-surface-variant">Sürümler:</span>
-                            {% for v in msg.versions %}
-                            <button class="version-toggle px-sm py-[2px] rounded-sm font-label-caps text-[10px] {{ 'bg-secondary text-on-primary' if v.is_current else 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high' }} transition-colors" data-version-id="{{ v.id }}">{{ v.version_number }}</button>
-                            {% endfor %}
+                            <div class="inline-flex p-xs rounded-lg bg-surface-container-low border border-outline-variant">
+                                <button id="bert-mode-btn" class="px-sm py-xs rounded font-label-caps text-[11px] bg-secondary text-on-secondary">BERT</button>
+                                <button id="baseline-mode-btn" class="px-sm py-xs rounded font-label-caps text-[11px] text-on-surface-variant">Baseline</button>
+                            </div>
+                            <button id="expand-graph-btn" class="inline-flex items-center gap-xs px-sm py-xs rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-label-caps text-[11px] hover:border-secondary transition-colors">
+                                <span class="material-symbols-outlined text-[17px]">open_in_full</span>
+                                Büyüt
+                            </button>
                         </div>
                     </div>
-                    {% endif %}
+                    <div class="flex flex-wrap items-center gap-sm mb-sm text-[11px] font-label-caps text-on-surface-variant">
+                        <span class="inline-flex items-center gap-xs"><span class="graph-legend-dot bg-secondary"></span> Konu+ iddia</span>
+                        <span class="inline-flex items-center gap-xs"><span class="graph-legend-dot bg-[#2f9b75]"></span> Konu+ kanıt</span>
+                        <span class="inline-flex items-center gap-xs"><span class="graph-legend-dot bg-[#d96b63]"></span> Konu- iddia</span>
+                        <span class="inline-flex items-center gap-xs"><span class="graph-legend-dot bg-[#b4473f]"></span> Konu- kanıt</span>
+                        <span class="inline-flex items-center gap-xs"><span class="inline-block w-7 border-t-2 border-[#2f9b75]"></span> SUPPORT</span>
+                        <span class="inline-flex items-center gap-xs"><span class="inline-block w-7 border-t-2 border-dashed border-error"></span> ATTACK</span>
+                    </div>
+                    <div id="argument-graph" class="rounded-lg bg-surface-container-lowest border border-outline-variant overflow-hidden flex items-center justify-center text-on-surface-variant font-body-md text-body-md">Graf için analiz bekleniyor...</div>
+                </div>
+
+                <div class="glass-panel rounded-xl p-lg bg-gradient-to-br from-surface to-secondary-container/10 border border-secondary/20 shadow-sm">
+                    <div class="flex items-center gap-sm mb-md">
+                        <span class="material-symbols-outlined text-secondary text-[24px]">trending_up</span>
+                        <div>
+                            <h3 class="font-headline-md text-headline-md text-on-surface">ModernBERT Optimizasyonu</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">Geri bildirim döngüsü ile argümantasyon gücü değişimi.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-md mb-md">
+                        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-center">
+                            <div class="font-label-caps text-[10px] text-on-surface-variant">Başlangıç Kalitesi</div>
+                            <div id="stats-initial-score" class="font-headline-lg text-[24px] font-bold text-on-surface-variant mt-xs">-</div>
+                        </div>
+                        <div class="bg-surface-container-lowest border border-secondary/30 rounded-lg p-md text-center ring-1 ring-secondary/10">
+                            <div class="font-label-caps text-[10px] text-secondary">Mevcut/Son Kalite</div>
+                            <div id="stats-current-score" class="font-headline-lg text-[24px] font-bold text-secondary mt-xs">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-sm">
+                        <div class="flex items-center justify-between text-xs font-label-caps">
+                            <span class="text-on-surface-variant">Model Kalite Artışı</span>
+                            <span id="stats-improvement-delta" class="text-secondary font-bold">+0%</span>
+                        </div>
+                        <div class="w-full bg-surface-container-low rounded-full h-3 overflow-hidden border border-outline-variant">
+                            <div id="stats-improvement-bar" class="bg-secondary h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-[11px] font-body-sm text-on-surface-variant pt-xs">
+                            <span id="stats-total-regens">0 revizyon döngüsü tetiklendi</span>
+                            <span class="inline-flex items-center gap-xs text-secondary font-semibold">
+                                <span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+                                Aktif Optimizasyon
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-xl p-lg">
+                    <h3 class="font-headline-md text-headline-md text-on-surface mb-md">ModernBERT Etki Lensi</h3>
+                    <div class="grid grid-cols-2 gap-sm">
+                        <div class="metric-tile rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
+                            <div class="font-label-caps text-[10px] text-on-surface-variant">Semantik Kenar</div>
+                            <div id="metric-semantic" class="font-headline-lg text-headline-lg text-secondary mt-xs">0</div>
+                        </div>
+                        <div class="metric-tile rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
+                            <div class="font-label-caps text-[10px] text-on-surface-variant">Baseline Kenar</div>
+                            <div id="metric-baseline" class="font-headline-lg text-headline-lg text-on-surface mt-xs">0</div>
+                        </div>
+                        <div class="metric-tile rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
+                            <div class="font-label-caps text-[10px] text-on-surface-variant">Uzak İlişki</div>
+                            <div id="metric-long-range" class="font-headline-lg text-headline-lg text-primary mt-xs">0</div>
+                        </div>
+                        <div class="metric-tile rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
+                            <div class="font-label-caps text-[10px] text-on-surface-variant">BERT-only</div>
+                            <div id="metric-bert-only" class="font-headline-lg text-headline-lg text-error mt-xs">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-xl p-lg">
+                    <h3 class="font-headline-md text-headline-md text-on-surface mb-md">Zaman Tüneli</h3>
+                    <div id="timeline-list" class="flex flex-col gap-sm text-body-md font-body-md text-on-surface-variant">
+                        <div class="text-center py-md">Henüz argüman haritası yok.</div>
+                    </div>
                 </div>
             </div>
-            {% endfor %}
-        </div>
+        </section>
 
-        <!-- Analysis Feedback (inline, shown after each analysis) -->
-        <div id="feedback-box" class="hidden bg-surface-container rounded-lg p-sm border border-outline-variant flex flex-col gap-sm mt-md shadow-inner">
-            <label class="font-label-caps text-[10px] text-on-surface-variant">MODERATÖR DEĞERLENDİRMESİ</label>
-            <p id="feedback-text" class="font-body-sm text-body-sm text-on-surface leading-relaxed"></p>
-        </div>
+        <section class="glass-panel rounded-xl overflow-hidden">
+            <div class="px-lg py-md border-b border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-sm">
+                <div>
+                    <h3 class="font-headline-md text-headline-md text-on-surface">Yalan ve Safsata Radar</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Bu panel olgusal doğrulama değil; ModernBERT ilişki grafına göre argümantatif açıkları gösterir.</p>
+                </div>
+                <div class="flex items-center gap-sm font-label-caps text-[11px] text-on-surface-variant">
+                    <span id="finding-unsupported">0 temelsiz iddia</span>
+                    <span>·</span>
+                    <span id="finding-missed">0 ıskalanan çürütme</span>
+                    <span>·</span>
+                    <span id="finding-neutral">0 nötr kaçış</span>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-surface-container-low border-b border-outline-variant">
+                            <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Bulgu</th>
+                            <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Açıklama</th>
+                            <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Güven</th>
+                            <th class="p-md font-label-caps text-label-caps text-on-surface-variant text-right">Önem</th>
+                        </tr>
+                    </thead>
+                    <tbody id="findings-body" class="divide-y divide-outline-variant">
+                        <tr>
+                            <td colspan="4" class="p-lg text-center text-on-surface-variant font-body-md text-body-md">ModernBERT analizi tamamlandığında radar dolacak.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
+</div>
 
-    <!-- ModernBERT Analysis Sidebar (Right Column) -->
-    <div class="lg:col-span-4 h-full">
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter sticky top-lg flex flex-col gap-lg shadow-sm h-[calc(100vh-144px)] overflow-y-auto">
-            <div class="flex items-center justify-between border-b border-outline-variant pb-sm">
-                <h3 class="font-headline-md text-headline-md text-primary">ModernBERT Analizi</h3>
-                <span class="material-symbols-outlined text-secondary text-[20px]">troubleshoot</span>
+<div id="graph-modal" class="graph-modal p-lg" hidden>
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_24px_80px_rgba(0,0,0,0.32)] h-full flex flex-col overflow-hidden">
+        <div class="px-lg py-md border-b border-outline-variant flex flex-col lg:flex-row lg:items-center justify-between gap-md">
+            <div>
+                <div class="font-label-caps text-label-caps text-secondary">ModernBERT Graph Inspector</div>
+                <h3 class="font-headline-lg text-headline-lg text-on-surface">Argüman İlişki Ağı</h3>
+                <p id="graph-modal-subtitle" class="font-body-md text-body-md text-on-surface-variant">Node veya çizgi seçerek model kararını inceleyin.</p>
             </div>
-            <div class="flex flex-col gap-md">
-                <h4 class="font-label-caps text-label-caps text-on-surface-variant">Canlı Argüman Duruşu</h4>
-                <div class="flex flex-col gap-xs">
-                    <div class="flex justify-between text-body-md font-body-md">
-                        <span class="text-on-surface">Ampirik Destek</span>
-                        <span id="emp-support-val" class="text-secondary font-bold">--</span>
-                    </div>
-                    <div class="w-full bg-surface-container h-xs rounded-full overflow-hidden">
-                        <div id="emp-support-bar" class="bg-secondary h-full rounded-full" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-xs mt-sm">
-                    <div class="flex justify-between text-body-md font-body-md">
-                        <span class="text-on-surface">Mantıksal Çelişki Riski</span>
-                        <span id="fallacy-val" class="text-error font-bold">--</span>
-                    </div>
-                    <div class="w-full bg-surface-container h-xs rounded-full overflow-hidden">
-                        <div id="fallacy-bar" class="bg-error h-full rounded-full" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-col gap-sm flex-1">
-                <h4 class="font-label-caps text-label-caps text-on-surface-variant pt-md border-t border-outline-variant">Çıkarılan Ontoloji</h4>
-                <div id="ontology-container" class="bg-surface rounded-DEFAULT border border-outline-variant p-sm flex flex-col gap-sm">
-                    <p class="font-body-md text-body-md text-on-surface-variant text-center py-md">Analiz bekleniyor...</p>
-                </div>
-            </div>
-            <div class="mt-auto pt-md border-t border-outline-variant">
-                <button onclick="forceResolve()" class="w-full py-sm bg-primary-container text-on-primary-container font-label-caps text-label-caps rounded-DEFAULT hover:bg-primary-container/90 transition-colors flex items-center justify-center gap-xs">
-                    <span class="material-symbols-outlined text-[18px]">gavel</span> Çözümü Zorla
+            <div class="flex flex-wrap items-center gap-sm">
+                <button id="modal-fit-btn" class="inline-flex items-center gap-xs px-sm py-xs rounded-lg border border-outline-variant font-label-caps text-[11px] hover:border-secondary">
+                    <span class="material-symbols-outlined text-[17px]">fit_screen</span>
+                    Sığdır
+                </button>
+                <button id="modal-refresh-layout-btn" class="inline-flex items-center gap-xs px-sm py-xs rounded-lg border border-outline-variant font-label-caps text-[11px] hover:border-secondary">
+                    <span class="material-symbols-outlined text-[17px]">schema</span>
+                    Hiyerarşi
+                </button>
+                <button id="close-graph-modal-btn" class="inline-flex items-center gap-xs px-sm py-xs rounded-lg bg-primary-container text-on-primary-container font-label-caps text-[11px]">
+                    <span class="material-symbols-outlined text-[17px]">close_fullscreen</span>
+                    Kapat
                 </button>
             </div>
+        </div>
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-0 flex-1 min-h-0">
+            <div class="xl:col-span-9 min-h-0 p-md">
+                <div id="argument-graph-modal" class="rounded-lg bg-surface border border-outline-variant overflow-hidden"></div>
+            </div>
+            <aside class="xl:col-span-3 border-t xl:border-t-0 xl:border-l border-outline-variant p-lg overflow-y-auto">
+                <h4 class="font-headline-md text-headline-md text-on-surface mb-md">Seçili Öğe</h4>
+                <div id="graph-detail-panel" class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Bir node veya ilişki seçin. Burada ajan, tur, ilişki türü, hedef iddia ve ModernBERT güven skoru görünecek.
+                </div>
+            </aside>
         </div>
     </div>
 </div>
 {% endblock %}
 {% block scripts %}
+<script id="messages-versions-data" type="application/json">
+{
+  {% for msg in messages %}
+    "{{ msg.id }}": [
+      {% for ver in msg.versions | reverse %}
+        {
+          "version_number": {{ ver.version_number }},
+          "content": {{ ver.content | tojson }},
+          "strength_score": {{ ver.strength_score if ver.strength_score is not none else 'null' }},
+          "is_current": {{ 'true' if ver.is_current else 'false' }},
+          "feedback": {% set first_analysis = ver.analyses[0] if ver.analyses else none %}{% if first_analysis and first_analysis.feedback_text %}{{ first_analysis.feedback_text | tojson }}{% else %}null{% endif %}
+        }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]{% if not loop.last %},{% endif %}
+  {% endfor %}
+}
+</script>
+<script src="https://unpkg.com/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
 <script>
 const debateId = {{ debate.id }};
-let lastAnalysis = null;
+let argumentMap = null;
+let graphMode = 'bert';
+let cyMini = null;
+let cyModal = null;
+let graphModalOpen = false;
+let selectedComponentId = null;
+const messageVersions = {};
 
-// SSE Connection
+if (window.cytoscapeDagre) {
+    try {
+        cytoscape.use(window.cytoscapeDagre);
+    } catch (error) {
+        console.warn('Dagre layout already registered or unavailable', error);
+    }
+}
+
 const evtSource = new EventSource(`/stream/${debateId}`);
-evtSource.onmessage = (e) => {
-    const data = JSON.parse(e.data);
+evtSource.onmessage = (event) => {
+    const data = JSON.parse(event.data);
     if (data.type === 'heartbeat') return;
     handleEvent(data);
 };
 
+document.addEventListener('DOMContentLoaded', () => {
+    loadArgumentMap();
+    
+    // Load initial message versions
+    try {
+        const initialData = JSON.parse(document.getElementById('messages-versions-data').textContent);
+        Object.assign(messageVersions, initialData);
+        for (const msgId in messageVersions) {
+            renderMessageVersions(msgId);
+        }
+        updateModelImprovementStats();
+    } catch (e) {
+        console.error("Initialization error:", e);
+    }
+});
+
 function handleEvent(data) {
     if (data.type === 'message') {
         appendMessage(data.message);
-    } else if (data.type === 'analysis') {
-        lastAnalysis = data;
-        updateAnalysis(data);
-        showFeedback(data);
-    } else if (data.type === 'status') {
-        document.querySelector('#pipeline-status span:last-child').textContent = data.status.toUpperCase();
     }
+    if (data.type === 'message_regeneration_started') {
+        const messageId = data.message_id;
+        const verNum = data.version_number;
+        const el = document.querySelector(`[data-message-id="${messageId}"]`);
+        if (el) {
+            let spinner = el.querySelector('.regen-spinner');
+            if (!spinner) {
+                spinner = document.createElement('div');
+                spinner.className = 'regen-spinner mt-sm text-xs font-label-caps text-secondary flex items-center gap-xs animate-pulse';
+                spinner.innerHTML = `
+                    <span class="material-symbols-outlined animate-spin text-[16px]">autorenew</span>
+                    <span>ModernBERT geribildirimiyle yeni cevap üretiliyor (v${verNum})...</span>
+                `;
+                el.appendChild(spinner);
+            }
+        }
+    }
+    if (data.type === 'message_version_created') {
+        const messageId = data.message_id;
+        if (!messageVersions[messageId]) {
+            messageVersions[messageId] = [];
+        }
+        messageVersions[messageId].forEach(v => v.is_current = false);
+        messageVersions[messageId].push({
+            version_number: data.version.version_number,
+            content: data.version.content,
+            strength_score: data.version.strength_score,
+            is_current: true,
+            feedback: data.feedback || null
+        });
+        
+        // Remove spinner
+        const el = document.querySelector(`[data-message-id="${messageId}"]`);
+        if (el) {
+            const spinner = el.querySelector('.regen-spinner');
+            if (spinner) spinner.remove();
+        }
+        
+        renderMessageVersions(messageId);
+        updateModelImprovementStats();
+    }
+    if (data.type === 'analysis_started') {
+        setStatus('ANALİZ EDİLİYOR');
+        setAnalyzeBusy(true);
+    }
+    if (data.type === 'argument_map_ready') {
+        setAnalyzeBusy(false);
+        loadArgumentMap();
+    }
+    if (data.type === 'analysis_failed') {
+        setAnalyzeBusy(false);
+        setStatus('ANALİZ HATASI');
+    }
+    if (data.type === 'status') {
+        setStatus(String(data.status).toUpperCase());
+    }
+    if (data.type === 'auto_advance_toggled') {
+        const checkbox = document.getElementById('auto-advance-checkbox');
+        const indicator = document.getElementById('auto-advance-indicator');
+        if (checkbox) checkbox.checked = data.enabled;
+        if (indicator) {
+            indicator.className = `w-2 h-2 rounded-full ${data.enabled ? 'bg-secondary' : 'bg-outline-variant'} transition-colors`;
+        }
+    }
+    if (data.type === 'analysis') {
+        const messageId = data.message_id;
+        const versions = messageVersions[messageId];
+        if (versions && versions.length) {
+            const currentVer = versions.find(v => v.is_current) || versions[versions.length - 1];
+            if (currentVer) {
+                currentVer.strength_score = data.strength;
+                if (data.analysis && data.analysis.feedback_text) {
+                    currentVer.feedback = data.analysis.feedback_text;
+                }
+            }
+        }
+        
+        const msg = document.querySelector(`[data-message-id="${messageId}"]`);
+        if (msg) msg.classList.add('ring-1', 'ring-secondary/30');
+        
+        renderMessageVersions(messageId);
+        updateModelImprovementStats();
+    }
+}
+
+async function loadArgumentMap() {
+    try {
+        const res = await fetch(`/api/debates/${debateId}/argument-map`);
+        if (!res.ok) throw new Error('Argument map yüklenemedi');
+        argumentMap = await res.json();
+        renderMap(argumentMap);
+    } catch (error) {
+        console.error(error);
+        setStatus('HARİTA HATASI');
+    }
+}
+
+function renderMap(map) {
+    if (selectedComponentId && !componentExists(selectedComponentId)) {
+        selectedComponentId = null;
+    }
+    renderHighlights(map.annotations || {});
+    renderImpact(map.impact || {});
+    renderTimeline(map.timeline || []);
+    renderFindings(map.findings || [], map.impact || {});
+    renderGraph();
+    if (graphModalOpen) renderModalGraph();
+}
+
+function renderGraph() {
+    const container = document.getElementById('argument-graph');
+    if (!argumentMap) return;
+
+    const { nodes, edges, totalNodes, totalEdges } = graphElements(false);
+    const subtitle = document.getElementById('graph-subtitle');
+    subtitle.textContent = graphMode === 'bert'
+        ? `${totalNodes} node · ${totalEdges} ilişki · küçük görünümde en güçlü ${edges.length} ilişki`
+        : `${totalNodes} mesaj node · ${totalEdges} kronolojik parent bağı`;
+
+    if (!nodes.length) {
+        container.textContent = 'Graf için analiz bekleniyor...';
+        if (cyMini) {
+            cyMini.destroy();
+            cyMini = null;
+        }
+        return;
+    }
+
+    container.textContent = '';
+    if (cyMini) cyMini.destroy();
+    cyMini = createGraphInstance(container, nodes, edges, { detailed: false });
+}
+
+function renderModalGraph() {
+    const container = document.getElementById('argument-graph-modal');
+    if (!argumentMap) return;
+    const { nodes, edges, totalNodes, totalEdges } = graphElements(true);
+    document.getElementById('graph-modal-subtitle').textContent = graphMode === 'bert'
+        ? `${totalNodes} component · ${totalEdges} ModernBERT ilişkisi · çizgi opaklığı/gövdesi güven skorunu gösterir`
+        : `${totalNodes} mesaj · ${totalEdges} kronolojik parent bağı`;
+
+    if (cyModal) cyModal.destroy();
+    cyModal = createGraphInstance(container, nodes, edges, { detailed: true });
+}
+
+function graphElements(detailed) {
+    const allNodes = graphMode === 'bert' ? (argumentMap.nodes || []) : (argumentMap.baseline_nodes || []);
+    const allEdges = graphMode === 'bert' ? (argumentMap.edges || []) : (argumentMap.baseline_edges || []);
+    if (detailed || graphMode === 'baseline') {
+        return { nodes: allNodes, edges: allEdges, totalNodes: allNodes.length, totalEdges: allEdges.length };
+    }
+    const strongestEdges = [...allEdges]
+        .sort((a, b) => (b.data.confidence || 0) - (a.data.confidence || 0))
+        .slice(0, 16);
+    const connectedNodeIds = new Set();
+    strongestEdges.forEach(edge => {
+        connectedNodeIds.add(edge.data.source);
+        connectedNodeIds.add(edge.data.target);
+    });
+    const visibleNodes = allNodes.filter(node => connectedNodeIds.has(node.data.id));
+    return {
+        nodes: visibleNodes.length ? visibleNodes : allNodes.slice(0, 40),
+        edges: strongestEdges,
+        totalNodes: allNodes.length,
+        totalEdges: allEdges.length,
+    };
+}
+
+function createGraphInstance(container, nodes, edges, options) {
+    const detailed = Boolean(options.detailed);
+    const graphConfig = {
+        container,
+        elements: [...nodes, ...edges],
+        style: [
+            {
+                selector: 'node',
+                style: {
+                    'shape': ele => ele.data('kind') === 'evidence' ? 'ellipse' : 'round-rectangle',
+                    'background-color': ele => nodeTopicColor(ele),
+                    'background-opacity': ele => graphMode === 'bert' ? 0.92 : 0.78,
+                    'label': ele => detailed ? nodeLabel(ele) : shortNodeLabel(ele),
+                    'color': '#ffffff',
+                    'font-size': detailed ? 11 : 9,
+                    'font-weight': 700,
+                    'text-valign': 'center',
+                    'text-halign': 'center',
+                    'text-margin-y': 0,
+                    'text-wrap': 'wrap',
+                    'text-max-width': ele => {
+                        if (ele.data('kind') === 'evidence') return detailed ? 120 : 60;
+                        return detailed ? 210 : 88;
+                    },
+                    'width': ele => {
+                        if (ele.data('kind') === 'evidence') return detailed ? 150 : 70;
+                        return detailed ? 230 : 98;
+                    },
+                    'height': ele => {
+                        if (ele.data('kind') === 'evidence') return detailed ? 70 : 42;
+                        return detailed ? 74 : 42;
+                    },
+                    'border-width': 2,
+                    'border-color': '#ffffff',
+                    'overlay-opacity': 0,
+                }
+            },
+            {
+                selector: 'edge',
+                style: {
+                    'curve-style': 'bezier',
+                    'target-arrow-shape': 'triangle',
+                    'line-color': ele => edgeColor(ele.data('relationType')),
+                    'target-arrow-color': ele => edgeColor(ele.data('relationType')),
+                    'width': ele => edgeWidth(ele, detailed),
+                    'opacity': ele => edgeOpacity(ele),
+                    'label': ele => detailed ? edgeLabel(ele) : '',
+                    'font-size': detailed ? 10 : 8,
+                    'color': '#45464d',
+                    'text-background-color': '#ffffff',
+                    'text-background-opacity': 0.82,
+                    'text-background-padding': 2,
+                    'target-arrow-fill': 'filled',
+                }
+            },
+            {
+                selector: 'edge[relationType = "attack"]',
+                style: {
+                    'line-style': 'dashed',
+                }
+            },
+            {
+                selector: 'edge[relationType = "support"]',
+                style: {
+                    'line-style': 'solid',
+                }
+            },
+            {
+                selector: ':selected',
+                style: {
+                    'border-width': 4,
+                    'border-color': '#064848',
+                    'line-color': '#064848',
+                    'target-arrow-color': '#064848',
+                    'opacity': 1,
+                }
+            },
+            {
+                selector: '.dimmed',
+                style: {
+                    'opacity': 0.16,
+                }
+            },
+            {
+                selector: 'node.focused',
+                style: {
+                    'border-width': 4,
+                    'border-color': '#064848',
+                    'background-opacity': 1,
+                }
+            },
+            {
+                selector: 'node.support-focus',
+                style: {
+                    'background-color': '#2f9b75',
+                    'background-opacity': 1,
+                    'border-width': 3,
+                    'border-color': '#63d99f',
+                }
+            },
+            {
+                selector: 'node.attack-focus',
+                style: {
+                    'background-color': '#b4473f',
+                    'background-opacity': 1,
+                    'border-width': 3,
+                    'border-color': '#ffb4ab',
+                }
+            },
+            {
+                selector: 'edge.support-focus',
+                style: {
+                    'line-color': '#2f9b75',
+                    'target-arrow-color': '#2f9b75',
+                    'opacity': 1,
+                    'width': ele => edgeWidth(ele, true) + 2,
+                }
+            },
+            {
+                selector: 'edge.attack-focus',
+                style: {
+                    'line-color': '#b4473f',
+                    'target-arrow-color': '#b4473f',
+                    'opacity': 1,
+                    'width': ele => edgeWidth(ele, true) + 2,
+                }
+            }
+        ],
+        layout: graphLayout(detailed)
+    };
+    let cyInstance;
+    try {
+        cyInstance = cytoscape(graphConfig);
+    } catch (error) {
+        console.warn('Graph layout failed, falling back to breadthfirst.', error);
+        graphConfig.layout = graphLayout(detailed, true);
+        cyInstance = cytoscape(graphConfig);
+    }
+
+    cyInstance.on('tap', 'node', event => {
+        const messageId = event.target.data('messageId');
+        selectArgumentComponent(event.target.id());
+        focusMessage(messageId);
+        if (detailed) renderGraphDetails(event.target);
+    });
+
+    cyInstance.on('tap', 'edge', event => {
+        selectArgumentComponent(event.target.data('target'));
+        if (detailed) renderGraphDetails(event.target);
+    });
+
+    cyInstance.on('tap', event => {
+        if (event.target === cyInstance) clearArgumentSelection();
+    });
+
+    if (detailed) {
+        cyInstance.one('layoutstop', () => {
+            cyInstance.zoom(0.68);
+            cyInstance.center();
+        });
+    }
+
+    applyGraphSelection(cyInstance);
+    return cyInstance;
+}
+
+function graphLayout(detailed, forceFallback = false) {
+    if (graphMode === 'baseline') {
+        return {
+            name: forceFallback ? 'breadthfirst' : 'dagre',
+            rankDir: 'TB',
+            nodeSep: detailed ? 72 : 36,
+            rankSep: detailed ? 110 : 62,
+            edgeSep: 18,
+            directed: true,
+            circle: false,
+            fit: !detailed,
+            spacingFactor: detailed ? 1.25 : 1.0,
+            padding: detailed ? 70 : 34,
+            animate: true,
+        };
+    }
+    return {
+        name: forceFallback ? 'breadthfirst' : 'dagre',
+        rankDir: 'TB',
+        nodeSep: detailed ? 68 : 26,
+        rankSep: detailed ? 120 : 70,
+        edgeSep: 18,
+        directed: true,
+        circle: false,
+        fit: !detailed,
+        spacingFactor: detailed ? 1.25 : 0.95,
+        padding: detailed ? 70 : 26,
+        animate: true,
+        animationDuration: 420,
+    };
+}
+
+function nodeLabel(ele) {
+    const label = ele.data('label') || '';
+    const agent = ele.data('agentName') || '';
+    const text = ele.data('text') || '';
+    if (graphMode === 'baseline') return label;
+    return `${label} · ${agent}\n${text.slice(0, 92)}${text.length > 92 ? '...' : ''}`;
+}
+
+function shortNodeLabel(ele) {
+    if (graphMode === 'baseline') return ele.data('label') || '';
+    const kind = ele.data('kind') === 'claim' ? 'İDDİA' : 'KANIT';
+    return `T${ele.data('round') || ''}\n${kind}`;
+}
+
+function edgeColor(type) {
+    if (type === 'attack') return '#b4473f';
+    if (type === 'support') return '#2f9b75';
+    if (type === 'parent') return '#76777d';
+    return '#565e74';
+}
+
+function nodeTopicColor(ele) {
+    if (graphMode === 'baseline') return '#565e74';
+    const relation = ele.data('topicRelationType') || 'neutral';
+    const confidence = clamp(Number(ele.data('topicRelationConfidence') || ele.data('confidence') || 0.25), 0.12, 1);
+    if (relation === 'support') {
+        const green = Math.round(132 - confidence * 64);
+        return `rgb(12, ${green}, 107)`;
+    }
+    if (relation === 'attack') {
+        const red = Math.round(220 - confidence * 64);
+        return `rgb(${red}, 71, 63)`;
+    }
+    const grey = Math.round(130 - confidence * 34);
+    return `rgb(${grey}, ${grey + 6}, ${grey + 18})`;
+}
+
+function edgeWidth(ele, detailed) {
+    const confidence = ele.data('confidence') || 0.35;
+    return (detailed ? 1.2 : 0.8) + (confidence * (detailed ? 6 : 4));
+}
+
+function edgeOpacity(ele) {
+    const confidence = ele.data('confidence') || 0.35;
+    if (ele.data('relationType') === 'parent') return 0.45;
+    return Math.max(0.12, Math.min(0.95, confidence));
+}
+
+function edgeLabel(ele) {
+    const type = ele.data('relationType');
+    if (type === 'parent') return 'PARENT';
+    const pct = Math.round((ele.data('confidence') || 0) * 100);
+    return `${String(type).toUpperCase()} ${pct}%`;
+}
+
+function renderGraphDetails(ele) {
+    const panel = document.getElementById('graph-detail-panel');
+    if (!panel) return;
+    if (ele.isNode && ele.isNode()) {
+        panel.innerHTML = `
+            <div class="space-y-md">
+                <div>
+                    <div class="font-label-caps text-[10px] text-on-surface-variant">NODE</div>
+                    <div class="font-headline-md text-headline-md text-on-surface">${escapeHtml(ele.data('label') || '')}</div>
+                </div>
+                <div class="grid grid-cols-2 gap-sm">
+                    <div class="rounded-lg bg-surface-container-low p-sm"><div class="font-label-caps text-[10px] text-on-surface-variant">Ajan</div><div class="font-body-md text-body-md text-on-surface">${escapeHtml(ele.data('agentName') || '-')}</div></div>
+                    <div class="rounded-lg bg-surface-container-low p-sm"><div class="font-label-caps text-[10px] text-on-surface-variant">Tur</div><div class="font-body-md text-body-md text-on-surface">${escapeHtml(ele.data('round') || '-')}</div></div>
+                    <div class="rounded-lg bg-surface-container-low p-sm"><div class="font-label-caps text-[10px] text-on-surface-variant">Tip</div><div class="font-body-md text-body-md text-on-surface">${escapeHtml(ele.data('kind') || '-')}</div></div>
+                    <div class="rounded-lg bg-surface-container-low p-sm"><div class="font-label-caps text-[10px] text-on-surface-variant">Güven</div><div class="font-code-mono text-code-mono text-on-surface">${Math.round((ele.data('confidence') || 0) * 100)}%</div></div>
+                </div>
+                <div>
+                    <div class="font-label-caps text-[10px] text-on-surface-variant mb-xs">Metin</div>
+                    <div class="rounded-lg border border-outline-variant bg-surface p-md text-on-surface">${escapeHtml(ele.data('text') || 'Mesaj node’u')}</div>
+                </div>
+            </div>`;
+        return;
+    }
+    const relation = ele.data('relationType') || 'edge';
+    const sourceText = ele.source().data('text') || ele.source().data('label') || '';
+    const targetText = ele.target().data('text') || ele.target().data('label') || '';
+    const relationVerb = relation === 'attack' ? 'şu iddiayı çürütüyor' : 'şu iddiayı destekliyor';
+    panel.innerHTML = `
+        <div class="space-y-md">
+            <div>
+                <div class="font-label-caps text-[10px] text-on-surface-variant">İLİŞKİ</div>
+                <div class="font-headline-md text-headline-md ${relation === 'attack' ? 'text-error' : 'text-secondary'}">${escapeHtml(String(relation).toUpperCase())}</div>
+            </div>
+            <div class="rounded-lg bg-surface-container-low p-md">
+                <div class="font-label-caps text-[10px] text-on-surface-variant">ModernBERT Güveni</div>
+                <div class="font-headline-lg text-headline-lg text-on-surface">${Math.round((ele.data('confidence') || 0) * 100)}%</div>
+            </div>
+            <div class="rounded-lg border border-outline-variant bg-surface p-md">
+                <div class="font-label-caps text-[10px] text-on-surface-variant mb-xs">Kaynak bileşen</div>
+                <div class="font-body-md text-body-md text-on-surface">${escapeHtml(sourceText)}</div>
+            </div>
+            <div class="rounded-lg border border-outline-variant bg-surface-container-low p-md">
+                <div class="font-label-caps text-[10px] text-on-surface-variant mb-xs">${escapeHtml(relationVerb)}</div>
+                <div class="font-body-md text-body-md text-on-surface">${escapeHtml(targetText)}</div>
+            </div>
+            <div class="font-body-md text-body-md text-on-surface-variant">Çizgi kalınlığı ve opaklığı bu güven skorundan türetilir. ATTACK ilişkileri kesikli kırmızı, SUPPORT ilişkileri düz yeşil çizilir.</div>
+            <button class="px-md py-sm rounded-lg border border-outline-variant font-label-caps text-[11px] hover:border-secondary" onclick="focusMessage(${ele.source().data('messageId')})">Kaynak mesaja git</button>
+            <button class="px-md py-sm rounded-lg border border-outline-variant font-label-caps text-[11px] hover:border-secondary" onclick="focusMessage(${ele.target().data('messageId')})">Hedef mesaja git</button>
+        </div>`;
+}
+
+function renderHighlights(annotations) {
+    document.querySelectorAll('.content-text').forEach(el => {
+        const frame = el.closest('[data-message-id]');
+        const messageId = frame ? frame.dataset.messageId : null;
+        const raw = el.dataset.raw || el.textContent || '';
+        const spans = annotations[String(messageId)] || [];
+        el.innerHTML = highlightHtml(raw, spans);
+    });
+}
+
+function highlightHtml(text, spans) {
+    if (!spans.length) return escapeHtml(text);
+    const ordered = [...spans].sort((a, b) => a.start - b.start);
+    let cursor = 0;
+    let html = '';
+    for (const span of ordered) {
+        const start = Math.max(0, Math.min(text.length, span.start));
+        const end = Math.max(start, Math.min(text.length, span.end));
+        if (start < cursor || end <= start) continue;
+        html += escapeHtml(text.slice(cursor, start));
+        const componentId = `c-${span.id}`;
+        const selection = selectedComponentId ? selectionRole(componentId) : null;
+        const type = selection ? selection.className : defaultHighlightClass(span);
+        const style = selection ? '' : topicHighlightStyle(span);
+        const baseLabel = span.type === 'claim' ? 'İDDİA' : 'KANIT';
+        const tooltip = selection && selection.tooltip
+            ? selection.tooltip
+            : topicTooltip(span, baseLabel);
+        html += `<span class="bert-mark ${type}" style="${style}" data-component-id="${componentId}" data-tooltip="${escapeHtml(tooltip)}">${escapeHtml(text.slice(start, end))}</span>`;
+        cursor = end;
+    }
+    html += escapeHtml(text.slice(cursor));
+    return html;
+}
+
+function defaultHighlightClass(span) {
+    const relation = span.topic_relation_type || 'neutral';
+    if (relation === 'support') return 'topic-support';
+    if (relation === 'attack') return 'topic-attack';
+    return 'topic-neutral';
+}
+
+function topicHighlightStyle(span) {
+    const relation = span.topic_relation_type || 'neutral';
+    const confidence = clamp(Number(span.topic_relation_confidence || span.confidence || 0.2), 0.08, 1);
+    if (relation === 'support') {
+        const bgAlpha = 0.10 + confidence * 0.42;
+        const lineAlpha = 0.26 + confidence * 0.62;
+        return `background: rgba(12,124,107,${bgAlpha.toFixed(3)}); box-shadow: inset 0 -2px 0 rgba(12,124,107,${lineAlpha.toFixed(3)}); color: #063f3f;`;
+    }
+    if (relation === 'attack') {
+        const bgAlpha = 0.10 + confidence * 0.44;
+        const lineAlpha = 0.28 + confidence * 0.62;
+        return `background: rgba(180,71,63,${bgAlpha.toFixed(3)}); box-shadow: inset 0 -2px 0 rgba(180,71,63,${lineAlpha.toFixed(3)}); color: #7f1d1d;`;
+    }
+    const neutralAlpha = 0.04 + confidence * 0.10;
+    return `background: rgba(86,94,116,${neutralAlpha.toFixed(3)}); box-shadow: inset 0 -1px 0 rgba(86,94,116,0.22); color: #4c5a56;`;
+}
+
+function topicTooltip(span, baseLabel) {
+    const relation = span.topic_relation_type || 'neutral';
+    const pct = Math.round((span.topic_relation_confidence || 0) * 100);
+    const relationLabel = relation === 'support'
+        ? 'ana konuyu destekliyor'
+        : relation === 'attack'
+            ? 'ana konuyu çürütüyor'
+            : 'ana konuyla nötr';
+    return `ModernBERT: %${pct} güvenle ${relationLabel}. Bileşen: ${baseLabel}`;
+}
+
+function selectionRole(componentId) {
+    if (!selectedComponentId || !argumentMap) return null;
+    if (componentId === selectedComponentId) {
+        const node = (argumentMap.nodes || []).find(item => item.data.id === componentId);
+        const kind = node && node.data.kind === 'claim' ? 'iddia' : 'kanıt';
+        return { className: 'selected', tooltip: `Seçili ${kind} bileşeni` };
+    }
+
+    const relation = relationForSelection(componentId);
+
+    if (!relation) {
+        return { className: 'dimmed', tooltip: 'Seçili argümanla görünür ilişki yok' };
+    }
+
+    const relationType = relation.relationType;
+    const pct = Math.round((relation.confidence || 0) * 100);
+    const isSource = relation.source === componentId;
+    const verb = relationType === 'attack' ? 'çürütüyor' : 'destekliyor';
+    const direction = isSource ? 'Bu parça seçili argümanı' : 'Seçili argüman bu parçayı';
+    return {
+        className: relationType === 'attack' ? 'attack-focus' : 'support-focus',
+        tooltip: `${direction} %${pct} güvenle ${verb}`,
+    };
+}
+
+function selectedNodeKind() {
+    const node = (argumentMap && argumentMap.nodes || []).find(item => item.data.id === selectedComponentId);
+    return node ? node.data.kind : null;
+}
+
+function relationForSelection(componentId) {
+    const candidates = (argumentMap.relations || [])
+        .filter(relation => relation.relationType === 'support' || relation.relationType === 'attack')
+        .filter(relation => (
+            relation.source === selectedComponentId && relation.target === componentId
+        ) || (
+            relation.target === selectedComponentId && relation.source === componentId
+        ));
+    candidates.sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
+    return candidates[0] || null;
+}
+
+function selectArgumentComponent(componentId) {
+    if (!componentId || graphMode !== 'bert') return;
+    selectedComponentId = componentId;
+    renderHighlights((argumentMap && argumentMap.annotations) || {});
+    applyGraphSelection(cyMini);
+    applyGraphSelection(cyModal);
+}
+
+function clearArgumentSelection() {
+    if (!selectedComponentId) return;
+    selectedComponentId = null;
+    renderHighlights((argumentMap && argumentMap.annotations) || {});
+    applyGraphSelection(cyMini);
+    applyGraphSelection(cyModal);
+}
+
+function componentExists(componentId) {
+    return Boolean((argumentMap && argumentMap.nodes || []).find(node => node.data.id === componentId));
+}
+
+function applyGraphSelection(cyInstance) {
+    if (!cyInstance || graphMode !== 'bert') return;
+    cyInstance.elements().removeClass('dimmed focused support-focus attack-focus');
+    if (!selectedComponentId) return;
+
+    cyInstance.elements().addClass('dimmed');
+    const selectedNode = cyInstance.getElementById(selectedComponentId);
+    const selectedKind = selectedNode.length ? selectedNode.data('kind') : null;
+    if (selectedNode.length) {
+        selectedNode.removeClass('dimmed').addClass('focused');
+    }
+
+    cyInstance.edges().forEach(edge => {
+        const source = edge.data('source');
+        const target = edge.data('target');
+        if (selectedKind === 'claim') {
+            if (target !== selectedComponentId) return;
+        } else if (source !== selectedComponentId && target !== selectedComponentId) {
+            return;
+        }
+        const focusClass = edge.data('relationType') === 'attack' ? 'attack-focus' : 'support-focus';
+        edge.removeClass('dimmed').addClass(focusClass);
+        edge.source().removeClass('dimmed').addClass(focusClass);
+        edge.target().removeClass('dimmed').addClass(target === selectedComponentId ? 'focused' : focusClass);
+    });
+}
+
+document.addEventListener('click', event => {
+    const mark = event.target.closest('.bert-mark[data-component-id]');
+    if (!mark) return;
+    event.stopPropagation();
+    selectArgumentComponent(mark.dataset.componentId);
+    const frame = mark.closest('[data-message-id]');
+    if (frame) focusMessage(frame.dataset.messageId);
+});
+
+function renderImpact(impact) {
+    setText('metric-semantic', impact.semantic_edges || 0);
+    setText('metric-baseline', impact.baseline_edges || 0);
+    setText('metric-long-range', impact.long_range_edges || 0);
+    setText('metric-bert-only', impact.bert_only_edges || 0);
+    setText('finding-unsupported', `${impact.unsupported_claims || 0} temelsiz iddia`);
+    setText('finding-missed', `${impact.missed_rebuttals || 0} ıskalanan çürütme`);
+    setText('finding-neutral', `${impact.neutral_escapes || 0} nötr kaçış`);
+}
+
+function renderTimeline(timeline) {
+    const list = document.getElementById('timeline-list');
+    if (!timeline.length) {
+        list.innerHTML = '<div class="text-center py-md">Henüz argüman haritası yok.</div>';
+        return;
+    }
+    list.innerHTML = timeline.map(item => `
+        <button class="w-full text-left rounded-lg bg-surface-container-lowest border border-outline-variant p-sm hover:border-secondary transition-colors" onclick="focusMessage(${item.message_id})">
+            <div class="flex items-center justify-between gap-sm">
+                <span class="font-label-caps text-[11px] text-primary">Tur ${item.round} · ${escapeHtml(item.agent_name)}</span>
+                <span class="font-code-mono text-[11px] text-on-surface-variant">${item.component_count} node</span>
+            </div>
+            <div class="mt-xs text-[12px] text-on-surface-variant">${item.incoming_count} gelen · ${item.outgoing_count} çıkan ilişki</div>
+        </button>
+    `).join('');
+}
+
+function renderFindings(findings, impact) {
+    const body = document.getElementById('findings-body');
+    if (!findings.length) {
+        body.innerHTML = '<tr><td colspan="4" class="p-lg text-center text-on-surface-variant font-body-md text-body-md">ModernBERT belirgin argümantatif açık bulmadı.</td></tr>';
+        return;
+    }
+    body.innerHTML = findings.map(finding => `
+        <tr class="hover:bg-surface-container-lowest/70 transition-colors">
+            <td class="p-md">
+                <button class="font-label-caps text-label-caps text-primary hover:text-secondary" onclick="focusMessage(${finding.message_id})">${escapeHtml(finding.title)}</button>
+            </td>
+            <td class="p-md font-body-md text-body-md text-on-surface-variant max-w-3xl">${escapeHtml(finding.detail)}</td>
+            <td class="p-md font-code-mono text-code-mono text-on-surface">${Math.round((finding.confidence || 0) * 100)}%</td>
+            <td class="p-md text-right">${severityBadge(finding.severity)}</td>
+        </tr>
+    `).join('');
+}
+
+function severityBadge(severity) {
+    if (severity === 'high') {
+        return '<span class="inline-flex px-sm py-xs rounded bg-error-container text-on-error-container font-label-caps text-[11px]">Yüksek</span>';
+    }
+    if (severity === 'medium') {
+        return '<span class="inline-flex px-sm py-xs rounded bg-secondary-container text-on-secondary-container font-label-caps text-[11px]">Orta</span>';
+    }
+    return '<span class="inline-flex px-sm py-xs rounded bg-surface-container text-on-surface-variant font-label-caps text-[11px]">Düşük</span>';
 }
 
 function appendMessage(msg) {
     const container = document.getElementById('thread-container');
-    const cv = msg.current_version;
-    const indent = Math.min(msg.position * 32, 64);
-    const color = msg.message_type === 'attack' ? 'bg-error' : 'bg-secondary';
+    const cv = msg.current_version || {};
+    const content = cv.content || '';
+    const round = Math.floor((msg.position || 0) / 2) + 1;
     const html = `
-    <div class="message-card" style="margin-left: ${indent}px" data-message-id="${msg.id}">
-        ${msg.parent_id ? `<div class="connector-line ${color}"></div>` : ''}
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter shadow-sm relative group hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow">
-            <div class="absolute left-0 top-0 bottom-0 w-[2px] ${color} rounded-l-lg"></div>
-            <div class="flex items-center gap-sm mb-md">
-                <div class="w-6 h-6 rounded-sm bg-primary-container text-on-primary-container flex items-center justify-center">
-                    <span class="font-label-caps text-[10px]">${msg.agent_name ? msg.agent_name[0] : 'S'}</span>
+        <article class="message-frame bg-surface-container-lowest rounded-lg p-md border border-outline-variant" data-message-id="${msg.id}" data-type="${escapeHtml(msg.message_type)}">
+            <header class="flex items-center gap-sm mb-sm">
+                <div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-label-caps text-[11px]">${escapeHtml((msg.agent_name || 'SY').slice(0, 2))}</div>
+                <div>
+                    <div class="font-label-caps text-label-caps text-primary">${escapeHtml(msg.agent_name || 'Sistem')}</div>
+                    <div class="font-body-md text-[12px] text-on-surface-variant">Tur ${round} · ${escapeHtml(String(msg.message_type || '').toUpperCase())}</div>
                 </div>
-                <span class="font-label-caps text-label-caps text-primary">${msg.agent_name || 'System'}</span>
-                <span class="inline-flex items-center px-sm py-[2px] bg-surface-container text-on-surface-variant font-label-caps text-[10px] rounded-sm ml-sm">${msg.message_type.toUpperCase()}</span>
-                <span class="font-body-md text-[12px] text-outline ml-auto">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-            </div>
-            <div class="pl-sm">
-                <p class="font-body-md text-body-md text-on-surface leading-relaxed content-text">${cv ? cv.content : ''}</p>
-            </div>
-        </div>
-    </div>`;
+            </header>
+            <p class="content-text font-body-md text-body-md text-on-surface leading-relaxed" data-raw="${escapeHtml(content)}">${escapeHtml(content)}</p>
+        </article>`;
     container.insertAdjacentHTML('beforeend', html);
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    
+    // Register the new message version
+    messageVersions[msg.id] = [{
+        version_number: cv.version_number || 1,
+        content: content,
+        strength_score: cv.strength_score !== undefined ? cv.strength_score : null,
+        is_current: true,
+        feedback: null
+    }];
+    renderMessageVersions(msg.id);
+    updateModelImprovementStats();
+    
+    container.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function updateAnalysis(data) {
-    const strength = data.strength || 0;
-    const pct = Math.round(strength * 100);
-    document.getElementById('emp-support-val').textContent = pct + '%';
-    document.getElementById('emp-support-bar').style.width = pct + '%';
-    // Mock fallacy risk inverse
-    const fallacy = Math.max(0, Math.round((1 - strength) * 100));
-    document.getElementById('fallacy-val').textContent = fallacy + '%';
-    document.getElementById('fallacy-bar').style.width = fallacy + '%';
-
-    const ont = document.getElementById('ontology-container');
-    const rel = data.analysis.relation_type;
-    const relColor = rel === 'attack' ? 'text-error' : rel === 'support' ? 'text-secondary' : 'text-on-surface-variant';
-    const relBadge = rel === 'attack' ? 'bg-error-container text-on-error-container' : rel === 'support' ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-container text-on-surface-variant';
-    ont.innerHTML = `
-        <div class="flex items-start gap-sm">
-            <span class="material-symbols-outlined text-secondary text-[16px] mt-[2px]">adjust</span>
-            <div>
-                <p class="font-code-mono text-code-mono text-on-surface leading-tight">Hedef İddia</p>
-                <div class="flex gap-xs mt-xs">
-                    <span class="px-xs py-[2px] bg-surface-container border border-outline-variant rounded-sm font-label-caps text-[10px] text-on-surface-variant">NODE_A</span>
-                </div>
-            </div>
-        </div>
-        <div class="ml-[7px] w-[2px] h-md bg-outline-variant"></div>
-        <div class="flex items-start gap-sm">
-            <span class="material-symbols-outlined ${relColor} text-[16px] mt-[2px]">gavel</span>
-            <div>
-                <p class="font-code-mono text-code-mono text-on-surface leading-tight">Yanıt Bileşeni</p>
-                <div class="flex gap-xs mt-xs">
-                    <span class="px-xs py-[2px] ${relBadge} rounded-sm font-label-caps text-[10px]">${rel.toUpperCase()}</span>
-                </div>
-            </div>
-        </div>
-    `;
+function computeDiff(oldText, newText) {
+    if (!oldText) return escapeHtml(newText);
+    const oldWords = oldText.split(/\s+/).filter(Boolean);
+    const newWords = newText.split(/\s+/).filter(Boolean);
+    
+    const dp = Array(oldWords.length + 1).fill(null).map(() => Array(newWords.length + 1).fill(0));
+    for (let i = 1; i <= oldWords.length; i++) {
+        for (let j = 1; j <= newWords.length; j++) {
+            if (oldWords[i-1] === newWords[j-1]) {
+                dp[i][j] = dp[i-1][j-1] + 1;
+            } else {
+                dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    
+    let i = oldWords.length;
+    let j = newWords.length;
+    const diff = [];
+    while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && oldWords[i-1] === newWords[j-1]) {
+            diff.unshift(escapeHtml(oldWords[i-1]));
+            i--;
+            j--;
+        } else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) {
+            diff.unshift(`<ins class="diff-added">${escapeHtml(newWords[j-1])}</ins>`);
+            j--;
+        } else if (i > 0 && (j === 0 || dp[i][j-1] < dp[i-1][j])) {
+            diff.unshift(`<del class="diff-removed">${escapeHtml(oldWords[i-1])}</del>`);
+            i--;
+        }
+    }
+    return diff.join(' ');
 }
 
-function showFeedback(data) {
-    const box = document.getElementById('feedback-box');
-    const textEl = document.getElementById('feedback-text');
-    const analysis = data.analysis;
-    if (analysis && analysis.feedback_text) {
-        textEl.textContent = analysis.feedback_text;
-        box.classList.remove('hidden');
-        box.scrollIntoView({ behavior: 'smooth' });
+function renderMessageVersions(messageId, selectedVersionNum = null, showDiff = false) {
+    const el = document.querySelector(`[data-message-id="${messageId}"]`);
+    if (!el) return;
+
+    const versions = messageVersions[messageId];
+    if (!versions || !versions.length) return;
+
+    const sorted = [...versions].sort((a, b) => a.version_number - b.version_number);
+
+    let selectedVer = null;
+    if (selectedVersionNum !== null) {
+        selectedVer = sorted.find(v => v.version_number === selectedVersionNum);
+    }
+    if (!selectedVer) {
+        selectedVer = sorted.find(v => v.is_current) || sorted[sorted.length - 1];
+    }
+
+    const selectedIdx = sorted.findIndex(v => v.version_number === selectedVer.version_number);
+    const prevVer = selectedIdx > 0 ? sorted[selectedIdx - 1] : null;
+
+    const textEl = el.querySelector('.content-text');
+    if (textEl) {
+        if (showDiff && prevVer) {
+            textEl.innerHTML = computeDiff(prevVer.content, selectedVer.content);
+        } else {
+            textEl.dataset.raw = selectedVer.content;
+            textEl.textContent = selectedVer.content;
+        }
+    }
+
+    let scoreBadge = el.querySelector('.header-score-badge');
+    if (selectedVer.strength_score !== null) {
+        const scorePct = Math.round(selectedVer.strength_score * 100);
+        let badgeColorClass = 'text-error';
+        if (selectedVer.strength_score >= 0.60) {
+            badgeColorClass = 'text-secondary';
+        } else if (selectedVer.strength_score >= 0.45) {
+            badgeColorClass = 'text-amber-600';
+        }
+        const html = `
+            <span class="font-label-caps text-[10px] text-on-surface-variant">BERT Gücü</span>
+            <span class="font-code-mono text-code-mono ${badgeColorClass} font-bold">${scorePct}%</span>
+        `;
+        if (!scoreBadge) {
+            const header = el.querySelector('header');
+            scoreBadge = document.createElement('div');
+            scoreBadge.className = 'header-score-badge ml-auto flex items-center gap-xs';
+            header.appendChild(scoreBadge);
+        }
+        scoreBadge.innerHTML = html;
+    } else {
+        if (scoreBadge) scoreBadge.remove();
+    }
+
+    const oldControls = el.querySelector('.version-controls-row');
+    if (oldControls) oldControls.remove();
+    const oldFeedback = el.querySelector('.feedback-card');
+    if (oldFeedback) oldFeedback.remove();
+
+    if (sorted.length > 1) {
+        const controlsRow = document.createElement('div');
+        controlsRow.className = 'version-controls-row flex flex-wrap items-center justify-between gap-sm border-t border-outline-variant/30 mt-sm pt-xs text-[11px] font-label-caps';
+        
+        let pillsHtml = `<div class="flex items-center gap-xs">
+            <span class="text-on-surface-variant text-[10px] mr-xs">Revizyon:</span>`;
+        
+        sorted.forEach(v => {
+            const isActive = v.version_number === selectedVer.version_number;
+            const isCurrent = v.is_current;
+            const scorePct = v.strength_score !== null ? `${Math.round(v.strength_score * 100)}%` : 'yok';
+            
+            let statusBorder = 'weak';
+            if (v.strength_score !== null && v.strength_score >= 0.60) statusBorder = 'strong';
+
+            pillsHtml += `
+                <button class="version-pill ${isActive ? 'active' : ''} ${statusBorder}" 
+                        onclick="renderMessageVersions(${messageId}, ${v.version_number}, ${showDiff})">
+                    v${v.version_number}${isCurrent ? ' (aktif)' : ''}
+                    <span class="text-[9px] opacity-75">(${scorePct})</span>
+                </button>
+            `;
+        });
+        pillsHtml += `</div>`;
+
+        const diffToggleHtml = `
+            <label class="flex items-center gap-xs cursor-pointer select-none text-[10px] text-on-surface-variant hover:text-secondary transition-colors">
+                <input type="checkbox" class="rounded border-outline-variant text-secondary focus:ring-secondary/30 h-3.5 w-3.5" 
+                       ${showDiff ? 'checked' : ''} 
+                       onchange="renderMessageVersions(${messageId}, ${selectedVer.version_number}, this.checked)">
+                <span>Değişiklikleri Göster</span>
+            </label>
+        `;
+
+        controlsRow.innerHTML = pillsHtml + diffToggleHtml;
+        el.appendChild(controlsRow);
+    }
+
+    if (selectedVer.feedback) {
+        const feedbackCard = document.createElement('div');
+        feedbackCard.className = 'feedback-card bg-secondary-container/5 border border-secondary/15 rounded-lg p-sm mt-sm flex flex-col gap-xs';
+        feedbackCard.innerHTML = `
+            <div class="flex items-center gap-xs text-[10px] font-label-caps text-secondary font-bold">
+                <span class="material-symbols-outlined text-[15px]">psychology</span>
+                ModernBERT Geri Bildirimi & Kriteri
+            </div>
+            <p class="font-body-sm text-[12px] italic text-on-surface-variant leading-relaxed">"${escapeHtml(selectedVer.feedback)}"</p>
+        `;
+        el.appendChild(feedbackCard);
     }
 }
 
-document.getElementById('advance-btn').addEventListener('click', async () => {
-    await fetch(`/api/debates/${debateId}/advance`, { method: 'POST' });
+function updateModelImprovementStats() {
+    let totalInitial = 0;
+    let initialCount = 0;
+    let totalCurrent = 0;
+    let currentCount = 0;
+    let totalRegens = 0;
+
+    for (const msgId in messageVersions) {
+        const versions = messageVersions[msgId];
+        if (!versions || !versions.length) continue;
+        
+        const sorted = [...versions].sort((a, b) => a.version_number - b.version_number);
+        
+        const initial = sorted[0];
+        if (initial && initial.strength_score !== null) {
+            totalInitial += initial.strength_score;
+            initialCount++;
+        }
+        
+        const current = sorted.find(v => v.is_current) || sorted[sorted.length - 1];
+        if (current && current.strength_score !== null) {
+            totalCurrent += current.strength_score;
+            currentCount++;
+        }
+        
+        totalRegens += (versions.length - 1);
+    }
+
+    const initialScore = initialCount > 0 ? (totalInitial / initialCount) : null;
+    const currentScore = currentCount > 0 ? (totalCurrent / currentCount) : null;
+
+    const initialText = initialScore !== null ? `${Math.round(initialScore * 100)}%` : '-';
+    const currentText = currentScore !== null ? `${Math.round(currentScore * 100)}%` : '-';
+
+    const initialEl = document.getElementById('stats-initial-score');
+    const currentEl = document.getElementById('stats-current-score');
+    if (initialEl) initialEl.textContent = initialText;
+    if (currentEl) currentEl.textContent = currentText;
+
+    if (initialScore !== null && currentScore !== null) {
+        const delta = currentScore - initialScore;
+        const deltaPercent = Math.round(delta * 100);
+        const sign = deltaPercent >= 0 ? '+' : '';
+        
+        const deltaEl = document.getElementById('stats-improvement-delta');
+        if (deltaEl) {
+            deltaEl.textContent = `${sign}${deltaPercent}%`;
+            if (deltaPercent > 0) {
+                deltaEl.className = 'text-secondary font-bold';
+            } else if (deltaPercent < 0) {
+                deltaEl.className = 'text-error font-bold';
+            } else {
+                deltaEl.className = 'text-on-surface-variant font-bold';
+            }
+        }
+        
+        const barEl = document.getElementById('stats-improvement-bar');
+        if (barEl) barEl.style.width = `${Math.round(currentScore * 100)}%`;
+    } else {
+        const deltaEl = document.getElementById('stats-improvement-delta');
+        if (deltaEl) deltaEl.textContent = '+0%';
+        const barEl = document.getElementById('stats-improvement-bar');
+        if (barEl) barEl.style.width = '0%';
+    }
+
+    const totalRegensEl = document.getElementById('stats-total-regens');
+    if (totalRegensEl) totalRegensEl.textContent = `${totalRegens} revizyon döngüsü tetiklendi`;
+}
+
+function focusMessage(messageId) {
+    const el = document.querySelector(`[data-message-id="${messageId}"]`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('ring-2', 'ring-secondary');
+    setTimeout(() => el.classList.remove('ring-2', 'ring-secondary'), 1300);
+}
+
+document.getElementById('advance-btn').addEventListener('click', async (event) => {
+    const btn = event.currentTarget;
+    const status = (btn.dataset.status || '').toLowerCase();
+    const endpoint = status === 'pending' ? 'start' : 'advance';
+    const busyText = status === 'pending' ? 'BAŞLATILIYOR' : 'TUR ÜRETİLİYOR';
+    setStatus(busyText);
+    const ok = await postDebateAction(endpoint);
+    if (ok && status === 'pending') {
+        btn.dataset.status = 'active';
+        const icon = btn.querySelector('.material-symbols-outlined');
+        const label = btn.querySelector('.action-label');
+        if (icon) icon.textContent = 'skip_next';
+        if (label) label.textContent = 'Sonraki Tur';
+    }
 });
 
-async function forceResolve() {
-    await fetch(`/api/debates/${debateId}/resolve`, { method: 'POST' });
-    window.location.reload();
+document.getElementById('run-full-btn').addEventListener('click', async () => {
+    setStatus('OTOMATİK ÇALIŞIYOR');
+    await postDebateAction('run-full');
+});
+
+document.getElementById('auto-advance-checkbox').addEventListener('change', async (e) => {
+    const enabled = e.target.checked;
+    await fetch(`/api/debates/${debateId}/auto-advance`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled })
+    });
+    const indicator = document.getElementById('auto-advance-indicator');
+    if (indicator) {
+        indicator.className = `w-2 h-2 rounded-full ${enabled ? 'bg-secondary' : 'bg-outline-variant'} transition-colors`;
+    }
+});
+
+document.getElementById('resolve-btn').addEventListener('click', async () => {
+    setStatus('ÇÖZÜMLENİYOR');
+    setAnalyzeBusy(true);
+    await postDebateAction('resolve');
+    setAnalyzeBusy(false);
+    await loadArgumentMap();
+});
+
+document.getElementById('analyze-btn').addEventListener('click', async () => {
+    setAnalyzeBusy(true);
+    await postDebateAction('analyze');
+    setAnalyzeBusy(false);
+    await loadArgumentMap();
+});
+
+document.getElementById('bert-mode-btn').addEventListener('click', () => {
+    graphMode = 'bert';
+    toggleGraphButtons();
+    renderGraph();
+});
+
+document.getElementById('baseline-mode-btn').addEventListener('click', () => {
+    graphMode = 'baseline';
+    toggleGraphButtons();
+    renderGraph();
+});
+
+document.getElementById('expand-graph-btn').addEventListener('click', () => {
+    graphModalOpen = true;
+    document.getElementById('graph-modal').hidden = false;
+    renderModalGraph();
+});
+
+document.getElementById('close-graph-modal-btn').addEventListener('click', closeGraphModal);
+
+document.getElementById('graph-modal').addEventListener('click', (event) => {
+    if (event.target.id === 'graph-modal') closeGraphModal();
+});
+
+document.getElementById('modal-fit-btn').addEventListener('click', () => {
+    if (cyModal) cyModal.fit(undefined, 48);
+});
+
+document.getElementById('modal-refresh-layout-btn').addEventListener('click', () => {
+    if (cyModal) cyModal.layout(graphLayout(true)).run();
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && graphModalOpen) closeGraphModal();
+});
+
+function closeGraphModal() {
+    graphModalOpen = false;
+    document.getElementById('graph-modal').hidden = true;
+    if (cyModal) {
+        cyModal.destroy();
+        cyModal = null;
+    }
+}
+
+function toggleGraphButtons() {
+    const bert = document.getElementById('bert-mode-btn');
+    const base = document.getElementById('baseline-mode-btn');
+    bert.className = graphMode === 'bert'
+        ? 'px-sm py-xs rounded font-label-caps text-[11px] bg-secondary text-on-secondary'
+        : 'px-sm py-xs rounded font-label-caps text-[11px] text-on-surface-variant';
+    base.className = graphMode === 'baseline'
+        ? 'px-sm py-xs rounded font-label-caps text-[11px] bg-secondary text-on-secondary'
+        : 'px-sm py-xs rounded font-label-caps text-[11px] text-on-surface-variant';
+    if (graphModalOpen) renderModalGraph();
+}
+
+function setAnalyzeBusy(isBusy) {
+    const btn = document.getElementById('analyze-btn');
+    btn.disabled = isBusy;
+    btn.classList.toggle('opacity-60', isBusy);
+    btn.querySelector('span').textContent = isBusy ? 'hourglass_top' : 'neurology';
+}
+
+async function postDebateAction(action) {
+    try {
+        const res = await fetch(`/api/debates/${debateId}/${action}`, { method: 'POST' });
+        if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            throw new Error(data.error || `${action} başarısız`);
+        }
+        return true;
+    } catch (error) {
+        console.error(error);
+        setStatus('İŞLEM HATASI');
+        return false;
+    }
+}
+
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function setStatus(status) {
+    const statusText = document.querySelector('#pipeline-status span:last-child');
+    if (statusText) statusText.textContent = status;
+}
+
+function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
 }
 </script>
 {% endblock %}

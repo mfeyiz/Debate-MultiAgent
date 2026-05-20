@@ -1,14 +1,46 @@
 {% extends "base.html" %}
-{% block title %}AkılAkışı - Pipeline Analizleri{% endblock %}
+{% block title %}logos - Pipeline Analizleri{% endblock %}
 {% block content %}
-<div class="max-w-[1280px] mx-auto px-xl py-xl space-y-xl">
-    <div>
-        <h2 class="font-headline-xl text-headline-xl text-on-surface mb-unit">ModernBERT Değerlendirme Mantığı</h2>
-        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Argüman yolları, güven eşikleri ve güç dağılımının derinlemesine teknik analizi.</p>
+<div class="max-w-[1400px] mx-auto px-xl py-xl space-y-xl">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col lg:flex-row lg:items-end justify-between gap-lg shadow-sm">
+        <div>
+            <div class="flex items-center gap-sm mb-sm">
+                <span class="material-symbols-outlined text-secondary">analytics</span>
+                <span class="font-label-caps text-label-caps text-secondary">ModernBERT Telemetri Merkezi</span>
+            </div>
+            <h2 class="font-headline-xl text-headline-xl text-on-surface mb-unit">Pipeline Analizleri</h2>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">Tam tartışma argüman haritaları, eski pairwise analizler ve model güven dağılımı tek ekranda.</p>
+        </div>
+        <a href="{{ url_for('pages.dashboard') }}" class="inline-flex items-center gap-xs px-md py-sm rounded-lg bg-primary-container text-on-primary-container font-label-caps text-label-caps">
+            <span class="material-symbols-outlined text-[18px]">add_chart</span>
+            Yeni Tartışma
+        </a>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-        <div class="col-span-1 md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-lg p-lg hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-300 flex flex-col">
+        <div class="col-span-12 md:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+            <div class="font-label-caps text-[10px] text-on-surface-variant">Tam Graph Run</div>
+            <div class="font-headline-xl text-headline-xl text-primary mt-xs">{{ analysis_runs|length }}</div>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-sm">Son kaydedilen ModernBERT tam tartışma analizleri.</p>
+        </div>
+        <div class="col-span-12 md:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+            <div class="font-label-caps text-[10px] text-on-surface-variant">Pairwise Analiz</div>
+            <div class="font-headline-xl text-headline-xl text-secondary mt-xs">{{ analyses|length }}</div>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-sm">Canlı akış sırasında üretilen anlık ilişki kayıtları.</p>
+        </div>
+        <div class="col-span-12 md:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+            <div class="font-label-caps text-[10px] text-on-surface-variant">Başarılı Run</div>
+            {% set completed_runs = analysis_runs|selectattr('status', 'equalto', 'completed')|list %}
+            <div class="font-headline-xl text-headline-xl text-secondary mt-xs">{{ completed_runs|length }}</div>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-sm">Graph UI için hazır veri üreten analizler.</p>
+        </div>
+        <div class="col-span-12 md:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+            <div class="font-label-caps text-[10px] text-on-surface-variant">Eşik</div>
+            <div class="font-headline-xl text-headline-xl text-error mt-xs">0.60</div>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-sm">Graph’a alınan support/attack minimum güveni.</p>
+        </div>
+
+        <div class="col-span-1 md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-300 flex flex-col">
             <div class="flex justify-between items-center mb-lg">
                 <div>
                     <h3 class="font-headline-md text-headline-md text-on-surface">Kanıt Gücü Dağılımı</h3>
@@ -42,7 +74,7 @@
             </div>
         </div>
 
-        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-lg p-lg hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-300 flex flex-col justify-between">
+        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:shadow-[0px_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-300 flex flex-col justify-between">
             <div class="mb-lg">
                 <div class="flex justify-between items-start mb-sm">
                     <h3 class="font-headline-md text-headline-md text-on-surface">Zayıf Argüman Uyarıları</h3>
@@ -64,7 +96,45 @@
         </div>
     </div>
 
-    <div class="bg-surface-bright border border-outline-variant rounded-lg overflow-hidden">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+        <div class="px-lg py-md border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-headline-md text-headline-md text-on-surface">Son Tam Argüman Haritası Run’ları</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low border-b border-outline-variant">
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Run</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Tartışma</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Durum</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant">Eşikler</th>
+                        <th class="p-md font-label-caps text-label-caps text-on-surface-variant text-right">Aç</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    {% for run in analysis_runs %}
+                    <tr class="hover:bg-surface-container-lowest/60">
+                        <td class="p-md font-code-mono text-code-mono text-on-surface-variant">#RUN-{{ "%03d"|format(run.id) }}</td>
+                        <td class="p-md font-body-md text-body-md text-on-surface">{{ run.debate.topic }}</td>
+                        <td class="p-md">
+                            <span class="px-sm py-xs rounded font-label-caps text-[11px] {{ 'bg-secondary-container text-on-secondary-container' if run.status == 'completed' else 'bg-error-container text-on-error-container' }}">{{ run.status|upper }}</span>
+                        </td>
+                        <td class="p-md font-code-mono text-code-mono text-on-surface-variant">rel {{ "%.2f"|format(run.relation_threshold) }} · atk {{ "%.2f"|format(run.attack_threshold) }}</td>
+                        <td class="p-md text-right">
+                            <a class="font-label-caps text-label-caps text-secondary hover:text-primary" href="{{ url_for('pages.live_arena', debate_id=run.debate_id) }}">Graph</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="p-md text-center text-on-surface-variant font-body-md text-body-md">Henüz tam argüman haritası run’ı yok.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="bg-surface-bright border border-outline-variant rounded-xl overflow-hidden">
         <div class="bg-surface-container-lowest border-b border-outline-variant px-lg py-md flex items-center justify-between">
             <div class="flex items-center gap-md">
                 <span class="material-symbols-outlined text-primary">account_tree</span>

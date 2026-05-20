@@ -19,6 +19,7 @@ spec:
       containers:
         - name: app
           image: logicflow-image-placeholder
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
               name: http
@@ -36,50 +37,60 @@ spec:
                 secretKeyRef:
                   name: logicflow-secrets
                   key: REDIS_URL
+                  optional: true
             - name: OPENROUTER_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: logicflow-secrets
                   key: OPENROUTER_API_KEY
+                  optional: true
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: logicflow-secrets
                   key: SECRET_KEY
-            - name: FLASK_DEBUG
-              value: "false"
+            - name: GOOGLE_FACTCHECK_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: logicflow-secrets
+                  key: GOOGLE_FACTCHECK_API_KEY
+                  optional: true
+            - name: TCMB_EVDS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: logicflow-secrets
+                  key: TCMB_EVDS_API_KEY
+                  optional: true
+            - name: TUIK_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: logicflow-secrets
+                  key: TUIK_API_KEY
+                  optional: true
           resources:
             requests:
-              memory: "2Gi"
               cpu: "1000m"
+              memory: "3Gi"
             limits:
-              memory: "4Gi"
               cpu: "2000m"
+              memory: "6Gi"
+          startupProbe:
+            httpGet:
+              path: /api/healthz
+              port: http
+            failureThreshold: 30
+            periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /api/healthz
-              port: 8080
+              port: http
             initialDelaySeconds: 30
-            periodSeconds: 10
+            periodSeconds: 20
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /api/ready
-              port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 5
-
-        - name: cloud-sql-proxy
-          image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
-          args:
-            - "--structured-logs"
-            - "--port=5432"
-            - "<DB_CONNECTION_NAME>"
-          securityContext:
-            runAsNonRoot: true
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "100m"
-            limits:
-              memory: "256Mi"
-              cpu: "250m"
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5

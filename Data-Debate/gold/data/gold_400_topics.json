@@ -1,0 +1,619 @@
+[
+  {
+    "topic": "uzaktan_calisma",
+    "claim": "Uzaktan çalışma verimliliği artırır.",
+    "support": [
+      "Evden çalışan kişiler kesintisiz odak süresi bulduğunda karmaşık görevleri daha hızlı tamamlayabilir.",
+      "Yolculuk süresinin ortadan kalkması çalışanların gün içindeki enerjisini iş çıktısına yöneltmesini kolaylaştırır.",
+      "Sessiz çalışma ortamı sağlayan ekiplerde rapor yazımı ve kod inceleme gibi derin işler daha az bölünür.",
+      "Esnek saat uygulaması çalışanların en üretken oldukları zaman aralığında çalışmasına imkan tanır.",
+      "Dijital görev takip araçları doğru kullanıldığında uzaktan ekiplerin öncelikleri daha görünür hale gelir.",
+    "Evden çalışma bazı çalışanların devamsızlık oranını azaltarak toplam üretim süresini artırır.",
+    "Stanford Üniversitesi'nden Nicholas Bloom'un 2015 yılında yayımlanan randomize kontrollü deneyi, evden çalışanların verimliliğinin %13 arttığını göstermiştir.",
+    "Bir Çin seyahat şirketinde iki yıl boyunca evden çalışan personelin daha fazla çıktı üretmesi, uzaktan çalışmanın verimliliği artırabileceğini destekler.",
+    "Sessiz ev ortamında daha az bölünen çalışanların daha yüksek performans göstermesi uzaktan çalışma lehine kanıt sağlar.",
+    "Bloom'un araştırmasında işten ayrılma oranının yarıya inmesi, uzaktan çalışmanın sürdürülebilir verimlilik yaratabileceğini gösterir.",
+    "Bu somut veriler, uzaktan çalışmanın verimliliği kanıtlanabilir şekilde yükselttiği iddiasını destekler.",
+    "Ayrıca işten ayrılma oranının yarıya inmesi, uzaktan çalışma düzeninin çalışan verimini sürdürülebilir kıldığını gösterir.",
+    "İşten ayrılma oranı yarıya inmiştir; bu durum uzaktan çalışmanın çalışan bağlılığı ve üretkenliği güçlendirdiğini destekler.",
+    "Çalışan devir hızının azalması ekiplerin deneyim kaybını düşürerek uzaktan çalışmanın verimliliği artırdığı iddiasını destekler.",
+    "Daha düşük işten ayrılma oranı, uzaktan çalışan ekiplerde performansın korunabildiğine dair destekleyici bir kanıttır."
+    ],
+    "attack": [
+      "Yeni başlayan çalışanlar yüz yüze mentorluk alamadığında işi öğrenme hızları belirgin biçimde düşebilir.",
+      "Ev ortamında çocuk bakımı ve ev işleri sık bölünme yaratarak verimlilik kazancını ortadan kaldırabilir.",
+      "Buna rağmen ekip içi güven zayıfsa yöneticiler kontrol toplantılarını artırır ve çalışma süresi parçalanır.",
+      "Uzaktan çalışmada teknik sorunlar toplantıların akışını keserek karar alma sürecini geciktirebilir.",
+      "Yaratıcı işlerde koridor sohbetleri ve spontane fikir alışverişi azalınca yenilik üretimi yavaşlayabilir.",
+    "Çalışan yalnızlığı artarsa motivasyon düşer ve uzun vadeli performans sürdürülemez hale gelir.",
+    "Microsoft'un Work Trend Index raporu, uzaktan çalışmanın iş birliği ve yenilikçiliği azaltarak verimlilik iddiasını zayıflattığını belirtir.",
+    "Çağrı merkezi gibi rutin işlerde görülen verimlilik artışı tüm sektörlere genellenemez.",
+    "Zorunlu uzaktan çalışma koşullarında ev içi kesintiler ve dijital yorgunluk verimlilik artışını tersine çevirebilir.",
+    "Yaratıcı ekiplerde yüz yüze etkileşim azaldığında karar kalitesi düşer ve uzaktan çalışma verimliliği artırmayabilir.",
+    "Yeni çalışanların oryantasyonu uzaktan yürütüldüğünde öğrenme süresi uzar ve toplam ekip verimi azalır."
+    ],
+    "neutral": [
+      "Uzaktan çalışanların masa lambası seçimi kişisel dekorasyon zevklerine göre değişebilir.",
+      "Kahve tüketimi büyük şehirlerde son yıllarda daha çeşitli hale gelmiştir.",
+      "Video konferans uygulamalarının arayüz renkleri marka güncellemeleriyle yenilenebilir.",
+      "Ev interneti paketlerinin fiyatları sağlayıcıların kampanya dönemlerine göre farklılaşır.",
+      "Bazı şirketler dizüstü bilgisayar çantalarında logo kullanmayı tercih eder.",
+      "Kargo teslimat saatleri apartman görevlilerinin çalışma düzeninden etkilenebilir.",
+      "Ev ofis sandalyesi modelleri ergonomi mağazalarında farklı malzemelerle satılır.",
+    "Bulut depolama planlarının isimleri teknoloji şirketlerinin pazarlama diline göre belirlenir.",
+    "Stanford kampüsündeki akademik yayın takvimi farklı fakültelerin çalışma alanlarına göre değişebilir.",
+    "Ev ofis dekorasyonunda kullanılan bitkiler çalışanların kişisel zevklerine göre seçilir.",
+    "Video toplantı arka planlarının rengi marka kılavuzlarına veya kişisel tercihlere bağlı olabilir."
+    ]
+  },
+  {
+    "topic": "sosyal_medya",
+    "claim": "Sosyal medya gençlerin ruh sağlığını iyileştirir.",
+    "support": [
+      "Benzer deneyimler yaşayan gençlerin çevrim içi destek gruplarına ulaşması yalnızlık hissini azaltabilir.",
+      "Psikolojik yardım hatlarını tanıtan kampanyalar kriz anında profesyonel desteğe erişimi kolaylaştırır.",
+      "Güvenli topluluklarda kendini ifade eden gençler sosyal kabul duygusunu güçlendirebilir.",
+      "Ruh sağlığı içerikleri bazı gençlere stres yönetimi ve nefes egzersizi gibi pratik araçlar öğretebilir.",
+      "Kırsal bölgelerde yaşayan gençler sosyal medya sayesinde akran desteğine daha kolay ulaşabilir.",
+      "Zorbalık karşıtı kampanyalar gençlerin yardım isteme davranışını normalleştirebilir."
+    ],
+    "attack": [
+      "Yoğun sosyal medya kullanımı uyku süresini kısaltarak kaygı belirtilerini artırabilir.",
+      "Sürekli karşılaştırma kültürü beden algısı ve özsaygı üzerinde olumsuz baskı oluşturur.",
+      "Ancak algoritmalar kriz içeriklerini tekrar tekrar gösterdiğinde gençlerin duygu durumu kötüleşebilir.",
+      "Siber zorbalığa maruz kalan gençlerde yalnızlık ve güvensizlik duygusu derinleşebilir.",
+      "Beğeni sayısına bağımlı sosyal onay arayışı gençlerin kendilik değerini kırılgan hale getirebilir.",
+      "Ekran süresi arttıkça yüz yüze arkadaşlık ilişkileri zayıflayabilir ve sosyal beceriler gerileyebilir."
+    ],
+    "neutral": [
+      "Sosyal medya uygulamalarının ikon tasarımları marka stratejilerine göre değişir.",
+      "Kış sporları turizmi yüksek rakımlı bölgelerde otel talebini artırır.",
+      "Bazı içerik üreticileri kamera ekipmanlarını sponsor anlaşmalarıyla yeniler.",
+      "Hashtag yazım biçimleri platformların karakter sınırına göre farklılaşabilir.",
+      "Gençlerin telefon kılıfı tercihleri moda akımlarından etkilenebilir.",
+      "Müzik festivallerinde sahne ışıkları konser atmosferini belirleyen unsurlardan biridir.",
+      "Dijital reklam fiyatları kampanya dönemlerinde platformdan platforma değişir.",
+      "Fotoğraf filtrelerinin isimleri uygulama güncellemeleriyle yeniden düzenlenebilir."
+    ]
+  },
+  {
+    "topic": "elektrikli_arac",
+    "claim": "Elektrikli araçlar çevre kirliliğini azaltır.",
+    "support": [
+      "Egzoz gazı üretmemeleri yoğun kent merkezlerinde yerel hava kalitesini iyileştirir.",
+      "Yenilenebilir elektrikle şarj edilen araçların kullanım aşamasındaki karbon salımı düşüktür.",
+      "Rejeneratif frenleme enerji kaybını azaltarak şehir içi sürüşte verimliliği artırır.",
+      "Elektrikli otobüs filoları dizel motor kaynaklı partikül kirliliğini azaltabilir.",
+      "Şarj altyapısı temiz enerjiyle desteklenirse ulaşım kaynaklı emisyonlar uzun vadede azalır.",
+      "Sessiz motor yapısı gürültü kirliliğini azaltarak kentsel yaşam kalitesine katkı sağlayabilir."
+    ],
+    "attack": [
+      "Batarya üretiminde kullanılan madencilik süreçleri su kaynakları üzerinde ciddi baskı yaratabilir.",
+      "Elektrik üretimi kömüre dayalıysa toplam emisyon avantajı önemli ölçüde azalır.",
+      "Ancak bataryaların geri dönüşümü yaygınlaşmazsa yeni bir tehlikeli atık sorunu oluşabilir.",
+      "Ağır bataryalar lastik aşınmasını artırarak mikroplastik kirliliğine katkıda bulunabilir.",
+      "Kısa ömürlü batarya tasarımları sık değişim gerektirirse çevresel maliyet yükselir.",
+      "Şarj istasyonları fosil yakıtlı elektrikle beslendiğinde araçların temizliği sınırlı kalır."
+    ],
+    "neutral": [
+      "Elektrikli araçların iç ekran boyutu marka segmentine göre değişir.",
+      "Müze ziyaret saatleri bayram dönemlerinde yeniden düzenlenebilir.",
+      "Şarj kablosu renkleri üreticinin tasarım tercihine göre farklı olabilir.",
+      "Araç yazılım güncellemeleri kullanıcı arayüzünde yeni ikonlar gösterebilir.",
+      "Otomobil fuarlarında stant yerleşimi ziyaretçi akışına göre planlanır.",
+      "Navigasyon uygulamaları bazı şehirlerde yeni yolları daha geç güncelleyebilir.",
+      "Koltuk döşemesi seçenekleri donanım paketlerine göre değişir.",
+      "Plaka basım ücretleri yerel mevzuat ve hizmet sağlayıcılarına göre belirlenir."
+    ]
+  },
+  {
+    "topic": "okul_telefon",
+    "claim": "Okullarda telefon kullanımı akademik başarıyı düşürür.",
+    "support": [
+      "Ders sırasında gelen bildirimler öğrencinin dikkatini bölerek konu takibini zorlaştırır.",
+      "Sosyal medya kontrolü sınıf içi etkinliklere ayrılan zihinsel enerjiyi azaltır.",
+      "Sınav haftalarında ekran süresi yükselen öğrencilerin düzenli çalışma süresi kısalabilir.",
+      "Telefonla oyun oynayan öğrenciler teneffüs sonrası derse odaklanmakta daha fazla zorlanabilir.",
+      "Kopya çekme riski arttığında öğretmenler ölçme sürecine daha fazla zaman harcamak zorunda kalır.",
+      "Sürekli mesajlaşma alışkanlığı uzun okuma parçalarına sabır göstermeyi güçleştirebilir."
+    ],
+    "attack": [
+      "Öğretmen denetiminde kullanılan telefonlar hızlı araştırma ve etkileşimli ölçme etkinliklerini destekleyebilir.",
+      "Erişilebilirlik uygulamaları görme veya işitme güçlüğü yaşayan öğrencilerin derse katılımını kolaylaştırır.",
+      "Buna karşın iyi tasarlanmış dijital etkinliklerde telefonlar öğrenmeyi dağıtmak yerine derinleştirebilir.",
+      "Dil öğrenme uygulamaları sınıf içinde anlık telaffuz ve kelime pratiği sağlayabilir.",
+      "Acil durumlarda aileyle hızlı iletişim kurabilmek öğrencinin güvenlik kaygısını azaltabilir.",
+      "Laboratuvar deneylerinde telefon kamerası gözlem kaydı tutmak için etkili bir araç olabilir."
+    ],
+    "neutral": [
+      "Okul kantinlerinde satılan sandviç çeşitleri öğrencilerin öğle yemeği tercihlerini etkiler.",
+      "Deniz fenerleri kıyı güvenliği açısından tarihsel olarak önemli yapılardır.",
+      "Telefon dolaplarının rengi okulun iç mekan tasarımına göre seçilebilir.",
+      "Bazı okullar öğrenci kartlarında manyetik şerit yerine karekod kullanır.",
+      "Sınıf perdelerinin kumaşı güneş ışığını kesme düzeyine göre belirlenebilir.",
+      "Okul bahçesindeki spor çizgileri farklı oyun alanlarını ayırmak için boyanır.",
+      "Zil sesleri okul yönetiminin tercih ettiği melodiyle değiştirilebilir.",
+      "Kütüphane raf etiketleri kitap türlerine göre renkli hazırlanabilir."
+    ]
+  },
+  {
+    "topic": "plastik_poset",
+    "claim": "Plastik poşet ücretleri çevre kirliliğini azaltır.",
+    "support": [
+      "Ücret uygulaması tüketicileri bez çanta kullanmaya yönelttiği için tek kullanımlık poşet talebi düşer.",
+      "Marketlerde poşet satışının azalması çöplüklere giden hafif plastik miktarını azaltabilir.",
+      "Ücretli poşet politikası tüketiciye atığın ekonomik maliyetini görünür kılar.",
+      "Daha az poşet kullanımı kıyı bölgelerinde rüzgarla taşınan plastik atıkları azaltabilir.",
+      "Alışveriş planı yapan tüketiciler yeniden kullanılabilir çantayı yanında taşıma alışkanlığı kazanabilir.",
+      "Poşet talebindeki düşüş üretim ve taşıma kaynaklı plastik emisyonlarını da azaltır."
+    ],
+    "attack": [
+      "Tüketiciler daha kalın çöp poşetleri satın almaya başlarsa toplam plastik tüketimi beklenenden az düşebilir.",
+      "Denetim zayıf olduğunda küçük işletmeler ücretsiz poşet vermeyi sürdürerek politikanın etkisini azaltır.",
+      "Ancak ücret çok düşükse tüketici davranışını değiştirmek için yeterli ekonomik baskı oluşturmaz.",
+      "Bez çantalar çok az kullanılıp sık değiştirilirse üretim kaynaklı çevresel maliyet artabilir.",
+      "Poşet gelirinin çevre projelerine aktarılmaması politikanın toplumsal kabulünü zayıflatabilir.",
+      "Alternatif ambalajlar daha ağır malzemeden yapılırsa taşıma sırasında karbon ayak izi yükselebilir."
+    ],
+    "neutral": [
+      "Plastik poşetlerin renkleri perakende markalarının tasarım tercihine göre değişebilir.",
+      "Futbol kulüplerinin forma renkleri taraftar kimliğinde güçlü bir semboldür.",
+      "Poşet üzerindeki barkod konumu kasiyerlerin okutma alışkanlığına göre belirlenebilir.",
+      "Market arabalarının tekerlek boyutu mağaza zeminine göre seçilebilir.",
+      "Ambalaj tasarım yarışmaları grafik tasarım öğrencileri için portfolyo fırsatı sunabilir.",
+      "Çöp kovalarının kapak şekli kullanım alanına göre yuvarlak veya pedallı olabilir.",
+      "Bazı mağazalar kampanya dönemlerinde bez çanta üzerine özel desen basar.",
+      "Kasiyer bankolarının yüksekliği ergonomi standartlarına göre planlanabilir."
+    ]
+  },
+  {
+    "topic": "yapay_zeka_egitim",
+    "claim": "Yapay zeka eğitimde kaliteyi artırır.",
+    "support": [
+      "Öğrencinin eksiklerini hızlı tespit eden sistemler öğretmene kişiselleştirilmiş alıştırma önerileri sunar.",
+      "Anında geri bildirim alan öğrenciler hatalarını sınav dönemini beklemeden düzeltebilir.",
+      "Uyarlanabilir testler öğrencinin seviyesine uygun sorular seçerek öğrenme boşluklarını görünür kılar.",
+      "Öğretmenler otomatik değerlendirme sayesinde daha fazla zamanı birebir rehberliğe ayırabilir.",
+      "Dil öğrenme araçları öğrencinin telaffuz hatalarını anında fark etmesine yardımcı olabilir.",
+      "Veri destekli öğrenme panelleri okul yönetimine hangi konularda ek destek gerektiğini gösterebilir."
+    ],
+    "attack": [
+      "Yanlış veya önyargılı veriyle eğitilen sistemler öğrenciyi hatalı yönlendirebilir.",
+      "Aşırı otomasyon öğretmenin pedagojik sezgisini geri plana iterse öğrenme deneyimi zayıflar.",
+      "Ancak veri gizliliği korunmazsa öğrencilerin kişisel öğrenme kayıtları risk altına girebilir.",
+      "Hazır cevap üreten araçlar öğrencinin problem çözme çabasını azaltabilir.",
+      "Teknolojiye erişimi sınırlı okullarda yapay zeka kullanımı eğitim eşitsizliğini artırabilir.",
+      "Model hatalarını fark etmeyen öğrenciler yanlış bilgiyi doğru kabul ederek öğrenme kaybı yaşayabilir."
+    ],
+    "neutral": [
+      "Yapay zeka araçlarının lisans ücretleri kurumların bütçe planına göre taksitlendirilebilir.",
+      "Zeytinyağı üretiminde hasat zamanı ürün aromasını etkileyen faktörlerden biridir.",
+      "Eğitim yazılımlarının ikon seti ürün ekibinin tasarım sistemine göre değişebilir.",
+      "Bazı okullar tablet kılıflarında okul logosu kullanmayı tercih eder.",
+      "Sınıf içi projeksiyon cihazlarının lamba ömrü kullanım süresine göre azalır.",
+      "Öğretmenler dijital yoklama ekranında öğrenci isimlerini alfabetik sıralayabilir.",
+      "Bulut servislerinin fatura tarihleri satın alma sözleşmesine göre belirlenir.",
+      "Klavyedeki tuş dizilimi ülke standardına göre farklılık gösterebilir."
+    ]
+  },
+  {
+    "topic": "dort_gun_calisma",
+    "claim": "Haftada dört gün çalışma şirket performansını artırır.",
+    "support": [
+      "Daha kısa çalışma haftası tükenmişliği azalttığında çalışanların odaklanma kalitesi yükselir.",
+      "Toplantı sayısını azaltan ekipler aynı çıktıyı daha kısa sürede üretebilir.",
+      "Dinlenme süresi artan çalışanlar haftaya daha yüksek motivasyonla başlayabilir.",
+      "İyi planlanmış dört günlük model gereksiz iş akışlarını görünür kılar ve süreçleri sadeleştirir.",
+      "Çalışan memnuniyeti yükseldiğinde personel devir oranı düşebilir ve kurumsal bilgi korunur.",
+      "Yoğunlaşmış çalışma takvimi bazı ekiplerde karar alma hızını artırabilir."
+    ],
+    "attack": [
+      "Müşteri desteği kesintisiz hizmet gerektiriyorsa çalışma gününün azalması yanıt sürelerini uzatabilir.",
+      "Üretim hattında vardiya planı değişmezse aynı hacmi korumak için ek maliyet doğabilir.",
+      "Ancak iş yükü azaltılmadan gün sayısı düşerse çalışanlar daha yoğun stres yaşayabilir.",
+      "Küresel ekiplerle çalışan şirketlerde farklı izin günleri koordinasyon sorunlarını artırabilir.",
+      "Satış ekipleri müşteri erişim süresi azaldığında fırsat takibinde gecikme yaşayabilir.",
+      "Küçük işletmelerde yedek personel yoksa dört günlük model hizmet kesintisine yol açabilir."
+    ],
+    "neutral": [
+      "Dört günlük modelde izin takvimi insan kaynakları yazılımında farklı renklerle gösterilebilir.",
+      "Klasik gitar tellerinin malzemesi müzisyenin ton tercihine göre seçilir.",
+      "Ofis giriş kartlarının tasarımı şirketin marka rehberine göre hazırlanabilir.",
+      "Mesai çizelgelerindeki tarih formatı kullanılan yazılıma göre değişir.",
+      "Toplantı odası isimleri şirket kültürünü yansıtan temalardan seçilebilir.",
+      "Kahvaltı menüsündeki ürünler çalışan servis anlaşmasına göre değişebilir.",
+      "Personel dolaplarının numaraları kat planına göre sıralanır.",
+      "Dijital takvim uygulamaları hafta başlangıç gününü kullanıcı ayarına göre belirler."
+    ]
+  },
+  {
+    "topic": "toplu_tasima",
+    "claim": "Toplu taşıma yatırımları trafik yoğunluğunu azaltır.",
+    "support": [
+      "Güvenilir metro ve otobüs hatları özel araç kullanma ihtiyacını azaltarak ana arterleri rahatlatır.",
+      "Aktarma süreleri kısaldığında yolcular günlük ulaşımda otomobil yerine toplu taşımayı tercih eder.",
+      "Sık sefer yapan hatlar işe gidiş saatlerinde araç trafiğine alternatif oluşturur.",
+      "Park et devam et alanları banliyö kullanıcılarının kent merkezine araçla girmesini azaltabilir.",
+      "Elektronik bilet entegrasyonu farklı ulaşım türleri arasında geçişi kolaylaştırır.",
+      "Otobüs öncelikli şeritler yolculuk süresini öngörülebilir hale getirerek toplu taşımayı cazip kılar."
+    ],
+    "attack": [
+      "Hatlar düşük talep bölgelerine plansız yapılırsa yolcu çekmeden kamu bütçesinde yük oluşturabilir.",
+      "Ring bağlantısı kurulmadığında banliyö kullanıcıları aracı bırakmakta zorlanır.",
+      "Ancak sefer aralıkları uzun kalırsa insanlar yine özel araç kullanmayı tercih edebilir.",
+      "Güvenlik ve temizlik sorunları çözülmezse yolcular toplu taşımadan uzaklaşabilir.",
+      "Yanlış güzergah planlaması bazı bölgelerde trafiği azaltmak yerine aktarma yoğunluğu yaratabilir.",
+      "Ücretler çok yükselirse düşük gelirli kullanıcılar bile daha ucuz alternatif arayabilir."
+    ],
+    "neutral": [
+      "Toplu taşıma kartlarının tasarımı belediyenin görsel kimliğiyle uyumlu hazırlanır.",
+      "Akdeniz mutfağında zeytinyağı birçok geleneksel tarifin temel unsurudur.",
+      "Durak tabelalarının yazı tipi okunabilirlik standartlarına göre seçilebilir.",
+      "Otobüs koltuk kumaşları temizlik kolaylığı dikkate alınarak belirlenir.",
+      "Metro istasyonlarında kullanılan seramik renkleri mimari konsepte göre değişir.",
+      "Bilet makinelerinin ekran parlaklığı ortam ışığına göre ayarlanabilir.",
+      "Sefer numaraları güzergah planlama sistemindeki kodlara göre verilir.",
+      "Harita panolarının ölçüsü istasyon duvar alanına göre belirlenir."
+    ]
+  },
+  {
+    "topic": "geri_donusum",
+    "claim": "Geri dönüşüm belediye atıklarını azaltır.",
+    "support": [
+      "Kaynağında ayrıştırma yapılan mahallelerde çöpe giden ambalaj miktarı düşer.",
+      "Depozito sistemi şişe ve kutuların tekrar toplama zincirine dönmesini sağlar.",
+      "Geri kazanılan kağıt ve metal belediyenin düzenli depolama yükünü azaltabilir.",
+      "Mahalle tipi toplama noktaları vatandaşın atığı doğru kanala vermesini kolaylaştırır.",
+      "Eğitim kampanyaları hanelerde ayrıştırma alışkanlığını güçlendirebilir.",
+      "Organik atıkların komposta ayrılması çöp kamyonlarının taşıdığı karışık atık hacmini düşürür."
+    ],
+    "attack": [
+      "Ayrıştırma tesisi kapasitesi yetersizse toplanan malzemenin önemli bölümü depolama alanına gidebilir.",
+      "Kirli veya karışık atıklar geri dönüşüm verimini düşürerek beklenen faydayı azaltır.",
+      "Ancak toplama kamyonları farklı atıkları aynı hazneye boşaltırsa vatandaşın ayrıştırma çabası boşa gider.",
+      "Pazar değeri düşük malzemeler ekonomik olarak işlenemediğinde stok sahalarında birikebilir.",
+      "Hanelere yeterli bilgilendirme yapılmazsa yanlış kutu kullanımı sistemin maliyetini artırır.",
+      "Geri dönüşüm tek başına tüketim artışını durdurmadığı için toplam atık üretimi yine yükselebilir."
+    ],
+    "neutral": [
+      "Geri dönüşüm kutularının rengi kullanıcıların atık türünü hızlı ayırt etmesi için standartlaştırılır.",
+      "Tiyatro festivalleri yerel sanat topluluklarının görünürlüğünü artırabilir.",
+      "Atık toplama takvimleri belediye web sitesinde farklı dosya biçimlerinde yayımlanabilir.",
+      "Konteyner kapaklarının şekli kullanım alanına göre değişiklik gösterebilir.",
+      "Geri dönüşüm afişlerinde kullanılan ikonlar grafik tasarım ekibi tarafından hazırlanır.",
+      "Mahalle haritalarında toplama noktaları farklı sembollerle gösterilebilir.",
+      "Plastik şişe etiketlerinde marka logosu ambalaj tasarımına göre yerleştirilir.",
+      "Kağıt kutuların ölçüsü depolama raflarının yüksekliğine göre seçilebilir."
+    ]
+  },
+  {
+    "topic": "uyku",
+    "claim": "Düzenli uyku akademik başarıyı artırır.",
+    "support": [
+      "Yeterli uyku dikkat süresini ve hafıza pekişmesini güçlendirdiği için öğrenilen bilgiler daha kalıcı olur.",
+      "Her gün benzer saatte uyuyan öğrenciler sabah derslerinde daha uyanık kalabilir.",
+      "Uyku düzeni oturan öğrenciler sınav öncesi bilgiyi hatırlamakta daha az zorlanabilir.",
+      "Gece geç saatlere kadar uyanık kalmamak ders sırasında tepki hızını korumaya yardımcı olur.",
+      "Kaliteli uyku duygu düzenlemeyi desteklediği için öğrencinin çalışma motivasyonu artabilir.",
+      "Erken yatma alışkanlığı ödev planlamasını daha düzenli hale getirebilir."
+    ],
+    "attack": [
+      "Tek başına uyku düzeni, düşük ders katılımı ve eksik çalışma alışkanlığı varsa başarıyı garanti etmez.",
+      "Sınav kaygısı yüksek öğrenciler düzenli uyusalar bile performans düşüşü yaşayabilir.",
+      "Ancak öğretim kalitesi zayıfsa uyku düzeni tek başına akademik açığı kapatamaz.",
+      "Aile içi stres yaşayan öğrenciler yeterli uyusalar bile derse odaklanmakta zorlanabilir.",
+      "Düzenli uyku ile başarı arasındaki ilişki bazen disiplinli yaşam tarzının dolaylı sonucu olabilir.",
+      "Öğrenci yanlış çalışma yöntemi kullanıyorsa iyi uyku bilgiyi doğru öğrenmesini sağlamaz."
+    ],
+    "neutral": [
+      "Uyku takip uygulamalarında grafik renkleri kullanıcının seçtiği temaya göre değişir.",
+      "Seramik atölyelerinde kullanılan sır teknikleri yüzey dokusunu belirler.",
+      "Yatak örtüsü desenleri mevsimlik ev tekstili koleksiyonlarına göre yenilenebilir.",
+      "Alarm sesleri telefon markasının sunduğu seçenekler arasından seçilir.",
+      "Yatak başlığı ölçüleri mobilya üreticisinin katalog standardına göre belirlenir.",
+      "Akıllı saat kordonları silikon veya deri gibi farklı malzemelerden üretilebilir.",
+      "Perde kalınlığı odanın ışık alma yönüne göre tercih edilebilir.",
+      "Uyku maskelerinin kumaş türü kullanıcının cilt hassasiyetine göre seçilebilir."
+    ]
+  },
+  {
+    "topic": "organik_tarim",
+    "claim": "Organik tarım toprak sağlığını korur.",
+    "support": [
+      "Sentetik pestisit kullanımının azalması topraktaki mikroorganizma çeşitliliğini destekler.",
+      "Dönüşümlü ekim uygulamaları toprağın tek bir besin maddesine aşırı yüklenmesini engelleyebilir.",
+      "Kompost kullanımı organik madde oranını artırarak toprağın su tutma kapasitesini güçlendirir.",
+      "Kimyasal gübreye bağımlılığın azalması yeraltı suyu kirliliği riskini düşürebilir.",
+      "Toprak örtüsü bitkileri erozyonu azaltarak verimli üst tabakanın korunmasına yardımcı olur.",
+      "Biyolojik mücadele yöntemleri zararlı kontrolünü toprak yaşamına daha az zarar vererek sağlayabilir."
+    ],
+    "attack": [
+      "Verim düşerse aynı miktarda ürün için daha geniş arazi kullanımı gerekebilir.",
+      "Sertifika maliyetleri küçük üreticilerin sürdürülebilir uygulamalara erişimini zorlaştırabilir.",
+      "Ancak yanlış uygulanan organik gübreleme nitrat sızıntısını tamamen ortadan kaldırmaz.",
+      "Pazar baskısı arttığında bazı üreticiler organik etiketi korumak için toprağı aşırı işlemeye devam edebilir.",
+      "Yetersiz hastalık kontrolü ürün kaybını artırırsa toprağın korunması ekonomik olarak sürdürülemez hale gelebilir.",
+      "Organik tarım tek başına sulama hatalarını düzeltmediği için tuzlulaşma sorunu devam edebilir."
+    ],
+    "neutral": [
+      "Organik ürün etiketlerinde kullanılan logo boyutu yönetmeliklere göre belirlenir.",
+      "Dağ bisikleti yarışları parkur eğimine göre farklı zorluk kategorilerine ayrılır.",
+      "Pazar tezgahlarındaki fiyat etiketleri satıcının tercih ettiği karton rengine göre hazırlanabilir.",
+      "Tohum paketlerinin tasarımında ürün fotoğrafı ve ekim bilgisi birlikte yer alabilir.",
+      "Çiftçi pazarlarının açılış saatleri belediye kararına göre değişebilir.",
+      "Bahçe eldivenlerinin bedeni üretici markaya göre farklı kalıplarda olabilir.",
+      "Seracılıkta kullanılan plastik örtü kalınlığı iklim koşullarına göre seçilir.",
+      "Tarım fuarlarında stant yerleşimi ziyaretçi giriş kapısına göre planlanır."
+    ]
+  },
+  {
+    "topic": "kentsel_yesil",
+    "claim": "Kentlerde yeşil alanlar yaşam kalitesini yükseltir.",
+    "support": [
+      "Ağaç gölgesi yaz aylarında ısı adası etkisini azaltarak sokak konforunu artırır.",
+      "Parklara yakın yaşayan kişiler açık havada daha fazla hareket ederek fiziksel sağlık kazanımı elde edebilir.",
+      "Yeşil alanlar kent içinde dinlenme ve sosyalleşme imkanı sunarak stres düzeyini azaltabilir.",
+      "Bitkilendirilmiş alanlar yağmur suyunun yüzey akışını yavaşlatarak taşkın riskini azaltabilir.",
+      "Çocuk oyun alanları ailelerin mahalle içinde güvenli vakit geçirmesine katkı sağlar.",
+      "Kent ağaçları hava kalitesini iyileştiren partikül tutma etkisi yaratabilir."
+    ],
+    "attack": [
+      "Bakım bütçesi ayrılmazsa parklar güvenlik ve temizlik sorunları nedeniyle kullanılmaz hale gelebilir.",
+      "Yeşil alan yatırımı kira baskısını artırıp düşük gelirli sakinleri mahalleden uzaklaştırabilir.",
+      "Ancak yanlış bitki seçimi su tüketimini artırarak kurak bölgelerde çevresel maliyet yaratabilir.",
+      "Güvenlik aydınlatması yetersizse bazı parklar akşam saatlerinde kullanılmayan boş alanlara dönüşebilir.",
+      "Yoğun polen üreten türler alerjisi olan kent sakinlerinin yaşam konforunu düşürebilir.",
+      "Park alanı planlanırken ulaşım bağlantısı kurulmazsa yeşil alan geniş kitlelere hizmet edemez."
+    ],
+    "neutral": [
+      "Park banklarının malzemesi belediyenin bakım stratejisine göre ahşap veya metal seçilebilir.",
+      "Satranç turnuvalarında zaman kontrolü oyun temposunu belirleyen temel kurallardan biridir.",
+      "Çim biçme makinelerinin modeli ihale şartnamesine göre farklılık gösterebilir.",
+      "Yürüyüş yolu taşlarının rengi peyzaj projesindeki malzeme paletine göre belirlenebilir.",
+      "Park haritalarında tuvalet ve çeşme simgeleri farklı ikonlarla gösterilir.",
+      "Süs havuzlarının çalışma saatleri elektrik tasarrufu kararlarına göre ayarlanabilir.",
+      "Fidan dikim törenlerinde kullanılan afişler yerel yönetimin kurumsal kimliğini taşır.",
+      "Bahçe sulama hortumlarının uzunluğu alanın büyüklüğüne göre seçilebilir."
+    ]
+  },
+  {
+    "topic": "online_egitim",
+    "claim": "Online eğitim öğrencilerin başarısını artırır.",
+    "support": [
+      "Kayıtlı ders videoları öğrencinin anlamadığı konuyu tekrar izleyerek pekiştirmesine imkan tanır.",
+      "Zaman ve mekan esnekliği çalışan öğrencilerin derslere düzenli katılımını kolaylaştırabilir.",
+      "Çevrim içi kısa testler öğrencinin eksiklerini hızlı görmesini sağlayabilir.",
+      "Dijital kaynaklara anında erişim farklı öğrenme materyallerinin birlikte kullanılmasına yardımcı olur.",
+      "Utangaç öğrenciler yazılı sohbet üzerinden soru sorarak derse daha rahat katılabilir.",
+      "Öğrenme yönetim sistemleri ödev takibini düzenleyerek son teslim tarihlerini görünür hale getirir."
+    ],
+    "attack": [
+      "Zayıf internet bağlantısı ders akışını keserek öğrencinin konudan kopmasına neden olabilir.",
+      "Ev ortamındaki dikkat dağıtıcı unsurlar öğrencinin derse odaklanmasını zorlaştırabilir.",
+      "Ancak laboratuvar ve uygulama gerektiren derslerde online ortam pratik beceri kazanımını sınırlayabilir.",
+      "Kamera kapalı derslerde öğretmen öğrencinin anlayıp anlamadığını fark etmekte zorlanabilir.",
+      "Ekran yorgunluğu uzun derslerde katılımı ve not alma kalitesini düşürebilir.",
+      "Cihaz ve internet erişimi olmayan öğrenciler online eğitimde akranlarının gerisinde kalabilir."
+    ],
+    "neutral": [
+      "Online ders platformlarının giriş ekranı kurum logosuna göre özelleştirilebilir.",
+      "Kahve çekirdeklerinin kavrulma derecesi içeceğin aromasını etkiler.",
+      "Ders kayıt dosyalarının adı sistem tarafından tarih ve saat bilgisiyle oluşturulabilir.",
+      "Kulaklık modelleri mikrofon kalitesine göre farklı fiyat aralıklarında satılır.",
+      "Sanal sınıf arka planları öğretmenin seçtiği görselle değiştirilebilir.",
+      "Tablet kalemlerinin uçları kullanım sıklığına göre aşınabilir.",
+      "Klavye kısayolları kullanılan işletim sistemine göre farklılık gösterebilir.",
+      "Dosya paylaşım klasörleri ders kodlarına göre isimlendirilebilir."
+    ]
+  },
+  {
+    "topic": "asgari_ucret",
+    "claim": "Asgari ücret artışı çalışan refahını yükseltir.",
+    "support": [
+      "Geliri artan düşük ücretli çalışanlar temel gıda ve barınma giderlerini daha rahat karşılayabilir.",
+      "Daha yüksek ücret hane içi borç baskısını azaltarak yaşam kalitesine katkı sağlayabilir.",
+      "Alım gücü artan çalışanların yerel esnaftan yaptığı harcama ekonomik canlılığı destekleyebilir.",
+      "Ücret artışı çalışanların iş değiştirme baskısını azaltarak işyerinde istikrar yaratabilir.",
+      "Yoksulluk sınırına yakın ailelerde ek gelir çocukların eğitim masraflarını karşılamayı kolaylaştırabilir.",
+      "Daha adil ücret algısı çalışan motivasyonunu ve iş tatminini güçlendirebilir."
+    ],
+    "attack": [
+      "Küçük işletmeler maliyet artışını karşılayamazsa işe alımları azaltabilir.",
+      "Fiyatlara yansıyan ücret maliyeti enflasyonu artırarak refah kazancını aşındırabilir.",
+      "Ancak kayıt dışı çalışmanın yaygın olduğu sektörlerde ücret artışı kağıt üzerinde kalabilir.",
+      "İşverenler toplam maliyeti dengelemek için çalışma saatlerini veya yan hakları azaltabilir.",
+      "Verimlilik artışı olmadan yapılan yüksek zam bazı firmaların rekabet gücünü zayıflatabilir.",
+      "Bölgesel yaşam maliyetleri farklı olduğunda tek oranlı artış bazı işyerleri için dengesiz yük oluşturabilir."
+    ],
+    "neutral": [
+      "Maaş bordrolarında kullanılan kalem adları muhasebe yazılımına göre değişebilir.",
+      "Pasta tariflerinde un miktarı kullanılan kalıba göre ayarlanabilir.",
+      "Banka promosyon anlaşmaları kurumların personel sayısına göre farklı teklif alabilir.",
+      "İnsan kaynakları formlarında imza alanı sayfanın alt bölümünde yer alır.",
+      "Ücret tabloları genellikle aylık veya yıllık görünümle hazırlanabilir.",
+      "Çalışan kimlik kartlarının ip rengi şirketin tercihine göre seçilebilir.",
+      "Vergi takvimi resmi kurumların duyurularıyla güncellenir.",
+      "Muhasebe raporlarında ondalık ayırıcı kullanılan dile göre değişebilir."
+    ]
+  },
+  {
+    "topic": "nukleer_enerji",
+    "claim": "Nükleer enerji iklim kriziyle mücadelede gereklidir.",
+    "support": [
+      "Nükleer santraller elektrik üretirken düşük karbon salımı yaptığı için fosil yakıt kullanımını azaltabilir.",
+      "Kesintisiz baz yük üretimi rüzgar ve güneşin dalgalı üretimini dengelemeye yardımcı olur.",
+      "Kömür santrallerinin yerini alan nükleer kapasite hava kirliliği kaynaklı sağlık yükünü azaltabilir.",
+      "Yüksek enerji yoğunluğu daha az arazi kullanımıyla büyük miktarda elektrik üretmeyi sağlar.",
+      "Gelişmiş reaktör tasarımları güvenlik sistemlerini pasif mekanizmalarla güçlendirebilir.",
+      "İthal fosil yakıta bağımlılığı azaltan nükleer üretim enerji arz güvenliğini artırabilir."
+    ],
+    "attack": [
+      "Radyoaktif atığın uzun süre güvenle saklanması teknik ve politik açıdan zor bir sorundur.",
+      "Santral kazası ihtimali düşük olsa bile gerçekleştiğinde etkileri çok geniş ve kalıcı olabilir.",
+      "Ancak inşaat maliyetleri yükseldiğinde nükleer projeler yenilenebilir yatırımları yavaşlatabilir.",
+      "Uzun kurulum süresi acil emisyon azaltımı gereken dönemde çözümün gecikmesine neden olabilir.",
+      "Su kaynaklarına bağımlı soğutma sistemleri kuraklık dönemlerinde üretim riskini artırabilir.",
+      "Güvenlik ve denetim kapasitesi zayıf ülkelerde nükleer yatırım toplumsal risk yaratabilir."
+    ],
+    "neutral": [
+      "Nükleer santral maketleri enerji fuarlarında cam vitrin içinde sergilenebilir.",
+      "Tarihi romanlarda karakter isimleri dönemin dil özelliklerine göre seçilebilir.",
+      "Santral kontrol odası simülatörlerinde ekran düzeni eğitim amacına göre ayarlanır.",
+      "Mühendislik raporlarında reaktör diyagramları standart sembollerle çizilir.",
+      "Enerji konferanslarında yaka kartı renkleri katılımcı türüne göre farklılaştırılabilir.",
+      "Koruyucu baretlerin rengi görev alanına göre değişebilir.",
+      "Teknik çizim dosyaları proje numarasına göre arşivlenir.",
+      "Santral ziyaretçi merkezlerinde bilgilendirme panoları çok dilli hazırlanabilir."
+    ]
+  },
+  {
+    "topic": "dijital_mahremiyet",
+    "claim": "Dijital mahremiyet yasaları bireyleri korur.",
+    "support": [
+      "Açık rıza zorunluluğu şirketlerin kişisel veriyi keyfi biçimde toplamasını sınırlar.",
+      "Veri silme hakkı bireyin eski kayıtlar üzerindeki kontrolünü güçlendirir.",
+      "Yüksek para cezaları şirketleri güvenlik açıklarını daha ciddiye almaya zorlayabilir.",
+      "Şeffaflık yükümlülüğü kullanıcıların hangi verilerinin işlendiğini anlamasını kolaylaştırır.",
+      "Çocuk verisine özel koruma kuralları hassas grupların ticari takibe maruz kalmasını azaltabilir.",
+      "İhlal bildirimleri kullanıcıların riskli durumda hızlı önlem almasına yardımcı olur."
+    ],
+    "attack": [
+      "Yasalar uygulanmadığında kağıt üzerinde güçlü görünen haklar gerçek koruma sağlamaz.",
+      "Karmaşık izin metinleri kullanıcıların neye onay verdiğini anlamasını zorlaştırabilir.",
+      "Ancak küçük işletmeler ağır uyum maliyetleri nedeniyle dijital hizmet geliştirmekte zorlanabilir.",
+      "Uluslararası veri aktarımı denetlenmezse yerel yasalar küresel platformlar karşısında yetersiz kalabilir.",
+      "Kullanıcılar haklarını bilmiyorsa şikayet mekanizmaları etkin çalışmayabilir.",
+      "Çerez onay pencereleri tasarım hileleriyle kullanıcıyı yine geniş veri paylaşımına yönlendirebilir."
+    ],
+    "neutral": [
+      "Gizlilik politikası sayfalarında başlık boyutu web sitesinin tasarım sistemine göre belirlenir.",
+      "Baharat kavanozlarının etiket rengi mutfak düzenine göre seçilebilir.",
+      "Parola yöneticilerinin ikonları ürün güncellemeleriyle değişebilir.",
+      "Veri merkezi raf numaraları bakım ekiplerinin erişimini kolaylaştırmak için sıralanır.",
+      "Mobil uygulama ayar menülerinde gizlilik sekmesi farklı konumlarda yer alabilir.",
+      "Elektronik imza dosyaları belge yönetim sisteminde tarih bilgisiyle saklanabilir.",
+      "Web formlarında zorunlu alanlar yıldız işaretiyle gösterilebilir.",
+      "Kullanıcı sözleşmelerinde madde numaraları hukuk ekibinin şablonuna göre düzenlenir."
+    ]
+  },
+  {
+    "topic": "bisiklet_yolu",
+    "claim": "Bisiklet yolları şehir içi ulaşımı iyileştirir.",
+    "support": [
+      "Güvenli bisiklet altyapısı kısa mesafelerde otomobil kullanımını azaltabilir.",
+      "Ayrılmış şeritler bisikletlilerin trafikle temasını azaltarak ulaşım güvenliğini artırır.",
+      "Bisiklet kullanımının artması toplu taşıma üzerindeki kısa mesafe yolcu baskısını hafifletebilir.",
+      "Düzenli bisiklet yolculuğu kent sakinlerinin fiziksel aktivite düzeyini yükseltir.",
+      "Bisiklet park alanları istasyonlarla bütünleştiğinde karma ulaşım seçenekleri güçlenir.",
+      "Yoğun merkezlerde bisiklet, park yeri arama süresini ortadan kaldırarak yolculuğu hızlandırabilir."
+    ],
+    "attack": [
+      "Bağlantısız ve kısa bisiklet yolları gerçek ulaşım ağı oluşturmadığı için kullanım düşük kalabilir.",
+      "Kötü tasarlanmış şeritler araç trafiğiyle kesiştiğinde kaza riskini artırabilir.",
+      "Ancak bakım yapılmazsa bozuk zemin bisikletliler için tehlikeli hale gelir.",
+      "Sert kış koşullarında temizlenmeyen bisiklet yolları yılın önemli bölümünde kullanılamaz.",
+      "Otopark alanı azaltıldığında esnaf müşteri kaybı yaşayacağını düşünerek projeye karşı çıkabilir.",
+      "Eğimli şehirlerde elektrikli destek olmadan bisiklet her kullanıcı için pratik olmayabilir."
+    ],
+    "neutral": [
+      "Bisiklet yolu çizgi rengi belediyenin trafik işaretleme standardına göre seçilir.",
+      "Kütüphanelerde kitap ayraçları okuyuculara ücretsiz dağıtılabilir.",
+      "Bisiklet kasklarının beden ölçüsü üretici tablolarına göre belirlenir.",
+      "Yol kenarı tabelalarının yüksekliği görünürlük yönetmeliğine göre ayarlanabilir.",
+      "Bisiklet paylaşım istasyonlarında ödeme ekranı farklı dillerde hizmet verebilir.",
+      "Lastik basıncı göstergeleri pompa modeline göre analog veya dijital olabilir.",
+      "Kilit aparatlarının rengi üretici markaya göre değişebilir.",
+      "Şehir haritalarında bisiklet rotaları kesik çizgiyle gösterilebilir."
+    ]
+  },
+  {
+    "topic": "sinav_sistemi",
+    "claim": "Merkezi sınav sistemi eğitimde adaleti sağlar.",
+    "support": [
+      "Tüm öğrencilerin aynı ölçütlerle değerlendirilmesi okuldan okula değişen not farklılıklarını azaltabilir.",
+      "Anonim puanlama kişisel ilişkilerin yerleştirme kararını etkilemesini engeller.",
+      "Standart sınavlar ülke genelinde başarı düzeyini karşılaştırmayı mümkün kılar.",
+      "Merkezi yerleştirme, kontenjan dağıtımında açık ve izlenebilir bir süreç sağlar.",
+      "Soruların önceden belirlenmiş kazanımlara dayanması öğrenciler için ortak hedef oluşturur.",
+      "Tek sınav takvimi başvuru ve sonuç süreçlerinde belirsizliği azaltabilir."
+    ],
+    "attack": [
+      "Tek sınava dayalı sistem öğrencinin yıl boyunca gösterdiği gelişimi yeterince yansıtmayabilir.",
+      "Sınav kaygısı yüksek öğrenciler bilgilerini gerçek düzeyde gösteremeyebilir.",
+      "Ancak özel ders ve kaynak imkanı fazla olan öğrenciler sınav yarışında avantaj kazanabilir.",
+      "Çoktan seçmeli sorular yaratıcılık ve proje üretme becerisini ölçmekte sınırlı kalabilir.",
+      "Sınav odaklı eğitim okullarda merak ve derin öğrenme kültürünü zayıflatabilir.",
+      "Bölgesel koşullar farklıyken tek sınav sonucu fırsat eşitsizliklerini görünmez hale getirebilir."
+    ],
+    "neutral": [
+      "Sınav giriş belgelerinde salon numarası ve sıra bilgisi ayrı alanlarda gösterilir.",
+      "Fotoğraf albümlerinde kapak tasarımı seçilen tema rengine göre değişir.",
+      "Optik formlardaki kodlama alanları sınav türüne göre farklı uzunlukta olabilir.",
+      "Kalem ve silgi setleri kırtasiyelerde sınav döneminde daha görünür raflara yerleştirilebilir.",
+      "Sınav takvimleri kurum web sitesinde PDF formatında yayımlanabilir.",
+      "Salon kapılarındaki listeler aday soyadına göre alfabetik hazırlanabilir.",
+      "Gözetmen yaka kartlarında görevli adı ve kurum bilgisi yer alır.",
+      "Cevap kağıdı paketleri güvenlik bandıyla kapatılabilir."
+    ]
+  },
+  {
+    "topic": "saglik_chatbot",
+    "claim": "Sağlık chatbotları temel sağlık hizmetlerini iyileştirir.",
+    "support": [
+      "Basit belirtileri ön değerlendiren chatbotlar hastaların doğru birime yönlendirilmesini hızlandırabilir.",
+      "Randevu ve ilaç hatırlatmaları kronik hastaların takip düzenini güçlendirebilir.",
+      "Gece saatlerinde temel bilgilendirme sunan sistemler acil olmayan kaygıları azaltabilir.",
+      "Yoğun çağrı merkezlerinde chatbot kullanımı personelin karmaşık vakalara daha fazla zaman ayırmasını sağlar.",
+      "Çok dilli chatbotlar göçmen hastaların sağlık sistemiyle ilk temasını kolaylaştırabilir.",
+      "Standart bilgilendirme akışı hastalara aynı konuda tutarlı yönergeler sunabilir."
+    ],
+    "attack": [
+      "Yanlış yönlendirme yapan chatbot acil durumdaki hastanın doktora geç ulaşmasına neden olabilir.",
+      "Belirti verilerinin güvenli saklanmaması mahrem sağlık bilgilerinin sızmasına yol açabilir.",
+      "Ancak düşük sağlık okuryazarlığı olan kullanıcılar chatbot yanıtını kesin tanı gibi yorumlayabilir.",
+      "Sistemin eğitim verisi dar ise nadir hastalık belirtilerini gözden kaçırabilir.",
+      "Yaşlı veya dijital erişimi sınırlı hastalar chatbot hizmetinden yararlanamayabilir.",
+      "Empati gerektiren hassas durumlarda otomatik yanıt hastanın güven duygusunu zayıflatabilir."
+    ],
+    "neutral": [
+      "Chatbot ekranındaki konuşma balonlarının rengi kurumun tasarım rehberine göre belirlenir.",
+      "Bahçe sulama zamanlayıcıları farklı program seçenekleriyle satılır.",
+      "Hastane web sitesindeki yardım simgesi sayfanın sağ alt köşesinde yer alabilir.",
+      "Randevu hatırlatma mesajlarında tarih biçimi kullanıcı diline göre değişir.",
+      "Sağlık uygulamalarının ikonları mağaza sayfasında farklı boyutlarda gösterilir.",
+      "Klavye otomatik tamamlama özelliği tıbbi kelimelerde farklı öneriler sunabilir.",
+      "Çağrı merkezi menü sesleri profesyonel stüdyo kaydıyla hazırlanabilir.",
+      "Hasta bilgilendirme broşürleri bekleme salonunda farklı raflara dizilebilir."
+    ]
+  },
+  {
+    "topic": "okuma_aliskanligi",
+    "claim": "Düzenli kitap okuma eleştirel düşünmeyi geliştirir.",
+    "support": [
+      "Farklı bakış açılarıyla karşılaşan okuyucu iddiaları tek kaynaktan kabul etmek yerine karşılaştırmayı öğrenir.",
+      "Kurgu dışı metinler neden sonuç ilişkilerini takip etme becerisini güçlendirebilir.",
+      "Roman karakterlerinin kararlarını değerlendirmek okuyucunun empati ve yorumlama yeteneğini artırabilir.",
+      "Düzenli okuma karmaşık cümleleri çözümlemeyi kolaylaştırarak argüman takibini geliştirir.",
+      "Not alarak okuyan kişiler kanıt ve yorum arasındaki farkı daha rahat ayırt edebilir.",
+      "Çeşitli türlerde okuma, kişinin kendi varsayımlarını sorgulamasına zemin hazırlar."
+    ],
+    "attack": [
+      "Sadece benzer görüşte kitaplar okumak kişinin mevcut önyargılarını güçlendirebilir.",
+      "Eleştirel tartışma yapılmadan pasif okuma, düşünme becerisini beklenen ölçüde geliştirmeyebilir.",
+      "Ancak ezber odaklı okuma alışkanlığı metindeki iddiaları sorgulamak yerine tekrar etmeye yol açabilir.",
+      "Düşük kaliteli veya manipülatif metinler okuyucunun hatalı akıl yürütmeleri benimsemesine neden olabilir.",
+      "Okuma süresi artsa bile kişi kaynak güvenilirliğini değerlendirmeyi öğrenmezse eleştirel düşünme sınırlı kalır.",
+      "Yoğun bilgi tüketimi, yavaş analiz alışkanlığı kazandırmadığında yüzeysel yorum üretimini artırabilir."
+    ],
+    "neutral": [
+      "Kitap kapaklarında kullanılan yazı tipi yayınevinin tasarım tercihine göre seçilir.",
+      "Bisiklet lastik basıncı sürüş zeminine göre ayarlanabilir.",
+      "Kütüphane kartlarında üye numarası barkodla birlikte basılabilir.",
+      "Ayraç tasarımları kitap fuarlarında promosyon ürünü olarak dağıtılabilir.",
+      "Okuma lambalarının parlaklığı masa yüksekliğine göre ayarlanabilir.",
+      "Raf düzeninde romanlar yazar soyadına göre alfabetik sıralanabilir.",
+      "E-kitap okuyucularında sayfa çevirme animasyonu kullanıcı ayarından kapatılabilir.",
+      "Kitap kulübü toplantıları ayın belirli günlerinde kafelerde yapılabilir."
+    ]
+  }
+]

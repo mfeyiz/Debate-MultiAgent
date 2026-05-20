@@ -24,9 +24,10 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Copy application code
 COPY app/ ./app/
 COPY main.py ./
+COPY gunicorn.conf.py ./
 
 # Copy only the production model weights (~1.14 GB)
-COPY models/component_extractor/final/ ./models/component_extractor/final/
+COPY models/component_classifier/final/ ./models/component_classifier/final/
 COPY models/relation_classifier/final/ ./models/relation_classifier/final/
 
 # Create non-root user
@@ -36,5 +37,5 @@ USER appuser
 # Expose the port GKE expects
 EXPOSE 8080
 
-# Run with gunicorn
+# Run ASGI app with gunicorn + Uvicorn workers
 CMD ["gunicorn", "-c", "gunicorn.conf.py", "main:app"]

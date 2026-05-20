@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}LogicFlow{% endblock %}</title>
+    <title>{% block title %}logos{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Work+Sans:wght@600&display=swap" rel="stylesheet">
@@ -15,59 +15,59 @@
             theme: {
                 extend: {
                     colors: {
-                        "tertiary-container": "#271901",
-                        "tertiary": "#000000",
-                        "surface-tint": "#565e74",
-                        "on-error-container": "#93000a",
+                        "tertiary-container": "#e8f1dd",
+                        "tertiary": "#5c6f2b",
+                        "surface-tint": "#0f5c58",
+                        "on-error-container": "#7f1d1d",
                         "on-error": "#ffffff",
-                        "on-primary-container": "#7c839b",
-                        "inverse-primary": "#bec6e0",
-                        "primary-fixed": "#dae2fd",
-                        "secondary": "#0058be",
+                        "on-primary-container": "#063f3f",
+                        "inverse-primary": "#9edbd0",
+                        "primary-fixed": "#d9f1ea",
+                        "secondary": "#0c7c6b",
                         "on-primary": "#ffffff",
-                        "on-primary-fixed": "#131b2e",
-                        "surface": "#fcf8fa",
-                        "primary-container": "#131b2e",
-                        "secondary-fixed": "#d8e2ff",
-                        "surface-container-high": "#eae7e9",
-                        "on-secondary-fixed-variant": "#004395",
-                        "inverse-surface": "#303032",
-                        "error": "#ba1a1a",
-                        "surface-container-low": "#f6f3f5",
-                        "secondary-fixed-dim": "#adc6ff",
-                        "on-tertiary-container": "#98805d",
+                        "on-primary-fixed": "#062f2f",
+                        "surface": "#f7f9f4",
+                        "primary-container": "#d9f1ea",
+                        "secondary-fixed": "#caeee5",
+                        "surface-container-high": "#e7eee7",
+                        "on-secondary-fixed-variant": "#07564b",
+                        "inverse-surface": "#263230",
+                        "error": "#b4473f",
+                        "surface-container-low": "#f0f5ef",
+                        "secondary-fixed-dim": "#9edbd0",
+                        "on-tertiary-container": "#2d3b11",
                         "on-tertiary": "#ffffff",
-                        "surface-container-highest": "#e4e2e4",
-                        "secondary-container": "#2170e4",
-                        "tertiary-fixed": "#fcdeb5",
-                        "on-tertiary-fixed-variant": "#574425",
-                        "on-surface-variant": "#45464d",
-                        "surface-container": "#f0edef",
-                        "on-secondary-container": "#fefcff",
+                        "surface-container-highest": "#dfe8df",
+                        "secondary-container": "#bde9df",
+                        "tertiary-fixed": "#e8f1dd",
+                        "on-tertiary-fixed-variant": "#4a5f1f",
+                        "on-surface-variant": "#4c5a56",
+                        "surface-container": "#eaf1ea",
+                        "on-secondary-container": "#053f37",
                         "on-secondary": "#ffffff",
-                        "surface-bright": "#fcf8fa",
-                        "outline-variant": "#c6c6cd",
-                        "tertiary-fixed-dim": "#dec29a",
-                        "on-primary-fixed-variant": "#3f465c",
-                        "surface-dim": "#dcd9db",
-                        "primary": "#000000",
-                        "background": "#fcf8fa",
-                        "on-tertiary-fixed": "#271901",
-                        "surface-variant": "#e4e2e4",
-                        "on-surface": "#1b1b1d",
+                        "surface-bright": "#fbfdf8",
+                        "outline-variant": "#c6d3cc",
+                        "tertiary-fixed-dim": "#cadab8",
+                        "on-primary-fixed-variant": "#0b5b58",
+                        "surface-dim": "#d8e1d8",
+                        "primary": "#064848",
+                        "background": "#f4f8f1",
+                        "on-tertiary-fixed": "#223006",
+                        "surface-variant": "#e1e9e0",
+                        "on-surface": "#17211f",
                         "surface-container-lowest": "#ffffff",
-                        "primary-fixed-dim": "#bec6e0",
-                        "outline": "#76777d",
-                        "inverse-on-surface": "#f3f0f2",
-                        "error-container": "#ffdad6",
-                        "on-secondary-fixed": "#001a42",
-                        "on-background": "#1b1b1d"
+                        "primary-fixed-dim": "#afdcd3",
+                        "outline": "#6f8079",
+                        "inverse-on-surface": "#edf4ef",
+                        "error-container": "#ffe0dc",
+                        "on-secondary-fixed": "#00201b",
+                        "on-background": "#17211f"
                     },
                     borderRadius: {
-                        DEFAULT: "0.125rem",
-                        lg: "0.25rem",
-                        xl: "0.5rem",
-                        full: "0.75rem"
+                        DEFAULT: "0.5rem",
+                        lg: "0.875rem",
+                        xl: "1.5rem",
+                        full: "999px"
                     },
                     spacing: {
                         md: "16px",
@@ -109,45 +109,79 @@
         ::-webkit-scrollbar-thumb { background: #e4e2e4; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #c6c6cd; }
         .fill-icon { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .brand-mark {
+            background:
+                radial-gradient(circle at 34% 34%, rgba(255,255,255,0.92) 0 15%, transparent 16%),
+                linear-gradient(135deg, #064848, #0c7c6b 62%, #afe3c5);
+            box-shadow: 0 16px 32px rgba(6, 72, 72, 0.18);
+        }
+        .nav-island {
+            box-shadow: 0 24px 70px rgba(18, 42, 36, 0.10);
+            backdrop-filter: blur(18px);
+        }
+        .top-island {
+            box-shadow: 0 14px 44px rgba(18, 42, 36, 0.08);
+            backdrop-filter: blur(18px);
+        }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-background text-on-surface font-body-md text-body-md h-screen flex overflow-hidden antialiased">
     <!-- SideNavBar -->
-    <nav class="bg-surface-container-lowest border-r border-outline-variant h-screen left-0 w-64 flex flex-col justify-between py-lg z-20 flex-shrink-0">
+    <nav class="nav-island bg-surface-container-lowest/90 border border-outline-variant h-[calc(100vh-32px)] m-md rounded-[28px] left-0 w-64 flex flex-col justify-between py-lg z-20 flex-shrink-0 overflow-hidden">
         <div class="px-lg">
             <div class="flex items-center gap-sm mb-lg">
-                <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <div class="w-4 h-4 bg-surface-container-lowest rotate-45 transform"></div>
+                <div class="brand-mark w-10 h-10 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <div class="w-4 h-4 border-2 border-white/90 rounded-full"></div>
                 </div>
                 <div>
-                    <h1 class="font-headline-md text-headline-md font-extrabold text-primary">AkılAkışı</h1>
-                    <p class="font-label-caps text-label-caps text-on-surface-variant">Argüman Analizi Motoru</p>
+                    <h1 class="font-headline-md text-headline-md font-extrabold text-primary lowercase tracking-tight">logos</h1>
+                    <p class="font-label-caps text-label-caps text-on-surface-variant">Argüman Adası</p>
                 </div>
             </div>
             <ul class="space-y-sm">
                 <li>
-                    <a href="{{ url_for('pages.dashboard') }}" class="flex items-center gap-md px-md py-sm rounded-DEFAULT {% if request.endpoint == 'pages.dashboard' %}text-secondary font-bold border-r-4 border-secondary bg-surface-container-low{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
-                        <span class="material-symbols-outlined {% if request.endpoint == 'pages.dashboard' %}fill-icon{% endif %}">dashboard</span>
+                    <a href="{{ url_for('pages.dashboard') }}" class="flex items-center gap-md px-md py-sm rounded-lg {% if active_page == 'dashboard' %}text-primary font-bold bg-secondary-container shadow-sm{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
+                        <span class="material-symbols-outlined {% if active_page == 'dashboard' %}fill-icon{% endif %}">dashboard</span>
                         <span class="font-label-caps text-label-caps">Kontrol Paneli</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('pages.live_arena', debate_id=1) if not debates else url_for('pages.live_arena', debate_id=debates[0].id) }}" class="flex items-center gap-md px-md py-sm rounded-DEFAULT {% if request.endpoint == 'pages.live_arena' %}text-secondary font-bold border-r-4 border-secondary bg-surface-container-low{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
-                        <span class="material-symbols-outlined {% if request.endpoint == 'pages.live_arena' %}fill-icon{% endif %}">forum</span>
+                    {% if debates %}
+                    <a href="{{ url_for('pages.live_arena', debate_id=debates[0].id) }}" class="flex items-center gap-md px-md py-sm rounded-lg {% if active_page == 'live_arena' %}text-primary font-bold bg-secondary-container shadow-sm{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
+                        <span class="material-symbols-outlined {% if active_page == 'live_arena' %}fill-icon{% endif %}">forum</span>
                         <span class="font-label-caps text-label-caps">Canlı Tartışma</span>
                     </a>
+                    {% else %}
+                    <span class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant/50 cursor-not-allowed">
+                        <span class="material-symbols-outlined">forum</span>
+                        <span class="font-label-caps text-label-caps">Canlı Tartışma</span>
+                    </span>
+                    {% endif %}
                 </li>
                 <li>
-                    <a href="{{ url_for('pages.agent_management') }}" class="flex items-center gap-md px-md py-sm rounded-DEFAULT {% if request.endpoint == 'pages.agent_management' %}text-secondary font-bold border-r-4 border-secondary bg-surface-container-low{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
-                        <span class="material-symbols-outlined {% if request.endpoint == 'pages.agent_management' %}fill-icon{% endif %}">smart_toy</span>
+                    <a href="{{ url_for('pages.agent_management') }}" class="flex items-center gap-md px-md py-sm rounded-lg {% if active_page == 'agent_management' %}text-primary font-bold bg-secondary-container shadow-sm{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
+                        <span class="material-symbols-outlined {% if active_page == 'agent_management' %}fill-icon{% endif %}">smart_toy</span>
                         <span class="font-label-caps text-label-caps">Ajan Yönetimi</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('pages.pipeline_analytics') }}" class="flex items-center gap-md px-md py-sm rounded-DEFAULT {% if request.endpoint == 'pages.pipeline_analytics' %}text-secondary font-bold border-r-4 border-secondary bg-surface-container-low{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
-                        <span class="material-symbols-outlined {% if request.endpoint == 'pages.pipeline_analytics' %}fill-icon{% endif %}">analytics</span>
+                    <a href="{{ url_for('pages.pipeline_analytics') }}" class="flex items-center gap-md px-md py-sm rounded-lg {% if active_page == 'pipeline_analytics' %}text-primary font-bold bg-secondary-container shadow-sm{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
+                        <span class="material-symbols-outlined {% if active_page == 'pipeline_analytics' %}fill-icon{% endif %}">analytics</span>
                         <span class="font-label-caps text-label-caps">Pipeline Analizleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('pages.modernbert_lab') }}" class="flex items-center gap-md px-md py-sm rounded-lg {% if active_page == 'modernbert_lab' %}text-primary font-bold bg-secondary-container shadow-sm{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
+                        <span class="material-symbols-outlined {% if active_page == 'modernbert_lab' %}fill-icon{% endif %}">science</span>
+                        <span class="font-label-caps text-label-caps">ModernBERT Lab</span>
+                    </a>
+                </li>
+                <li class="pt-sm">
+                    <a href="{{ url_for('pages.fact_check_lab') }}" class="relative flex items-center gap-md px-md py-sm rounded-xl border {% if active_page == 'fact_check_lab' %}text-[#064848] font-bold border-[#0c7c6b]/30 bg-[#e2f6ed] shadow-sm{% else %}text-on-surface-variant border-[#0c7c6b]/20 bg-[#f5fbf7] hover:bg-[#e2f6ed] transition-all hover:translate-x-1 duration-200{% endif %}">
+                        <span class="material-symbols-outlined {% if active_page == 'fact_check_lab' %}fill-icon{% endif %}">fact_check</span>
+                        <span class="font-label-caps text-label-caps">Teyit Lab</span>
+                        <span class="ml-auto px-xs py-[2px] rounded-full bg-[#064848] text-white font-label-caps text-[9px]">BETA</span>
                     </a>
                 </li>
             </ul>
@@ -155,13 +189,13 @@
         <div class="px-lg">
             <ul class="space-y-sm border-t border-outline-variant pt-lg">
                 <li>
-                    <a href="#" class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200">
+                    <a href="https://github.com/mfeyiz/Debate-MultiAgent" target="_blank" class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200">
                         <span class="material-symbols-outlined">help_outline</span>
                         <span class="font-label-caps text-label-caps">Destek</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200">
+                    <a href="{{ url_for('pages.pipeline_analytics') }}" class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200">
                         <span class="material-symbols-outlined">terminal</span>
                         <span class="font-label-caps text-label-caps">Günlükler</span>
                     </a>
@@ -173,11 +207,12 @@
     <!-- Main Wrapper -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden bg-background">
         <!-- TopAppBar -->
-        <header class="bg-surface border-b border-outline-variant flex justify-between items-center w-full px-lg h-xl flex-shrink-0 z-10 relative">
+        <header class="top-island bg-surface/80 border border-outline-variant flex justify-between items-center mx-md mt-md rounded-[24px] px-lg h-xl flex-shrink-0 z-10 relative">
             <div class="flex-1 max-w-md flex items-center">
-                <div class="relative w-full">
+                <div class="relative w-full" id="global-search-container">
                     <span class="material-symbols-outlined absolute left-sm top-1/2 transform -translate-y-1/2 text-on-surface-variant">search</span>
-                    <input type="text" placeholder="Argüman, günlük veya varlık ara..." class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT pl-[36px] pr-sm py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors h-10">
+                    <input type="text" id="global-search-input" placeholder="Tartışma veya ajan ara..." class="w-full bg-surface-container-lowest/90 border border-outline-variant rounded-full pl-[36px] pr-sm py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors h-10">
+                    <div id="global-search-results" class="absolute top-full left-0 right-0 mt-sm bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg hidden z-50 max-h-64 overflow-y-auto"></div>
                 </div>
             </div>
             <div class="flex items-center gap-lg">
@@ -194,7 +229,7 @@
                     </button>
                 </div>
                 <div class="w-10 h-10 rounded-full border border-outline-variant overflow-hidden cursor-pointer hover:border-outline transition-colors">
-                    <img src="https://ui-avatars.com/api/?name=Admin&background=131b2e&color=fff" alt="User Profile" class="w-full h-full object-cover">
+                    <img src="https://ui-avatars.com/api/?name=Logos&background=064848&color=fff" alt="User Profile" class="w-full h-full object-cover">
                 </div>
             </div>
         </header>
@@ -205,6 +240,109 @@
         </main>
     </div>
 
+    <script>
+    // Global search functionality
+    (function() {
+        const searchInput = document.getElementById('global-search-input');
+        const searchResults = document.getElementById('global-search-results');
+        if (!searchInput || !searchResults) return;
+
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim().toLowerCase();
+            if (query.length < 2) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+            searchTimeout = setTimeout(() => performSearch(query), 300);
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchResults.classList.add('hidden');
+                searchInput.blur();
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!document.getElementById('global-search-container').contains(e.target)) {
+                searchResults.classList.add('hidden');
+            }
+        });
+
+        async function performSearch(query) {
+            try {
+                const [debatesRes, agentsRes] = await Promise.all([
+                    fetch('/api/debates'),
+                    fetch('/api/agents')
+                ]);
+                const debates = await debatesRes.json();
+                const agents = await agentsRes.json();
+
+                const matchedDebates = (debates || []).filter(d =>
+                    d.topic.toLowerCase().includes(query) ||
+                    d.status.toLowerCase().includes(query)
+                ).slice(0, 4);
+
+                const matchedAgents = (agents || []).filter(a =>
+                    a.name.toLowerCase().includes(query) ||
+                    a.role.toLowerCase().includes(query)
+                ).slice(0, 3);
+
+                renderResults(matchedDebates, matchedAgents);
+            } catch (err) {
+                console.error('Search error:', err);
+            }
+        }
+
+        function renderResults(debates, agents) {
+            if (!debates.length && !agents.length) {
+                searchResults.innerHTML = '<div class="p-md text-on-surface-variant font-body-md text-body-md">Sonuç bulunamadı</div>';
+                searchResults.classList.remove('hidden');
+                return;
+            }
+
+            let html = '';
+            if (debates.length) {
+                html += '<div class="p-sm border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant">Tartışmalar</div>';
+                debates.forEach(d => {
+                    html += `
+                        <a href="/debate/${d.id}" class="flex items-center gap-sm p-md hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">forum</span>
+                            <div class="flex-1 min-w-0">
+                                <div class="font-body-md text-body-md text-on-surface truncate">${escapeHtml(d.topic)}</div>
+                                <div class="font-body-md text-[12px] text-on-surface-variant">${d.status.toUpperCase()} · Tur ${d.current_round}/${d.max_rounds}</div>
+                            </div>
+                        </a>
+                    `;
+                });
+            }
+            if (agents.length) {
+                html += '<div class="p-sm border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant">Ajanlar</div>';
+                agents.forEach(a => {
+                    html += `
+                        <a href="/agents" class="flex items-center gap-sm p-md hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">smart_toy</span>
+                            <div class="flex-1 min-w-0">
+                                <div class="font-body-md text-body-md text-on-surface truncate">${escapeHtml(a.name)}</div>
+                                <div class="font-body-md text-[12px] text-on-surface-variant">${a.role.toUpperCase()}</div>
+                            </div>
+                        </a>
+                    `;
+                });
+            }
+            searchResults.innerHTML = html;
+            searchResults.classList.remove('hidden');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    })();
+    </script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

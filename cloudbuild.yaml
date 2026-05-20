@@ -26,6 +26,7 @@ steps:
       - "get-credentials"
       - "${_CLUSTER}"
       - "--region=${_REGION}"
+      - "--project=${PROJECT_ID}"
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "kubectl"
@@ -45,7 +46,7 @@ steps:
       - "deployment/logicflow-app"
       - "-n"
       - "logicflow"
-      - "--timeout=300s"
+      - "--timeout=600s"
 
 substitutions:
   _REGION: us-central1

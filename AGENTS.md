@@ -15,7 +15,7 @@ uv sync
 # Run development server
 uv run python main.py
 
-# Server starts on http://127.0.0.1:5000 with Flask debug reloader
+# Server starts on http://127.0.0.1:5000 with Uvicorn
 ```
 
 ## Adding Real ModernBERT Weights
@@ -32,6 +32,24 @@ uv run python main.py
    ```
 2. Optionally change `DEFAULT_MODEL` to any OpenRouter-supported model (e.g. `anthropic/claude-3-opus`, `google/gemini-1.5-pro`).
 3. Restart the server. The mock fallback automatically disables itself when a real key is present.
+
+## Enhanced Fact-Check APIs (Optional, Free)
+
+The Teyit Laboratuvarı can verify claims against multiple free APIs:
+
+1. **Google Fact Check Tools API** — Global claim reviews from IFCN-certified outlets.
+   - Get a key from https://developers.google.com/fact-check/tools/api
+   - Add to `.env`: `GOOGLE_FACTCHECK_API_KEY=...`
+
+2. **TCMB EVDS API** — Real-time numeric verification of economic claims (exchange rates, inflation, interest).
+   - Register free at https://evds2.tcmb.gov.tr
+   - Add to `.env`: `TCMB_EVDS_API_KEY=...`
+
+3. **TÜİK API** — Official Turkish statistical bulletins.
+   - Visit https://data.tuik.gov.tr
+   - Add to `.env`: `TUIK_API_KEY=...` (many endpoints work without a key)
+
+All three fall back gracefully when keys are missing.
 
 ## Database
 
@@ -52,7 +70,7 @@ The app will re-seed two default agents (Agent Alpha & Agent Beta) on the next s
 
 ## Project Structure Decisions
 
-- **Flask (sync) + Pydantic-AI**: Pydantic-AI agents expose a synchronous `run_sync()` method, which fits Flask's request/response model without async complexity.
+- **FastAPI + Pydantic-AI**: Pydantic-AI agents expose a synchronous `run_sync()` method; FastAPI runs the existing sync service layer behind ASGI endpoints.
 - **SSE instead of WebSockets**: SSE is unidirectional (server → client), requires no extra libraries, and is sufficient for streaming debate events.
 - **Jinja2 + Tailwind CDN**: Keeps the frontend lightweight and avoids a build step. The Tailwind config from the designs is inlined in `base.html`.
 - **MessageVersion table**: Supports versioning natively. When an agent regenerates based on feedback, a new `MessageVersion` row is created rather than overwriting history.
@@ -61,4 +79,4 @@ The app will re-seed two default agents (Agent Alpha & Agent Beta) on the next s
 
 - **Missing Authentication header (401)**: `OPENROUTER_API_KEY` is empty or invalid. The app falls back to mock mode, but if you see this error it means the key was set incorrectly.
 - **Database locked**: SQLite does not support high concurrency. For production, migrate to PostgreSQL.
-- **Port already in use**: Change the port in `main.py` (`app.run(debug=True, port=5001)`).
+- **Port already in use**: Change `PORT` in `.env` or the shell before running `uv run python main.py`.

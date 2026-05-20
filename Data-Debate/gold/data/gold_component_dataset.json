@@ -1,0 +1,1226 @@
+[
+  {
+    "id": 1,
+    "data": {
+      "text": "Uzaktan çalışma verimliliği artırır. Çünkü çalışanlar ofis içi kesintilerden uzaklaştığında derin çalışma süresi artar. Stanford kaynaklı bir saha deneyi, evden çalışan ekiplerde tamamlanan görev sayısının belirgin biçimde yükseldiğini göstermiştir. Buna rağmen uzaktan çalışma yeni başlayan çalışanlarda mentorluk temasını azalttığı için öğrenme hızını düşürebilir. Takım içi koordinasyon zayıfladığında kararların gecikmesi verimlilik kazancını azaltır. Uzaktan çalışanların kullandığı masa sandalye modelleri şirketlerin satın alma politikalarına göre değişir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Uzaktan çalışma verimliliği artırır.",
+          "start": 0,
+          "end": 36
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Çünkü çalışanlar ofis içi kesintilerden uzaklaştığında derin çalışma süresi artar.",
+          "start": 37,
+          "end": 119
+        },
+        {
+          "id": "e2",
+          "text": "Stanford kaynaklı bir saha deneyi, evden çalışan ekiplerde tamamlanan görev sayısının belirgin biçimde yükseldiğini göstermiştir.",
+          "start": 120,
+          "end": 249
+        },
+        {
+          "id": "e3",
+          "text": "Buna rağmen uzaktan çalışma yeni başlayan çalışanlarda mentorluk temasını azalttığı için öğrenme hızını düşürebilir.",
+          "start": 250,
+          "end": 366
+        },
+        {
+          "id": "e4",
+          "text": "Takım içi koordinasyon zayıfladığında kararların gecikmesi verimlilik kazancını azaltır.",
+          "start": 367,
+          "end": 455
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 2,
+    "data": {
+      "text": "Kahve tüketimi büyük şehirlerde son yıllarda daha çeşitli hale gelmiştir. Uzaktan çalışma verimliliği artırır. Buna rağmen uzaktan çalışma yeni başlayan çalışanlarda mentorluk temasını azalttığı için öğrenme hızını düşürebilir. Çünkü çalışanlar ofis içi kesintilerden uzaklaştığında derin çalışma süresi artar.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Uzaktan çalışma verimliliği artırır.",
+          "start": 74,
+          "end": 110
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Buna rağmen uzaktan çalışma yeni başlayan çalışanlarda mentorluk temasını azalttığı için öğrenme hızını düşürebilir.",
+          "start": 111,
+          "end": 227
+        },
+        {
+          "id": "e2",
+          "text": "Çünkü çalışanlar ofis içi kesintilerden uzaklaştığında derin çalışma süresi artar.",
+          "start": 228,
+          "end": 310
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 3,
+    "data": {
+      "text": "Çünkü çalışanlar ofis içi kesintilerden uzaklaştığında derin çalışma süresi artar. Uzaktan çalışma verimliliği artırır. Uzaktan çalışanların kullandığı masa sandalye modelleri şirketlerin satın alma politikalarına göre değişir. Takım içi koordinasyon zayıfladığında kararların gecikmesi verimlilik kazancını azaltır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Uzaktan çalışma verimliliği artırır.",
+          "start": 83,
+          "end": 119
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Çünkü çalışanlar ofis içi kesintilerden uzaklaştığında derin çalışma süresi artar.",
+          "start": 0,
+          "end": 82
+        },
+        {
+          "id": "e2",
+          "text": "Takım içi koordinasyon zayıfladığında kararların gecikmesi verimlilik kazancını azaltır.",
+          "start": 228,
+          "end": 316
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 4,
+    "data": {
+      "text": "Sosyal medya gençlerin ruh sağlığını iyileştirir. Destek gruplarına erişim bulan gençler yalnızlık duygusunu azaltan güvenli topluluklar kurabilir. Kriz anında yardım hatlarına yönlendiren kampanyalar bazı gençlerin profesyonel destek almasını kolaylaştırır. Ancak yoğun sosyal medya kullanımı uyku düzenini bozarak kaygı belirtilerini artırabilir. Sürekli karşılaştırma kültürü beden algısı ve özsaygı üzerinde olumsuz baskı oluşturur. Sosyal medya uygulamalarının arayüz renkleri marka kimliğine göre sık sık güncellenir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Sosyal medya gençlerin ruh sağlığını iyileştirir.",
+          "start": 0,
+          "end": 49
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Destek gruplarına erişim bulan gençler yalnızlık duygusunu azaltan güvenli topluluklar kurabilir.",
+          "start": 50,
+          "end": 147
+        },
+        {
+          "id": "e2",
+          "text": "Kriz anında yardım hatlarına yönlendiren kampanyalar bazı gençlerin profesyonel destek almasını kolaylaştırır.",
+          "start": 148,
+          "end": 258
+        },
+        {
+          "id": "e3",
+          "text": "Ancak yoğun sosyal medya kullanımı uyku düzenini bozarak kaygı belirtilerini artırabilir.",
+          "start": 259,
+          "end": 348
+        },
+        {
+          "id": "e4",
+          "text": "Sürekli karşılaştırma kültürü beden algısı ve özsaygı üzerinde olumsuz baskı oluşturur.",
+          "start": 349,
+          "end": 436
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 5,
+    "data": {
+      "text": "Kış sporları turizmi yüksek rakımlı bölgelerde konaklama talebini artırır. Sosyal medya gençlerin ruh sağlığını iyileştirir. Ancak yoğun sosyal medya kullanımı uyku düzenini bozarak kaygı belirtilerini artırabilir. Destek gruplarına erişim bulan gençler yalnızlık duygusunu azaltan güvenli topluluklar kurabilir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Sosyal medya gençlerin ruh sağlığını iyileştirir.",
+          "start": 75,
+          "end": 124
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ancak yoğun sosyal medya kullanımı uyku düzenini bozarak kaygı belirtilerini artırabilir.",
+          "start": 125,
+          "end": 214
+        },
+        {
+          "id": "e2",
+          "text": "Destek gruplarına erişim bulan gençler yalnızlık duygusunu azaltan güvenli topluluklar kurabilir.",
+          "start": 215,
+          "end": 312
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 6,
+    "data": {
+      "text": "Destek gruplarına erişim bulan gençler yalnızlık duygusunu azaltan güvenli topluluklar kurabilir. Sosyal medya gençlerin ruh sağlığını iyileştirir. Sosyal medya uygulamalarının arayüz renkleri marka kimliğine göre sık sık güncellenir. Sürekli karşılaştırma kültürü beden algısı ve özsaygı üzerinde olumsuz baskı oluşturur.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Sosyal medya gençlerin ruh sağlığını iyileştirir.",
+          "start": 98,
+          "end": 147
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Destek gruplarına erişim bulan gençler yalnızlık duygusunu azaltan güvenli topluluklar kurabilir.",
+          "start": 0,
+          "end": 97
+        },
+        {
+          "id": "e2",
+          "text": "Sürekli karşılaştırma kültürü beden algısı ve özsaygı üzerinde olumsuz baskı oluşturur.",
+          "start": 235,
+          "end": 322
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 7,
+    "data": {
+      "text": "Elektrikli araçlar çevre kirliliğini azaltır. Egzoz gazı üretmedikleri için yoğun şehir merkezlerinde yerel hava kalitesini iyileştirirler. Yenilenebilir elektrikle şarj edilen araçların kullanım aşamasındaki karbon salımı fosil yakıtlı araçlardan daha düşüktür. Fakat batarya üretiminde kullanılan madencilik süreçleri su kaynakları ve ekosistemler üzerinde baskı yaratabilir. Elektrik üretimi kömüre dayalıysa toplam emisyon avantajı önemli ölçüde azalır. Elektrikli araçlarda ekran boyutu ve iç aydınlatma tercihleri marka segmentine göre değişir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Elektrikli araçlar çevre kirliliğini azaltır.",
+          "start": 0,
+          "end": 45
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Egzoz gazı üretmedikleri için yoğun şehir merkezlerinde yerel hava kalitesini iyileştirirler.",
+          "start": 46,
+          "end": 139
+        },
+        {
+          "id": "e2",
+          "text": "Yenilenebilir elektrikle şarj edilen araçların kullanım aşamasındaki karbon salımı fosil yakıtlı araçlardan daha düşüktür.",
+          "start": 140,
+          "end": 262
+        },
+        {
+          "id": "e3",
+          "text": "Fakat batarya üretiminde kullanılan madencilik süreçleri su kaynakları ve ekosistemler üzerinde baskı yaratabilir.",
+          "start": 263,
+          "end": 377
+        },
+        {
+          "id": "e4",
+          "text": "Elektrik üretimi kömüre dayalıysa toplam emisyon avantajı önemli ölçüde azalır.",
+          "start": 378,
+          "end": 457
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 8,
+    "data": {
+      "text": "Müze ziyaret saatleri bayram dönemlerinde yerel yönetimler tarafından yeniden düzenlenebilir. Elektrikli araçlar çevre kirliliğini azaltır. Fakat batarya üretiminde kullanılan madencilik süreçleri su kaynakları ve ekosistemler üzerinde baskı yaratabilir. Egzoz gazı üretmedikleri için yoğun şehir merkezlerinde yerel hava kalitesini iyileştirirler.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Elektrikli araçlar çevre kirliliğini azaltır.",
+          "start": 94,
+          "end": 139
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Fakat batarya üretiminde kullanılan madencilik süreçleri su kaynakları ve ekosistemler üzerinde baskı yaratabilir.",
+          "start": 140,
+          "end": 254
+        },
+        {
+          "id": "e2",
+          "text": "Egzoz gazı üretmedikleri için yoğun şehir merkezlerinde yerel hava kalitesini iyileştirirler.",
+          "start": 255,
+          "end": 348
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 9,
+    "data": {
+      "text": "Egzoz gazı üretmedikleri için yoğun şehir merkezlerinde yerel hava kalitesini iyileştirirler. Elektrikli araçlar çevre kirliliğini azaltır. Elektrikli araçlarda ekran boyutu ve iç aydınlatma tercihleri marka segmentine göre değişir. Elektrik üretimi kömüre dayalıysa toplam emisyon avantajı önemli ölçüde azalır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Elektrikli araçlar çevre kirliliğini azaltır.",
+          "start": 94,
+          "end": 139
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Egzoz gazı üretmedikleri için yoğun şehir merkezlerinde yerel hava kalitesini iyileştirirler.",
+          "start": 0,
+          "end": 93
+        },
+        {
+          "id": "e2",
+          "text": "Elektrik üretimi kömüre dayalıysa toplam emisyon avantajı önemli ölçüde azalır.",
+          "start": 233,
+          "end": 312
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 10,
+    "data": {
+      "text": "Okullarda telefon kullanımı akademik başarıyı düşürür. Ders sırasında gelen bildirimler öğrencinin dikkatini bölerek konu takibini zorlaştırır. Sınav haftalarında ekran süresi yükselen öğrencilerin çalışma süresi kısalabilir. Buna karşın öğretmen denetiminde kullanılan telefonlar hızlı araştırma ve etkileşimli ölçme etkinliklerini destekleyebilir. Erişilebilirlik uygulamaları bazı öğrencilerin not alma ve okuma süreçlerini kolaylaştırır. Okul kantinlerinde satılan sandviç çeşitleri öğrencilerin öğle yemeği tercihlerini etkiler.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Okullarda telefon kullanımı akademik başarıyı düşürür.",
+          "start": 0,
+          "end": 54
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ders sırasında gelen bildirimler öğrencinin dikkatini bölerek konu takibini zorlaştırır.",
+          "start": 55,
+          "end": 143
+        },
+        {
+          "id": "e2",
+          "text": "Sınav haftalarında ekran süresi yükselen öğrencilerin çalışma süresi kısalabilir.",
+          "start": 144,
+          "end": 225
+        },
+        {
+          "id": "e3",
+          "text": "Buna karşın öğretmen denetiminde kullanılan telefonlar hızlı araştırma ve etkileşimli ölçme etkinliklerini destekleyebilir.",
+          "start": 226,
+          "end": 349
+        },
+        {
+          "id": "e4",
+          "text": "Erişilebilirlik uygulamaları bazı öğrencilerin not alma ve okuma süreçlerini kolaylaştırır.",
+          "start": 350,
+          "end": 441
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 11,
+    "data": {
+      "text": "Deniz fenerleri kıyı güvenliği açısından tarihsel olarak önemli yapılar arasında yer alır. Okullarda telefon kullanımı akademik başarıyı düşürür. Buna karşın öğretmen denetiminde kullanılan telefonlar hızlı araştırma ve etkileşimli ölçme etkinliklerini destekleyebilir. Ders sırasında gelen bildirimler öğrencinin dikkatini bölerek konu takibini zorlaştırır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Okullarda telefon kullanımı akademik başarıyı düşürür.",
+          "start": 91,
+          "end": 145
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Buna karşın öğretmen denetiminde kullanılan telefonlar hızlı araştırma ve etkileşimli ölçme etkinliklerini destekleyebilir.",
+          "start": 146,
+          "end": 269
+        },
+        {
+          "id": "e2",
+          "text": "Ders sırasında gelen bildirimler öğrencinin dikkatini bölerek konu takibini zorlaştırır.",
+          "start": 270,
+          "end": 358
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 12,
+    "data": {
+      "text": "Ders sırasında gelen bildirimler öğrencinin dikkatini bölerek konu takibini zorlaştırır. Okullarda telefon kullanımı akademik başarıyı düşürür. Okul kantinlerinde satılan sandviç çeşitleri öğrencilerin öğle yemeği tercihlerini etkiler. Erişilebilirlik uygulamaları bazı öğrencilerin not alma ve okuma süreçlerini kolaylaştırır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Okullarda telefon kullanımı akademik başarıyı düşürür.",
+          "start": 89,
+          "end": 143
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ders sırasında gelen bildirimler öğrencinin dikkatini bölerek konu takibini zorlaştırır.",
+          "start": 0,
+          "end": 88
+        },
+        {
+          "id": "e2",
+          "text": "Erişilebilirlik uygulamaları bazı öğrencilerin not alma ve okuma süreçlerini kolaylaştırır.",
+          "start": 236,
+          "end": 327
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 13,
+    "data": {
+      "text": "Plastik poşet ücretleri çevre kirliliğini azaltır. Ücret uygulaması tüketicileri bez çanta kullanmaya yönelttiği için tek kullanımlık poşet talebi düşer. Market verileri poşet satışlarının ücretlendirme sonrasında belirgin biçimde azaldığını göstermektedir. Ancak tüketiciler daha kalın çöp poşetleri satın almaya başlarsa toplam plastik tüketimi beklenenden az düşebilir. Denetim zayıf olduğunda küçük işletmeler ücretsiz poşet vermeyi sürdürerek politikanın etkisini azaltır. Plastik poşetlerin renkleri perakende markalarının tasarım tercihlerine göre değişebilir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Plastik poşet ücretleri çevre kirliliğini azaltır.",
+          "start": 0,
+          "end": 50
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ücret uygulaması tüketicileri bez çanta kullanmaya yönelttiği için tek kullanımlık poşet talebi düşer.",
+          "start": 51,
+          "end": 153
+        },
+        {
+          "id": "e2",
+          "text": "Market verileri poşet satışlarının ücretlendirme sonrasında belirgin biçimde azaldığını göstermektedir.",
+          "start": 154,
+          "end": 257
+        },
+        {
+          "id": "e3",
+          "text": "Ancak tüketiciler daha kalın çöp poşetleri satın almaya başlarsa toplam plastik tüketimi beklenenden az düşebilir.",
+          "start": 258,
+          "end": 372
+        },
+        {
+          "id": "e4",
+          "text": "Denetim zayıf olduğunda küçük işletmeler ücretsiz poşet vermeyi sürdürerek politikanın etkisini azaltır.",
+          "start": 373,
+          "end": 477
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 14,
+    "data": {
+      "text": "Futbol kulüplerinin forma renkleri taraftar kimliğinde güçlü bir semboldür. Plastik poşet ücretleri çevre kirliliğini azaltır. Ancak tüketiciler daha kalın çöp poşetleri satın almaya başlarsa toplam plastik tüketimi beklenenden az düşebilir. Ücret uygulaması tüketicileri bez çanta kullanmaya yönelttiği için tek kullanımlık poşet talebi düşer.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Plastik poşet ücretleri çevre kirliliğini azaltır.",
+          "start": 76,
+          "end": 126
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ancak tüketiciler daha kalın çöp poşetleri satın almaya başlarsa toplam plastik tüketimi beklenenden az düşebilir.",
+          "start": 127,
+          "end": 241
+        },
+        {
+          "id": "e2",
+          "text": "Ücret uygulaması tüketicileri bez çanta kullanmaya yönelttiği için tek kullanımlık poşet talebi düşer.",
+          "start": 242,
+          "end": 344
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 15,
+    "data": {
+      "text": "Ücret uygulaması tüketicileri bez çanta kullanmaya yönelttiği için tek kullanımlık poşet talebi düşer. Plastik poşet ücretleri çevre kirliliğini azaltır. Plastik poşetlerin renkleri perakende markalarının tasarım tercihlerine göre değişebilir. Denetim zayıf olduğunda küçük işletmeler ücretsiz poşet vermeyi sürdürerek politikanın etkisini azaltır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Plastik poşet ücretleri çevre kirliliğini azaltır.",
+          "start": 103,
+          "end": 153
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ücret uygulaması tüketicileri bez çanta kullanmaya yönelttiği için tek kullanımlık poşet talebi düşer.",
+          "start": 0,
+          "end": 102
+        },
+        {
+          "id": "e2",
+          "text": "Denetim zayıf olduğunda küçük işletmeler ücretsiz poşet vermeyi sürdürerek politikanın etkisini azaltır.",
+          "start": 244,
+          "end": 348
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 16,
+    "data": {
+      "text": "Yapay zeka eğitimde kaliteyi artırır. Öğrencinin eksiklerini hızlı tespit eden sistemler öğretmene kişiselleştirilmiş alıştırma önerileri sunar. Anında geri bildirim alan öğrenciler hatalarını sınav dönemini beklemeden düzeltebilir. Yanlış veya önyargılı veriyle eğitilen sistemler öğrenciyi hatalı yönlendirebilir. Aşırı otomasyon öğretmenin pedagojik sezgisini geri plana iterse öğrenme deneyimi zayıflar. Yapay zeka araçlarının lisans ücretleri kurumların bütçe planına göre farklı ödeme dönemlerine ayrılır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Yapay zeka eğitimde kaliteyi artırır.",
+          "start": 0,
+          "end": 37
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Öğrencinin eksiklerini hızlı tespit eden sistemler öğretmene kişiselleştirilmiş alıştırma önerileri sunar.",
+          "start": 38,
+          "end": 144
+        },
+        {
+          "id": "e2",
+          "text": "Anında geri bildirim alan öğrenciler hatalarını sınav dönemini beklemeden düzeltebilir.",
+          "start": 145,
+          "end": 232
+        },
+        {
+          "id": "e3",
+          "text": "Yanlış veya önyargılı veriyle eğitilen sistemler öğrenciyi hatalı yönlendirebilir.",
+          "start": 233,
+          "end": 315
+        },
+        {
+          "id": "e4",
+          "text": "Aşırı otomasyon öğretmenin pedagojik sezgisini geri plana iterse öğrenme deneyimi zayıflar.",
+          "start": 316,
+          "end": 407
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 17,
+    "data": {
+      "text": "Zeytinyağı üretiminde hasat zamanı ürün aromasını etkileyen faktörlerden biridir. Yapay zeka eğitimde kaliteyi artırır. Yanlış veya önyargılı veriyle eğitilen sistemler öğrenciyi hatalı yönlendirebilir. Öğrencinin eksiklerini hızlı tespit eden sistemler öğretmene kişiselleştirilmiş alıştırma önerileri sunar.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Yapay zeka eğitimde kaliteyi artırır.",
+          "start": 82,
+          "end": 119
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Yanlış veya önyargılı veriyle eğitilen sistemler öğrenciyi hatalı yönlendirebilir.",
+          "start": 120,
+          "end": 202
+        },
+        {
+          "id": "e2",
+          "text": "Öğrencinin eksiklerini hızlı tespit eden sistemler öğretmene kişiselleştirilmiş alıştırma önerileri sunar.",
+          "start": 203,
+          "end": 309
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 18,
+    "data": {
+      "text": "Öğrencinin eksiklerini hızlı tespit eden sistemler öğretmene kişiselleştirilmiş alıştırma önerileri sunar. Yapay zeka eğitimde kaliteyi artırır. Yapay zeka araçlarının lisans ücretleri kurumların bütçe planına göre farklı ödeme dönemlerine ayrılır. Aşırı otomasyon öğretmenin pedagojik sezgisini geri plana iterse öğrenme deneyimi zayıflar.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Yapay zeka eğitimde kaliteyi artırır.",
+          "start": 107,
+          "end": 144
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Öğrencinin eksiklerini hızlı tespit eden sistemler öğretmene kişiselleştirilmiş alıştırma önerileri sunar.",
+          "start": 0,
+          "end": 106
+        },
+        {
+          "id": "e2",
+          "text": "Aşırı otomasyon öğretmenin pedagojik sezgisini geri plana iterse öğrenme deneyimi zayıflar.",
+          "start": 249,
+          "end": 340
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 19,
+    "data": {
+      "text": "Haftada dört gün çalışma şirket performansını artırır. Daha kısa çalışma haftası tükenmişliği azalttığında çalışanların odaklanma kalitesi yükselir. Pilot uygulamalarda bazı ekipler aynı çıktıyı daha az toplantıyla üretebildiğini raporlamıştır. Müşteri desteği kesintisiz hizmet gerektiriyorsa çalışma gününün azalması yanıt sürelerini uzatabilir. Üretim hattında vardiya planı değişmezse aynı hacmi korumak için ek maliyet doğabilir. Dört günlük modelde izin takvimi insan kaynakları yazılımında farklı renklerle gösterilebilir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Haftada dört gün çalışma şirket performansını artırır.",
+          "start": 0,
+          "end": 54
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Daha kısa çalışma haftası tükenmişliği azalttığında çalışanların odaklanma kalitesi yükselir.",
+          "start": 55,
+          "end": 148
+        },
+        {
+          "id": "e2",
+          "text": "Pilot uygulamalarda bazı ekipler aynı çıktıyı daha az toplantıyla üretebildiğini raporlamıştır.",
+          "start": 149,
+          "end": 244
+        },
+        {
+          "id": "e3",
+          "text": "Müşteri desteği kesintisiz hizmet gerektiriyorsa çalışma gününün azalması yanıt sürelerini uzatabilir.",
+          "start": 245,
+          "end": 347
+        },
+        {
+          "id": "e4",
+          "text": "Üretim hattında vardiya planı değişmezse aynı hacmi korumak için ek maliyet doğabilir.",
+          "start": 348,
+          "end": 434
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 20,
+    "data": {
+      "text": "Klasik gitar tellerinin malzemesi müzisyenin ton tercihine göre seçilir. Haftada dört gün çalışma şirket performansını artırır. Müşteri desteği kesintisiz hizmet gerektiriyorsa çalışma gününün azalması yanıt sürelerini uzatabilir. Daha kısa çalışma haftası tükenmişliği azalttığında çalışanların odaklanma kalitesi yükselir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Haftada dört gün çalışma şirket performansını artırır.",
+          "start": 73,
+          "end": 127
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Müşteri desteği kesintisiz hizmet gerektiriyorsa çalışma gününün azalması yanıt sürelerini uzatabilir.",
+          "start": 128,
+          "end": 230
+        },
+        {
+          "id": "e2",
+          "text": "Daha kısa çalışma haftası tükenmişliği azalttığında çalışanların odaklanma kalitesi yükselir.",
+          "start": 231,
+          "end": 324
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 21,
+    "data": {
+      "text": "Daha kısa çalışma haftası tükenmişliği azalttığında çalışanların odaklanma kalitesi yükselir. Haftada dört gün çalışma şirket performansını artırır. Dört günlük modelde izin takvimi insan kaynakları yazılımında farklı renklerle gösterilebilir. Üretim hattında vardiya planı değişmezse aynı hacmi korumak için ek maliyet doğabilir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Haftada dört gün çalışma şirket performansını artırır.",
+          "start": 94,
+          "end": 148
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Daha kısa çalışma haftası tükenmişliği azalttığında çalışanların odaklanma kalitesi yükselir.",
+          "start": 0,
+          "end": 93
+        },
+        {
+          "id": "e2",
+          "text": "Üretim hattında vardiya planı değişmezse aynı hacmi korumak için ek maliyet doğabilir.",
+          "start": 244,
+          "end": 330
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 22,
+    "data": {
+      "text": "Toplu taşıma yatırımları trafik yoğunluğunu azaltır. Güvenilir metro ve otobüs hatları özel araç kullanma ihtiyacını azaltarak ana arterleri rahatlatır. Aktarma süreleri kısaldığında yolcular günlük ulaşımda otomobil yerine toplu taşımayı tercih eder. Hatlar düşük talep bölgelerine plansız yapılırsa yolcu çekmeden kamu bütçesinde yük oluşturabilir. Park alanı ve ring bağlantısı kurulmadığında banliyö kullanıcıları aracı bırakmakta zorlanır. Toplu taşıma kartlarının tasarımı belediyenin görsel kimliğiyle uyumlu hazırlanır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Toplu taşıma yatırımları trafik yoğunluğunu azaltır.",
+          "start": 0,
+          "end": 52
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Güvenilir metro ve otobüs hatları özel araç kullanma ihtiyacını azaltarak ana arterleri rahatlatır.",
+          "start": 53,
+          "end": 152
+        },
+        {
+          "id": "e2",
+          "text": "Aktarma süreleri kısaldığında yolcular günlük ulaşımda otomobil yerine toplu taşımayı tercih eder.",
+          "start": 153,
+          "end": 251
+        },
+        {
+          "id": "e3",
+          "text": "Hatlar düşük talep bölgelerine plansız yapılırsa yolcu çekmeden kamu bütçesinde yük oluşturabilir.",
+          "start": 252,
+          "end": 350
+        },
+        {
+          "id": "e4",
+          "text": "Park alanı ve ring bağlantısı kurulmadığında banliyö kullanıcıları aracı bırakmakta zorlanır.",
+          "start": 351,
+          "end": 444
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 23,
+    "data": {
+      "text": "Akdeniz mutfağında zeytinyağı birçok geleneksel tarifin temel unsurudur. Toplu taşıma yatırımları trafik yoğunluğunu azaltır. Hatlar düşük talep bölgelerine plansız yapılırsa yolcu çekmeden kamu bütçesinde yük oluşturabilir. Güvenilir metro ve otobüs hatları özel araç kullanma ihtiyacını azaltarak ana arterleri rahatlatır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Toplu taşıma yatırımları trafik yoğunluğunu azaltır.",
+          "start": 73,
+          "end": 125
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Hatlar düşük talep bölgelerine plansız yapılırsa yolcu çekmeden kamu bütçesinde yük oluşturabilir.",
+          "start": 126,
+          "end": 224
+        },
+        {
+          "id": "e2",
+          "text": "Güvenilir metro ve otobüs hatları özel araç kullanma ihtiyacını azaltarak ana arterleri rahatlatır.",
+          "start": 225,
+          "end": 324
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 24,
+    "data": {
+      "text": "Güvenilir metro ve otobüs hatları özel araç kullanma ihtiyacını azaltarak ana arterleri rahatlatır. Toplu taşıma yatırımları trafik yoğunluğunu azaltır. Toplu taşıma kartlarının tasarımı belediyenin görsel kimliğiyle uyumlu hazırlanır. Park alanı ve ring bağlantısı kurulmadığında banliyö kullanıcıları aracı bırakmakta zorlanır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Toplu taşıma yatırımları trafik yoğunluğunu azaltır.",
+          "start": 100,
+          "end": 152
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Güvenilir metro ve otobüs hatları özel araç kullanma ihtiyacını azaltarak ana arterleri rahatlatır.",
+          "start": 0,
+          "end": 99
+        },
+        {
+          "id": "e2",
+          "text": "Park alanı ve ring bağlantısı kurulmadığında banliyö kullanıcıları aracı bırakmakta zorlanır.",
+          "start": 236,
+          "end": 329
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 25,
+    "data": {
+      "text": "Geri dönüşüm belediye atıklarını azaltır. Kaynağında ayrıştırma yapılan mahallelerde çöpe giden ambalaj miktarı düşer. Depozito sistemi şişe ve kutuların tekrar toplama zincirine dönmesini sağlar. Ayrıştırma tesisi kapasitesi yetersizse toplanan malzemenin önemli bölümü yine depolama alanına gidebilir. Kirli veya karışık atıklar geri dönüşüm verimini düşürerek beklenen çevresel faydayı azaltır. Geri dönüşüm kutularının rengi kullanıcıların atık türünü hızlı ayırt etmesi için standartlaştırılır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Geri dönüşüm belediye atıklarını azaltır.",
+          "start": 0,
+          "end": 41
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Kaynağında ayrıştırma yapılan mahallelerde çöpe giden ambalaj miktarı düşer.",
+          "start": 42,
+          "end": 118
+        },
+        {
+          "id": "e2",
+          "text": "Depozito sistemi şişe ve kutuların tekrar toplama zincirine dönmesini sağlar.",
+          "start": 119,
+          "end": 196
+        },
+        {
+          "id": "e3",
+          "text": "Ayrıştırma tesisi kapasitesi yetersizse toplanan malzemenin önemli bölümü yine depolama alanına gidebilir.",
+          "start": 197,
+          "end": 303
+        },
+        {
+          "id": "e4",
+          "text": "Kirli veya karışık atıklar geri dönüşüm verimini düşürerek beklenen çevresel faydayı azaltır.",
+          "start": 304,
+          "end": 397
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 26,
+    "data": {
+      "text": "Tiyatro festivalleri yerel sanat topluluklarının görünürlüğünü artırabilir. Geri dönüşüm belediye atıklarını azaltır. Ayrıştırma tesisi kapasitesi yetersizse toplanan malzemenin önemli bölümü yine depolama alanına gidebilir. Kaynağında ayrıştırma yapılan mahallelerde çöpe giden ambalaj miktarı düşer.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Geri dönüşüm belediye atıklarını azaltır.",
+          "start": 76,
+          "end": 117
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ayrıştırma tesisi kapasitesi yetersizse toplanan malzemenin önemli bölümü yine depolama alanına gidebilir.",
+          "start": 118,
+          "end": 224
+        },
+        {
+          "id": "e2",
+          "text": "Kaynağında ayrıştırma yapılan mahallelerde çöpe giden ambalaj miktarı düşer.",
+          "start": 225,
+          "end": 301
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 27,
+    "data": {
+      "text": "Kaynağında ayrıştırma yapılan mahallelerde çöpe giden ambalaj miktarı düşer. Geri dönüşüm belediye atıklarını azaltır. Geri dönüşüm kutularının rengi kullanıcıların atık türünü hızlı ayırt etmesi için standartlaştırılır. Kirli veya karışık atıklar geri dönüşüm verimini düşürerek beklenen çevresel faydayı azaltır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Geri dönüşüm belediye atıklarını azaltır.",
+          "start": 77,
+          "end": 118
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Kaynağında ayrıştırma yapılan mahallelerde çöpe giden ambalaj miktarı düşer.",
+          "start": 0,
+          "end": 76
+        },
+        {
+          "id": "e2",
+          "text": "Kirli veya karışık atıklar geri dönüşüm verimini düşürerek beklenen çevresel faydayı azaltır.",
+          "start": 221,
+          "end": 314
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 28,
+    "data": {
+      "text": "Düzenli uyku akademik başarıyı artırır. Yeterli uyku dikkat süresini ve hafıza pekişmesini güçlendirdiği için öğrenilen bilgiler daha kalıcı olur. Her gün benzer saatte uyuyan öğrenciler sabah derslerinde daha uyanık kalabilir. Tek başına uyku düzeni, düşük ders katılımı ve eksik çalışma alışkanlığı varsa başarıyı garanti etmez. Sınav kaygısı yüksek öğrenciler düzenli uyusalar bile performans düşüşü yaşayabilir. Uyku takip uygulamalarında grafiklerin renkleri kullanıcının seçtiği temaya göre değişir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Düzenli uyku akademik başarıyı artırır.",
+          "start": 0,
+          "end": 39
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Yeterli uyku dikkat süresini ve hafıza pekişmesini güçlendirdiği için öğrenilen bilgiler daha kalıcı olur.",
+          "start": 40,
+          "end": 146
+        },
+        {
+          "id": "e2",
+          "text": "Her gün benzer saatte uyuyan öğrenciler sabah derslerinde daha uyanık kalabilir.",
+          "start": 147,
+          "end": 227
+        },
+        {
+          "id": "e3",
+          "text": "Tek başına uyku düzeni, düşük ders katılımı ve eksik çalışma alışkanlığı varsa başarıyı garanti etmez.",
+          "start": 228,
+          "end": 330
+        },
+        {
+          "id": "e4",
+          "text": "Sınav kaygısı yüksek öğrenciler düzenli uyusalar bile performans düşüşü yaşayabilir.",
+          "start": 331,
+          "end": 415
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 29,
+    "data": {
+      "text": "Seramik atölyelerinde kullanılan sır teknikleri yüzey dokusunu belirler. Düzenli uyku akademik başarıyı artırır. Tek başına uyku düzeni, düşük ders katılımı ve eksik çalışma alışkanlığı varsa başarıyı garanti etmez. Yeterli uyku dikkat süresini ve hafıza pekişmesini güçlendirdiği için öğrenilen bilgiler daha kalıcı olur.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Düzenli uyku akademik başarıyı artırır.",
+          "start": 73,
+          "end": 112
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Tek başına uyku düzeni, düşük ders katılımı ve eksik çalışma alışkanlığı varsa başarıyı garanti etmez.",
+          "start": 113,
+          "end": 215
+        },
+        {
+          "id": "e2",
+          "text": "Yeterli uyku dikkat süresini ve hafıza pekişmesini güçlendirdiği için öğrenilen bilgiler daha kalıcı olur.",
+          "start": 216,
+          "end": 322
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 30,
+    "data": {
+      "text": "Yeterli uyku dikkat süresini ve hafıza pekişmesini güçlendirdiği için öğrenilen bilgiler daha kalıcı olur. Düzenli uyku akademik başarıyı artırır. Uyku takip uygulamalarında grafiklerin renkleri kullanıcının seçtiği temaya göre değişir. Sınav kaygısı yüksek öğrenciler düzenli uyusalar bile performans düşüşü yaşayabilir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Düzenli uyku akademik başarıyı artırır.",
+          "start": 107,
+          "end": 146
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Yeterli uyku dikkat süresini ve hafıza pekişmesini güçlendirdiği için öğrenilen bilgiler daha kalıcı olur.",
+          "start": 0,
+          "end": 106
+        },
+        {
+          "id": "e2",
+          "text": "Sınav kaygısı yüksek öğrenciler düzenli uyusalar bile performans düşüşü yaşayabilir.",
+          "start": 237,
+          "end": 321
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 31,
+    "data": {
+      "text": "Organik tarım toprak sağlığını korur. Sentetik pestisit kullanımının azalması topraktaki mikroorganizma çeşitliliğini destekler. Dönüşümlü ekim ve kompost uygulamaları organik madde oranını artırabilir. Verim düşerse aynı miktarda ürün için daha geniş arazi kullanımı gerekebilir. Sertifika maliyetleri küçük üreticilerin sürdürülebilir uygulamalara erişimini zorlaştırabilir. Organik ürün etiketlerinde kullanılan logo boyutu yönetmeliklere göre belirlenir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Organik tarım toprak sağlığını korur.",
+          "start": 0,
+          "end": 37
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Sentetik pestisit kullanımının azalması topraktaki mikroorganizma çeşitliliğini destekler.",
+          "start": 38,
+          "end": 128
+        },
+        {
+          "id": "e2",
+          "text": "Dönüşümlü ekim ve kompost uygulamaları organik madde oranını artırabilir.",
+          "start": 129,
+          "end": 202
+        },
+        {
+          "id": "e3",
+          "text": "Verim düşerse aynı miktarda ürün için daha geniş arazi kullanımı gerekebilir.",
+          "start": 203,
+          "end": 280
+        },
+        {
+          "id": "e4",
+          "text": "Sertifika maliyetleri küçük üreticilerin sürdürülebilir uygulamalara erişimini zorlaştırabilir.",
+          "start": 281,
+          "end": 376
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 32,
+    "data": {
+      "text": "Dağ bisikleti yarışları parkur eğimine göre farklı zorluk kategorilerine ayrılır. Organik tarım toprak sağlığını korur. Verim düşerse aynı miktarda ürün için daha geniş arazi kullanımı gerekebilir. Sentetik pestisit kullanımının azalması topraktaki mikroorganizma çeşitliliğini destekler.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Organik tarım toprak sağlığını korur.",
+          "start": 82,
+          "end": 119
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Verim düşerse aynı miktarda ürün için daha geniş arazi kullanımı gerekebilir.",
+          "start": 120,
+          "end": 197
+        },
+        {
+          "id": "e2",
+          "text": "Sentetik pestisit kullanımının azalması topraktaki mikroorganizma çeşitliliğini destekler.",
+          "start": 198,
+          "end": 288
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 33,
+    "data": {
+      "text": "Sentetik pestisit kullanımının azalması topraktaki mikroorganizma çeşitliliğini destekler. Organik tarım toprak sağlığını korur. Organik ürün etiketlerinde kullanılan logo boyutu yönetmeliklere göre belirlenir. Sertifika maliyetleri küçük üreticilerin sürdürülebilir uygulamalara erişimini zorlaştırabilir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Organik tarım toprak sağlığını korur.",
+          "start": 91,
+          "end": 128
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Sentetik pestisit kullanımının azalması topraktaki mikroorganizma çeşitliliğini destekler.",
+          "start": 0,
+          "end": 90
+        },
+        {
+          "id": "e2",
+          "text": "Sertifika maliyetleri küçük üreticilerin sürdürülebilir uygulamalara erişimini zorlaştırabilir.",
+          "start": 211,
+          "end": 306
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 34,
+    "data": {
+      "text": "Kentlerde yeşil alanlar yaşam kalitesini yükseltir. Ağaç gölgesi yaz aylarında ısı adası etkisini azaltarak sokak konforunu artırır. Parklara yakın yaşayan kişiler açık havada daha fazla hareket ederek fiziksel sağlık kazanımı elde edebilir. Bakım bütçesi ayrılmazsa parklar güvenlik ve temizlik sorunları nedeniyle kullanılmaz hale gelebilir. Yeşil alan yatırımı kira baskısını artırıp düşük gelirli sakinleri mahalleden uzaklaştırabilir. Park banklarının malzemesi belediyenin bakım stratejisine göre ahşap veya metal seçilebilir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Kentlerde yeşil alanlar yaşam kalitesini yükseltir.",
+          "start": 0,
+          "end": 51
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ağaç gölgesi yaz aylarında ısı adası etkisini azaltarak sokak konforunu artırır.",
+          "start": 52,
+          "end": 132
+        },
+        {
+          "id": "e2",
+          "text": "Parklara yakın yaşayan kişiler açık havada daha fazla hareket ederek fiziksel sağlık kazanımı elde edebilir.",
+          "start": 133,
+          "end": 241
+        },
+        {
+          "id": "e3",
+          "text": "Bakım bütçesi ayrılmazsa parklar güvenlik ve temizlik sorunları nedeniyle kullanılmaz hale gelebilir.",
+          "start": 242,
+          "end": 343
+        },
+        {
+          "id": "e4",
+          "text": "Yeşil alan yatırımı kira baskısını artırıp düşük gelirli sakinleri mahalleden uzaklaştırabilir.",
+          "start": 344,
+          "end": 439
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 35,
+    "data": {
+      "text": "Satranç turnuvalarında zaman kontrolü oyun temposunu belirleyen temel kurallardan biridir. Kentlerde yeşil alanlar yaşam kalitesini yükseltir. Bakım bütçesi ayrılmazsa parklar güvenlik ve temizlik sorunları nedeniyle kullanılmaz hale gelebilir. Ağaç gölgesi yaz aylarında ısı adası etkisini azaltarak sokak konforunu artırır.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Kentlerde yeşil alanlar yaşam kalitesini yükseltir.",
+          "start": 91,
+          "end": 142
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Bakım bütçesi ayrılmazsa parklar güvenlik ve temizlik sorunları nedeniyle kullanılmaz hale gelebilir.",
+          "start": 143,
+          "end": 244
+        },
+        {
+          "id": "e2",
+          "text": "Ağaç gölgesi yaz aylarında ısı adası etkisini azaltarak sokak konforunu artırır.",
+          "start": 245,
+          "end": 325
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  },
+  {
+    "id": 36,
+    "data": {
+      "text": "Ağaç gölgesi yaz aylarında ısı adası etkisini azaltarak sokak konforunu artırır. Kentlerde yeşil alanlar yaşam kalitesini yükseltir. Park banklarının malzemesi belediyenin bakım stratejisine göre ahşap veya metal seçilebilir. Yeşil alan yatırımı kira baskısını artırıp düşük gelirli sakinleri mahalleden uzaklaştırabilir.",
+      "claim": [
+        {
+          "id": "c1",
+          "text": "Kentlerde yeşil alanlar yaşam kalitesini yükseltir.",
+          "start": 81,
+          "end": 132
+        }
+      ],
+      "Evidence": [
+        {
+          "id": "e1",
+          "text": "Ağaç gölgesi yaz aylarında ısı adası etkisini azaltarak sokak konforunu artırır.",
+          "start": 0,
+          "end": 80
+        },
+        {
+          "id": "e2",
+          "text": "Yeşil alan yatırımı kira baskısını artırıp düşük gelirli sakinleri mahalleden uzaklaştırabilir.",
+          "start": 226,
+          "end": 321
+        }
+      ],
+      "support": [],
+      "attack": []
+    }
+  }
+]

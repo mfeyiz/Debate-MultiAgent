@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 import random
-from typing import List
+from typing import Dict, List
 
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIChatModel
@@ -86,7 +86,7 @@ class AgentService:
         lines.append(f"\nŞimdi sıra sizde, {agent_config.name}. Doğrudan yanıt verin:")
         return "\n".join(lines)
 
-    def generate_response(
+    async def generate_response(
         self,
         agent_config: AgentModel,
         topic: str,
@@ -107,10 +107,10 @@ class AgentService:
             system_prompt=system_prompt,
             model_settings={"temperature": agent_config.temperature},
         )
-        result = agent.run_sync(user_prompt)
+        result = await agent.run(user_prompt)
         return str(result.output)
 
-    def generate_opening_claim(
+    async def generate_opening_claim(
         self, agent_config: AgentModel, topic: str
     ) -> str:
         """Generate the opening claim for a debate."""
@@ -129,34 +129,101 @@ class AgentService:
             system_prompt=system_prompt,
             model_settings={"temperature": agent_config.temperature},
         )
-        result = agent.run_sync(user_prompt)
+        result = await agent.run(user_prompt)
         return str(result.output)
 
     # ------------------------------------------------------------------
     # Mock fallback for demo without API keys
+    # Uses topic-aware templates instead of hardcoded unrelated content.
     # ------------------------------------------------------------------
 
-    _MOCK_CLAIMS = [
-        "Sentetik veri ölçeklendirmesi, sıkı bir ayıklayıcı ağından geçirildiğinde sıfır örnekli görevlerde model performansını güvenilir şekilde artırır. Ampirik sonuçlardaki varyans, öncelikle zayıf filtreleme metodolojilerine bağlanabilir; sentetik veri setlerinin doğasındaki sınırlamalara değil.",
-        "Kuantum bilgisayarlama, önümüzdeki beş yıl içinde ilaç keşfinde pratik üstünlüğe ulaşacak ve farmasötik araştırma ile geliştirme takvimini temelden değiştirecektir.",
-        "Büyük ölçekli karbon yakalama teknolojisi bugün ekonomik olarak uygulanabilirdir; asıl engel mühendislik kısıtları değil, düzenleyici atalettir.",
-    ]
+    _MOCK_TOPIC_KEYWORDS: Dict[str, List[str]] = {
+        "default": ["bu konu", "tartışma konusu", "iddia"],
+        "technology": ["yapay zeka", "teknoloji", "dijital dönüşüm"],
+        "climate": ["iklim değişikliği", "çevre", "sürdürülebilirlik"],
+        "economy": ["ekonomi", "finans", "piyasa"],
+        "health": ["sağlık", "tıp", "hastalık"],
+        "education": ["eğitim", "öğrenme", "akademi"],
+        "politics": ["siyaset", "hükümet", "politika"],
+    }
 
-    _MOCK_ATTACKS = [
-        "Bu iddia mod çöküşü sorununu aşırı basitleştiriyor. Ayıklayıcılar gürültüyü filtrelerken, sentetik dağılımın çeşitliliğini doğal olarak ayıklayıcının kendi öğrendiği manifold ile sınırlandırırlar. Bu durum, yüksek karmaşıklıktaki akıl yürütme görevlerinde gözlemlenen dağılım uyumsuzluğu ile kanıtlandığı üzere, genellemede azalan getirilere yol açar.",
-        "İddia, oda sıcaklığında çözülemeyen koherans kaybı zorluklarını görmezden geliyor. Sentetik moleküller üzerindeki kıyaslama sonuçları henüz gerçek dünya protein katlanma doğruluğuna dönüşmedi.",
-        "Ekonomik analiz, yakalama ve depolamanın enerji maliyetini hesaba katmıyor. Son çalışmalar düzleştirilmiş maliyetin karbonun sosyal maliyetinin 3 katı üzerinde olduğunu gösteriyor.",
-    ]
+    @staticmethod
+    def _detect_topic_category(topic: str) -> str:
+        """Detect broad topic category for generating relevant mock responses."""
+        topic_lower = topic.lower()
+        tech_keywords = ["yapay zeka", "ai", "teknoloji", "yazılım", "digital", "robot", "otomasyon"]
+        climate_keywords = ["iklim", "çevre", "küresel", "karbon", "yeşil", "sürdürülebilir"]
+        economy_keywords = ["ekonomi", "finans", "borsa", "enflasyon", "dolar", "yatırım"]
+        health_keywords = ["sağlık", "tıp", "hastalık", "virüs", "aşı", "tedavi"]
+        education_keywords = ["eğitim", "üniversite", "öğrenci", "öğretmen", "akademi", "okul"]
+        politics_keywords = ["siyaset", "hükümet", "seçim", "parti", "devlet", "politika"]
 
-    _MOCK_REBUTTALS = [
-        "Mod çöküşü eleştirisi eğitim dinamiklerini dağıtım sonuçlarıyla karıştırıyor. arxiv:2305.1234 kaynağındaki ampirik kanıtlar, topluluk ayıklayıcılarının tek model manifold sınırlamasının ötesinde dağılımsal çeşitliliği koruduğunu gösteriyor.",
-        "Koherans kaybı gerçekten bir zorluktur, ancak hata düzeltme eşikleri 2022'den bu yana iki büyüklük sırası iyileşti. Yatırımın sürdürülmesi koşuluyla bu eğilim, beş yıllık projeksiyonu destekliyor.",
-        "Erken yakalama maliyetleri yüksek olsa da, doğrudan hava yakalama öğrenme eğrileri artık 2010 ile 2020 arasındaki güneş fotovoltaik hücrelerinkini yansıtıyor. Eğilim kesindir.",
-    ]
+        for category, keywords in [
+            ("technology", tech_keywords),
+            ("climate", climate_keywords),
+            ("economy", economy_keywords),
+            ("health", health_keywords),
+            ("education", education_keywords),
+            ("politics", politics_keywords),
+        ]:
+            if any(kw in topic_lower for kw in keywords):
+                return category
+        return "default"
+
+    def _generate_topic_aware_mock(
+        self,
+        topic: str,
+        role: str,
+        message_type: str,
+        feedback: str | None = None,
+    ) -> str:
+        """Generate topic-aware mock responses that reference the actual debate topic."""
+        category = self._detect_topic_category(topic)
+        keywords = self._MOCK_TOPIC_KEYWORDS.get(category, self._MOCK_TOPIC_KEYWORDS["default"])
+        keyword = random.choice(keywords)
+
+        templates = {
+            "proponent_claim": [
+                f"{topic} konusunda kesin bir şekilde savunulmalıdır. {keyword} üzerine yapılan araştırmalar, bu yöndeki iddiaları güçlü şekilde desteklemektedir.",
+                f"Tartışma konusu olan '{topic}' önemli bir meseledir. {keyword} bağlamında ele alındığında, savunulacak güçlü argümanlar mevcuttur.",
+                f"{topic} konusundaki iddiamızı {keyword} perspektifinden destekleyerek açıklayalım. Somut veriler ve mantıksal akıl yürütme ile bu savı temellendirebiliriz.",
+            ],
+            "opponent_attack": [
+                f"Karşı tarafın '{topic}' konusundaki iddiası zayıf temellere dayanıyor. {keyword} ile ilgili sunulan kanıtlar yetersiz ve çelişkili görünmektedir.",
+                f"{topic} konusundaki savın temelindeki varsayımları sorgulamak gerekir. {keyword} açısından bakıldığında, önemli mantıksal boşluklar mevcuttur.",
+                f"Karşı görüşteki '{topic}' iddiası, {keyword} bağlamında ele alındığında tutarsızlıklar içermektedir. Bu zayıflıkları gözler önüne sermek gerekiyor.",
+            ],
+            "proponent_rebuttal": [
+                f"Karşı tarafın eleştirilerine rağmen, '{topic}' konusundaki savımızı {keyword} verileriyle güçlendirebiliriz. Eleştirilerin temelindeki yanlış anlamaları düzeltelim.",
+                f"{topic} tartışmasında karşı argümanlar göz ardı edilemez, ancak {keyword} perspektifinden bakıldığında bizim savımız daha tutarlı durmaktadır.",
+                f"Karşı tarafın '{topic}' konusundaki itirazları, {keyword} alanındaki gelişmeler ışığında geçersiz kalmaktadır. Güncel bulgular bizim lehimize işlemektedir.",
+            ],
+            "moderator_summary": [
+                f"Tartışma konusu '{topic}' bağlamında her iki tarafın da {keyword} ile ilgili argümanları dikkate alınmalıdır. Tarafların güçlü ve zayıf yönlerini özetleyelim.",
+                f"{topic} meselesinde, {keyword} perspektifinden bakıldığında her iki görüşün de geçerli noktaları vardır. Mantıksal tutarlılık açısından değerlendirme yapalım.",
+            ],
+        }
+
+        # Select template based on role and message type
+        if role == "opponent" or message_type in ("attack",):
+            key = "opponent_attack"
+        elif message_type in ("rebuttal",) or role == "proponent":
+            key = "proponent_rebuttal"
+        elif role == "moderator":
+            key = "moderator_summary"
+        else:
+            key = "proponent_claim"
+
+        response = random.choice(templates.get(key, templates["proponent_claim"]))
+
+        # Append feedback hint if regeneration feedback exists
+        if feedback:
+            response += f" (Geri bildirime göre düzenlendi: {feedback[:60]}...)"
+
+        return response
 
     def _mock_opening_claim(self, agent_config: AgentModel, topic: str) -> str:
-        rng = random.Random(hash(topic + str(agent_config.id)))
-        return rng.choice(self._MOCK_CLAIMS)
+        return self._generate_topic_aware_mock(topic, agent_config.role, "claim")
 
     def _mock_response(
         self,
@@ -165,9 +232,9 @@ class AgentService:
         messages: List[Message],
         feedback: str | None,
     ) -> str:
-        rng = random.Random(hash(topic + str(len(messages)) + str(agent_config.id)))
         last_type = messages[-1].message_type if messages else "claim"
-
         if agent_config.role == "opponent" or last_type in ("claim", "rebuttal"):
-            return rng.choice(self._MOCK_ATTACKS)
-        return rng.choice(self._MOCK_REBUTTALS)
+            msg_type = "attack"
+        else:
+            msg_type = "rebuttal"
+        return self._generate_topic_aware_mock(topic, agent_config.role, msg_type, feedback)

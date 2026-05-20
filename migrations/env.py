@@ -2,8 +2,11 @@
 
 import logging
 from logging.config import fileConfig
+from sqlalchemy import create_engine
 
-from flask import current_app
+from app.config import Config
+from app.database import Base
+import app.models  # noqa: F401
 
 from alembic import context
 
@@ -16,20 +19,11 @@ config = context.config
 fileConfig(config.config_file_name)
 logger = logging.getLogger("alembic.env")
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-config.set_main_option(
-    "sqlalchemy.url",
-    str(current_app.extensions["migrate"].db.get_engine().url).replace("%", "%%"),
-)
-target_metadata = current_app.extensions["migrate"].db.metadata
+# Set SQLAlchemy URL from Config
+db_url = Config.SQLALCHEMY_DATABASE_URI
+config.set_main_option("sqlalchemy.url", db_url.replace("%", "%%"))
 
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
+target_metadata = Base.metadata
 
 
 def run_migrations_offline():
@@ -46,7 +40,6 @@ def run_migrations_online():
 
     # this callback is used to prevent an auto-migration from being generated
     # when there are no changes to the schema
-    # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html
     def process_revision_directives(context, revision, directives):
         if getattr(config.cmd_opts, "autogenerate", False):
             script = directives[0]
@@ -54,14 +47,13 @@ def run_migrations_online():
                 directives[:] = []
                 logger.info("No changes in schema detected.")
 
-    connectable = current_app.extensions["migrate"].db.get_engine()
+    connectable = create_engine(db_url)
 
     with connectable.connect() as connection:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
             process_revision_directives=process_revision_directives,
-            **current_app.extensions["migrate"].configure_args,
         )
 
         with context.begin_transaction():
@@ -72,3 +64,4 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
+

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LogicFlow Teyit</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <div class="mark"></div>
+    <div>
+      <h1>LogicFlow Teyit</h1>
+      <p>Sayfadaki iddiaları analiz et</p>
+    </div>
+  </header>
+
+  <label>
+    API adresi
+    <input id="api-base" type="url" value="http://127.0.0.1:5000">
+  </label>
+
+  <button id="analyze-page">Bu sayfayı analiz et</button>
+  <button id="analyze-selection" class="secondary">Seçili metni analiz et</button>
+
+  <section id="status" class="status">Hazır.</section>
+  <section id="result" class="result" hidden>
+    <div class="score">
+      <span id="logic-score">0%</span>
+      <small>Mantık skoru</small>
+    </div>
+    <dl>
+      <div><dt>İddia</dt><dd id="claim-count">0</dd></div>
+      <div><dt>Kaynak</dt><dd id="source-count">0</dd></div>
+      <div><dt>Bayrak</dt><dd id="flag-count">0</dd></div>
+    </dl>
+    <p id="summary"></p>
+    <a id="open-graph" target="_blank" rel="noreferrer">Graph görünümünü aç</a>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>

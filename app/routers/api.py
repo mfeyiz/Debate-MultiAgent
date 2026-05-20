@@ -1,157 +1,373 @@
-"""REST API routes."""
+"""FastAPI router for REST API endpoints."""
 
-from flask import Blueprint, jsonify, request
+from __future__ import annotations
 
-from app.extensions import db
-from app.models import Agent, Debate
+from typing import Any
+
+from fastapi import APIRouter, Body, Depends, Request
+from fastapi.responses import JSONResponse
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.database import get_db
+from app.models import Agent
 from app.services.debate_service import DebateService
+from app.services.fact_check_service import FactCheckService
 
-api_bp = Blueprint("api", __name__)
-svc = DebateService()
+
+router = APIRouter(prefix="/api")
+
+
+def _json_error(message: str, status_code: int) -> JSONResponse:
+    return JSONResponse({"error": message}, status_code=status_code)
 
 
 # ------------------------------------------------------------------
 # Agents
 # ------------------------------------------------------------------
 
-@api_bp.route("/agents", methods=["GET"])
-def list_agents():
-    agents = svc.list_agents()
-    return jsonify([a.to_dict() for a in agents])
+
+@router.get("/agents")
+async def list_agents(request: Request, db: AsyncSession = Depends(get_db)) -> list[dict]:
+    svc: DebateService = request.app.state.debate_svc
+    agents = await svc.list_agents(db)
+    return [a.to_dict() for a in agents]
 
 
-@api_bp.route("/agents", methods=["POST"])
-def create_agent():
-    data = request.get_json() or {}
+@router.post("/agents", status_code=201)
+async def create_agent(
+    request: Request,
+    data: dict = Body(default={}),
+    db: AsyncSession = Depends(get_db),
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
     try:
-        agent = svc.create_agent(
+        agent = await svc.create_agent(
+            db=db,
             name=data["name"],
             model_name=data.get("model_name", ""),
             role=data.get("role", "proponent"),
             system_prompt=data.get("system_prompt", ""),
             temperature=float(data.get("temperature", 0.7)),
         )
-        return jsonify(agent.to_dict()), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return agent.to_dict()
+    except Exception as exc:
+        return _json_error(str(exc), 400)
 
 
-@api_bp.route("/agents/<int:agent_id>", methods=["GET"])
-def get_agent(agent_id: int):
-    agent = db.session.get(Agent, agent_id)
+@router.get("/agents/{agent_id}")
+async def get_agent(agent_id: int, db: AsyncSession = Depends(get_db)) -> Any:
+    agent = await db.get(Agent, agent_id)
     if not agent:
-        return jsonify({"error": "Bulunamadı"}), 404
-    return jsonify(agent.to_dict())
+        return _json_error("Bulunamadı", 404)
+    return agent.to_dict()
 
 
-@api_bp.route("/agents/<int:agent_id>", methods=["PUT"])
-def update_agent(agent_id: int):
-    agent = db.session.get(Agent, agent_id)
+@router.put("/agents/{agent_id}")
+async def update_agent(
+    agent_id: int,
+    data: dict = Body(default={}),
+    db: AsyncSession = Depends(get_db),
+) -> Any:
+    agent = await db.get(Agent, agent_id)
     if not agent:
-        return jsonify({"error": "Bulunamadı"}), 404
-    data = request.get_json() or {}
+        return _json_error("Bulunamadı", 404)
     agent.name = data.get("name", agent.name)
     agent.model_name = data.get("model_name", agent.model_name)
     agent.role = data.get("role", agent.role)
     agent.system_prompt = data.get("system_prompt", agent.system_prompt)
     agent.temperature = float(data.get("temperature", agent.temperature))
-    db.session.commit()
-    return jsonify(agent.to_dict())
+    await db.commit()
+    return agent.to_dict()
 
 
-@api_bp.route("/agents/<int:agent_id>", methods=["DELETE"])
-def delete_agent(agent_id: int):
-    agent = db.session.get(Agent, agent_id)
+@router.delete("/agents/{agent_id}")
+async def delete_agent(agent_id: int, db: AsyncSession = Depends(get_db)) -> Any:
+    agent = await db.get(Agent, agent_id)
     if not agent:
-        return jsonify({"error": "Bulunamadı"}), 404
-    db.session.delete(agent)
-    db.session.commit()
-    return jsonify({"deleted": True})
+        return _json_error("Bulunamadı", 404)
+    await db.delete(agent)
+    await db.commit()
+    return {"deleted": True}
 
 
 # ------------------------------------------------------------------
 # Debates
 # ------------------------------------------------------------------
 
-@api_bp.route("/debates", methods=["GET"])
-def list_debates():
-    debates = svc.list_debates()
-    return jsonify([d.to_dict() for d in debates])
+
+@router.get("/debates")
+async def list_debates(request: Request, db: AsyncSession = Depends(get_db)) -> list[dict]:
+    svc: DebateService = request.app.state.debate_svc
+    debates = await svc.list_debates(db)
+    return [d.to_dict() for d in debates]
 
 
-@api_bp.route("/debates", methods=["POST"])
-def create_debate():
-    data = request.get_json() or {}
+@router.post("/debates", status_code=201)
+async def create_debate(
+    request: Request,
+    data: dict = Body(default={}),
+    db: AsyncSession = Depends(get_db),
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
     try:
-        debate = svc.create_debate(
+        debate = await svc.create_debate(
+            db=db,
             topic=data["topic"],
             agent_ids=data["agent_ids"],
             max_rounds=int(data.get("max_rounds", 5)),
         )
-        return jsonify(debate.to_dict()), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return debate.to_dict()
+    except Exception as exc:
+        return _json_error(str(exc), 400)
 
 
-@api_bp.route("/debates/<int:debate_id>", methods=["GET"])
-def get_debate(debate_id: int):
-    debate = svc.get_debate(debate_id)
+@router.get("/debates/{debate_id}")
+async def get_debate(
+    request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
+    debate = await svc.get_debate(db, debate_id)
     if not debate:
-        return jsonify({"error": "Bulunamadı"}), 404
-    return jsonify(debate.to_dict())
+        return _json_error("Bulunamadı", 404)
+    return debate.to_dict()
 
 
-@api_bp.route("/debates/<int:debate_id>/messages", methods=["GET"])
-def get_messages(debate_id: int):
-    debate = svc.get_debate(debate_id)
+@router.get("/debates/{debate_id}/messages")
+async def get_messages(
+    request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
+    debate = await svc.get_debate(db, debate_id)
     if not debate:
-        return jsonify({"error": "Bulunamadı"}), 404
-    return jsonify([m.to_dict() for m in debate.messages])
+        return _json_error("Bulunamadı", 404)
+    return [m.to_dict() for m in debate.messages]
 
 
-@api_bp.route("/debates/<int:debate_id>/start", methods=["POST"])
-def start_debate(debate_id: int):
+@router.post("/debates/{debate_id}/start")
+async def start_debate(
+    request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
     try:
-        svc.start_debate(debate_id)
-        return jsonify({"started": True})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        await svc.start_debate(db, debate_id)
+        return {"started": True}
+    except Exception as exc:
+        return _json_error(str(exc), 400)
 
 
-@api_bp.route("/debates/<int:debate_id>/advance", methods=["POST"])
-def advance_debate(debate_id: int):
+@router.post("/debates/{debate_id}/advance")
+async def advance_debate(
+    request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
     try:
-        svc.advance_debate(debate_id)
-        return jsonify({"advanced": True})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        await svc.advance_debate(db, debate_id)
+        return {"advanced": True}
+    except Exception as exc:
+        return _json_error(str(exc), 400)
 
 
-@api_bp.route("/debates/<int:debate_id>/resolve", methods=["POST"])
-def resolve_debate(debate_id: int):
+@router.post("/debates/{debate_id}/resolve")
+async def resolve_debate(
+    request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
     try:
-        svc.force_resolution(debate_id)
-        return jsonify({"resolved": True})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        await svc.force_resolution(db, debate_id)
+        return {"resolved": True}
+    except Exception as exc:
+        return _json_error(str(exc), 400)
+
+
+@router.post("/debates/{debate_id}/analyze")
+async def analyze_debate(
+    request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
+    try:
+        res = await svc.analyze_debate(db, debate_id)
+        return res
+    except Exception as exc:
+        return _json_error(str(exc), 400)
+
+
+@router.get("/debates/{debate_id}/argument-map")
+async def get_argument_map(
+    request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
+    try:
+        res = await svc.get_argument_map(db, debate_id)
+        return res
+    except Exception as exc:
+        return _json_error(str(exc), 404)
+
+
+@router.post("/debates/{debate_id}/messages/{message_id}/regenerate")
+async def regenerate_message(
+    request: Request,
+    debate_id: int,
+    message_id: int,
+    db: AsyncSession = Depends(get_db),
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
+    try:
+        res = await svc.regenerate_message(db, debate_id, message_id)
+        return res
+    except Exception as exc:
+        return _json_error(str(exc), 400)
+
+
+@router.post("/debates/{debate_id}/auto-advance")
+async def toggle_auto_advance(
+    request: Request,
+    debate_id: int,
+    data: dict = Body(default={}),
+    db: AsyncSession = Depends(get_db),
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
+    try:
+        enabled = bool(data.get("enabled", False))
+        debate = await svc.toggle_auto_advance(db, debate_id, enabled)
+        return {"auto_advance": debate.auto_advance, "enabled": enabled}
+    except Exception as exc:
+        return _json_error(str(exc), 400)
+
+
+@router.post("/debates/{debate_id}/run-full")
+async def run_full_debate(
+    request: Request,
+    debate_id: int,
+    db: AsyncSession = Depends(get_db),
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
+    try:
+        await svc.run_full_debate(db, debate_id)
+        return {"status": "running", "message": "Tartışma otomatik olarak ilerletiliyor"}
+    except Exception as exc:
+        return _json_error(str(exc), 400)
+
+
+# ------------------------------------------------------------------
+# Fact-check lab
+# ------------------------------------------------------------------
+
+
+@router.post("/fact-checks", status_code=201)
+async def create_fact_check(
+    request: Request,
+    data: dict = Body(default={}),
+    db: AsyncSession = Depends(get_db),
+) -> Any:
+    fact_svc: FactCheckService = request.app.state.fact_svc
+    try:
+        res = await fact_svc.analyze(
+            db=db,
+            text=data.get("text", ""),
+            url=data.get("url", ""),
+        )
+        return res
+    except Exception as exc:
+        return _json_error(str(exc), 400)
+
+
+@router.get("/fact-checks/{run_id}")
+async def get_fact_check(
+    request: Request, run_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    fact_svc: FactCheckService = request.app.state.fact_svc
+    try:
+        res = await fact_svc.get_run(db, run_id)
+        return res
+    except Exception as exc:
+        return _json_error(str(exc), 404)
+
+
+@router.post("/fact-checks/{run_id}/refresh")
+async def refresh_fact_check(
+    request: Request, run_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    fact_svc: FactCheckService = request.app.state.fact_svc
+    try:
+        res = await fact_svc.refresh(db, run_id)
+        return res
+    except Exception as exc:
+        return _json_error(str(exc), 400)
+
+
+@router.get("/fact-checks/token/{token}")
+async def get_fact_check_by_token(
+    request: Request, token: str, db: AsyncSession = Depends(get_db)
+) -> Any:
+    fact_svc: FactCheckService = request.app.state.fact_svc
+    try:
+        res = await fact_svc.get_run_by_token(db, token)
+        return res
+    except Exception as exc:
+        return _json_error(str(exc), 404)
+
+
+@router.get("/fact-checks/{run_id}/export")
+async def export_fact_check(
+    request: Request, run_id: int, db: AsyncSession = Depends(get_db)
+) -> Any:
+    fact_svc: FactCheckService = request.app.state.fact_svc
+    try:
+        data = await fact_svc.export_json(db, run_id)
+        return JSONResponse(
+            content=data,
+            headers={
+                "Content-Disposition": f'attachment; filename="fact-check-{run_id}.json"'
+            },
+        )
+    except Exception as exc:
+        return _json_error(str(exc), 404)
+
+
+# ------------------------------------------------------------------
+# ModernBERT Lab
+# ------------------------------------------------------------------
+
+
+@router.post("/modernbert/compare")
+async def compare_modernbert(
+    request: Request,
+    data: dict = Body(default={}),
+) -> Any:
+    svc: DebateService = request.app.state.debate_svc
+    try:
+        target_text = data.get("target_text", "").strip()
+        source_text = data.get("source_text", "").strip()
+        if not target_text or not source_text:
+            return _json_error("Hedef iddia ve yanıt metinleri boş olamaz.", 400)
+            
+        res = svc.bert.compare_models(source_text=source_text, target_text=target_text)
+        return res
+    except Exception as exc:
+        return _json_error(str(exc), 400)
 
 
 # ------------------------------------------------------------------
 # Health checks
 # ------------------------------------------------------------------
 
-@api_bp.route("/healthz", methods=["GET"])
-def healthz():
+
+@router.get("/healthz")
+async def healthz() -> dict:
     """Liveness probe. Returns 200 if the process is alive."""
-    return jsonify({"status": "ok"}), 200
+    return {"status": "ok"}
 
 
-@api_bp.route("/ready", methods=["GET"])
-def ready():
+@router.get("/ready")
+async def ready(db: AsyncSession = Depends(get_db)) -> Any:
     """Readiness probe. Returns 200 only if the database is connectable."""
     try:
         from sqlalchemy import text
-        db.session.execute(text("SELECT 1"))
-        return jsonify({"status": "ready"}), 200
-    except Exception as e:
-        return jsonify({"status": "not ready", "error": str(e)}), 503
+        await db.execute(text("SELECT 1"))
+        return {"status": "ready"}
+    except Exception as exc:
+        return JSONResponse(
+            {"status": "not ready", "error": str(exc)},
+            status_code=503,
+        )

@@ -1,106 +1,161 @@
 {% extends "base.html" %}
-{% block title %}AkılAkışı - Ajan Yönetimi{% endblock %}
+{% block title %}logos - Ajan Yönetimi{% endblock %}
+{% block extra_head %}
+<style>
+    .agent-shell {
+        background: #f4f8f1;
+    }
+
+    .agent-panel {
+        background: #ffffff;
+        border: 1px solid #c6d3cc;
+    }
+
+    .agent-card.is-selected {
+        border-color: #0c7c6b;
+        background: #bde9df;
+        box-shadow: 0 2px 8px rgba(18, 42, 36, 0.06);
+    }
+</style>
+{% endblock %}
 {% block content %}
-<div class="max-w-[1280px] mx-auto h-full flex flex-col px-xl py-xl">
-    <div class="flex justify-between items-end mb-xl">
-        <div>
-            <h2 class="font-headline-lg text-headline-lg text-primary mb-sm">Ajan Yapılandırması</h2>
-            <p class="font-body-md text-body-md text-on-surface-variant">Tartışma pipeline'ları için otonom mantık katılımcılarını tanımlayın ve yönetin.</p>
-        </div>
-        <button onclick="showAgentModal()" class="flex items-center gap-sm px-md py-sm bg-secondary text-on-secondary rounded font-label-caps text-label-caps hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm">
-            <span class="material-symbols-outlined text-[18px]">add</span> Yeni Ajan
-        </button>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl flex-1 min-h-[600px]">
-        <!-- Agent List -->
-        <div class="lg:col-span-4 flex flex-col border border-outline-variant bg-surface-container-lowest rounded-lg overflow-hidden">
-            <div class="p-md border-b border-outline-variant bg-surface">
-                <div class="relative">
-                    <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
-                    <input type="text" id="agent-filter" placeholder="Ajanları filtrele..." class="w-full pl-[36px] pr-sm py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary transition-colors">
+{% set proponent_count = agents|selectattr('role', 'equalto', 'proponent')|list|length %}
+{% set opponent_count = agents|selectattr('role', 'equalto', 'opponent')|list|length %}
+{% set moderator_count = agents|selectattr('role', 'equalto', 'moderator')|list|length %}
+<div class="agent-shell min-h-full">
+    <div class="max-w-[1500px] mx-auto p-lg md:p-xl flex flex-col gap-lg">
+        <section class="agent-panel rounded-xl p-lg flex flex-col xl:flex-row xl:items-center justify-between gap-lg">
+            <div>
+                <div class="flex items-center gap-sm mb-sm">
+                    <span class="material-symbols-outlined text-secondary">smart_toy</span>
+                    <span class="font-label-caps text-label-caps text-secondary">LLM Katılımcı Laboratuvarı</span>
+                </div>
+                <h2 class="font-headline-lg text-headline-lg text-primary">Ajan Yönetimi</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-xs max-w-3xl">Tartışma rollerini, model seçimini, davranış kısıtlarını ve üretim sıcaklığını tek ekranda düzenleyin.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-sm w-full xl:w-auto">
+                <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md min-w-28">
+                    <div class="font-label-caps text-[10px] text-on-surface-variant">Toplam</div>
+                    <div class="font-headline-lg text-headline-lg text-on-surface">{{ agents|length }}</div>
+                </div>
+                <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md min-w-28">
+                    <div class="font-label-caps text-[10px] text-on-surface-variant">Savunucu</div>
+                    <div class="font-headline-lg text-headline-lg text-secondary">{{ proponent_count }}</div>
+                </div>
+                <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md min-w-28">
+                    <div class="font-label-caps text-[10px] text-on-surface-variant">Karşıt</div>
+                    <div class="font-headline-lg text-headline-lg text-error">{{ opponent_count }}</div>
+                </div>
+                <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md min-w-28">
+                    <div class="font-label-caps text-[10px] text-on-surface-variant">Moderatör</div>
+                    <div class="font-headline-lg text-headline-lg text-primary">{{ moderator_count }}</div>
                 </div>
             </div>
-            <div id="agent-list" class="flex-1 overflow-y-auto p-sm space-y-sm">
-                {% for agent in agents %}
-                <div class="agent-card p-md rounded border {% if loop.first %}border-secondary bg-surface-container shadow-sm{% else %}border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low{% endif %} cursor-pointer group transition-colors relative" data-agent-id="{{ agent.id }}">
-                    {% if loop.first %}<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-secondary rounded-l"></div>{% endif %}
-                    <div class="flex justify-between items-start mb-sm">
-                        <h3 class="font-headline-md text-headline-md text-primary agent-name">{{ agent.name }}</h3>
-                        <div class="flex {% if not loop.first %}opacity-0 group-hover:opacity-100{% endif %} transition-opacity">
-                            <button onclick="editAgent({{ agent.id }})" class="p-1 text-on-surface-variant hover:text-secondary transition-colors" title="Düzenle">
-                                <span class="material-symbols-outlined text-[18px]">edit</span>
-                            </button>
-                            <button onclick="deleteAgent({{ agent.id }})" class="p-1 text-on-surface-variant hover:text-error transition-colors" title="Sil">
-                                <span class="material-symbols-outlined text-[18px]">delete</span>
-                            </button>
+        </section>
+
+        <section class="grid grid-cols-1 xl:grid-cols-12 gap-lg">
+            <aside class="xl:col-span-4 agent-panel rounded-xl overflow-hidden">
+                <div class="p-md border-b border-outline-variant flex items-center gap-sm">
+                    <div class="relative flex-1">
+                        <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                        <input type="text" id="agent-filter" placeholder="Ajan, rol veya model ara..." class="w-full pl-[36px] pr-sm py-sm border border-outline-variant rounded-lg bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary">
+                    </div>
+                    <button onclick="resetForm()" class="p-sm rounded-lg bg-secondary text-on-secondary hover:bg-secondary-container hover:text-on-secondary-container transition-colors" title="Yeni ajan">
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                </div>
+                <div id="agent-list" class="p-sm space-y-sm max-h-[calc(100vh-280px)] overflow-y-auto">
+                    {% for agent in agents %}
+                    <button type="button" onclick="editAgent({{ agent.id }})" class="agent-card w-full text-left p-md rounded-lg border {% if loop.first %}is-selected{% else %}border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low{% endif %} transition-colors" data-agent-id="{{ agent.id }}" data-search="{{ (agent.name ~ ' ' ~ agent.role ~ ' ' ~ agent.model_name)|lower }}">
+                        <div class="flex items-start justify-between gap-sm">
+                            <div>
+                                <h3 class="font-headline-md text-headline-md text-primary agent-name">{{ agent.name }}</h3>
+                                <p class="font-code-mono text-code-mono text-on-surface-variant mt-xs">{{ agent.model_name }}</p>
+                            </div>
+                            <span class="px-sm py-xs rounded font-label-caps text-[10px] {% if agent.role == 'opponent' %}bg-error-container text-on-error-container{% elif agent.role == 'proponent' %}bg-secondary-container text-on-secondary-container{% else %}bg-surface-container text-on-surface-variant{% endif %}">{{ agent.role|upper }}</span>
                         </div>
-                    </div>
-                    <div class="flex items-center gap-sm mb-md">
-                        <span class="font-label-caps text-label-caps px-sm py-xs border {% if agent.role == 'opponent' %}border-error text-error bg-error-container/10{% elif agent.role == 'proponent' %}border-secondary text-secondary bg-secondary-container/10{% else %}border-outline text-on-surface-variant{% endif %} rounded">{{ agent.role|title }}</span>
-                        <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
-                        <span class="font-code-mono text-code-mono text-on-surface-variant">{{ agent.model_name }}</span>
-                    </div>
-                    <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">{{ agent.system_prompt[:120] }}{% if agent.system_prompt|length > 120 %}...{% endif %}</p>
+                        <p class="font-body-md text-body-md text-on-surface-variant mt-md line-clamp-2">{{ agent.system_prompt[:150] }}{% if agent.system_prompt|length > 150 %}...{% endif %}</p>
+                    </button>
+                    {% else %}
+                    <div class="p-lg text-center text-on-surface-variant">Henüz ajan yok.</div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        </div>
+            </aside>
 
-        <!-- Configuration Form -->
-        <div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-lg p-xl flex flex-col">
-            <div class="flex justify-between items-center mb-xl border-b border-outline-variant pb-md">
-                <div>
-                    <h3 id="form-title" class="font-headline-lg text-headline-lg text-primary">Yeni Ajan</h3>
-                    <span id="form-subtitle" class="font-label-caps text-label-caps text-on-surface-variant hidden">No: <span id="agent-id-display"></span></span>
-                </div>
-                <div class="flex gap-md">
-                    <button onclick="resetForm()" class="px-md py-sm border border-outline-variant rounded text-on-surface font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">Vazgeç</button>
-                    <button onclick="saveAgent()" class="px-md py-sm bg-primary text-on-primary rounded font-label-caps text-label-caps hover:bg-surface-tint transition-colors">Kaydet</button>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-xl flex-1">
-                <div class="space-y-lg">
+            <div class="xl:col-span-8 agent-panel rounded-xl p-lg">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-md pb-md border-b border-outline-variant">
                     <div>
-                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Ajan Kimliği</label>
-                        <input type="text" id="agent-name" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
+                        <h3 id="form-title" class="font-headline-lg text-headline-lg text-primary">Yeni Ajan</h3>
+                        <p id="form-helper" class="font-body-md text-body-md text-on-surface-variant">Rol, model ve sistem yönergesini ayarlayın; sonra kaydedin.</p>
                     </div>
-                    <div>
-                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Hesaplama Motoru (Model)</label>
-                        <div class="relative">
-                            <select id="agent-model" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md appearance-none focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
-                                <option value="openai/gpt-4o-mini">GPT-4o Mini (OpenRouter)</option>
-                                <option value="openai/gpt-4o">GPT-4o (OpenRouter)</option>
-                                <option value="anthropic/claude-3-opus">Claude 3 Opus (OpenRouter)</option>
-                                <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet (OpenRouter)</option>
-                                <option value="google/gemini-1.5-pro">Gemini 1.5 Pro (OpenRouter)</option>
+                    <div class="flex flex-wrap items-center gap-sm">
+                        <button onclick="duplicatePrompt()" class="inline-flex items-center gap-xs px-md py-sm border border-outline-variant rounded-lg font-label-caps text-label-caps hover:border-secondary">
+                            <span class="material-symbols-outlined text-[18px]">content_copy</span>
+                            Promptu Çoğalt
+                        </button>
+                        <button onclick="deleteCurrentAgent()" id="delete-current-btn" class="hidden inline-flex items-center gap-xs px-md py-sm border border-error text-error rounded-lg font-label-caps text-label-caps hover:bg-error-container/40">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                            Sil
+                        </button>
+                        <button onclick="saveAgent()" class="inline-flex items-center gap-xs px-md py-sm bg-primary text-on-primary rounded-lg font-label-caps text-label-caps hover:opacity-90">
+                            <span class="material-symbols-outlined text-[18px]">save</span>
+                            Kaydet
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg mt-lg">
+                    <div class="lg:col-span-5 space-y-lg">
+                        <div>
+                            <label class="block font-label-caps text-label-caps text-primary mb-sm">Ajan Adı</label>
+                            <input type="text" id="agent-name" class="w-full px-md py-sm border border-outline-variant rounded-lg bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary">
+                        </div>
+                        <div>
+                            <label class="block font-label-caps text-label-caps text-primary mb-sm">Model</label>
+                            <select id="agent-model" class="w-full px-md py-sm border border-outline-variant rounded-lg bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary">
+                                <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
+                                <option value="openai/gpt-4o">GPT-4o</option>
+                                <option value="anthropic/claude-3-opus">Claude 3 Opus</option>
+                                <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+                                <option value="google/gemini-1.5-pro">Gemini 1.5 Pro</option>
                             </select>
-                            <span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                        </div>
+                        <div>
+                            <label class="block font-label-caps text-label-caps text-primary mb-sm">Rol</label>
+                            <div class="grid grid-cols-3 gap-sm">
+                                <button type="button" onclick="setRole('proponent')" class="role-btn py-sm border border-outline-variant rounded-lg font-label-caps text-[11px]" data-role="proponent">Savunucu</button>
+                                <button type="button" onclick="setRole('opponent')" class="role-btn py-sm border border-outline-variant rounded-lg font-label-caps text-[11px]" data-role="opponent">Karşıt</button>
+                                <button type="button" onclick="setRole('moderator')" class="role-btn py-sm border border-outline-variant rounded-lg font-label-caps text-[11px]" data-role="moderator">Moderatör</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-sm">
+                                <label class="block font-label-caps text-label-caps text-primary">Temperature</label>
+                                <span id="temp-display" class="font-code-mono text-code-mono text-secondary">0.7</span>
+                            </div>
+                            <input type="range" id="agent-temp" min="0" max="2" step="0.1" value="0.7" class="w-full accent-[#0c7c6b]">
+                            <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant mt-xs">
+                                <span>Tutarlı</span>
+                                <span>Dengeli</span>
+                                <span>Yaratıcı</span>
+                            </div>
+                        </div>
+                        <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
+                            <div class="font-label-caps text-[10px] text-on-surface-variant mb-sm">Hazır Şablonlar</div>
+                            <div class="flex flex-wrap gap-sm">
+                                <button onclick="applyTemplate('academic')" class="px-sm py-xs rounded border border-outline-variant font-label-caps text-[10px] hover:border-secondary">Akademik</button>
+                                <button onclick="applyTemplate('skeptic')" class="px-sm py-xs rounded border border-outline-variant font-label-caps text-[10px] hover:border-secondary">Sert Eleştirmen</button>
+                                <button onclick="applyTemplate('judge')" class="px-sm py-xs rounded border border-outline-variant font-label-caps text-[10px] hover:border-secondary">Hakem</button>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Tartışma Rolü</label>
-                        <div class="flex gap-sm">
-                            <button type="button" onclick="setRole('proponent')" class="role-btn flex-1 py-sm border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors" data-role="proponent">Savunucu</button>
-                            <button type="button" onclick="setRole('opponent')" class="role-btn flex-1 py-sm border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors" data-role="opponent">Karşıt</button>
-                            <button type="button" onclick="setRole('moderator')" class="role-btn flex-1 py-sm border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors" data-role="moderator">Moderatör</button>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Sıcaklık (Temperature)</label>
-                        <input type="number" id="agent-temp" min="0" max="2" step="0.1" value="0.7" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
-                    </div>
-                </div>
-                <div class="space-y-lg flex flex-col">
-                    <div class="flex-1 flex flex-col">
-                        <div class="flex justify-between items-end mb-sm">
-                            <label class="block font-label-caps text-label-caps text-primary">Sistem Kişiliği ve Kısıtlamalar</label>
-                        </div>
-                        <textarea id="agent-prompt" rows="12" placeholder="Sistem talimatlarını girin..." class="w-full flex-1 px-md py-sm border border-outline-variant rounded bg-surface font-code-mono text-code-mono text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all resize-none min-h-[200px]"></textarea>
+                    <div class="lg:col-span-7 flex flex-col">
+                        <label class="block font-label-caps text-label-caps text-primary mb-sm">Sistem Promptu</label>
+                        <textarea id="agent-prompt" rows="18" placeholder="Ajanın konuşma tarzı, kanıt beklentisi, kaçınması gereken davranışlar..." class="w-full flex-1 min-h-[420px] px-md py-sm border border-outline-variant rounded-lg bg-surface font-code-mono text-code-mono text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary resize-none"></textarea>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </div>
 {% endblock %}
@@ -109,26 +164,35 @@
 let currentAgentId = null;
 let currentRole = 'proponent';
 
+const templates = {
+    academic: 'Türkçe yanıt ver. Her iddiayı açık bir gerekçeyle kur, kanıt türünü belirt ve gereksiz retorikten kaçın. Kısa, ölçülü ve akademik bir ton kullan.',
+    skeptic: 'Türkçe yanıt ver. Karşı tarafın iddiasındaki zayıf varsayımları, nedensel kopuklukları ve genelleme hatalarını hedef al. Eleştiriyi doğrudan argüman yapısına bağla.',
+    judge: 'Türkçe yanıt ver. Yeni ana iddia üretmeden argümanları değerlendir. Destek, çürütme ve cevapsız kalan noktaları açıkça ayır.'
+};
+
 function setRole(role) {
     currentRole = role;
     document.querySelectorAll('.role-btn').forEach(btn => {
-        if (btn.dataset.role === role) {
-            btn.className = 'role-btn flex-1 py-sm border border-primary bg-primary text-on-primary rounded font-label-caps text-label-caps transition-colors';
-        } else {
-            btn.className = 'role-btn flex-1 py-sm border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors';
-        }
+        const active = btn.dataset.role === role;
+        btn.className = active
+            ? 'role-btn py-sm border border-primary bg-primary text-on-primary rounded-lg font-label-caps text-[11px]'
+            : 'role-btn py-sm border border-outline-variant text-on-surface-variant rounded-lg font-label-caps text-[11px] hover:bg-surface-container-low';
     });
 }
 
 function resetForm() {
     currentAgentId = null;
     document.getElementById('form-title').textContent = 'Yeni Ajan';
-    document.getElementById('form-subtitle').classList.add('hidden');
+    document.getElementById('form-helper').textContent = 'Rol, model ve sistem yönergesini ayarlayın; sonra kaydedin.';
+    document.getElementById('delete-current-btn').classList.add('hidden');
     document.getElementById('agent-name').value = '';
     document.getElementById('agent-model').value = 'openai/gpt-4o-mini';
     document.getElementById('agent-temp').value = '0.7';
+    document.getElementById('temp-display').textContent = '0.7';
     document.getElementById('agent-prompt').value = '';
+    document.querySelectorAll('.agent-card').forEach(card => card.classList.remove('is-selected'));
     setRole('proponent');
+    document.getElementById('agent-name').focus();
 }
 
 async function saveAgent() {
@@ -146,47 +210,63 @@ async function saveAgent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     });
-    if (res.ok) {
-        window.location.reload();
-    } else {
-        const data = await res.json();
-        alert(data.error || 'Ajan kaydedilemedi');
-    }
+    if (res.ok) window.location.reload();
+    else alert((await res.json()).error || 'Ajan kaydedilemedi');
 }
 
 async function editAgent(id) {
     const res = await fetch(`/api/agents/${id}`);
     const agent = await res.json();
     currentAgentId = agent.id;
-    document.getElementById('form-title').textContent = `Ajanı Düzenle: ${agent.name}`;
-    document.getElementById('form-subtitle').classList.remove('hidden');
-    document.getElementById('agent-id-display').textContent = agent.id;
+    document.getElementById('form-title').textContent = agent.name;
+    document.getElementById('form-helper').textContent = `#${agent.id} · ${agent.model_name}`;
+    document.getElementById('delete-current-btn').classList.remove('hidden');
     document.getElementById('agent-name').value = agent.name;
     document.getElementById('agent-model').value = agent.model_name;
     document.getElementById('agent-temp').value = agent.temperature;
+    document.getElementById('temp-display').textContent = agent.temperature;
     document.getElementById('agent-prompt').value = agent.system_prompt;
     setRole(agent.role);
+    document.querySelectorAll('.agent-card').forEach(card => {
+        card.classList.toggle('is-selected', card.dataset.agentId === String(id));
+    });
 }
 
-async function deleteAgent(id) {
-    if (!confirm('Bu ajani silmek istediğinize emin misiniz?')) return;
-    await fetch(`/api/agents/${id}`, { method: 'DELETE' });
+async function deleteCurrentAgent() {
+    if (!currentAgentId) return;
+    if (!confirm('Bu ajanı silmek istediğinize emin misiniz?')) return;
+    await fetch(`/api/agents/${currentAgentId}`, { method: 'DELETE' });
     window.location.reload();
 }
 
-function showAgentModal() {
-    resetForm();
-    document.getElementById('agent-name').focus();
+function applyTemplate(name) {
+    const prompt = document.getElementById('agent-prompt');
+    prompt.value = prompt.value ? `${prompt.value}\n\n${templates[name]}` : templates[name];
+    prompt.focus();
 }
 
-document.getElementById('agent-filter').addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase();
+function duplicatePrompt() {
+    currentAgentId = null;
+    document.getElementById('form-title').textContent = 'Kopyadan Yeni Ajan';
+    document.getElementById('form-helper').textContent = 'Mevcut prompt korunur; yeni isimle kaydedilir.';
+    document.getElementById('agent-name').value = `${document.getElementById('agent-name').value} Copy`.trim();
+    document.getElementById('delete-current-btn').classList.add('hidden');
+}
+
+document.getElementById('agent-temp').addEventListener('input', event => {
+    document.getElementById('temp-display').textContent = event.target.value;
+});
+
+document.getElementById('agent-filter').addEventListener('input', event => {
+    const term = event.target.value.toLowerCase();
     document.querySelectorAll('.agent-card').forEach(card => {
-        const name = card.querySelector('.agent-name').textContent.toLowerCase();
-        card.style.display = name.includes(term) ? '' : 'none';
+        card.style.display = card.dataset.search.includes(term) ? '' : 'none';
     });
 });
 
 setRole('proponent');
+{% if agents %}
+editAgent({{ agents[0].id }});
+{% endif %}
 </script>
 {% endblock %}
