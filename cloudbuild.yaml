@@ -1,11 +1,3 @@
-substitutions:
-  _REGION: europe-west3
-  _ARTIFACT_REPOSITORY: debate-platform-repository
-  _IMAGE_NAME: debate-app
-  _CLUSTER_NAME: debate-cluster
-  _CLUSTER_LOCATION: europe-west3
-  _NAMESPACE: logicflow
-
 options:
   logging: CLOUD_LOGGING_ONLY
   machineType: E2_HIGHCPU_8
@@ -84,8 +76,7 @@ steps:
     args:
       - "-ceu"
       - |
-        IMAGE_URI="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${SHORT_SHA}"
-        sed -i "s|logicflow-image-placeholder|${IMAGE_URI}|g" /workspace/rendered-k8s.yaml
+        sed -i "s|logicflow-image-placeholder|${_IMAGE_URI}|g" /workspace/rendered-k8s.yaml
 
   - id: "deploy-gke"
     name: "gcr.io/cloud-builders/gke-deploy"
@@ -113,3 +104,12 @@ steps:
 images:
   - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${SHORT_SHA}"
   - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:latest"
+
+substitutions:
+  _REGION: europe-west3
+  _ARTIFACT_REPOSITORY: debate-platform-repository
+  _IMAGE_NAME: debate-app
+  _IMAGE_URI: "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${SHORT_SHA}"
+  _CLUSTER_NAME: debate-cluster
+  _CLUSTER_LOCATION: europe-west3
+  _NAMESPACE: logicflow
