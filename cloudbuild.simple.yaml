@@ -4,20 +4,20 @@ steps:
     args:
       - "build"
       - "-t"
-      - "europe-west3-docker.pkg.dev/$PROJECT_ID/debate-repo/debate-app:$SHORT_SHA"
+      - "europe-west3-docker.pkg.dev/$PROJECT_ID/debate-platform-repository/debate-app:$SHORT_SHA"
       - "."
 
   # 2. İmajı Artifact Registry'ye pushla
   - name: "gcr.io/cloud-builders/docker"
     args:
       - "push"
-      - "europe-west3-docker.pkg.dev/$PROJECT_ID/debate-repo/debate-app:$SHORT_SHA"
+      - "europe-west3-docker.pkg.dev/$PROJECT_ID/debate-platform-repository/debate-app:$SHORT_SHA"
 
   # 3. GKE'ye deploy et
   - name: "gcr.io/cloud-builders/gke-deploy"
     args:
       - "run"
       - "--filename=kubernetes-manifests.yaml"
-      - "--image=europe-west3-docker.pkg.dev/$PROJECT_ID/debate-repo/debate-app:$SHORT_SHA"
+      - "--image=europe-west3-docker.pkg.dev/$PROJECT_ID/debate-platform-repository/debate-app:$SHORT_SHA"
       - "--location=europe-west3"
       - "--cluster=debate-cluster"

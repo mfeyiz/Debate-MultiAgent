@@ -179,7 +179,7 @@ kubectl create secret generic logicflow-secrets \
 Create an Artifact Registry repository if you do not already have one:
 
 ```bash
-gcloud artifacts repositories create debate-repo \
+gcloud artifacts repositories create debate-platform-repository \
   --repository-format=docker \
   --location=europe-west3 \
   --description="LogicFlow Docker images"
@@ -190,7 +190,7 @@ Run the Cloud Build pipeline manually:
 ```bash
 gcloud builds submit \
   --config=cloudbuild.yaml \
-  --substitutions=_REGION=europe-west3,_ARTIFACT_REPOSITORY=debate-repo,_IMAGE_NAME=debate-app,_CLUSTER_NAME=debate-cluster,_CLUSTER_LOCATION=europe-west3,_NAMESPACE=logicflow
+  --substitutions=_REGION=europe-west3,_ARTIFACT_REPOSITORY=debate-platform-repository,_IMAGE_NAME=debate-app,_CLUSTER_NAME=debate-cluster,_CLUSTER_LOCATION=europe-west3,_NAMESPACE=logicflow
 ```
 
 For a minimal reference pipeline matching the single-file manifest approach, the repo also includes:
