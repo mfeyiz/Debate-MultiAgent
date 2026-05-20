@@ -139,7 +139,13 @@ Large `model.safetensors` and tokenizer files are stored through Git LFS. The Do
 
 ## GKE Deployment Notes
 
-The `k8s/` directory contains GKE-ready manifests and `cloudbuild.yaml` builds the Docker image, pushes it to Artifact Registry, and updates the `logicflow-app` deployment.
+The `k8s/` directory contains GKE-ready manifests and `cloudbuild.yaml` runs the full CI/CD path:
+
+1. verifies Git LFS model artifacts,
+2. runs the test suite,
+3. renders Kubernetes manifests,
+4. builds and pushes the Docker image to Artifact Registry,
+5. deploys to GKE and waits for rollout.
 
 Before deploying:
 
@@ -151,8 +157,62 @@ kubectl kustomize k8s
 Set these values for your project:
 
 - Replace `PROJECT_ID` in `k8s/serviceaccount.yaml`.
-- Fill `k8s/secret.yaml` or create the `logicflow-secrets` secret separately in the cluster.
+- Create the `logicflow-secrets` secret in the cluster. `k8s/secret.example.yaml` is only a template and is intentionally not applied by `kustomize`.
 - Make sure Cloud Build has access to Git LFS objects when building the image.
+
+Create the runtime secret:
+
+```bash
+kubectl create namespace logicflow --dry-run=client -o yaml | kubectl apply -f -
+kubectl create secret generic logicflow-secrets \
+  --namespace logicflow \
+  --from-literal=DATABASE_URL='postgresql://USER:PASSWORD@HOST:5432/DB' \
+  --from-literal=REDIS_URL='' \
+  --from-literal=OPENROUTER_API_KEY='sk-or-v1-...' \
+  --from-literal=SECRET_KEY='replace-with-a-long-random-secret' \
+  --from-literal=GOOGLE_FACTCHECK_API_KEY='' \
+  --from-literal=TCMB_EVDS_API_KEY='' \
+  --from-literal=TUIK_API_KEY='' \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
+
+Create an Artifact Registry repository if you do not already have one:
+
+```bash
+gcloud artifacts repositories create debate-repo \
+  --repository-format=docker \
+  --location=europe-west3 \
+  --description="LogicFlow Docker images"
+```
+
+Run the Cloud Build pipeline manually:
+
+```bash
+gcloud builds submit \
+  --config=cloudbuild.yaml \
+  --substitutions=_REGION=europe-west3,_ARTIFACT_REPOSITORY=debate-repo,_IMAGE_NAME=debate-app,_CLUSTER_NAME=debate-cluster,_CLUSTER_LOCATION=europe-west3,_NAMESPACE=logicflow
+```
+
+### GitHub Actions
+
+Two workflows are included:
+
+- `.github/workflows/ci.yml` runs tests, verifies LFS model artifacts, and renders manifests on PRs and pushes.
+- `.github/workflows/deploy-gke.yml` manually submits `cloudbuild.yaml` from GitHub Actions.
+
+For the manual deploy workflow, configure these GitHub repository secrets:
+
+```text
+GCP_WORKLOAD_IDENTITY_PROVIDER
+GCP_SERVICE_ACCOUNT
+```
+
+The service account used by GitHub/Cloud Build needs permissions for Cloud Build, Artifact Registry push, and GKE deploy. At minimum, grant the appropriate project/cluster-scoped roles for:
+
+- Cloud Build execution
+- Artifact Registry writer
+- Kubernetes Engine developer or a narrower deploy role
+- Service account user, if your build/deploy service account impersonates another account
 
 ## API Overview
 

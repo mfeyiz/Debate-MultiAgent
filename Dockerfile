@@ -25,10 +25,12 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 COPY app/ ./app/
 COPY main.py ./
 COPY gunicorn.conf.py ./
+COPY scripts/check_model_artifacts.py ./scripts/check_model_artifacts.py
 
 # Copy only the production model weights (~1.14 GB)
 COPY models/component_classifier/final/ ./models/component_classifier/final/
 COPY models/relation_classifier/final/ ./models/relation_classifier/final/
+RUN python scripts/check_model_artifacts.py
 
 # Create non-root user
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app

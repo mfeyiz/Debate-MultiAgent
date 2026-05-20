@@ -11,6 +11,7 @@ wheels/
 
 # Local secrets
 .env
+k8s/secret.yaml
 
 # Local runtime artifacts
 *.log
