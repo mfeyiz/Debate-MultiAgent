@@ -78,6 +78,15 @@ steps:
       - "push"
       - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:latest"
 
+  - id: "set-deploy-image"
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-ceu"
+      - |
+        IMAGE_URI="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${SHORT_SHA}"
+        sed -i "s|logicflow-image-placeholder|${IMAGE_URI}|g" /workspace/rendered-k8s.yaml
+
   - id: "deploy-gke"
     name: "gcr.io/cloud-builders/gke-deploy"
     args:
