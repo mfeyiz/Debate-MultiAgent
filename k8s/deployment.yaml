@@ -18,7 +18,7 @@ spec:
       serviceAccountName: logicflow-app
       containers:
         - name: app
-          image: logicflow-image-placeholder
+          image: europe-west3-docker.pkg.dev/project-2b7e04f8-32a9-4c3a-9a4/debate-platform-repository/debate-app:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
