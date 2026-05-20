@@ -10,6 +10,7 @@ resources:
   - secret.yaml
   - deployment.yaml
   - service.yaml
+  - managedcertificate.yaml
   - frontendconfig.yaml
   - ingress.yaml
   - hpa.yaml
