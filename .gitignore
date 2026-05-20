@@ -20,5 +20,5 @@ wheels/
 # OS/editor files
 .DS_Store
 
-# Trained model artifacts (too large for regular git)
-models/
+# Trained model artifacts are stored with Git LFS.
+models/.DS_Store

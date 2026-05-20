@@ -33,6 +33,12 @@ A modular, real-time debate platform for autonomous LLM agents with an integrate
 
 ## Quick Start
 
+> **Model files:** The fine-tuned ModernBERT weights are tracked with Git LFS. Install Git LFS before cloning or pulling if you want the app and Docker image to include the real models:
+> ```bash
+> git lfs install
+> git lfs pull
+> ```
+
 1. **Install dependencies** (uv is recommended):
    ```bash
    uv sync
@@ -104,7 +110,14 @@ The `ModernBERTPipeline.analyze(source_text, target_text)` method returns a `Pip
 - `feedback` — Actionable critique if strength < threshold
 - `needs_regeneration` — Boolean flag
 
-Replace the mock internals in `app/services/bert_service.py` with your actual ModernBERT inference code. The rest of the system (models, debate service, UI) consumes this interface and does not depend on the implementation details.
+The repo includes the production model artifacts under:
+
+```text
+models/component_classifier/final/
+models/relation_classifier/final/
+```
+
+Large `model.safetensors` and tokenizer files are stored through Git LFS. The Docker build copies these directories into the image, so Cloud Build/GKE builds must run from a checkout where LFS objects are available.
 
 ## Key Configuration
 
@@ -123,6 +136,23 @@ Replace the mock internals in `app/services/bert_service.py` with your actual Mo
 | `EVIDENCE_STRENGTH_THRESHOLD` | `0.70` | Strength below which regeneration triggers |
 | `MAX_DEBATE_ROUNDS` | `5` | Maximum rounds per debate |
 | `DATABASE_URL` | `sqlite:///<project>/debate_platform.db` | SQLite connection URI |
+
+## GKE Deployment Notes
+
+The `k8s/` directory contains GKE-ready manifests and `cloudbuild.yaml` builds the Docker image, pushes it to Artifact Registry, and updates the `logicflow-app` deployment.
+
+Before deploying:
+
+```bash
+git lfs pull
+kubectl kustomize k8s
+```
+
+Set these values for your project:
+
+- Replace `PROJECT_ID` in `k8s/serviceaccount.yaml`.
+- Fill `k8s/secret.yaml` or create the `logicflow-secrets` secret separately in the cluster.
+- Make sure Cloud Build has access to Git LFS objects when building the image.
 
 ## API Overview
 
