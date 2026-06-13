@@ -80,8 +80,9 @@ class PublicDataSourceClient:
             "dolar_kuru": r"dolar\s*(?:kuru|fiyatı)?\s*:?\s*(\d+[,.]?\d*)\s*(?:TL|tl|lira)?",
             "euro_kuru": r"euro\s*(?:kuru|fiyatı)?\s*:?\s*(\d+[,.]?\d*)\s*(?:TL|tl|lira)?",
             "faiz": r"faiz\s*(?:oranı|yüzdesi)?\s*:?\s*(%?\s*\d+[,.]?\d*)",
+            "enflasyon_yuzde": r"enflasyon.*?(?:%|yüzde)\s*(\d+[,.]?\d*)",
             "issizlik": r"işsizlik\s*(?:oranı|yüzdesi)?\s*:?\s*(%?\s*\d+[,.]?\d*)",
-            "büyüme": r"büyüme\s*(?:oranı|yüzdesi)?\s*:?\s*(%?\s*\d+[,.]?\d*)",
+            "büyüme": r"(?:büyüme|ekonomi|ekonomisi|gsyh|gayri safi).*(?:%|yüzde)\s*(\d+[,.]?\d*)",
             "nufus": r"nüfus\s*:?\s*(\d+[,.]?\d*)\s*(?:milyon|bin)?",
         }
 

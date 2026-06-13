@@ -32,6 +32,10 @@ class _TeyitResultParser(HTMLParser):
         cls = attr_dict.get("class", "")
         href = attr_dict.get("href", "")
 
+        # Ignore menu, navigation, sidebar, widget, and post_type list items
+        if any(x in cls.lower() for x in ("menu", "nav", "sidebar", "widget", "header", "footer", "post_type")):
+            return
+
         if tag == "article" or "post" in cls:
             self._in_article = True
             self._current = {"url": "", "title": "", "excerpt": ""}
@@ -92,6 +96,10 @@ class _DogrulukPayiResultParser(HTMLParser):
         cls = attr_dict.get("class", "")
         href = attr_dict.get("href", "")
 
+        # Ignore menu, navigation, sidebar, widget, and post_type list items
+        if any(x in cls.lower() for x in ("menu", "nav", "sidebar", "widget", "header", "footer", "post_type")):
+            return
+
         if "card" in cls or "item" in cls or tag == "article":
             self._in_card = True
             self._current = {"url": "", "title": "", "excerpt": ""}
@@ -140,6 +148,10 @@ class _MalumatFurusResultParser(HTMLParser):
         attr_dict = {k: v or "" for k, v in attrs}
         cls = attr_dict.get("class", "")
         href = attr_dict.get("href", "")
+
+        # Ignore menu, navigation, sidebar, widget, and post_type list items
+        if any(x in cls.lower() for x in ("menu", "nav", "sidebar", "widget", "header", "footer", "post_type")):
+            return
 
         if "post" in cls or "entry" in cls or tag == "article":
             self._in_item = True
@@ -192,6 +204,59 @@ class TurkishArchiveScraper:
         "AppleWebKit/537.36 logosFactCheck/1.0"
     )
 
+    @staticmethod
+    def is_valid_source_url(url: str | None) -> bool:
+        """Filter out generic pages, tag pages, and non-article paths for fact check archives."""
+        if not url:
+            return False
+        from urllib.parse import urlparse
+        try:
+            parsed = urlparse(url)
+            domain = parsed.netloc.lower().replace("www.", "")
+            path = parsed.path.lower()
+            
+            # Reject empty path or root-only paths
+            if path.strip("/") in {"", "tr", "en", "homepage", "anasayfa"}:
+                return False
+                
+            # Exclude search queries/feeds
+            if "/search" in path or "/feed" in path or "s=" in parsed.query.lower():
+                return False
+                
+            # Exclude common boilerplate page slugs/paths
+            exclude_patterns = [
+                "/kategori/", "/category/",
+                "/etiket/", "/tag/",
+                "/yazar/", "/author/",
+                "/page/", "/iletisim", "/contact",
+                "/hakkimizda", "/hakkinda", "/about",
+                "/kunye", "/gizlilik", "/privacy",
+                "/cerez", "/cookie",
+                "/arsiv", "/archive",
+                "/yazarlar", "/ekip", "/destek",
+                "/bulten", "/newsletter",
+                "hakkimizda", "hakkinda", "kunye", "yazarlar", "iletisim", "malumatfurus-hakkinda"
+            ]
+            for pattern in exclude_patterns:
+                if pattern in path:
+                    return False
+                    
+            if domain == "teyit.org":
+                # Teyit.org valid paths are typically /analiz-something or /kronoloji-something
+                if not (path.startswith("/analiz") or path.startswith("/kronoloji") or path.startswith("/makale") or len(path.strip("/")) > 5):
+                    return False
+            elif domain == "dogrulukpayi.com":
+                # Dogruluk Payi valid paths are typically /dogrulama/some-slug or /iddia-kontrolu/some-slug
+                if not (path.startswith("/dogrulama") or path.startswith("/iddia-kontrolu") or len(path.strip("/")) > 5):
+                    return False
+            elif domain == "malumatfurus.org":
+                # Malumatfurus valid paths are single post pages
+                if path.strip("/") in {"yazarlar", "kunye", "hakkinda", "iletisim", "malumatfurus-hakkinda"}:
+                    return False
+            return True
+        except Exception:
+            return False
+
     @classmethod
     async def search_teyit(cls, query: str) -> list[dict[str, Any]]:
         """Search teyit.org for articles related to the claim."""
@@ -213,9 +278,9 @@ class TurkishArchiveScraper:
                 "source": "teyit.org",
                 "source_domain": "teyit.org",
             }
-            for r in parser.results[:3]
-            if r.get("url")
-        ]
+            for r in parser.results
+            if r.get("url") and cls.is_valid_source_url(r.get("url"))
+        ][:3]
 
     @classmethod
     async def search_dogrulukpayi(cls, query: str) -> list[dict[str, Any]]:
@@ -238,9 +303,9 @@ class TurkishArchiveScraper:
                 "source": "dogrulukpayi.com",
                 "source_domain": "dogrulukpayi.com",
             }
-            for r in parser.results[:3]
-            if r.get("url")
-        ]
+            for r in parser.results
+            if r.get("url") and cls.is_valid_source_url(r.get("url"))
+        ][:3]
 
     @classmethod
     async def search_malumatfurus(cls, query: str) -> list[dict[str, Any]]:
@@ -263,19 +328,23 @@ class TurkishArchiveScraper:
                 "source": "malumatfurus.org",
                 "source_domain": "malumatfurus.org",
             }
-            for r in parser.results[:3]
-            if r.get("url")
-        ]
+            for r in parser.results
+            if r.get("url") and cls.is_valid_source_url(r.get("url"))
+        ][:3]
 
     @classmethod
     async def search_all(cls, claim_text: str) -> list[dict[str, Any]]:
         """Search all Turkish archives concurrently and return normalized results."""
-        salient = " ".join(
-            w for w in re.findall(r"[\wğüşöçıİĞÜŞÖÇ%]+", claim_text)
-            if len(w) > 3
-        )[:80]
+        words = [w for w in re.findall(r"[\wğüşöçıİĞÜŞÖÇ%]+", claim_text) if len(w) > 3]
+        stopwords = {
+            "dedi", "söyledi", "açıkladı", "iddia", "edildi", "oldu", "olacak", "yapıldı",
+            "yapacak", "geldi", "gitti", "verdi", "aldı", "başladı", "bitirdi", "tarafından",
+            "yönelik", "ilişkin", "hakkında", "üzerine", "karşı", "sonra", "önce"
+        }
+        filtered_words = [w for w in words if w.lower() not in stopwords]
+        salient = " ".join(filtered_words[:5])
         if not salient:
-            salient = claim_text[:80]
+            salient = claim_text[:50]
 
         # Execute searches concurrently
         tasks = [
@@ -300,5 +369,5 @@ class TurkishArchiveScraper:
         if any(w in lower for w in ("yanlış", "yalan", "çürüt", "doğru değil", "hayır", "sahte")):
             return "attack"
         if any(w in lower for w in ("karmaşa", "karışık", "net değil", "belirsiz")):
-            return "neutral"
+            return "none"
         return None

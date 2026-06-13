@@ -34,7 +34,7 @@ class FakeBert:
         claim_text: str,
         evidence_text: str,
     ) -> tuple[str, float, dict[str, float]]:
-        return "support", 0.80, {"support": 0.80, "attack": 0.10, "neutral": 0.10}
+        return "support", 0.80, {"support": 0.80, "attack": 0.10, "none": 0.10}
 
     def analyze(self, source_text: str, target_text: str, source_type: str, target_type: str):
         from app.services.bert_service import PipelineResult, Relation
@@ -60,7 +60,7 @@ class FakeBert:
                     target_component=target_comp,
                     relation_type="support",
                     confidence=0.80,
-                    probabilities={"support": 0.80, "attack": 0.10, "neutral": 0.10},
+                    probabilities={"support": 0.80, "attack": 0.10, "none": 0.10},
                 )
             ],
             overall_strength=0.75,
@@ -268,6 +268,35 @@ async def test_run_full_debate_auto_advance(test_env):
         messages_res = await ac.get(f"/api/debates/{debate_id}/messages")
         messages = messages_res.json()
         assert len(messages) >= 2  # At least claim + attack for 1 round
+
+
+@pytest.mark.asyncio
+async def test_overlapping_debate_operations_are_rejected(test_env):
+    """A second mutating operation on the same debate should fail before SQLite locks."""
+    app_instance = test_env
+    async with AsyncClient(transport=ASGITransport(app=app_instance), base_url="http://test") as ac:
+        agents_res = await ac.get("/api/agents")
+        agents = agents_res.json()
+        pro_agent = [a for a in agents if a["role"] == "proponent"][0]
+        opp_agent = [a for a in agents if a["role"] == "opponent"][0]
+
+        debate_res = await ac.post(
+            "/api/debates",
+            json={
+                "topic": "Çakışma testi",
+                "agent_ids": [pro_agent["id"], opp_agent["id"]],
+                "max_rounds": 1,
+            },
+        )
+        debate_id = debate_res.json()["id"]
+        svc = app_instance.state.debate_svc
+        lock = await svc.acquire_operation_lock(debate_id, "test")
+        try:
+            advance_res = await ac.post(f"/api/debates/{debate_id}/advance")
+            assert advance_res.status_code == 400
+            assert "halen çalışıyor" in advance_res.json()["error"]
+        finally:
+            lock.release()
 
 
 @pytest.mark.asyncio

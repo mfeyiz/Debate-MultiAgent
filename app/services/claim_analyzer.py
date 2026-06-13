@@ -126,10 +126,11 @@ class ClaimAnalyzer:
     def detect_statistical_claim(cls, text: str) -> dict[str, Any]:
         """Detect if a claim contains statistical data."""
         patterns = {
-            "percentage": r"%?\s*\d+[,.]?\d*\s*%",
+            "percentage": r"(?:%\s*\d+[,.]?\d*|\d+[,.]?\d*\s*%|yüzde\s+\d+[,.]?\d*)",
             "year_with_number": r"\b(19|20)\d{2}\b.*\d+[,.]?\d*",
             "number_with_unit": r"\d+[,.]?\d*\s*(?:milyon|milyar|bin|trilyon|TL|dolar|euro)",
-            "rate_pattern": r"(?:oranı|yüzdesi|oran|oranını)\s*:?\s*(%?\s*\d+[,.]?\d*)",
+            "rate_pattern": r"(?:oranı|yüzdesi|oran|oranını)\s*:?\s*(?:%?\s*\d+[,.]?\d*|yüzde\s+\d+[,.]?\d*)",
+            "economic_rate": r"(?:enflasyon|büyüme|faiz|işsizlik|kur|dolar|euro).*(?:%|yüzde|\d+[,.]?\d*)",
         }
 
         found = {}
@@ -230,3 +231,126 @@ class ClaimAnalyzer:
             "is_imbalanced": imbalance,
             "findings": findings,
         }
+
+    @classmethod
+    async def analyze_argument_structure(
+        cls,
+        article_text: str,
+        claims: list[Any],
+        model: Any | None = None,
+    ) -> dict[str, Any]:
+        """Analyze article text for thesis, logical fallacies, and dialectic quality."""
+        if model is not None:
+            try:
+                from pydantic_ai import Agent as PydanticAgent
+                
+                # Setup structured prompt
+                prompt = (
+                    "Aşağıdaki haber metnini argüman madenciliği ve mantıksal tutarlılık açısından incele.\n"
+                    "Metnin ana tezini (main thesis), genel retorik tonunu (dialectic tone), 0-100 arası mantıksal tutarlılık/objektiflik skorunu "
+                    "ve metinde tespit ettiğin mantıksal safsataları (Logical Fallacies - örn. Ad Hominem, Saman Adam, "
+                    "Otoriteye Başvuru, Korkuya Başvuru, Kısır Döngü vb.) Türkçe olarak çıkar.\n\n"
+                    f"Haber Metni:\n{article_text}\n"
+                )
+                
+                agent = PydanticAgent(
+                    model,
+                    result_type=ArgumentStructureResult,
+                    system_prompt=(
+                        "Sen profesyonel bir argüman madenciliği araştırmacısı ve medya okuryazarlığı editörüsün. "
+                        "Haber metinlerindeki mantıksal yapıları ve safsataları titizlikle analiz edersin."
+                    ),
+                    model_settings={"temperature": 0.15},
+                )
+                
+                response = await agent.run(prompt)
+                res_obj = response.output
+                return {
+                    "main_thesis": res_obj.main_thesis,
+                    "dialectic_tone": res_obj.dialectic_tone,
+                    "objectivity_score": res_obj.objectivity_score,
+                    "fallacies": [
+                        {
+                            "title": item.title,
+                            "detail": item.detail,
+                            "severity": item.severity,
+                            "confidence": item.confidence,
+                        }
+                        for item in res_obj.fallacies
+                    ]
+                }
+            except Exception as exc:
+                import sys
+                print(f"LLM argument mining analysis failed, falling back to rule-based: {exc}", file=sys.stderr)
+
+        # Fallback rule-based analysis
+        lower = article_text.lower()
+        clickbait_hits = sum(1 for p in cls.CLICKBAIT_PATTERNS if re.search(p, lower))
+        generalization_hits = sum(1 for p in cls.GENERALIZATION_PATTERNS if re.search(p, lower))
+        missing_source_hits = sum(1 for p in cls.MISSING_SOURCE_PATTERNS if re.search(p, lower))
+        charged_hits = sum(1 for term in cls.EMOTIONAL_CHARGED_TERMS if term in lower)
+
+        fallacies = []
+        if clickbait_hits > 0:
+            fallacies.append({
+                "title": "Tıklama Tuzağı ve Sansasyonellik",
+                "detail": "Metin, okuyucunun merakını veya duygularını manipüle etmeye yönelik abartılı başlık/ifadeler içeriyor.",
+                "severity": "medium",
+                "confidence": 0.85
+            })
+        if generalization_hits > 0:
+            fallacies.append({
+                "title": "Aşırı Genelleme (Hasty Generalization)",
+                "detail": "Metin, 'herkes', 'asla', 'hiçbir zaman' gibi sözcüklerle sınırlı gözlemlerden genel yargılara varıyor.",
+                "severity": "medium",
+                "confidence": 0.80
+            })
+        if missing_source_hits > 0:
+            fallacies.append({
+                "title": "Kanıtsız İddia ve Belirsiz Kaynak",
+                "detail": "İddialar somut kanıtlara dayandırılmak yerine 'iddia edildi', 'kaynaklara göre' denilerek belirsiz bırakılmış.",
+                "severity": "high",
+                "confidence": 0.90
+            })
+        if charged_hits >= 3:
+            fallacies.append({
+                "title": "Duygulara Başvurmak (Appeal to Emotion)",
+                "detail": "Akılcı argümanlar sunmak yerine okuyucuda öfke, korku veya şok yaratacak kelimeler yoğun kullanılmış.",
+                "severity": "high",
+                "confidence": 0.75
+            })
+
+        # Infer basic tone
+        if clickbait_hits > 0 or charged_hits >= 2:
+            tone = "Sansasyonel ve Alarmist"
+            score = max(30, 90 - (clickbait_hits * 15 + charged_hits * 10))
+        else:
+            tone = "Göreceli Dengeli / Bilgilendirici"
+            score = min(100, 95 - (generalization_hits * 8 + missing_source_hits * 10))
+
+        # Infer basic thesis from first paragraph
+        first_paragraph = article_text.strip().split("\n")[0]
+        thesis = first_paragraph[:160] + "..." if len(first_paragraph) > 160 else first_paragraph
+
+        return {
+            "main_thesis": thesis or "Haber tezi analiz edilemedi.",
+            "dialectic_tone": tone,
+            "objectivity_score": int(score),
+            "fallacies": fallacies
+        }
+
+
+# --- Pydantic models for structured output ---
+from pydantic import BaseModel, Field
+
+class FallacyItem(BaseModel):
+    title: str = Field(description="Name of the fallacy in Turkish (e.g. Ad Hominem, Saman Adam, Otoriteye Başvuru)")
+    detail: str = Field(description="Detailed explanation in Turkish of where it occurs in the text and why it is a fallacy.")
+    severity: str = Field(description="Severity: high, medium, or low")
+    confidence: float = Field(description="Confidence score between 0.0 and 1.0")
+
+class ArgumentStructureResult(BaseModel):
+    main_thesis: str = Field(description="The core main thesis or claim of the news article in Turkish.")
+    dialectic_tone: str = Field(description="The rhetorical/dialectic tone description in Turkish, e.g. Objektif, Sansasyonel, Yanlı, Korku Odaklı.")
+    objectivity_score: int = Field(description="Overall objectivity and logical consistency score out of 100.")
+    fallacies: list[FallacyItem] = Field(description="List of logical fallacies identified in the text.")

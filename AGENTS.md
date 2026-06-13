@@ -1,4 +1,4 @@
-# Agent Instructions — LogicFlow
+# Agent Instructions — Logos
 
 ## Environment
 

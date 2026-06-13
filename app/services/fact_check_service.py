@@ -313,6 +313,23 @@ class FactCheckService:
     RELATION_THRESHOLD = 0.60
     ATTACK_THRESHOLD = 0.70
     MAX_SOURCE_COMPONENTS = 24
+    MIN_SOURCE_RELEVANCE = 0.34
+    MIN_SEARCH_SCORE = 0.20
+    MANIPULATION_RELATION_SKIP = 0.55
+    OFFICIAL_SOURCE_TERMS = {
+        "tüik",
+        "tuik",
+        "tcmb",
+        "merkez bankası",
+        "oecd",
+        "who",
+        "dünya bankası",
+        "world bank",
+        "resmi gazete",
+        "bakanlığı",
+        "eurostat",
+        "imf",
+    }
 
     _bert_lock = threading.Lock()
     _bert_instance: ModernBERTPipeline | None = None
@@ -404,9 +421,22 @@ class FactCheckService:
             await self._retrieve_and_classify_sources(db, run, db_components)
             await db.flush()
             await self._finalize_verdicts(db, run)
-            # Build manipulation findings
+            
+            # Deep Argument Mining analysis (logical fallacies, thesis, tone)
+            arg_structure = await ClaimAnalyzer.analyze_argument_structure(article_text, db_components, self._llm_model)
+            
+            # Blend overall thesis/tone/objectivity score into balanced_reporting
+            balanced = json.loads(run.balanced_reporting_json or "{}")
+            balanced["main_thesis"] = arg_structure.get("main_thesis")
+            balanced["dialectic_tone"] = arg_structure.get("dialectic_tone")
+            balanced["objectivity_score"] = arg_structure.get("objectivity_score")
+            run.balanced_reporting_json = json.dumps(balanced)
+            
+            # Blend logical fallacies into manipulation findings
             manipulation_findings = self._build_manipulation_findings(db_components)
+            manipulation_findings["fallacies"] = arg_structure.get("fallacies", [])
             run.manipulation_findings_json = json.dumps(manipulation_findings)
+            
             run.status = "completed"
             run.completed_at = datetime.datetime.utcnow()
             claims_only = [c for c in db_components if c.component_type == "claim"]
@@ -509,12 +539,85 @@ class FactCheckService:
             for component in components
             if len(component.text.split()) >= 4 and len(component.text) >= 24
         ]
-        if meaningful:
-            has_claim = any(c.component_type == "claim" for c in meaningful)
-            if not has_claim:
-                meaningful[0].component_type = "claim"
-            return meaningful[: self.MAX_SOURCE_COMPONENTS]
+        for component in meaningful:
+            component._extraction_reason = f"model_{component.component_type}"
+
+        rescued = self._rescue_verifiable_claims(text, meaningful)
+        if meaningful or rescued:
+            merged = [*meaningful, *rescued]
+            merged.sort(key=lambda component: (component.start_idx, component.end_idx))
+            return merged[: self.MAX_SOURCE_COMPONENTS]
         return self._fallback_components(text)
+
+    def _rescue_verifiable_claims(
+        self,
+        text: str,
+        existing: list[ArgumentComponent],
+    ) -> list[ArgumentComponent]:
+        """Recover factual claims that the component model labeled as other."""
+        rescued: list[ArgumentComponent] = []
+        spans = [(component.start_idx, component.end_idx) for component in existing]
+
+        text_units = getattr(self.bert, "_text_units", None)
+        is_meaningful = getattr(self.bert, "_is_meaningful_component", None)
+        units = text_units(text) if callable(text_units) else self._simple_text_units(text)
+        for start_idx, end_idx in units:
+            unit_text = text[start_idx:end_idx].strip()
+            meaningful = is_meaningful(unit_text) if callable(is_meaningful) else self._simple_meaningful_component(unit_text)
+            if not meaningful:
+                continue
+            if self._overlaps_existing_span(start_idx, end_idx, spans):
+                continue
+
+            statistical = ClaimAnalyzer.detect_statistical_claim(unit_text)
+            official = self._has_official_source_signal(unit_text)
+            if not statistical["is_statistical"] and not official:
+                continue
+
+            reason = "statistical_rescue" if statistical["is_statistical"] else "official_source_rescue"
+            confidence = 0.74 if statistical["is_statistical"] else 0.68
+            component = ArgumentComponent(
+                text=unit_text[: self.bert.MAX_COMPONENT_CHARS],
+                component_type="claim",
+                start_idx=start_idx,
+                end_idx=min(end_idx, start_idx + self.bert.MAX_COMPONENT_CHARS),
+                confidence=confidence,
+            )
+            component._extraction_reason = reason
+            rescued.append(component)
+            spans.append((component.start_idx, component.end_idx))
+
+        return rescued
+
+    @staticmethod
+    def _simple_text_units(text: str) -> list[tuple[int, int]]:
+        units: list[tuple[int, int]] = []
+        for match in re.finditer(r"[^.!?;\n]+(?:[.!?;]+|$)", text, flags=re.UNICODE):
+            start_idx, end_idx = match.span()
+            while start_idx < end_idx and text[start_idx].isspace():
+                start_idx += 1
+            while end_idx > start_idx and text[end_idx - 1].isspace():
+                end_idx -= 1
+            if end_idx > start_idx:
+                units.append((start_idx, end_idx))
+        return units
+
+    @staticmethod
+    def _simple_meaningful_component(text: str) -> bool:
+        return len(text.strip()) >= 24 and len(re.findall(r"[\wğüşöçıİĞÜŞÖÇ%]+", text, flags=re.UNICODE)) >= 4
+
+    @staticmethod
+    def _overlaps_existing_span(start_idx: int, end_idx: int, spans: list[tuple[int, int]]) -> bool:
+        for left, right in spans:
+            overlap = max(0, min(end_idx, right) - max(start_idx, left))
+            if overlap / max(1, end_idx - start_idx) >= 0.6:
+                return True
+        return False
+
+    @classmethod
+    def _has_official_source_signal(cls, text: str) -> bool:
+        lower = text.lower()
+        return any(term in lower for term in cls.OFFICIAL_SOURCE_TERMS)
 
     def _enrich_components(self, components: list[ArgumentComponent], article_text: str) -> list[ArgumentComponent]:
         """Enrich components with claim hash, manipulation score, statistical flag, and quote data."""
@@ -584,6 +687,7 @@ class FactCheckService:
                 is_statistical=getattr(component, "_is_statistical", False),
                 statistical_data_json=json.dumps(getattr(component, "_statistical_data", {})),
                 quote_data_json=json.dumps(getattr(component, "_quote_data", [])),
+                extraction_reason=getattr(component, "_extraction_reason", f"model_{component.component_type}"),
             )
             db.add(row)
             persisted.append(row)
@@ -598,13 +702,19 @@ class FactCheckService:
                     continue
                 if source.start_idx > target.start_idx and source.component_type == "claim":
                     continue
+                if self._should_skip_internal_source(source):
+                    continue
                 relation_type, confidence, probabilities = await asyncio.to_thread(
                     self.bert.classify_relation,
                     target.text,
                     source.text,
                 )
-                if relation_type == "neutral" or confidence < self.RELATION_THRESHOLD:
+                if relation_type in {"neutral", "none"} or confidence < self.RELATION_THRESHOLD:
                     continue
+                probabilities = {
+                    ("none" if key == "neutral" else key): value
+                    for key, value in (probabilities or {}).items()
+                }
                 db.add(
                     FactRelation(
                         run_id=run.id,
@@ -617,6 +727,18 @@ class FactCheckService:
                     )
                 )
 
+    @classmethod
+    def _should_skip_internal_source(cls, source: FactClaim) -> bool:
+        """Do not let manipulative unsupported language become a strong semantic attack."""
+        if source.component_type == "claim":
+            return False
+        manipulation = source.manipulation_score or 0.0
+        if manipulation < cls.MANIPULATION_RELATION_SKIP:
+            return False
+        if source.is_statistical or cls._has_official_source_signal(source.text):
+            return False
+        return True
+
     async def _search_turkish_archives(self, db: AsyncSession, run: FactCheckRun, components: list[FactClaim]) -> None:
         """Search Turkish fact-check archives for pre-existing verifications."""
         claims = [c for c in components if c.component_type == "claim"]
@@ -625,6 +747,15 @@ class FactCheckService:
             for result in archive_results:
                 # Infer preliminary verdict from title
                 inferred = TurkishArchiveScraper.infer_verdict_from_title(result["title"])
+                relevance = self._score_source_candidate(
+                    claim.text,
+                    title=result["title"],
+                    url=result["url"],
+                    snippet=result["snippet"],
+                    search_score=0.85,
+                    source_domain=result["source_domain"],
+                    is_archive=True,
+                )
                 # Add as evidence
                 evidence = FactEvidence(
                     run_id=run.id,
@@ -635,13 +766,16 @@ class FactCheckService:
                     source_domain=result["source_domain"],
                     snippet=result["snippet"],
                     score=0.85,
+                    relevance_score=relevance["relevance_score"],
+                    source_quality=relevance["source_quality"],
+                    accepted_for_verdict=relevance["accepted_for_verdict"],
                     is_turkish_archive=True,
                     archive_match_claim_text=claim.text,
                 )
                 db.add(evidence)
                 await db.flush()
                 # Add relation based on inferred verdict
-                if inferred:
+                if inferred and evidence.accepted_for_verdict:
                     db.add(
                         FactRelation(
                             run_id=run.id,
@@ -650,7 +784,7 @@ class FactCheckService:
                             relation_scope="external",
                             relation_type=inferred,
                             confidence=0.75,
-                            probabilities_json=json.dumps({inferred: 0.75, "neutral": 0.25}),
+                            probabilities_json=json.dumps({inferred: 0.75, "none": 0.25}),
                         )
                     )
 
@@ -663,6 +797,15 @@ class FactCheckService:
             gc_results = await self.google_factcheck.search(claim.text, language_code="tr")
             for result in gc_results:
                 inferred = result.get("inferred_verdict")
+                relevance = self._score_source_candidate(
+                    claim.text,
+                    title=result["title"],
+                    url=result["url"],
+                    snippet=result["snippet"],
+                    search_score=0.88,
+                    source_domain=result["source_domain"],
+                    is_archive=True,
+                )
                 evidence = FactEvidence(
                     run_id=run.id,
                     claim_id=claim.id,
@@ -672,12 +815,15 @@ class FactCheckService:
                     source_domain=result["source_domain"],
                     snippet=result["snippet"],
                     score=0.88,
+                    relevance_score=relevance["relevance_score"],
+                    source_quality=relevance["source_quality"],
+                    accepted_for_verdict=relevance["accepted_for_verdict"],
                     is_turkish_archive=False,
                     archive_match_claim_text=claim.text,
                 )
                 db.add(evidence)
                 await db.flush()
-                if inferred and inferred in {"support", "attack"}:
+                if inferred and inferred in {"support", "attack"} and evidence.accepted_for_verdict:
                     db.add(
                         FactRelation(
                             run_id=run.id,
@@ -686,7 +832,7 @@ class FactCheckService:
                             relation_scope="external",
                             relation_type=inferred,
                             confidence=0.72,
-                            probabilities_json=json.dumps({inferred: 0.72, "neutral": 0.28}),
+                            probabilities_json=json.dumps({inferred: 0.72, "none": 0.28}),
                         )
                     )
 
@@ -697,11 +843,13 @@ class FactCheckService:
             public_results = await PublicDataSourceClient.query_all_for_claim(claim.text)
             for result in public_results:
                 # Determine relation from numeric comparison if available
-                relation_type = "neutral"
+                relation_type = "none"
                 confidence = 0.90
                 comparison = result.get("comparison")
                 if comparison:
-                    relation_type = comparison.get("verdict", "neutral")
+                    relation_type = comparison.get("verdict", "none")
+                    if relation_type == "neutral":
+                        relation_type = "none"
                     confidence = 0.92 if relation_type in {"support", "attack"} else 0.75
 
                 evidence = FactEvidence(
@@ -713,6 +861,9 @@ class FactCheckService:
                     source_domain=source_domain if (source_domain := result.get("source_domain")) else "",
                     snippet=result["snippet"],
                     score=0.90,
+                    relevance_score=1.0,
+                    source_quality="public_data",
+                    accepted_for_verdict=True,
                     is_public_data_source=True,
                 )
                 db.add(evidence)
@@ -726,7 +877,7 @@ class FactCheckService:
                             relation_scope="external",
                             relation_type=relation_type,
                             confidence=confidence,
-                            probabilities_json=json.dumps({relation_type: confidence, "neutral": round(1 - confidence, 2)}),
+                            probabilities_json=json.dumps({relation_type: confidence, "none": round(1 - confidence, 2)}),
                         )
                     )
 
@@ -750,6 +901,15 @@ class FactCheckService:
                     source_domain = urlparse(result.url).netloc.replace("www.", "")
                     # Get credibility score
                     credibility = CredibilityScorer.score_domain(source_domain)
+                    relevance = self._score_source_candidate(
+                        claim.text,
+                        title=result.title,
+                        url=result.url,
+                        snippet=result.snippet,
+                        search_score=result.score,
+                        source_domain=source_domain,
+                        is_archive=self._source_category(source_domain) == "fact_check_archive",
+                    )
                     evidence = FactEvidence(
                         run_id=run.id,
                         claim_id=claim.id,
@@ -762,10 +922,13 @@ class FactCheckService:
                         score=result.score,
                         credibility_score=credibility.get("credibility_score"),
                         source_bias=credibility.get("bias"),
+                        relevance_score=relevance["relevance_score"],
+                        source_quality=relevance["source_quality"],
+                        accepted_for_verdict=relevance["accepted_for_verdict"],
                     )
                     db.add(evidence)
                     await db.flush()
-                    if result.snippet.strip():
+                    if result.snippet.strip() and evidence.accepted_for_verdict:
                         relation_type, confidence, probabilities = await asyncio.to_thread(
                             self.bert.classify_relation,
                             claim.text,
@@ -782,6 +945,120 @@ class FactCheckService:
                                 probabilities_json=json.dumps(probabilities),
                             )
                         )
+
+    @classmethod
+    def _score_source_candidate(
+        cls,
+        claim_text: str,
+        *,
+        title: str,
+        url: str,
+        snippet: str,
+        search_score: float,
+        source_domain: str,
+        is_archive: bool = False,
+    ) -> dict[str, Any]:
+        """Strict source gate used before an external result can affect verdicts."""
+        title = title or ""
+        snippet = snippet or ""
+        parsed = urlparse(url or "")
+        path = parsed.path.strip("/")
+        text = f"{title} {snippet}"
+        coverage = cls._claim_term_coverage(claim_text, text)
+        boilerplate = cls._is_boilerplate_source_text(title, snippet)
+        homepage = path in {"", "#"} or path.lower() in {"tr", "en", "homepage", "anasayfa"}
+        trusted = cls._source_category(source_domain) in {"knowledge_base", "fact_check_archive"}
+        official = cls._has_official_source_signal(f"{source_domain} {title} {snippet}")
+        valid_url = TurkishArchiveScraper.is_valid_source_url(url)
+
+        relevance = round(
+            min(
+                1.0,
+                (coverage * 0.72)
+                + (min(max(search_score, 0.0), 1.0) * 0.18)
+                + (0.10 if trusted or official else 0.0),
+            ),
+            3,
+        )
+
+        accepted = True
+        quality = "accepted"
+        if boilerplate:
+            accepted = False
+            quality = "boilerplate"
+        elif homepage and not official:
+            accepted = False
+            quality = "homepage"
+        elif not valid_url:
+            accepted = False
+            quality = "invalid_url_format"
+        elif search_score < cls.MIN_SEARCH_SCORE and not trusted:
+            accepted = False
+            quality = "low_search_score"
+        elif relevance < cls.MIN_SOURCE_RELEVANCE:
+            accepted = False
+            quality = "low_relevance"
+        elif is_archive and coverage < 0.18 and not official:
+            accepted = False
+            quality = "archive_low_coverage"
+
+        return {
+            "relevance_score": relevance,
+            "source_quality": quality,
+            "accepted_for_verdict": accepted,
+            "claim_coverage": coverage,
+        }
+
+    @staticmethod
+    def _claim_terms(text: str) -> set[str]:
+        stopwords = {
+            "bir", "ve", "ile", "için", "olan", "olarak", "göre", "buna", "rağmen",
+            "haberde", "iddia", "iddiası", "oldu", "olduğu", "sonunda", "yılında",
+            "the", "and", "for", "with", "from", "this", "that",
+        }
+        return {
+            word
+            for word in re.findall(r"[\wğüşöçıİĞÜŞÖÇ%]+", text.lower(), flags=re.UNICODE)
+            if len(word) >= 4 and word not in stopwords
+        }
+
+    @classmethod
+    def _claim_term_coverage(cls, claim_text: str, source_text: str) -> float:
+        claim_terms = cls._claim_terms(claim_text)
+        if not claim_terms:
+            return 0.0
+        source_terms = cls._claim_terms(source_text)
+        return round(len(claim_terms & source_terms) / len(claim_terms), 3)
+
+    @staticmethod
+    def _is_boilerplate_source_text(title: str, snippet: str) -> bool:
+        text = re.sub(r"\s+", " ", f"{title} {snippet}").strip().lower()
+        if len(text) < 24:
+            return True
+        exact_noise = {
+            "hakkında",
+            "tüm yazılar",
+            "şehir efsaneleri",
+            "fact check",
+            "politifact",
+        }
+        if text in exact_noise:
+            return True
+        noise_terms = [
+            "menu",
+            "sign up",
+            "read more",
+            "newsletter",
+            "membership",
+            "recent articles",
+            "anasayfa",
+            "çerez",
+            "giriş yap",
+            "abone ol",
+        ]
+        hits = sum(1 for term in noise_terms if term in text)
+        link_markers = text.count("http") + text.count("[") + text.count("]")
+        return hits >= 2 or link_markers >= 8
 
     async def _check_claim_cache(self, db: AsyncSession, claim: FactClaim) -> dict[str, Any] | None:
         """Check if a semantically similar claim was analyzed recently."""
@@ -826,7 +1103,12 @@ class FactCheckService:
                 continue
 
             claim_relations = by_target.get(claim.id, [])
-            external = [r for r in claim_relations if r.relation_scope == "external"]
+            external = [
+                r
+                for r in claim_relations
+                if r.relation_scope == "external"
+                and (not r.evidence or r.evidence.accepted_for_verdict)
+            ]
             internal = [r for r in claim_relations if r.relation_scope == "internal"]
             archive_relations = [
                 r for r in external if r.evidence and self._source_category(r.evidence.source_domain) == "fact_check_archive"
@@ -901,7 +1183,7 @@ class FactCheckService:
                 claim.verdict_status = "Metin içinde kanıtsız"
             else:
                 claim.verdict_status = "Belirsiz"
-            claim.explanation = await self._synthesize_explanation(claim, claim_relations)
+            claim.explanation = await self._synthesize_explanation(claim, [*internal, *external])
 
     async def _synthesize_explanation(self, claim: FactClaim, relations: list[FactRelation]) -> str:
         top_relations = sorted(relations, key=lambda r: r.confidence, reverse=True)[:4]
@@ -955,29 +1237,50 @@ class FactCheckService:
     @staticmethod
     def _query_plan_for_claim(claim_text: str) -> list[tuple[str, str]]:
         normalized = re.sub(r"\s+", " ", claim_text).strip()
-        quoted = f'"{normalized[:180]}"'
+        lower = normalized.lower()
         words = re.findall(r"[\wğüşöçıİĞÜŞÖÇ%]+", normalized, flags=re.UNICODE)
-        salient = " ".join([word for word in words if len(word) > 3][:12])
-        source_terms = " ".join(
-            [
-                "teyit",
-                "doğruluk payı",
-                "factcheck",
-                "politifact",
-                "TÜİK",
-                "Merkez Bankası",
-                "WHO",
-                "World Bank",
-            ]
-        )
-        queries: list[tuple[str, str]] = [
-            ("knowledge_base", f"{salient or normalized[:180]} {source_terms}"),
-            ("exact_claim", quoted),
-        ]
-        return [
-            (query, scope)
-            for scope, query in queries[: max(1, Config.FACT_CHECK_MAX_QUERIES_PER_CLAIM)]
-        ]
+        
+        # Stopwords to keep search query focused
+        stopwords = {
+            "dedi", "söyledi", "açıkladı", "iddia", "edildi", "oldu", "olacak", "yapıldı",
+            "yapacak", "geldi", "gitti", "verdi", "aldı", "başladı", "bitirdi", "tarafından",
+            "yönelik", "ilişkin", "hakkında", "üzerine", "karşı", "sonra", "önce", "olan",
+            "olarak", "göre"
+        }
+        filtered_words = [w for w in words if w.lower() not in stopwords and len(w) > 3]
+        salient = " ".join(filtered_words[:8])
+        if not salient:
+            salient = " ".join(words[:8])
+        if not salient:
+            salient = normalized[:120]
+
+        # 1. Clean direct query for finding news reports / evidence
+        q_direct = salient
+        
+        # 2. Fact checking archives search
+        q_verify = f"{salient} (teyit OR \"doğruluk payı\" OR malumatfuruş)"
+        
+        # 3. Official data search (if statistical or economic/demographic)
+        is_stat = ClaimAnalyzer.detect_statistical_claim(normalized)["is_statistical"]
+        has_econ = any(w in lower for w in ["enflasyon", "büyüme", "faiz", "işsizlik", "dolar", "türk lirası", "tcmb", "tüik", "nüfus", "emekli", "maaş", "bütçe"])
+        
+        queries = []
+        if is_stat or has_econ:
+            q_official = f"{salient} (TÜİK OR \"Merkez Bankası\" OR TCMB OR Resmi Gazete)"
+            queries.append((q_official, "official_data"))
+            
+        queries.append((q_verify, "verification"))
+        queries.append((q_direct, "direct_claim"))
+        
+        # Deduplicate and return planned queries based on maximum allowed config
+        seen_queries = set()
+        planned = []
+        for q, scope in queries:
+            if q not in seen_queries:
+                seen_queries.add(q)
+                planned.append((q, scope))
+                
+        return planned[:max(1, Config.FACT_CHECK_MAX_QUERIES_PER_CLAIM)]
 
     @staticmethod
     def _infer_title(text: str) -> str:
@@ -987,6 +1290,8 @@ class FactCheckService:
     @staticmethod
     def _is_visible_relation(relation: FactRelation) -> bool:
         if relation.relation_type not in {"support", "attack"}:
+            return False
+        if relation.relation_scope == "external" and relation.evidence and not relation.evidence.accepted_for_verdict:
             return False
         if relation.relation_type == "attack":
             return relation.confidence >= FactCheckService.ATTACK_THRESHOLD
@@ -1020,6 +1325,7 @@ class FactCheckService:
                     "target_claim_id": relation.target_claim_id if relation else None,
                     "is_statistical": claim.is_statistical,
                     "manipulation_score": claim.manipulation_score,
+                    "extraction_reason": claim.extraction_reason,
                 }
             )
         return annotations
@@ -1043,6 +1349,7 @@ class FactCheckService:
                         "confidence": claim.confidence,
                         "is_statistical": claim.is_statistical,
                         "manipulation_score": claim.manipulation_score,
+                        "extraction_reason": claim.extraction_reason,
                     }
                 }
             )
@@ -1060,6 +1367,9 @@ class FactCheckService:
                         "confidence": item.score,
                         "credibility_score": item.credibility_score,
                         "source_bias": item.source_bias,
+                        "relevance_score": item.relevance_score,
+                        "source_quality": item.source_quality,
+                        "accepted_for_verdict": item.accepted_for_verdict,
                         "is_turkish_archive": item.is_turkish_archive,
                         "is_public_data_source": item.is_public_data_source,
                     }
@@ -1121,12 +1431,11 @@ class FactCheckService:
         """Build manipulation findings from claim components."""
         all_findings = []
         for claim in components:
-            if claim.component_type != "claim":
-                continue
             analysis = ClaimAnalyzer.analyze_manipulation(claim.text)
             if analysis["score"] >= 0.35:
                 all_findings.append({
                     "claim_id": claim.id,
+                    "component_type": claim.component_type,
                     "text": claim.text,
                     "score": analysis["score"],
                     "details": analysis["findings"],
@@ -1150,6 +1459,20 @@ class FactCheckService:
 
         for claim in claims:
             if claim.component_type != "claim":
+                manipulation = ClaimAnalyzer.analyze_manipulation(claim.text)
+                if manipulation["score"] >= 0.35:
+                    findings.append(
+                        {
+                            "claim_id": claim.id,
+                            "title": "Manipülasyon uyarısı",
+                            "detail": (
+                                "Bu metin parçası doğrulanabilir kanıt yerine manipülatif/belirsiz "
+                                f"kaynak dili içeriyor: {claim.text[:160]}"
+                            ),
+                            "severity": "medium",
+                            "confidence": manipulation["score"],
+                        }
+                    )
                 continue
             claim_relations = relation_by_target.get(claim.id, [])
             unsupported = not any(
@@ -1285,6 +1608,22 @@ class FactCheckService:
                 }
             )
 
+        # Logical fallacies findings integration
+        try:
+            manip_data = json.loads(run.manipulation_findings_json or "{}")
+            for fallacy in manip_data.get("fallacies", []):
+                findings.append(
+                    {
+                        "claim_id": None,
+                        "title": f"Mantıksal Safsata: {fallacy['title']}",
+                        "detail": fallacy["detail"],
+                        "severity": fallacy["severity"],
+                        "confidence": fallacy["confidence"],
+                    }
+                )
+        except Exception:
+            pass
+
         if not run.to_dict()["source_metadata"].get("search_provider") == "tavily":
             findings.insert(
                 0,
@@ -1301,7 +1640,8 @@ class FactCheckService:
     @staticmethod
     def _source_category(domain: str) -> str:
         normalized = domain.lower().replace("www.", "")
-        if any(item in normalized for item in Config.FACT_CHECK_ARCHIVE_DOMAINS):
+        archive_domains = set(Config.FACT_CHECK_ARCHIVE_DOMAINS) | {"malumatfurus.org", "malumatfurus"}
+        if any(item in normalized for item in archive_domains):
             return "fact_check_archive"
         if any(item in normalized for item in Config.FACT_CHECK_TRUSTED_DOMAINS):
             return "knowledge_base"
@@ -1355,6 +1695,10 @@ class FactCheckService:
             1 for e in evidence
             if e.source_domain == "tcmb.gov.tr" and e.is_public_data_source
         )
+        low_relevance_count = sum(1 for e in evidence if not e.accepted_for_verdict)
+        accepted_source_count = sum(1 for e in evidence if e.accepted_for_verdict)
+        numeric_claim_count = sum(1 for claim in claims if claim.component_type == "claim" and claim.is_statistical)
+        filtered_source_count = low_relevance_count
         contradiction_ratio = attack_count / max(1, support_count + attack_count)
         logic_score = max(0, round((1 - contradiction_ratio) * 100) - (unsupported_count * 30))
 
@@ -1365,6 +1709,10 @@ class FactCheckService:
             "claim_count": claim_count,
             "text_component_count": len(claims),
             "source_count": len(evidence),
+            "accepted_source_count": accepted_source_count,
+            "filtered_source_count": filtered_source_count,
+            "low_relevance_source_count": low_relevance_count,
+            "numeric_claim_count": numeric_claim_count,
             "support_count": support_count,
             "attack_count": attack_count,
             "unsupported_count": unsupported_count,

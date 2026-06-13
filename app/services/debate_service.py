@@ -7,6 +7,7 @@ import datetime
 import json
 import queue
 import threading
+from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List
 
@@ -135,27 +136,80 @@ class DebateService:
     RELATION_GRAPH_THRESHOLD = 0.60
     ATTACK_RESPONSE_THRESHOLD = 0.70
     MAX_RELATION_COMPONENTS_PER_MESSAGE = 5
-    MAX_GRAPH_EDGES = 120
-    MAX_GRAPH_ATTACK_EDGES = 48
-    MAX_GRAPH_SUPPORT_EDGES = 48
-    MAX_GRAPH_EDGES_PER_SOURCE_TYPE = 3
-    MAX_GRAPH_EDGES_PER_TARGET_TYPE = 14
+    MAX_GRAPH_EDGES = 48
+    MAX_GRAPH_ATTACK_EDGES = 18
+    MAX_GRAPH_SUPPORT_EDGES = 18
+    MAX_GRAPH_EDGES_PER_SOURCE_TYPE = 2
+    MAX_GRAPH_EDGES_PER_TARGET_TYPE = 6
     MAX_FINDINGS_PER_TYPE = 8
 
     _bert_lock = threading.Lock()
     _bert_instance: ModernBERTPipeline | None = None
+    _bert_signature: tuple[float, float] | None = None
+    _operation_locks: defaultdict[int, asyncio.Lock] = defaultdict(asyncio.Lock)
 
     def __init__(self) -> None:
         self.agent_svc = AgentService()
 
+    async def acquire_operation_lock(self, debate_id: int, operation: str) -> asyncio.Lock:
+        """Prevent overlapping mutating operations for a single debate."""
+        lock = self.__class__._operation_locks[debate_id]
+        if lock.locked():
+            raise RuntimeError(
+                f"'{operation}' başlatılamadı; bu tartışma için başka bir işlem halen çalışıyor."
+            )
+        await lock.acquire()
+        return lock
+
     @property
     def bert(self) -> ModernBERTPipeline:
-        """Load the ModernBERT models once, on first real analysis."""
-        if self.__class__._bert_instance is None:
+        """Load the ModernBERT models and refresh when local weights change."""
+        signature = self._model_signature()
+        should_reload = (
+            self.__class__._bert_instance is None
+            or (
+                isinstance(self.__class__._bert_instance, ModernBERTPipeline)
+                and self.__class__._bert_signature != signature
+            )
+        )
+        if should_reload:
             with self.__class__._bert_lock:
-                if self.__class__._bert_instance is None:
+                should_reload = (
+                    self.__class__._bert_instance is None
+                    or (
+                        isinstance(self.__class__._bert_instance, ModernBERTPipeline)
+                        and self.__class__._bert_signature != signature
+                    )
+                )
+                if should_reload:
                     self.__class__._bert_instance = ModernBERTPipeline()
+                    self.__class__._bert_signature = signature
         return self.__class__._bert_instance
+
+    @staticmethod
+    def _model_signature() -> tuple[float, float]:
+        component_file = Path(Config.COMPONENT_MODEL_DIR) / "model.safetensors"
+        relation_file = Path(Config.RELATION_MODEL_DIR) / "model.safetensors"
+        return (
+            component_file.stat().st_mtime if component_file.exists() else 0.0,
+            relation_file.stat().st_mtime if relation_file.exists() else 0.0,
+        )
+
+    @staticmethod
+    def _model_file_version(path: str) -> str:
+        model_file = Path(path) / "model.safetensors"
+        if not model_file.exists():
+            return f"{path}:missing"
+        stat = model_file.stat()
+        return f"{path}:mtime={stat.st_mtime_ns}:size={stat.st_size}"
+
+    @classmethod
+    def _component_model_version(cls) -> str:
+        return cls._model_file_version(Config.COMPONENT_MODEL_DIR)
+
+    @classmethod
+    def _relation_model_version(cls) -> str:
+        return cls._model_file_version(Config.RELATION_MODEL_DIR)
 
     # ------------------------------------------------------------------
     # CRUD helpers
@@ -371,8 +425,8 @@ class DebateService:
             status="running",
             relation_threshold=self.RELATION_GRAPH_THRESHOLD,
             attack_threshold=self.ATTACK_RESPONSE_THRESHOLD,
-            component_model="models/component_classifier/final",
-            relation_model="models/relation_classifier/final",
+            component_model=self._component_model_version(),
+            relation_model=self._relation_model_version(),
         )
         db.add(run)
         await db.flush()
@@ -389,6 +443,11 @@ class DebateService:
                     self.bert.extract_components,
                     version.content,
                     default_type=default_type,
+                )
+                extracted_components = self._ensure_claim_anchor(
+                    extracted_components,
+                    default_type,
+                    msg.message_type,
                 )
                 for extracted in extracted_components:
                     component = ArgumentComponentModel(
@@ -454,7 +513,17 @@ class DebateService:
         messages = list(debate.messages)
         baseline_nodes, baseline_edges = self._build_baseline_graph(messages)
 
-        stmt = select(AnalysisRun).filter_by(debate_id=debate_id, status="completed").order_by(AnalysisRun.created_at.desc()).limit(1)
+        stmt = (
+            select(AnalysisRun)
+            .filter_by(
+                debate_id=debate_id,
+                status="completed",
+                component_model=self._component_model_version(),
+                relation_model=self._relation_model_version(),
+            )
+            .order_by(AnalysisRun.created_at.desc())
+            .limit(1)
+        )
         res = await db.execute(stmt)
         run = res.scalars().first()
 
@@ -485,10 +554,10 @@ class DebateService:
         graph_relations = self._select_graph_relations(relations, run)
         nodes = [self._component_node(component) for component in components]
         edges = [self._relation_edge(relation) for relation in graph_relations]
-        relation_payloads = [self._relation_payload(relation) for relation in relations]
+        relation_payloads = [self._relation_payload(relation) for relation in graph_relations]
         annotations = self._build_annotations(components, graph_relations)
         findings = self._build_findings(messages, components, relations, run)
-        impact = self._build_impact(messages, graph_relations, findings, len(baseline_edges))
+        impact = self._build_impact(messages, relations, graph_relations, findings, len(baseline_edges))
 
         return {
             "status": "ready",
@@ -514,8 +583,8 @@ class DebateService:
     ) -> None:
         """Classify every directed component pair in the debate.
 
-        The source component is interpreted as supporting, attacking, or being
-        neutral to the target component. The UI can then show sentence-to-sentence
+        The source component is interpreted as supporting, attacking, or having no
+        relation to the target component. The UI can then show sentence-to-sentence
         relations when a transcript span is selected.
         """
         message_by_id = {message.id: message for message in messages}
@@ -525,6 +594,8 @@ class DebateService:
             for component in components_by_message.get(message.id, [])
         ]
 
+        jobs: list[tuple[ArgumentComponentModel, ArgumentComponentModel, int]] = []
+        pairs: list[tuple[str, str]] = []
         for source_component in all_components:
             source_msg = message_by_id.get(source_component.message_id)
             if not source_msg:
@@ -535,26 +606,53 @@ class DebateService:
                 target_msg = message_by_id.get(target_component.message_id)
                 if not target_msg:
                     continue
-
-                relation_type, confidence, probabilities = await asyncio.to_thread(
-                    self.bert.classify_relation,
-                    target_component.text,
-                    source_component.text,
-                )
                 distance_turns = abs(
                     (source_msg.position or 0) - (target_msg.position or 0)
                 )
-                relation = ArgumentRelation(
-                    analysis_run_id=run.id,
-                    source_component_id=source_component.id,
-                    target_component_id=target_component.id,
-                    relation_type=relation_type,
-                    confidence=confidence,
-                    probabilities_json=json.dumps(probabilities),
-                    distance_turns=distance_turns,
-                    is_long_range=distance_turns >= 2,
-                )
-                db.add(relation)
+                jobs.append((source_component, target_component, distance_turns))
+                pairs.append((target_component.text, source_component.text))
+
+        if hasattr(self.bert, "classify_relations_batch"):
+            predictions = await asyncio.to_thread(self.bert.classify_relations_batch, pairs)
+        else:
+            predictions = [
+                await asyncio.to_thread(self.bert.classify_relation, claim, evidence)
+                for claim, evidence in pairs
+            ]
+
+        for (source_component, target_component, distance_turns), (
+            relation_type,
+            confidence,
+            probabilities,
+        ) in zip(jobs, predictions):
+            relation = ArgumentRelation(
+                analysis_run_id=run.id,
+                source_component_id=source_component.id,
+                target_component_id=target_component.id,
+                relation_type=relation_type,
+                confidence=confidence,
+                probabilities_json=json.dumps(probabilities),
+                distance_turns=distance_turns,
+                is_long_range=distance_turns >= 2,
+            )
+            db.add(relation)
+
+    @staticmethod
+    def _ensure_claim_anchor(
+        components: list,
+        default_type: str,
+        message_type: str,
+    ) -> list:
+        """Guarantee one claim anchor for claim-like turns when the model collapses to evidence."""
+        if not components or default_type != "claim" or message_type not in ("claim", "rebuttal"):
+            return components
+        if any(component.component_type == "claim" for component in components):
+            return components
+        candidates = [component for component in components if component.component_type != "other"] or components
+        anchor = max(candidates, key=lambda component: (component.confidence, len(component.text)))
+        anchor.component_type = "claim"
+        anchor.confidence = max(anchor.confidence, 0.72)
+        return components
 
     def _top_relation_components(
         self,
@@ -719,33 +817,60 @@ class DebateService:
             msg.current_version.strength_score = self._aggregate_model_strength(
                 components_by_message.get(msg.id, []),
                 relations_by_source_message.get(msg.id, []),
+                run,
             )
+
+    @staticmethod
+    def _top_actionable_pair_relation(relations: list) -> object | None:
+        """Return the strongest relation that should be exposed as pair verdict."""
+        actionable = [
+            relation
+            for relation in relations
+            if (
+                relation.relation_type == "support"
+                and relation.confidence >= DebateService.RELATION_GRAPH_THRESHOLD
+            )
+            or (
+                relation.relation_type == "attack"
+                and relation.confidence >= DebateService.ATTACK_RESPONSE_THRESHOLD
+            )
+        ]
+        if not actionable:
+            return None
+        return max(actionable, key=lambda relation: relation.confidence)
 
     @staticmethod
     def _aggregate_model_strength(
         components: list[ArgumentComponentModel],
         relations: list[ArgumentRelation],
+        run: AnalysisRun | None = None,
     ) -> float:
-        """Aggregate strength from ModernBERT component and relation confidence only."""
+        """Aggregate strength from filtered, visible ModernBERT signals only."""
         component_score = (
             sum(component.confidence for component in components) / len(components)
             if components
             else 0.0
         )
 
-        if not relations:
-            return round(max(0.0, min(1.0, component_score * 0.5)), 2)
-
-        non_neutral = [
+        visible_relations = [
             relation
             for relation in relations
+            if run is None or DebateService._is_visible_graph_relation(relation, run)
+        ]
+
+        if not visible_relations:
+            return round(max(0.0, min(1.0, component_score * 0.5)), 2)
+
+        non_none = [
+            relation
+            for relation in visible_relations
             if relation.relation_type in ("support", "attack")
         ]
-        if non_neutral:
-            relation_score = sum(r.confidence for r in non_neutral) / len(non_neutral)
+        if non_none:
+            relation_score = sum(r.confidence for r in non_none) / len(non_none)
         else:
-            neutral_score = sum(r.confidence for r in relations) / len(relations)
-            relation_score = 1.0 - neutral_score
+            none_score = sum(r.confidence for r in visible_relations) / len(visible_relations)
+            relation_score = 1.0 - none_score
 
         score = (component_score * 0.35) + (relation_score * 0.65)
         return round(max(0.0, min(1.0, score)), 2)
@@ -759,7 +884,11 @@ class DebateService:
     def _component_node(self, component: ArgumentComponentModel) -> dict:
         msg = component.message
         round_number = ((msg.position or 0) // 2) + 1
-        label_type = "İddia" if component.component_type == "claim" else "Kanıt"
+        label_type = {
+            "claim": "Claim",
+            "evidence": "Evidence",
+            "other": "Other",
+        }.get(component.component_type, component.component_type.title())
         agent_name = component.agent.name if component.agent else "Sistem"
 
         return {
@@ -1041,7 +1170,7 @@ class DebateService:
                         "severity": "high",
                     })
 
-        # 3. Neutral Escapes
+        # 3. None Escapes
         for msg in messages:
             if msg.message_type not in ("attack", "rebuttal"):
                 continue
@@ -1057,13 +1186,13 @@ class DebateService:
                 round_num = ((msg.position or 0) // 2) + 1
                 agent_name = msg.agent.name if msg.agent else "Bilinmeyen"
                 findings.append({
-                    "type": "neutral_escape",
+                    "type": "none_escape",
                     "title": "Boş Tur",
                     "message_id": msg.id,
                     "detail": (
                         f"Tur {round_num} içinde {agent_name} tarafından sunulan metin, "
                         f"tartışmanın geri kalanındaki hiçbir iddia veya kanıt ile ModernBERT "
-                        f"tarafından ilişkilendirilemedi (Nötr kaçış)."
+                        f"tarafından ilişkilendirilemedi (None kaçışı)."
                     ),
                     "confidence": 0.85,
                     "severity": "low",
@@ -1093,6 +1222,7 @@ class DebateService:
     @staticmethod
     def _build_impact(
         messages: list[Message],
+        all_relations: list[ArgumentRelation],
         graph_relations: list[ArgumentRelation],
         findings: list[dict],
         baseline_edge_count: int,
@@ -1104,8 +1234,18 @@ class DebateService:
             if not source_message or source_message.parent_id != relation.target_component.message_id:
                 bert_only_edges += 1
 
+        raw_count = len(all_relations)
+        visible_count = len(graph_relations)
+        none_count = sum(1 for relation in all_relations if relation.relation_type == "none")
+        filtered_count = max(0, raw_count - visible_count)
+
         return {
             "semantic_edges": len(graph_relations),
+            "raw_relations": raw_count,
+            "visible_relations": visible_count,
+            "none_relations": none_count,
+            "filtered_relations": filtered_count,
+            "filter_reasons": DebateService._relation_filter_reasons(all_relations, graph_relations),
             "baseline_edges": baseline_edge_count,
             "bert_only_edges": bert_only_edges,
             "long_range_edges": sum(1 for relation in graph_relations if relation.is_long_range),
@@ -1115,8 +1255,8 @@ class DebateService:
             "missed_rebuttals": sum(
                 1 for finding in findings if finding["type"] == "missed_rebuttal"
             ),
-            "neutral_escapes": sum(
-                1 for finding in findings if finding["type"] == "neutral_escape"
+            "none_escapes": sum(
+                1 for finding in findings if finding["type"] == "none_escape"
             ),
         }
 
@@ -1124,13 +1264,45 @@ class DebateService:
     def _empty_impact(baseline_edge_count: int) -> dict:
         return {
             "semantic_edges": 0,
+            "raw_relations": 0,
+            "visible_relations": 0,
+            "none_relations": 0,
+            "filtered_relations": 0,
+            "filter_reasons": {},
             "baseline_edges": baseline_edge_count,
             "bert_only_edges": 0,
             "long_range_edges": 0,
             "unsupported_claims": 0,
             "missed_rebuttals": 0,
-            "neutral_escapes": 0,
+            "none_escapes": 0,
         }
+
+    @staticmethod
+    def _relation_filter_reasons(
+        all_relations: list[ArgumentRelation],
+        graph_relations: list[ArgumentRelation],
+    ) -> dict:
+        visible_ids = {relation.id for relation in graph_relations}
+        reasons: defaultdict[str, int] = defaultdict(int)
+        for relation in all_relations:
+            if relation.id in visible_ids:
+                continue
+            if relation.relation_type == "none":
+                reasons["none_relation"] += 1
+                continue
+            source = relation.source_component
+            target = relation.target_component
+            if target and target.component_type != "claim":
+                reasons["target_not_claim"] += 1
+            elif relation.relation_type == "attack" and relation.confidence < DebateService.ATTACK_RESPONSE_THRESHOLD:
+                reasons["below_attack_threshold"] += 1
+            elif relation.relation_type == "support" and relation.confidence < DebateService.RELATION_GRAPH_THRESHOLD:
+                reasons["below_support_threshold"] += 1
+            elif source and target and source.agent_id == target.agent_id and source.message_id != target.message_id:
+                reasons["same_agent_cross_message"] += 1
+            else:
+                reasons["graph_cap_or_structural_filter"] += 1
+        return dict(reasons)
 
     # ------------------------------------------------------------------
     # Internal helpers
@@ -1212,12 +1384,13 @@ class DebateService:
             )
 
             # Store analysis
+            top_relation = self._top_actionable_pair_relation(result.relations)
             analysis = Analysis(
                 message_version_id=current_version.id,
                 target_message_version_id=parent_msg.current_version.id,
                 component_type="evidence",
-                relation_type=result.relations[0].relation_type if result.relations else "neutral",
-                confidence=result.relations[0].confidence if result.relations else 0.0,
+                relation_type=top_relation.relation_type if top_relation else "none",
+                confidence=top_relation.confidence if top_relation else 0.0,
                 feedback_text=result.feedback,
             )
             db.add(analysis)
@@ -1423,12 +1596,13 @@ class DebateService:
         )
 
         # Store analysis
+        top_relation = self._top_actionable_pair_relation(result.relations)
         analysis = Analysis(
             message_version_id=current_version.id,
             target_message_version_id=parent_version_id,
             component_type="evidence" if msg.parent_id else "claim",
-            relation_type=result.relations[0].relation_type if result.relations else "neutral",
-            confidence=result.relations[0].confidence if result.relations else 0.0,
+            relation_type=top_relation.relation_type if top_relation else "none",
+            confidence=top_relation.confidence if top_relation else 0.0,
             feedback_text=result.feedback,
         )
         db.add(analysis)

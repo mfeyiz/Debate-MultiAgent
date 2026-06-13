@@ -124,9 +124,9 @@ class TcmbEvdsClient:
             ("euro_kuru", r"euro\s*(?:kuru|fiyatı)?\s*:?\s*(\d+[,.]?\d*)\s*(?:TL|tl|lira)?"),
             ("sterlin_kuru", r"sterlin\s*(?:kuru|fiyatı)?\s*:?\s*(\d+[,.]?\d*)\s*(?:TL|tl|lira)?"),
             ("faiz_orani", r"faiz\s*(?:oranı|yüzdesi)?\s*:?\s*(%?\s*\d+[,.]?\d*)"),
-            ("tufe_yillik", r"enflasyon\s*(?:oranı|yüzdesi)?\s*:?\s*(%?\s*\d+[,.]?\d*)"),
+            ("tufe_yillik", r"enflasyon.*?(?:%|yüzde)\s*(\d+[,.]?\d*)"),
             ("issizlik_orani", r"işsizlik\s*(?:oranı|yüzdesi)?\s*:?\s*(%?\s*\d+[,.]?\d*)"),
-            ("büyüme_orani", r"büyüme\s*(?:oranı|yüzdesi)?\s*:?\s*(%?\s*\d+[,.]?\d*)"),
+            ("büyüme_orani", r"(?:büyüme|büyüdü|ekonomi|ekonomisi|gsyh|gayri safi).*?(?:%|yüzde)\s*(\d+[,.]?\d*)"),
         ]
         for key, regex in mapping:
             match = re.search(regex, lower)
@@ -138,11 +138,11 @@ class TcmbEvdsClient:
     def _compare_values(claimed_raw: str, actual: float | None) -> dict[str, Any]:
         """Compare claimed value with actual TCMB value."""
         if actual is None:
-            return {"label": "Bilinmiyor", "diff_percent": None, "verdict": "neutral"}
+            return {"label": "Bilinmiyor", "diff_percent": None, "verdict": "none"}
         try:
             claimed = float(claimed_raw.replace(",", ".").replace("%", "").strip())
         except ValueError:
-            return {"label": "Karşılaştırılamadı", "diff_percent": None, "verdict": "neutral"}
+            return {"label": "Karşılaştırılamadı", "diff_percent": None, "verdict": "none"}
         if actual == 0:
             diff_pct = abs(claimed - actual) * 100
         else:
@@ -150,7 +150,7 @@ class TcmbEvdsClient:
         if diff_pct <= 3:
             return {"label": "Eşleşiyor", "diff_percent": round(diff_pct, 2), "verdict": "support"}
         if diff_pct <= 10:
-            return {"label": "Yakın", "diff_percent": round(diff_pct, 2), "verdict": "neutral"}
+            return {"label": "Yakın", "diff_percent": round(diff_pct, 2), "verdict": "none"}
         return {"label": "Çelişiyor", "diff_percent": round(diff_pct, 2), "verdict": "attack"}
 
     @staticmethod

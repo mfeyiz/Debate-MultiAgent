@@ -36,8 +36,8 @@ class FakeBert:
         evidence_text: str,
     ) -> tuple[str, float, dict[str, float]]:
         if "çürütür" in evidence_text.lower():
-            return "attack", 0.92, {"support": 0.04, "attack": 0.92, "neutral": 0.04}
-        return "support", 0.88, {"support": 0.88, "attack": 0.05, "neutral": 0.07}
+            return "attack", 0.92, {"support": 0.04, "attack": 0.92, "none": 0.04}
+        return "support", 0.88, {"support": 0.88, "attack": 0.05, "none": 0.07}
 
     def analyze(self, source_text: str, target_text: str, source_type: str, target_type: str):
         from app.services.bert_service import AnalysisResult, RelationPrediction
@@ -49,7 +49,7 @@ class FakeBert:
                 target_text=target_text,
                 relation_type="support",
                 confidence=0.85,
-                probabilities={"support": 0.85, "attack": 0.05, "neutral": 0.10}
+                probabilities={"support": 0.85, "attack": 0.05, "none": 0.10}
             )],
             feedback="İyi bir destekleme kurulmuş."
         )
@@ -194,7 +194,7 @@ async def test_analyze_endpoint_returns_argument_map_contract(test_env):
         assert payload["status"] == "ready"
         assert len(payload["nodes"]) >= 2
         assert len(payload["edges"]) >= 1
-        assert len(payload["relations"]) >= 2
+        assert len(payload["relations"]) == len(payload["edges"])
         assert "annotations" in payload
         assert "findings" in payload
         assert "impact" in payload
@@ -215,3 +215,4 @@ async def test_analyze_endpoint_returns_argument_map_contract(test_env):
         assert annotation_spans
         assert all("topic_relation_type" in span for span in annotation_spans)
         assert all("topic_relation_confidence" in span for span in annotation_spans)
+        assert {span["stance"] for span in annotation_spans} == {"pro", "con"}

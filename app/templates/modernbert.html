@@ -27,19 +27,40 @@
             </div>
             <h2 class="font-headline-xl text-headline-xl text-on-surface mb-unit">ModernBERT Dil Laboratuvarı</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
-                Türkçe argüman madenciliği modellerinin gelişim aşamalarını inceleyin. İngilizce taban model, Türkçe dil modeli ve bu platform için özel fine-tune edilmiş **Logos-BERT** arasındaki farkları canlı test edin.
+                Türkçe argüman madenciliği için fine-tune edilmiş gerçek Logos-BERT modelinin Claim/Evidence/Other ve Attack/Support/None çıktılarını canlı test edin.
             </p>
         </div>
         <div class="flex items-center gap-sm z-10">
-            <span class="px-md py-xs rounded-full bg-secondary/10 text-secondary font-label-caps text-label-caps border border-secondary/20">3 Model</span>
-            <span class="px-md py-xs rounded-full bg-primary/10 text-primary font-label-caps text-label-caps border border-primary/20">Bilingual Tokenizer</span>
+            <span class="px-md py-xs rounded-full bg-secondary/10 text-secondary font-label-caps text-label-caps border border-secondary/20">Gerçek Model</span>
+            <span class="px-md py-xs rounded-full bg-primary/10 text-primary font-label-caps text-label-caps border border-primary/20">Artifact Verified</span>
         </div>
     </div>
 
-    <!-- Playground & Input Form -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
-        <!-- Input Panel -->
-        <div class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between shadow-sm">
+    <!-- Tab Filters -->
+    <div class="flex flex-wrap gap-sm border-b border-outline-variant pb-sm" role="tablist" aria-label="ModernBERT Lab Sekmeleri">
+        <button id="tab-btn-playground" class="px-md py-sm font-label-caps text-label-caps font-bold border-b-2 border-secondary text-primary transition-all flex items-center gap-xs" role="tab" aria-selected="true" aria-controls="section-playground">
+            <span class="material-symbols-outlined text-[18px]">edit_note</span>
+            Playground & Metrikler
+        </button>
+        <button id="tab-btn-tokenization" class="px-md py-sm font-label-caps text-label-caps font-bold border-b-2 border-transparent text-on-surface-variant hover:text-primary hover:border-outline-variant transition-all flex items-center gap-xs" role="tab" aria-selected="false" aria-controls="section-tokenization">
+            <span class="material-symbols-outlined text-[18px]">line_style</span>
+            Tokenizasyon Seviyesi
+        </button>
+        <button id="tab-btn-components" class="px-md py-sm font-label-caps text-label-caps font-bold border-b-2 border-transparent text-on-surface-variant hover:text-primary hover:border-outline-variant transition-all flex items-center gap-xs" role="tab" aria-selected="false" aria-controls="section-components">
+            <span class="material-symbols-outlined text-[18px]">label_important</span>
+            Bileşen Çıkarımı (BIO)
+        </button>
+        <button id="tab-btn-relations" class="px-md py-sm font-label-caps text-label-caps font-bold border-b-2 border-transparent text-on-surface-variant hover:text-primary hover:border-outline-variant transition-all flex items-center gap-xs" role="tab" aria-selected="false" aria-controls="section-relations">
+            <span class="material-symbols-outlined text-[18px]">schema</span>
+            İlişki & Güç Analizi
+        </button>
+    </div>
+
+    <!-- Playground & Input Form Section -->
+    <div id="section-playground" class="transition-opacity duration-200" role="tabpanel" aria-labelledby="tab-btn-playground">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+            <!-- Input Panel -->
+            <div class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between shadow-sm">
             <div class="space-y-lg">
                 <div class="flex items-center justify-between">
                     <h3 class="font-headline-md text-headline-md text-on-surface">Test Metinleri</h3>
@@ -72,7 +93,7 @@
             <div class="pt-lg">
                 <button id="compare-btn" class="w-full py-md px-lg bg-secondary hover:bg-primary text-white font-label-caps text-label-caps font-bold rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-sm">
                     <span class="material-symbols-outlined text-[20px]" id="btn-icon">compare_arrows</span>
-                    <span id="btn-text">Modelleri Karşılaştır</span>
+                    <span id="btn-text">Gerçek Modeli Çalıştır</span>
                 </button>
             </div>
         </div>
@@ -81,68 +102,44 @@
         <div class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between shadow-sm relative overflow-hidden">
             <div>
                 <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Eğitim & Model Metrikleri</h3>
-                <p class="font-body-md text-body-md text-on-surface-variant mb-lg">Modellerin akademik test veri seti üzerindeki doğrulanmış skorları:</p>
+                <p class="font-body-md text-body-md text-on-surface-variant mb-lg">Referans profiller kıyas için gösterilir; canlı çıkarım yalnızca production Logos-BERT artifact üzerinde çalışır.</p>
                 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse font-body-md">
                         <thead>
                             <tr class="bg-surface-container-low border-b border-outline-variant">
                                 <th class="p-sm font-label-caps text-label-caps text-on-surface-variant">Model Adı</th>
-                                <th class="p-sm font-label-caps text-label-caps text-on-surface-variant">Tokenizer</th>
+                                <th class="p-sm font-label-caps text-label-caps text-on-surface-variant">Çıktı Şeması</th>
                                 <th class="p-sm font-label-caps text-label-caps text-on-surface-variant text-center">Bileşen F1</th>
                                 <th class="p-sm font-label-caps text-label-caps text-on-surface-variant text-center">İlişki F1</th>
-                                <th class="p-sm font-label-caps text-label-caps text-on-surface-variant text-center">Eğitim Aşaması</th>
+                                <th class="p-sm font-label-caps text-label-caps text-on-surface-variant text-center">Durum</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-outline-variant">
-                            <tr class="hover:bg-surface-container-low/40">
-                                <td class="p-sm font-bold text-on-surface-variant">ModernBERT-base</td>
-                                <td class="p-sm font-code-mono text-[11px] text-outline-variant">English (50k voc)</td>
-                                <td class="p-sm text-center text-error">5.2%</td>
-                                <td class="p-sm text-center text-error">31.4%</td>
-                                <td class="p-sm text-center"><span class="px-2 py-0.5 rounded bg-error-container text-on-error-container text-[10px] font-label-caps">Pre-trained</span></td>
-                            </tr>
-                            <tr class="hover:bg-surface-container-low/40">
-                                <td class="p-sm font-bold text-on-surface-variant">ModernBERT-tr-base-1k</td>
-                                <td class="p-sm font-code-mono text-[11px] text-secondary">Turkish (128k voc)</td>
-                                <td class="p-sm text-center text-error">12.8%</td>
-                                <td class="p-sm text-center text-error">33.1%</td>
-                                <td class="p-sm text-center"><span class="px-2 py-0.5 rounded bg-error-container text-on-error-container text-[10px] font-label-caps">Pre-trained</span></td>
-                            </tr>
-                            <tr class="hover:bg-surface-container-low/40 bg-secondary-container/10">
-                                <td class="p-sm font-extrabold text-primary flex items-center gap-xs">
-                                    <span class="material-symbols-outlined text-[16px] text-secondary fill-icon">military_tech</span>
-                                    Logos-BERT
-                                </td>
-                                <td class="p-sm font-code-mono text-[11px] text-secondary font-bold">Turkish (128k voc)</td>
-                                <td class="p-sm text-center text-secondary font-bold">89.4%</td>
-                                <td class="p-sm text-center text-secondary font-bold">86.7%</td>
-                                <td class="p-sm text-center"><span class="px-2 py-0.5 rounded bg-secondary text-white text-[10px] font-label-caps">Double FT</span></td>
-                            </tr>
+                        <tbody id="model-metrics-body" class="divide-y divide-outline-variant">
                         </tbody>
                     </table>
                 </div>
 
                 <!-- Custom visual training progression -->
                 <div class="mt-lg pt-md border-t border-outline-variant">
-                    <h4 class="font-headline-md text-[14px] text-on-surface font-semibold mb-sm">Logos-BERT Aşamalı Eğitim İlerlemesi (F1 Skoru)</h4>
+                    <h4 class="font-headline-md text-[14px] text-on-surface font-semibold mb-sm">Production Model Gate Durumu</h4>
                     <div class="space-y-sm">
                         <div>
                             <div class="flex justify-between font-label-caps text-[11px] text-on-surface-variant mb-1">
-                                <span>Phase 1: Frozen Base + CRF Head (Bileşen Eğitimi)</span>
-                                <span class="font-bold text-on-surface">78.0%</span>
+                                <span>Component hard-case gate</span>
+                                <span id="metric-component-hard" class="font-bold text-on-surface">-</span>
                             </div>
                             <div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
-                                <div class="h-full bg-secondary/70 rounded-full" style="width: 78%"></div>
+                                <div id="bar-component-hard" class="h-full bg-secondary/70 rounded-full" style="width: 0%"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex justify-between font-label-caps text-[11px] text-on-surface-variant mb-1">
-                                <span>Phase 2: Unfrozen Last 8 Layers (Anlamsal İlişki Ayarı)</span>
-                                <span class="font-bold text-secondary">89.4%</span>
+                                <span>Relation hard-case gate</span>
+                                <span id="metric-relation-hard" class="font-bold text-secondary">-</span>
                             </div>
                             <div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
-                                <div class="h-full bg-secondary rounded-full" style="width: 89.4%"></div>
+                                <div id="bar-relation-hard" class="h-full bg-secondary rounded-full" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
@@ -152,77 +149,84 @@
             <div class="bg-surface-container border border-[#0c7c6b]/10 rounded-lg p-md mt-md flex gap-sm items-start">
                 <span class="material-symbols-outlined text-secondary text-[20px] mt-xs">info</span>
                 <p class="font-body-md text-[12px] text-on-secondary-fixed-variant leading-relaxed">
-                    <strong>Neden Çift Aşamalı (Double FT)?</strong> ModernBERT-tr-base-1k modeli Türkçe sözdizimini (syntax) mükemmel çözse de argüman analiz yeteneği yoktur. Phase 1 ile token-level etiketleme (CRF) başlığı eğitilmiş, Phase 2'de ise son 8 katman açılarak anlamsal ilişki kavrama yeteneği kazandırılmıştır.
+                    <strong>Gerçek çıkarım modu:</strong> Referans profiller çalıştırılmaz; yalnızca yüklü Logos-BERT artifact sonucu canlı üretilir. Model artifact yoksa veya yüklenemezse sonuç uydurulmaz; hata doğrudan kullanıcıya gösterilir.
                 </p>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Loading State -->
     <div id="loading-state" class="hidden flex-col items-center justify-center p-xl bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm space-y-md">
         <div class="w-12 h-12 border-4 border-secondary/20 border-t-secondary rounded-full animate-spin"></div>
-        <p class="font-label-caps text-label-caps text-on-surface-variant animate-pulse">Modeller üzerinde karşılaştırmalı çıkarım yapılıyor...</p>
+        <p class="font-label-caps text-label-caps text-on-surface-variant animate-pulse">Production Logos-BERT üzerinde gerçek çıkarım yapılıyor...</p>
     </div>
 
     <!-- Comparison Results (Rendered dynamically) -->
     <div id="results-container" class="space-y-xl transition-opacity duration-300 opacity-100">
         
         <!-- SECTION 1: Tokenization Level -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
-            <div class="flex justify-between items-center mb-lg border-b border-outline-variant pb-sm">
-                <div>
-                    <h3 class="font-headline-md text-headline-md text-on-surface">1. Tokenizasyon Seviyesi ve Verimlilik</h3>
-                    <p class="font-body-md text-body-md text-on-surface-variant">Modellerin Türkçe metni nasıl çözümlediğini (böldüğünü) karşılaştırın.</p>
-                </div>
-                <span class="material-symbols-outlined text-secondary">line_style</span>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg" id="tokenization-view">
-                <!-- Target Claim Tokenization -->
-                <div class="space-y-md">
-                    <h4 class="font-label-caps text-label-caps text-primary border-b border-outline-variant pb-xs">Hedef İddia Token Analizi</h4>
-                    <div id="token-target-models" class="space-y-lg">
-                        <!-- Filled by JS -->
+        <div id="section-tokenization" class="hidden transition-opacity duration-200" role="tabpanel" aria-labelledby="tab-btn-tokenization">
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+                <div class="flex justify-between items-center mb-lg border-b border-outline-variant pb-sm">
+                    <div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">1. Tokenizasyon Seviyesi ve Verimlilik</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Modellerin Türkçe metni nasıl çözümlediğini (böldüğünü) karşılaştırın.</p>
                     </div>
+                    <span class="material-symbols-outlined text-secondary">line_style</span>
                 </div>
 
-                <!-- Source Text Tokenization -->
-                <div class="space-y-md">
-                    <h4 class="font-label-caps text-label-caps text-primary border-b border-outline-variant pb-xs">Yanıt/Kanıt Token Analizi</h4>
-                    <div id="token-source-models" class="space-y-lg">
-                        <!-- Filled by JS -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg" id="tokenization-view">
+                    <!-- Target Claim Tokenization -->
+                    <div class="space-y-md">
+                        <h4 class="font-label-caps text-label-caps text-primary border-b border-outline-variant pb-xs">Hedef İddia Token Analizi</h4>
+                        <div id="token-target-models" class="space-y-lg">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Source Text Tokenization -->
+                    <div class="space-y-md">
+                        <h4 class="font-label-caps text-label-caps text-primary border-b border-outline-variant pb-xs">Yanıt/Kanıt Token Analizi</h4>
+                        <div id="token-source-models" class="space-y-lg">
+                            <!-- Filled by JS -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- SECTION 2: Argument Component Extraction -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
-            <div class="flex justify-between items-center mb-lg border-b border-outline-variant pb-sm">
-                <div>
-                    <h3 class="font-headline-md text-headline-md text-on-surface">2. Argüman Bileşeni Çıkarımı (CLAIM / EVIDENCE)</h3>
-                    <p class="font-body-md text-body-md text-on-surface-variant">Propozisyon seviyesinde iddia ve kanıt spans'lerini tespit etme yeteneği.</p>
+        <div id="section-components" class="hidden transition-opacity duration-200" role="tabpanel" aria-labelledby="tab-btn-components">
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+                <div class="flex justify-between items-center mb-lg border-b border-outline-variant pb-sm">
+                    <div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">2. Argüman Bileşeni Çıkarımı (Claim / Evidence / Other)</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Propozisyon seviyesinde iddia ve kanıt spans'lerini tespit etme yeteneği.</p>
+                    </div>
+                    <span class="material-symbols-outlined text-secondary">label_important</span>
                 </div>
-                <span class="material-symbols-outlined text-secondary">label_important</span>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="components-view">
-                <!-- Filled by JS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="components-view">
+                    <!-- Filled by JS -->
+                </div>
             </div>
         </div>
 
         <!-- SECTION 3: Semantic Relation & Strength -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
-            <div class="flex justify-between items-center mb-lg border-b border-outline-variant pb-sm">
-                <div>
-                    <h3 class="font-headline-md text-headline-md text-on-surface">3. Anlamsal İlişki Sınıflandırması ve Güç Analizi</h3>
-                    <p class="font-body-md text-body-md text-on-surface-variant">Metinler arası Support, Attack ve Neutral ilişkisini algılama ve mukavemet skoru.</p>
+        <div id="section-relations" class="hidden transition-opacity duration-200" role="tabpanel" aria-labelledby="tab-btn-relations">
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+                <div class="flex justify-between items-center mb-lg border-b border-outline-variant pb-sm">
+                    <div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">3. Anlamsal İlişki Sınıflandırması ve Güç Analizi</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Metinler arası Attack, Support ve None ilişkisini algılama ve mukavemet skoru.</p>
+                    </div>
+                    <span class="material-symbols-outlined text-secondary">schema</span>
                 </div>
-                <span class="material-symbols-outlined text-secondary">schema</span>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="relations-view">
-                <!-- Filled by JS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="relations-view">
+                    <!-- Filled by JS -->
+                </div>
             </div>
         </div>
 
@@ -255,6 +259,37 @@
         const loadingState = document.getElementById("loading-state");
         const resultsContainer = document.getElementById("results-container");
 
+        // --- Tab Switching Logic ---
+        const tabs = [
+            { btn: 'tab-btn-playground', sec: 'section-playground' },
+            { btn: 'tab-btn-tokenization', sec: 'section-tokenization' },
+            { btn: 'tab-btn-components', sec: 'section-components' },
+            { btn: 'tab-btn-relations', sec: 'section-relations' }
+        ];
+
+        tabs.forEach(t => {
+            const btnEl = document.getElementById(t.btn);
+            if (btnEl) {
+                btnEl.addEventListener('click', () => {
+                    tabs.forEach(x => {
+                        const b = document.getElementById(x.btn);
+                        const s = document.getElementById(x.sec);
+                        if (x.btn === t.btn) {
+                            b.classList.remove('border-transparent', 'text-on-surface-variant');
+                            b.classList.add('border-secondary', 'text-primary');
+                            b.setAttribute('aria-selected', 'true');
+                            s.classList.remove('hidden');
+                        } else {
+                            b.classList.remove('border-secondary', 'text-primary');
+                            b.classList.add('border-transparent', 'text-on-surface-variant');
+                            b.setAttribute('aria-selected', 'false');
+                            s.classList.add('hidden');
+                        }
+                    });
+                });
+            }
+        });
+
         // Set initial preset
         const loadPreset = (key) => {
             const data = PRESETS[key];
@@ -286,6 +321,10 @@
             document.getElementById("btn-text").textContent = "Hesaplanıyor...";
             loadingState.classList.remove("hidden");
             resultsContainer.style.opacity = "0.3";
+            
+            if (window.addNotification) {
+                window.addNotification("ModernBERT gerçek model analizi başlatıldı.", "info");
+            }
 
             try {
                 const response = await fetch("/api/modernbert/compare", {
@@ -300,20 +339,28 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error("Sunucu hatası oluştu.");
+                    const detail = await response.json().catch(() => ({}));
+                    throw new Error(detail.error || "Sunucu hatası oluştu.");
                 }
 
                 const result = await response.json();
                 renderComparison(result);
+                
+                if (window.addNotification) {
+                    window.addNotification("ModernBERT gerçek model analizi tamamlandı.", "success");
+                }
 
             } catch (error) {
                 console.error("Comparison error:", error);
                 alert("Karşılaştırma sırasında bir hata oluştu: " + error.message);
+                if (window.addNotification) {
+                    window.addNotification("ModernBERT analizi başarısız: " + error.message, "error");
+                }
             } finally {
                 compareBtn.disabled = false;
                 document.getElementById("btn-icon").textContent = "compare_arrows";
                 document.getElementById("btn-icon").classList.remove("animate-spin");
-                document.getElementById("btn-text").textContent = "Modelleri Karşılaştır";
+                document.getElementById("btn-text").textContent = "Gerçek Modeli Çalıştır";
                 loadingState.classList.add("hidden");
                 resultsContainer.style.opacity = "1";
             }
@@ -324,30 +371,79 @@
     });
 
     function renderComparison(data) {
-        renderTokenization(data.models);
+        window.lastComparisonData = data;
+        renderMetrics(data.model || {});
+        renderTokenization(data);
         renderComponents(data);
-        renderRelations(data.models);
+        renderRelations(data);
     }
 
-    function renderTokenization(models) {
+    function renderMetrics(model) {
+        renderModelMetricRows(window.lastComparisonData?.models || null, model);
+        const componentF1 = model.component_metrics?.f1;
+        const relationF1 = model.relation_metrics?.f1;
+        const componentHard = model.component_metrics?.hard_case_accuracy;
+        const relationHard = model.relation_metrics?.hard_case_accuracy;
+        setMetric("metric-component-f1", componentF1);
+        setMetric("metric-relation-f1", relationF1);
+        setMetric("metric-component-hard", componentHard);
+        setMetric("metric-relation-hard", relationHard);
+        setBar("bar-component-hard", componentHard);
+        setBar("bar-relation-hard", relationHard);
+    }
+
+    function renderModelMetricRows(models, productionModel) {
+        const body = document.getElementById("model-metrics-body");
+        if (!body) return;
+        const entries = models
+            ? Object.values(models)
+            : [productionModel || {}];
+        body.innerHTML = entries.map(model => {
+            const isReal = model.is_simulated === false || model.name === "Logos-BERT";
+            const rowClass = isReal ? "bg-secondary-container/10" : "bg-surface-container-lowest";
+            const nameClass = isReal ? "text-primary" : "text-on-surface-variant";
+            const badgeClass = isReal ? "bg-secondary text-white" : "bg-surface-container-high text-on-surface-variant border border-outline-variant";
+            const badgeText = isReal ? "Real Inference" : "Reference";
+            const icon = isReal ? "military_tech" : "analytics";
+            const componentF1 = model.component_metrics?.f1;
+            const relationF1 = model.relation_metrics?.f1;
+            return `
+                <tr class="hover:bg-surface-container-low/40 ${rowClass}">
+                    <td class="p-sm font-extrabold ${nameClass} flex items-center gap-xs">
+                        <span class="material-symbols-outlined text-[16px] ${isReal ? "text-secondary" : "text-outline"} fill-icon">${icon}</span>
+                        ${escapeHtml(model.name || "Model")}
+                    </td>
+                    <td class="p-sm font-code-mono text-[11px] ${isReal ? "text-secondary font-bold" : "text-on-surface-variant"}">Claim/Evidence/Other · Attack/Support/None</td>
+                    <td ${isReal ? 'id="metric-component-f1"' : ""} class="p-sm text-center ${isReal ? "text-secondary font-bold" : "text-on-surface-variant"}">${typeof componentF1 === "number" ? `${(componentF1 * 100).toFixed(1)}%` : "-"}</td>
+                    <td ${isReal ? 'id="metric-relation-f1"' : ""} class="p-sm text-center ${isReal ? "text-secondary font-bold" : "text-on-surface-variant"}">${typeof relationF1 === "number" ? `${(relationF1 * 100).toFixed(1)}%` : "-"}</td>
+                    <td class="p-sm text-center"><span class="px-2 py-0.5 rounded text-[10px] font-label-caps ${badgeClass}">${badgeText}</span></td>
+                </tr>
+            `;
+        }).join("");
+    }
+
+    function setMetric(id, value) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = typeof value === "number" ? `${(value * 100).toFixed(1)}%` : "-";
+    }
+
+    function setBar(id, value) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.width = typeof value === "number" ? `${Math.max(0, Math.min(100, value * 100)).toFixed(1)}%` : "0%";
+    }
+
+    function renderTokenization(data) {
         const targetContainer = document.getElementById("token-target-models");
         const sourceContainer = document.getElementById("token-source-models");
 
         targetContainer.innerHTML = "";
         sourceContainer.innerHTML = "";
 
-        const keys = ["model_1", "model_2", "model_3"];
-        keys.forEach(k => {
-            const model = models[k];
-            
-            // Build visual block for target text tokens
-            const cardTarget = createTokenCard(model.name, model.tokens_target);
-            targetContainer.appendChild(cardTarget);
-
-            // Build visual block for source text tokens
-            const cardSource = createTokenCard(model.name, model.tokens_source);
-            sourceContainer.appendChild(cardSource);
-        });
+        const modelName = data.model?.name || "Logos-BERT";
+        targetContainer.appendChild(createTokenCard(modelName, data.tokens_target || []));
+        sourceContainer.appendChild(createTokenCard(modelName, data.tokens_source || []));
     }
 
     function createTokenCard(modelName, tokens) {
@@ -377,24 +473,12 @@
             const el = document.createElement("span");
             el.className = "token-bubble px-xs py-0.5 rounded cursor-help border ";
             
-            if (modelName.includes("Düz")) {
-                // English tokens - highlight subword splittings
-                if (t.is_subword) {
-                    el.className += "bg-error-container/30 text-error border-error-container/40";
-                    el.title = `Alt kelime parçası (subword): ${t.raw}`;
-                } else {
-                    el.className += "bg-surface-container text-on-surface border-outline-variant";
-                    el.title = `Ana token: ${t.raw}`;
-                }
+            if (t.is_subword) {
+                el.className += "bg-secondary-container/20 text-secondary border-secondary/20";
+                el.title = `Alt kelime eki: ${t.raw}`;
             } else {
-                // Turkish tokens - clean splits
-                if (t.is_subword) {
-                    el.className += "bg-secondary-container/20 text-secondary border-secondary/20";
-                    el.title = `Alt kelime eki: ${t.raw}`;
-                } else {
-                    el.className += "bg-surface-container text-on-surface border-outline-variant";
-                    el.title = `Kelime kökü: ${t.raw}`;
-                }
+                el.className += "bg-surface-container text-on-surface border-outline-variant";
+                el.title = `Kelime kökü: ${t.raw}`;
             }
             el.textContent = t.text;
             tokenContainer.appendChild(el);
@@ -408,80 +492,68 @@
         const container = document.getElementById("components-view");
         container.innerHTML = "";
 
-        const keys = ["model_1", "model_2", "model_3"];
-        keys.forEach(k => {
-            const model = data.models[k];
-            const isLogos = k === "model_3";
-            const isTr = k === "model_2";
-            
-            const card = document.createElement("div");
-            card.className = `bg-surface-container-lowest border rounded-xl p-lg flex flex-col justify-between hover:shadow-md transition-all duration-300 ${isLogos ? 'border-secondary/40 shadow-sm ring-1 ring-secondary/10' : 'border-outline-variant'}`;
+        const card = document.createElement("div");
+        card.className = "md:col-span-3 bg-surface-container-lowest border border-secondary/40 rounded-xl p-lg flex flex-col justify-between hover:shadow-md transition-all duration-300 shadow-sm ring-1 ring-secondary/10";
+        const model = data.model || {};
+        const targetHtml = highlightText(data.target_text, data.components, "claim");
+        const sourceHtml = highlightText(data.source_text, data.components, "evidence");
+        const otherHtml = highlightText(`${data.target_text}\n${data.source_text}`, data.components, "other");
+        const targetCount = countComponentsForText(data.target_text, data.components, "claim");
+        const sourceCount = countComponentsForText(data.source_text, data.components, "evidence");
+        const otherCount = (data.components || []).filter(c => c.component_type === "other").length;
 
-            // Card Header
-            let headerHtml = `
-                <div>
-                    <h4 class="font-headline-md text-[16px] text-on-surface font-extrabold">${model.name}</h4>
-                    <p class="font-body-md text-[12px] text-on-surface-variant mt-1 leading-snug min-h-[40px]">${model.description}</p>
-                </div>
-            `;
-            
-            // Highlights or empty content
-            let targetHtml = "";
-            let sourceHtml = "";
-
-            if (k === "model_1") {
-                // Model 1: English - no extraction
-                targetHtml = `<div class="p-sm bg-surface-container rounded border border-dashed border-outline-variant text-[13px] text-on-surface-variant italic">Bileşen çıkarılamadı.</div>`;
-                sourceHtml = `<div class="p-sm bg-surface-container rounded border border-dashed border-outline-variant text-[13px] text-on-surface-variant italic">Bileşen çıkarılamadı.</div>`;
-            } else if (k === "model_2") {
-                // Model 2: Turkish Base - no extraction / simulated unaligned
-                targetHtml = `<div class="p-sm bg-surface-container rounded border border-dashed border-outline-variant text-[13px] text-on-surface-variant italic">Bileşen çıkarılamadı.</div>`;
-                sourceHtml = `<div class="p-sm bg-surface-container rounded border border-dashed border-outline-variant text-[13px] text-on-surface-variant italic">Bileşen çıkarılamadı.</div>`;
-            } else {
-                // Model 3: Logos-BERT (Real highlights!)
-                targetHtml = highlightText(data.target_text, model.components, "claim");
-                sourceHtml = highlightText(data.source_text, model.components, "evidence");
-            }
-
-            const contentHtml = `
+        const headerHtml = `
+            <div>
+                <h4 class="font-headline-md text-[16px] text-on-surface font-extrabold">${model.name || "Logos-BERT"}</h4>
+                <span class="inline-flex mt-xs px-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-[10px]">Gerçek Çıkarım</span>
+                <p class="font-body-md text-[12px] text-on-surface-variant mt-1 leading-snug">${model.description || ""}</p>
+            </div>
+        `;
+        const contentHtml = `
                 <div class="space-y-md my-lg flex-1">
                     <div>
                         <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant mb-1">
-                            <span>Hedef İddia (Claim Highlights)</span>
-                            ${isLogos && model.components.filter(c => c.component_type === 'claim').length ? '<span class="text-secondary font-bold">1 Tespit</span>' : '<span>0 Tespit</span>'}
+                            <span>Claim Highlights</span>
+                            ${targetCount ? `<span class="text-secondary font-bold">${targetCount} Tespit</span>` : '<span>0 Tespit</span>'}
                         </div>
                         ${targetHtml}
                     </div>
                     <div>
                         <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant mb-1">
-                            <span>Metin/Kanıt (Evidence Highlights)</span>
-                            ${isLogos && model.components.filter(c => c.component_type === 'evidence').length ? `<span class="text-secondary font-bold">${model.components.filter(c => c.component_type === 'evidence').length} Tespit</span>` : '<span>0 Tespit</span>'}
+                            <span>Evidence Highlights</span>
+                            ${sourceCount ? `<span class="text-secondary font-bold">${sourceCount} Tespit</span>` : '<span>0 Tespit</span>'}
                         </div>
                         ${sourceHtml}
+                    </div>
+                    <div>
+                        <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant mb-1">
+                            <span>Other Highlights</span>
+                            ${otherCount ? `<span class="text-secondary font-bold">${otherCount} Tespit</span>` : '<span>0 Tespit</span>'}
+                        </div>
+                        ${otherHtml}
                     </div>
                 </div>
             `;
 
-            const footerHtml = `
+        const footerHtml = `
                 <div class="border-t border-outline-variant pt-md flex items-center justify-between">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">BIO Tagging F1 Skoru:</span>
-                    <span class="font-code-mono text-[14px] font-bold ${isLogos ? 'text-secondary' : 'text-error'}">${(model.f1_components * 100).toFixed(1)}%</span>
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">Component F1:</span>
+                    <span class="font-code-mono text-[14px] font-bold text-secondary">${typeof model.component_metrics?.f1 === "number" ? (model.component_metrics.f1 * 100).toFixed(1) + "%" : "-"}</span>
                 </div>
             `;
 
-            card.innerHTML = headerHtml + contentHtml + footerHtml;
-            container.appendChild(card);
-        });
+        card.innerHTML = headerHtml + contentHtml + footerHtml;
+        container.appendChild(card);
     }
 
     function highlightText(text, components, filterType) {
         if (!components || components.length === 0) {
-            return `<div class="p-sm bg-surface-container rounded border border-dashed border-outline-variant text-[13px] text-on-surface text-on-surface-variant">${escapeHtml(text)}</div>`;
+            return `<div class="p-sm bg-surface-container rounded border border-dashed border-outline-variant text-[13px] text-on-surface-variant italic">Bu alanda bileşen tespit edilmedi.</div>`;
         }
 
-        const filtered = components.filter(c => c.component_type === filterType);
+        const filtered = componentsForText(text, components, filterType);
         if (filtered.length === 0) {
-            return `<div class="p-sm bg-surface-container rounded border border-dashed border-outline-variant text-[13px] text-on-surface text-on-surface-variant">${escapeHtml(text)}</div>`;
+            return `<div class="p-sm bg-surface-container rounded border border-dashed border-outline-variant text-[13px] text-on-surface-variant italic">Bu alanda ${filterType.toUpperCase()} tespit edilmedi.</div>`;
         }
 
         // Sort components by start index to apply highlights sequentially
@@ -499,8 +571,10 @@
             // Add highlighted text
             const spanText = text.substring(comp.start_idx, comp.end_idx);
             const colorClass = comp.component_type === "claim" 
-                ? "bg-secondary-container/40 text-on-secondary-container border-[#0c7c6b]/30" 
-                : "bg-tertiary-container/50 text-on-tertiary-container border-tertiary/30";
+                ? "bg-secondary-container/40 text-on-secondary-container border-[#0c7c6b]/30"
+                : comp.component_type === "evidence"
+                    ? "bg-tertiary-container/50 text-on-tertiary-container border-tertiary/30"
+                    : "bg-surface-container-high text-on-surface-variant border-outline-variant";
             
             highlighted += `
                 <span class="relative group px-1 rounded border ${colorClass} font-semibold cursor-help" title="${comp.component_type.toUpperCase()} (Güven: %${(comp.confidence * 100).toFixed(0)})">
@@ -522,43 +596,48 @@
         return `<div class="p-sm bg-surface-container-lowest border border-outline-variant rounded text-[13px] text-on-surface leading-relaxed">${highlighted}</div>`;
     }
 
-    function renderRelations(models) {
+    function componentsForText(text, components, filterType) {
+        return (components || []).filter(c => {
+            if (c.component_type !== filterType) return false;
+            const span = text.substring(c.start_idx, c.end_idx);
+            return span === c.text || text.includes(c.text);
+        });
+    }
+
+    function countComponentsForText(text, components, filterType) {
+        return componentsForText(text, components, filterType).length;
+    }
+
+    function renderRelations(data) {
         const container = document.getElementById("relations-view");
         container.innerHTML = "";
 
-        const keys = ["model_1", "model_2", "model_3"];
-        keys.forEach(k => {
-            const model = models[k];
-            const isLogos = k === "model_3";
-            const isTr = k === "model_2";
-            
-            const card = document.createElement("div");
-            card.className = `bg-surface-container-lowest border rounded-xl p-lg flex flex-col justify-between hover:shadow-md transition-all duration-300 ${isLogos ? 'border-secondary/40 shadow-sm ring-1 ring-secondary/10' : 'border-outline-variant'}`;
+        const model = data.model || {};
+        const card = document.createElement("div");
+        card.className = "md:col-span-3 bg-surface-container-lowest border border-secondary/40 rounded-xl p-lg flex flex-col justify-between hover:shadow-md transition-all duration-300 shadow-sm ring-1 ring-secondary/10";
 
             // Probability bars html
             let barsHtml = "";
-            let rel = model.relations[0];
-            
-            const probs = rel ? rel.probabilities : { "support": 0.33, "attack": 0.33, "neutral": 0.34 };
-            const relationType = rel ? rel.relation_type : "neutral";
-            const confidence = rel ? rel.confidence : 0.33;
+            const relationSummary = summarizeRelations(data.relations);
+            const probs = relationSummary.probabilities;
+            const relationType = relationSummary.relation_type;
 
             const classes = {
                 "support": "bg-secondary",
                 "attack": "bg-error",
-                "neutral": "bg-outline-variant"
+                "none": "bg-outline-variant"
             };
 
             const labels = {
-                "support": "DESTEK (Support)",
-                "attack": "ÇÜRÜTME (Attack)",
-                "neutral": "NÖTR (Neutral)"
+                "attack": "ATTACK",
+                "support": "SUPPORT",
+                "none": "NONE"
             };
 
             // Render bars
             Object.keys(probs).forEach(type => {
                 const percentage = (probs[type] * 100).toFixed(0);
-                const isWinner = type === relationType && (k !== "model_1" && k !== "model_2" || relationType !== "neutral" || probs[type] > 0.5);
+                const isWinner = type === relationType;
                 
                 barsHtml += `
                     <div>
@@ -574,47 +653,73 @@
             });
 
             // Overall score gauge
-            const strengthPct = (model.overall_strength * 100).toFixed(0);
+            const strengthPct = (data.overall_strength * 100).toFixed(0);
             
             const contentHtml = `
                 <div>
-                    <h4 class="font-headline-md text-[16px] text-on-surface font-extrabold mb-md">${model.name}</h4>
+                    <h4 class="font-headline-md text-[16px] text-on-surface font-extrabold mb-md">${model.name || "Logos-BERT"}</h4>
+                    <span class="inline-flex mb-md px-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-[10px]">Gerçek Çıkarım</span>
                     
                     <!-- Strength score block -->
                     <div class="bg-surface rounded-lg p-md border border-outline-variant/50 flex items-center justify-between mb-lg">
                         <div>
                             <span class="font-label-caps text-[10px] text-on-surface-variant block">Argüman Güç Skoru</span>
-                            <span class="font-headline-xl text-headline-lg font-black ${isLogos ? 'text-secondary' : 'text-on-surface-variant'}">${model.overall_strength.toFixed(2)}</span>
+                            <span class="font-headline-xl text-headline-lg font-black text-secondary">${data.overall_strength.toFixed(2)}</span>
                         </div>
                         <div class="relative w-12 h-12 flex items-center justify-center">
                             <!-- Simple ring progression -->
                             <div class="w-full h-full rounded-full border-4 border-surface-container-high absolute"></div>
-                            <div class="w-full h-full rounded-full border-4 ${isLogos ? 'border-secondary' : 'border-outline'} absolute" style="clip-path: polygon(0 0, 100% 0, 100% ${strengthPct}%, 0 ${strengthPct}%)"></div>
+                            <div class="w-full h-full rounded-full border-4 border-secondary absolute" style="clip-path: polygon(0 0, 100% 0, 100% ${strengthPct}%, 0 ${strengthPct}%)"></div>
                             <span class="font-code-mono text-[11px] font-bold text-on-surface-variant z-10">${strengthPct}%</span>
                         </div>
                     </div>
 
                     <div class="space-y-sm">
                         <label class="font-label-caps text-[10px] text-on-surface-variant block mb-1">Anlamsal İlişki Olasılıkları</label>
+                        <div class="font-code-mono text-[11px] text-on-surface-variant mb-sm">${relationSummary.count} ilişki üzerinden ağırlıklı özet</div>
                         ${barsHtml}
                     </div>
 
                     <div class="mt-lg p-sm bg-surface-container rounded text-[13px] text-on-surface-variant leading-relaxed min-h-[100px] flex flex-col justify-between">
-                        <p class="italic">"${model.feedback}"</p>
+                        <p class="italic">"${data.feedback}"</p>
                     </div>
                 </div>
             `;
 
             const footerHtml = `
                 <div class="border-t border-outline-variant pt-md flex items-center justify-between mt-lg">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">İlişki Sınıflandırma F1:</span>
-                    <span class="font-code-mono text-[14px] font-bold ${isLogos ? 'text-secondary' : 'text-error'}">${(model.f1_relations * 100).toFixed(1)}%</span>
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">Relation F1:</span>
+                    <span class="font-code-mono text-[14px] font-bold text-secondary">${typeof model.relation_metrics?.f1 === "number" ? (model.relation_metrics.f1 * 100).toFixed(1) + "%" : "-"}</span>
                 </div>
             `;
 
             card.innerHTML = contentHtml + footerHtml;
             container.appendChild(card);
+    }
+
+    function summarizeRelations(relations) {
+        if (!relations || relations.length === 0) {
+            return {
+                count: 0,
+                relation_type: "none",
+                probabilities: { "attack": 0.33, "support": 0.33, "none": 0.34 }
+            };
+        }
+        const totals = { attack: 0, support: 0, none: 0 };
+        relations.forEach(rel => {
+            const weight = rel.confidence || 0.01;
+            Object.keys(totals).forEach(type => {
+                totals[type] += ((rel.probabilities && rel.probabilities[type]) || 0) * weight;
+            });
         });
+        const sum = Object.values(totals).reduce((a, b) => a + b, 0) || 1;
+        const probabilities = {
+            attack: totals.attack / sum,
+            support: totals.support / sum,
+            none: totals.none / sum
+        };
+        const relation_type = Object.keys(probabilities).sort((a, b) => probabilities[b] - probabilities[a])[0];
+        return { count: relations.length, relation_type, probabilities };
     }
 
     function escapeHtml(text) {

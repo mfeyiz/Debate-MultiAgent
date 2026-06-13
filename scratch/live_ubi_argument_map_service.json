@@ -1,0 +1,3278 @@
+{
+  "status": "ready",
+  "debate": {
+    "id": 15,
+    "topic": "Evrensel gelir gelecekteki işsizlik problemini çözebilir mi?",
+    "status": "resolved",
+    "max_rounds": 5,
+    "current_round": 5,
+    "auto_advance": true,
+    "created_at": "2026-06-09T20:39:34.340057",
+    "participant_ids": [
+      4,
+      3
+    ]
+  },
+  "run": {
+    "id": 21,
+    "debate_id": 15,
+    "status": "completed",
+    "relation_threshold": 0.6,
+    "attack_threshold": 0.7,
+    "component_model": "/Users/mfeyiz/Desktop/Debate-MultiAgent/models/component_classifier/final:mtime=1781005250982866039:size=597336940",
+    "relation_model": "/Users/mfeyiz/Desktop/Debate-MultiAgent/models/relation_classifier/final:mtime=1781005251394738609:size=597336940",
+    "created_at": "2026-06-09T20:42:02.863234",
+    "completed_at": "2026-06-09T20:43:50.562148"
+  },
+  "nodes": [
+    {
+      "data": {
+        "id": "c-929",
+        "messageId": 87,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Evrensel gelir, gelecekteki işsizlik problemini çözmekten ziyade, onun semptomlarını yüzeysel olarak hafifletebilir.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-930",
+        "messageId": 87,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Temel sorun, otomasyon ve yapay zekanın yol açtığı yapısal işsizliktir;",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-931",
+        "messageId": 87,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "bu, bireylerin becerilerinin işgücü piyasasının ihtiyaçlarıyla uyuşmamasından kaynaklanır.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-932",
+        "messageId": 87,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Evrensel gelir, insanlara temel bir geçim kaynağı sağlasa da, eğitim, yeniden beceri kazandırma veya iş yaratma gibi uzun vadeli çözümler sunmaz.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-933",
+        "messageId": 87,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Örneğin, Finlandiya’da 2017-2018 yıllarında yapılan evrensel gelir deneyinde, katılımcıların istihdam oranlarında anlamlı bir artış gözlenmemiştir (Kela, 2019).",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.989
+      }
+    },
+    {
+      "data": {
+        "id": "c-934",
+        "messageId": 87,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma teşviklerini azaltarak ekonomik durgunluğu derinleştirme riski taşır.",
+        "kind": "claim",
+        "round": 1,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-935",
+        "messageId": 87,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Gerçek çözüm, teknolojik dönüşüme uyum sağlayacak eğitim politikaları ve esnek işgücü piyasalarıdır.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.833
+      }
+    },
+    {
+      "data": {
+        "id": "c-936",
+        "messageId": 90,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Evrensel gelir, yapısal işsizliğin kök nedenlerini doğrudan çözmese de, gelecekteki işsizlik krizine karşı kritik bir güvenlik ağı ve dönüşüm aracı sunar.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.984
+      }
+    },
+    {
+      "data": {
+        "id": "c-937",
+        "messageId": 90,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Otomasyon çağında milyonlarca insan aniden işsiz kalabilir;",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-938",
+        "messageId": 90,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "evrensel gelir, onların temel geçimini garanti altına alarak yeniden beceri kazanma, girişimcilik veya eğitim gibi uzun vadeli çözümlere zaman ve kaynak ayırmalarını sağlar.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.72
+      }
+    },
+    {
+      "data": {
+        "id": "c-939",
+        "messageId": 90,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Finlandiya deneyinde istihdamda anlamlı artış olmaması, UBI’nin tek başına işe yaramadığını gösterse de, katılımcıların refah ve psikolojik sağlığında iyileşme sağladığı belirtilmiştir (Kangas vd., 2019).",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.933
+      }
+    },
+    {
+      "data": {
+        "id": "c-940",
+        "messageId": 90,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Bu da UBI’nin, insanları yeni fırsatlara yönlendirecek esnekliği ve motivasyonu artırabileceğini kanıtlar.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.958
+      }
+    },
+    {
+      "data": {
+        "id": "c-941",
+        "messageId": 90,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Ayrıca Kenya’da yapılan uzun vadeli bir çalışma, UBI’nin girişimcilik ve küçük işletme kurma oranlarını artırdığını göstermiştir (GiveDirectly, 2022).",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.995,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.845
+      }
+    },
+    {
+      "data": {
+        "id": "c-942",
+        "messageId": 90,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Dolayısıyla evrensel gelir, eğitim ve iş politikalarının tamamlayıcısı olarak, işsizliğin dönüşümünü kolaylaştıran bir katalizördür.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.836
+      }
+    },
+    {
+      "data": {
+        "id": "c-943",
+        "messageId": 92,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Savunucu, Finlandiya deneyinde refah iyileşmesine rağmen istihdam artışı olmadığını kabul etmektedir;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.992
+      }
+    },
+    {
+      "data": {
+        "id": "c-944",
+        "messageId": 92,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "bu, evrensel gelirin işsizliğin yapısal belirleyicilerine dokunmadığının kanıtıdır.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-945",
+        "messageId": 92,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Kenya'da girişimcilik artışı iddiası ise gelişmiş ekonomilerdeki yapısal işsizlik sorununu açıklamaz;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-946",
+        "messageId": 92,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "zira gelişmemiş bölgelerde informal ekonomi baskın olduğu için sonuçlar taşınabilir değildir (Banerjee vd., 2019).",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-947",
+        "messageId": 92,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Evrensel gelir, eğitim ve iş politikalarının tamamlayıcısı olarak değil, onların yerine geçme riski taşıyan pahalı bir araçtır.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-948",
+        "messageId": 92,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Oysa asıl ihtiyaç, otomasyona uyum sağlayacak yeniden beceri kazandırma programlarına yönelik doğrudan kamu yatırımıdır (Acemoglu & Restrepo, 2018).",
+        "kind": "claim",
+        "round": 2,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.956
+      }
+    },
+    {
+      "data": {
+        "id": "c-949",
+        "messageId": 92,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle evrensel gelir, işsizliğin semptomlarını hafifletirken kök nedenleri ihmal eden yüzeysel bir çözümdür.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-950",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Elbette, karşıt görüşün belirttiği gibi evrensel gelir tek başına yapısal işsizliğin kök nedenlerini ortadan kaldırmaz;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-951",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "ancak bu, onun işe yaramaz olduğu anlamına gelmez.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-952",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Evrensel gelir, otomasyonun yol açtığı ani iş kayıplarına karşı bir tampon görevi görerek, bireylerin yeniden beceri kazanma veya girişimcilik gibi uzun vadeli çözümlere yönelmesi için gereken zamanı ve finansal güvenceyi sağlar.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.983
+      }
+    },
+    {
+      "data": {
+        "id": "c-953",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Finlandiya deneyinde istihdam artışı olmaması, UBI’nin tek başına bir istihdam politikası olmadığını",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.997,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.982
+      }
+    },
+    {
+      "data": {
+        "id": "c-954",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "ancak refah ve psikolojik sağlığı iyileştirerek bireylerin iş arama motivasyonunu ve esnekliğini artırdığını göstermiştir (Kangas vd., 2019).",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.756
+      }
+    },
+    {
+      "data": {
+        "id": "c-955",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Ayrıca, Kenya’daki GiveDirectly çalışması, UBI’nin gelişmekte olan ekonomilerde girişimciliği teşvik ettiğini kanıtlamıştır;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.993,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.898
+      }
+    },
+    {
+      "data": {
+        "id": "c-956",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "bu, gelişmiş ekonomilerde de benzer dinamiklerin oluşabileceğine işaret eder (GiveDirectly, 2022).",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.926
+      }
+    },
+    {
+      "data": {
+        "id": "c-957",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Evrensel gelir, eğitim ve iş politikalarının yerine geçmek değil, onları tamamlayan bir katalizördür;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.99
+      }
+    },
+    {
+      "data": {
+        "id": "c-958",
+        "messageId": 94,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "bu nedenle, işsizliğin semptomlarını hafifletirken aynı zamanda dönüşümü kolaylaştıran bir araç olarak değerlendirilmelidir.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.986
+      }
+    },
+    {
+      "data": {
+        "id": "c-959",
+        "messageId": 96,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Savunucu, Finlandiya deneyinde istihdam artışı olmadığını kabul ederken, UBI’nin refah ve psikolojik sağlık üzerindeki olumlu etkilerine vurgu yaparak konuyu saptırmaktadır.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.982
+      }
+    },
+    {
+      "data": {
+        "id": "c-960",
+        "messageId": 96,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "İşsizlik sorununun çözümü, bireylerin moralini yükseltmekten ibaret değildir;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.992
+      }
+    },
+    {
+      "data": {
+        "id": "c-961",
+        "messageId": 96,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "asıl mesele, işgücü piyasasındaki yapısal uyumsuzluğu gidermektir.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.992,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.974
+      }
+    },
+    {
+      "data": {
+        "id": "c-962",
+        "messageId": 96,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Kenya’daki girişimcilik artışı ise gelişmiş ekonomilerdeki otomasyon kaynaklı işsizliğe çözüm olarak sunulamaz;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-963",
+        "messageId": 96,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "zira informal ekonominin ağırlıklı olduğu bu bağlam, sanayi sonrası toplumların dinamiklerini yansıtmamaktadır (Banerjee vd., 2019).",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-964",
+        "messageId": 96,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Ayrıca, UBI’nin eğitim ve iş politikalarını tamamladığı iddiası, sınırlı kamu kaynakları düşünüldüğünde gerçekçi değildir;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.995,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-965",
+        "messageId": 96,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "UBI’ye ayrılan devasa bütçe, doğrudan yeniden beceri kazandırma programlarına yapılacak yatırımı engelleyerek yapısal sorunların derinleşmesine yol açabilir (Acemoglu & Restrepo, 2018).",
+        "kind": "claim",
+        "round": 3,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.98
+      }
+    },
+    {
+      "data": {
+        "id": "c-966",
+        "messageId": 96,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle, evrensel gelir semptomları yüzeysel olarak hafifletirken, gerçek çözüm olan teknolojik dönüşüme uyumlu eğitim reformlarının önünü kesen pahalı bir araçtır.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-967",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Karşıt görüşün son itirazı, UBI’nin refah etkilerini küçümseyerek yapısal uyumsuzluğa odaklanmakta ve Kenya örneğinin gelişmiş ekonomiler için geçersiz olduğunu iddia etmektedir.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-968",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Oysa psikolojik sağlık ve refah, işsiz bireylerin yeniden beceri kazanma veya girişimcilik gibi uzun vadeli çözümlere yönelmesi için kritik bir ön koşuldur;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-969",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Finlandiya deneyinde katılımcıların refahındaki iyileşme, iş arama motivasyonunu ve esnekliğini artırmıştır (Kangas vd., 2019).",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.998,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.817
+      }
+    },
+    {
+      "data": {
+        "id": "c-970",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Kenya’daki GiveDirectly çalışması ise UBI’nin girişimciliği teşvik ettiğini göstermiştir;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.851,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.907
+      }
+    },
+    {
+      "data": {
+        "id": "c-971",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "bu, gelişmiş ekonomilerde de benzer dinamiklerin oluşabileceğine işaret eder (GiveDirectly, 2022).",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.926
+      }
+    },
+    {
+      "data": {
+        "id": "c-972",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Ayrıca, UBI’nin eğitim yatırımlarını engellediği iddiası yanlıştır;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.762,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.983
+      }
+    },
+    {
+      "data": {
+        "id": "c-973",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "aksine, UBI bireylere eğitim ve beceri geliştirme için zaman ve kaynak sağlayarak bu programların etkinliğini artırır.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.654
+      }
+    },
+    {
+      "data": {
+        "id": "c-974",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Örneğin, ABD’de yapılan bir çalışmada UBI alan bireylerin eğitim harcamalarında artış gözlenmiştir (Jones & Marinescu, 2022).",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.974,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.602
+      }
+    },
+    {
+      "data": {
+        "id": "c-975",
+        "messageId": 97,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Bu nedenle evrensel gelir, yapısal işsizliğin semptomlarını hafifletirken aynı zamanda dönüşümü kolaylaştıran tamamlayıcı bir araçtır.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.96
+      }
+    },
+    {
+      "data": {
+        "id": "c-976",
+        "messageId": 99,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Savunucunun son argümanı, psikolojik refahın yeniden beceri kazanma için ön koşul olduğunu belirtse de, Finlandiya deneyinde istihdam artışı sağlanamaması, UBI’nin yapısal uyumsuzluğu gidermede yetersiz kaldığını teyit etmektedir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.993
+      }
+    },
+    {
+      "data": {
+        "id": "c-977",
+        "messageId": 99,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, Banerjee ve arkadaşlarının (2019) çalışmasında vurgulandığı gibi, informal ekonominin baskın olduğu bağlamların farklı dinamiklere sahip olmasından kaynaklanır.",
+        "kind": "claim",
+        "round": 4,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-978",
+        "messageId": 99,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Ayrıca Jones & Marinescu (2022) tarafından ABD’de gözlemlenen eğitim harcamalarındaki artış, bu harcamaların otomasyon çağında talep edilen ileri düzey becerilerle uyumlu olup olmadığını sorgulatmaktadır.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.861
+      }
+    },
+    {
+      "data": {
+        "id": "c-979",
+        "messageId": 99,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Kamu kaynaklarının kıt olduğu bir ortamda, UBI’ye yapılan devasa harcamalar, Acemoglu ve Restrepo’nun (2018) savunduğu gibi, doğrudan yeniden beceri kazandırma ve teknolojik dönüşüme yönelik eğitim yatırımlarını baltalama riski taşır.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.984
+      }
+    },
+    {
+      "data": {
+        "id": "c-980",
+        "messageId": 99,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle evrensel gelir, işsizliğin semptomlarını hafifletirken kök nedenleri ihmal eden ve kaynakları yanlış yönlendiren pahalı bir araç olmaya devam etmektedir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-981",
+        "messageId": 100,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Karşıt görüşün Finlandiya deneyinde istihdam artışı olmadığı yönündeki itirafı, UBI’nin tek başına bir istihdam politikası olmadığını gösterse de, onun asıl işlevinin otomasyon çağında bireylere geçici bir güvenlik ağı ve dönüşüm fırsatı sunmak olduğunu ortaya koyar.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-982",
+        "messageId": 100,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Psikolojik refah iyileşmesi, yeniden beceri kazanma ve girişimcilik gibi uzun vadeli çözümlere yönelmede kritik bir ön koşuldur;",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.85
+      }
+    },
+    {
+      "data": {
+        "id": "c-983",
+        "messageId": 100,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Finlandiya’da katılımcıların iş arama motivasyonundaki artış bu bağlamda değerlendirilmelidir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.997,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.73
+      }
+    },
+    {
+      "data": {
+        "id": "c-984",
+        "messageId": 100,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Kenya’daki GiveDirectly çalışması ise UBI’nin gelişmekte olan ekonomilerde girişimciliği teşvik ettiğini kanıtlarken, bu dinamiklerin gelişmiş ekonomilerde de benzer şekilde işleyebileceğine dair güçlü bir öngörü sunar (GiveDirectly, 2022).",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.785
+      }
+    },
+    {
+      "data": {
+        "id": "c-985",
+        "messageId": 100,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Ayrıca, Jones ve Marinescu’nun (2022) ABD’de gözlemlediği eğitim harcamalarındaki artış, UBI’nin bireyleri otomasyon çağına uygun beceriler edinmeye yönlendirdiğini göstermektedir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.68
+      }
+    },
+    {
+      "data": {
+        "id": "c-986",
+        "messageId": 100,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Kaynak kıtlığı iddiasına gelince, UBI’nin yeniden beceri kazandırma programlarını baltalamadığı, aksine bu programların etkinliğini artıran bir tamamlayıcı olduğu açıktır.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.888
+      }
+    },
+    {
+      "data": {
+        "id": "c-987",
+        "messageId": 100,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Bu nedenle evrensel gelir, yapısal işsizliğin semptomlarını hafifletirken aynı zamanda dönüşümü kolaylaştıran vazgeçilmez bir araçtır.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.969
+      }
+    },
+    {
+      "data": {
+        "id": "c-988",
+        "messageId": 101,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Rakip, Finlandiya deneyinde istihdam artışı olmadığını kabul ederek, yalnızca psikolojik refah ve motivasyon artışına vurgu yaparak konuyu saptırmaktadır.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-989",
+        "messageId": 101,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Oysa işsizliğin temel sorunu yapısal uyumsuzluktur;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.962,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-990",
+        "messageId": 101,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "moral ne kadar yükselirse yükselsin, bireylerin becerileri otomasyon çağının talepleriyle uyuşmuyorsa iş bulamazlar (Acemoglu & Restrepo, 2018).",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-991",
+        "messageId": 101,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, informal ekonominin baskın olduğu bu bağlamın sanayi sonrası toplumlardan farklı dinamiklere sahip olmasından kaynaklanır (Banerjee vd., 2019).",
+        "kind": "claim",
+        "round": 5,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-992",
+        "messageId": 101,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "ABD’de eğitim harcamalarındaki artış iddiası ise, bu harcamaların otomasyon çağında talep edilen ileri düzey teknik becerilerle uyumlu olduğunu kanıtlamaz.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-993",
+        "messageId": 101,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Kıt kamu kaynaklarıyla UBI’ye yapılan devasa harcamalar, doğrudan yeniden beceri kazandırma ve teknoloji odaklı eğitim yatırımlarını baltalayarak yapısal sorunları derinleştirme riski taşır.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-994",
+        "messageId": 101,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Sonuç olarak evrensel gelir, semptomları hafifletirken kök nedenleri ihmal eden pahalı bir araçtır.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-995",
+        "messageId": 103,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Karşıt görüşün son itirazı, Finlandiya deneyinde istihdam artışı olmamasını ve Kenya örneğinin genellenemeyeceğini vurgulasa da, evrensel gelirin asıl gücü, yapısal işsizliğin çözümünde bir katalizör görevi görmesidir.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.996
+      }
+    },
+    {
+      "data": {
+        "id": "c-996",
+        "messageId": 103,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Psikolojik refah iyileşmesi, bireylerin yeniden beceri kazanma sürecine başlaması için temel bir adımdır;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.607
+      }
+    },
+    {
+      "data": {
+        "id": "c-997",
+        "messageId": 103,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Finnlandiya'da katılımcıların iş arama motivasyonundaki artış, bu dönüşümün ilk sinyalidir (Kangas vd., 2019).",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.99,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.863
+      }
+    },
+    {
+      "data": {
+        "id": "c-998",
+        "messageId": 103,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Kenya'daki GiveDirectly çalışması, UBI'nin girişimciliği teşvik ettiğini gösterirken, gelişmiş ekonomilerde de benzer dinamiklerin ortaya çıkabileceğine dair güçlü kanıtlar sunar (GiveDirectly, 2022).",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.894
+      }
+    },
+    {
+      "data": {
+        "id": "c-999",
+        "messageId": 103,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "ABD'de eğitim harcamalarındaki artış ise, UBI'nin bireyleri otomasyon çağına uygun beceriler edinmeye yönlendirdiğini doğrulamaktadır (Jones & Marinescu, 2022).",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.619
+      }
+    },
+    {
+      "data": {
+        "id": "c-1000",
+        "messageId": 103,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Kaynak kıtlığı argümanına gelince, UBI'nin yeniden beceri kazandırma programlarını baltalamaktan ziyade, bu programların etkinliğini artıran bir tamamlayıcı olduğu açıktır;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.96
+      }
+    },
+    {
+      "data": {
+        "id": "c-1001",
+        "messageId": 103,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "zira bireyler temel geçim güvencesine sahip olduklarında eğitim ve beceri geliştirmeye daha fazla zaman ayırabilirler.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.942
+      }
+    },
+    {
+      "data": {
+        "id": "c-1002",
+        "messageId": 103,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Bu nedenle evrensel gelir, yapısal işsizliğin semptomlarını hafifletirken aynı zamanda uzun vadeli dönüşümü kolaylaştıran vazgeçilmez bir araçtır.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.955
+      }
+    }
+  ],
+  "edges": [
+    {
+      "data": {
+        "id": "r-72664",
+        "source": "c-937",
+        "target": "c-977",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 5,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-72678",
+        "source": "c-937",
+        "target": "c-991",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-73571",
+        "source": "c-950",
+        "target": "c-934",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-73644",
+        "source": "c-951",
+        "target": "c-934",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-74197",
+        "source": "c-958",
+        "target": "c-977",
+        "relationType": "attack",
+        "confidence": 0.998,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-73759",
+        "source": "c-952",
+        "target": "c-977",
+        "relationType": "attack",
+        "confidence": 0.997,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-73832",
+        "source": "c-953",
+        "target": "c-977",
+        "relationType": "attack",
+        "confidence": 0.997,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-73700",
+        "source": "c-951",
+        "target": "c-991",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 5,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-73627",
+        "source": "c-950",
+        "target": "c-991",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 5,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-74211",
+        "source": "c-958",
+        "target": "c-991",
+        "relationType": "attack",
+        "confidence": 0.998,
+        "distanceTurns": 5,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-74812",
+        "source": "c-967",
+        "target": "c-934",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 5,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-74885",
+        "source": "c-968",
+        "target": "c-934",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 5,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-75045",
+        "source": "c-970",
+        "target": "c-948",
+        "relationType": "support",
+        "confidence": 0.945,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-74868",
+        "source": "c-967",
+        "target": "c-991",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-74941",
+        "source": "c-968",
+        "target": "c-991",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-75834",
+        "source": "c-981",
+        "target": "c-934",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-76140",
+        "source": "c-985",
+        "target": "c-948",
+        "relationType": "support",
+        "confidence": 0.933,
+        "distanceTurns": 5,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-75865",
+        "source": "c-981",
+        "target": "c-965",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-77294",
+        "source": "c-1001",
+        "target": "c-934",
+        "relationType": "attack",
+        "confidence": 0.999,
+        "distanceTurns": 9,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-77016",
+        "source": "c-997",
+        "target": "c-948",
+        "relationType": "support",
+        "confidence": 0.951,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-77089",
+        "source": "c-998",
+        "target": "c-948",
+        "relationType": "support",
+        "confidence": 0.933,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-77162",
+        "source": "c-999",
+        "target": "c-948",
+        "relationType": "support",
+        "confidence": 0.919,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-76943",
+        "source": "c-996",
+        "target": "c-948",
+        "relationType": "support",
+        "confidence": 0.913,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-77264",
+        "source": "c-1000",
+        "target": "c-977",
+        "relationType": "attack",
+        "confidence": 0.997,
+        "distanceTurns": 3,
+        "isLongRange": true
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": 72664,
+      "source": "c-937",
+      "target": "c-977",
+      "source_component_id": 937,
+      "target_component_id": 977,
+      "source_message_id": 90,
+      "target_message_id": 99,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 0.999,
+        "none": 0.001
+      },
+      "distanceTurns": 5,
+      "isLongRange": true
+    },
+    {
+      "id": 72678,
+      "source": "c-937",
+      "target": "c-991",
+      "source_component_id": 937,
+      "target_component_id": 991,
+      "source_message_id": 90,
+      "target_message_id": 101,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.001,
+        "attack": 0.999,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 73571,
+      "source": "c-950",
+      "target": "c-934",
+      "source_component_id": 950,
+      "target_component_id": 934,
+      "source_message_id": 94,
+      "target_message_id": 87,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 73644,
+      "source": "c-951",
+      "target": "c-934",
+      "source_component_id": 951,
+      "target_component_id": 934,
+      "source_message_id": 94,
+      "target_message_id": 87,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 74197,
+      "source": "c-958",
+      "target": "c-977",
+      "source_component_id": 958,
+      "target_component_id": 977,
+      "source_message_id": 94,
+      "target_message_id": 99,
+      "relationType": "attack",
+      "confidence": 0.998,
+      "probabilities": {
+        "support": 0.001,
+        "attack": 0.998,
+        "none": 0.001
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 73759,
+      "source": "c-952",
+      "target": "c-977",
+      "source_component_id": 952,
+      "target_component_id": 977,
+      "source_message_id": 94,
+      "target_message_id": 99,
+      "relationType": "attack",
+      "confidence": 0.997,
+      "probabilities": {
+        "support": 0.003,
+        "attack": 0.997,
+        "none": 0.0
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 73832,
+      "source": "c-953",
+      "target": "c-977",
+      "source_component_id": 953,
+      "target_component_id": 977,
+      "source_message_id": 94,
+      "target_message_id": 99,
+      "relationType": "attack",
+      "confidence": 0.997,
+      "probabilities": {
+        "support": 0.002,
+        "attack": 0.997,
+        "none": 0.001
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 73700,
+      "source": "c-951",
+      "target": "c-991",
+      "source_component_id": 951,
+      "target_component_id": 991,
+      "source_message_id": 94,
+      "target_message_id": 101,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 5,
+      "isLongRange": true
+    },
+    {
+      "id": 73627,
+      "source": "c-950",
+      "target": "c-991",
+      "source_component_id": 950,
+      "target_component_id": 991,
+      "source_message_id": 94,
+      "target_message_id": 101,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 0.999,
+        "none": 0.0
+      },
+      "distanceTurns": 5,
+      "isLongRange": true
+    },
+    {
+      "id": 74211,
+      "source": "c-958",
+      "target": "c-991",
+      "source_component_id": 958,
+      "target_component_id": 991,
+      "source_message_id": 94,
+      "target_message_id": 101,
+      "relationType": "attack",
+      "confidence": 0.998,
+      "probabilities": {
+        "support": 0.002,
+        "attack": 0.998,
+        "none": 0.0
+      },
+      "distanceTurns": 5,
+      "isLongRange": true
+    },
+    {
+      "id": 74812,
+      "source": "c-967",
+      "target": "c-934",
+      "source_component_id": 967,
+      "target_component_id": 934,
+      "source_message_id": 97,
+      "target_message_id": 87,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.001,
+        "attack": 0.999,
+        "none": 0.0
+      },
+      "distanceTurns": 5,
+      "isLongRange": true
+    },
+    {
+      "id": 74885,
+      "source": "c-968",
+      "target": "c-934",
+      "source_component_id": 968,
+      "target_component_id": 934,
+      "source_message_id": 97,
+      "target_message_id": 87,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.001,
+        "attack": 0.999,
+        "none": 0.0
+      },
+      "distanceTurns": 5,
+      "isLongRange": true
+    },
+    {
+      "id": 75045,
+      "source": "c-970",
+      "target": "c-948",
+      "source_component_id": 970,
+      "target_component_id": 948,
+      "source_message_id": 97,
+      "target_message_id": 92,
+      "relationType": "support",
+      "confidence": 0.945,
+      "probabilities": {
+        "support": 0.945,
+        "attack": 0.048,
+        "none": 0.007
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 74868,
+      "source": "c-967",
+      "target": "c-991",
+      "source_component_id": 967,
+      "target_component_id": 991,
+      "source_message_id": 97,
+      "target_message_id": 101,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.001,
+        "attack": 0.999,
+        "none": 0.0
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 74941,
+      "source": "c-968",
+      "target": "c-991",
+      "source_component_id": 968,
+      "target_component_id": 991,
+      "source_message_id": 97,
+      "target_message_id": 101,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.001,
+        "attack": 0.999,
+        "none": 0.0
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 75834,
+      "source": "c-981",
+      "target": "c-934",
+      "source_component_id": 981,
+      "target_component_id": 934,
+      "source_message_id": 100,
+      "target_message_id": 87,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 76140,
+      "source": "c-985",
+      "target": "c-948",
+      "source_component_id": 985,
+      "target_component_id": 948,
+      "source_message_id": 100,
+      "target_message_id": 92,
+      "relationType": "support",
+      "confidence": 0.933,
+      "probabilities": {
+        "support": 0.933,
+        "attack": 0.062,
+        "none": 0.005
+      },
+      "distanceTurns": 5,
+      "isLongRange": true
+    },
+    {
+      "id": 75865,
+      "source": "c-981",
+      "target": "c-965",
+      "source_component_id": 981,
+      "target_component_id": 965,
+      "source_message_id": 100,
+      "target_message_id": 96,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.001,
+        "attack": 0.999,
+        "none": 0.0
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    },
+    {
+      "id": 77294,
+      "source": "c-1001",
+      "target": "c-934",
+      "source_component_id": 1001,
+      "target_component_id": 934,
+      "source_message_id": 103,
+      "target_message_id": 87,
+      "relationType": "attack",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.001,
+        "attack": 0.999,
+        "none": 0.0
+      },
+      "distanceTurns": 9,
+      "isLongRange": true
+    },
+    {
+      "id": 77016,
+      "source": "c-997",
+      "target": "c-948",
+      "source_component_id": 997,
+      "target_component_id": 948,
+      "source_message_id": 103,
+      "target_message_id": 92,
+      "relationType": "support",
+      "confidence": 0.951,
+      "probabilities": {
+        "support": 0.951,
+        "attack": 0.046,
+        "none": 0.002
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 77089,
+      "source": "c-998",
+      "target": "c-948",
+      "source_component_id": 998,
+      "target_component_id": 948,
+      "source_message_id": 103,
+      "target_message_id": 92,
+      "relationType": "support",
+      "confidence": 0.933,
+      "probabilities": {
+        "support": 0.933,
+        "attack": 0.066,
+        "none": 0.001
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 77162,
+      "source": "c-999",
+      "target": "c-948",
+      "source_component_id": 999,
+      "target_component_id": 948,
+      "source_message_id": 103,
+      "target_message_id": 92,
+      "relationType": "support",
+      "confidence": 0.919,
+      "probabilities": {
+        "support": 0.919,
+        "attack": 0.079,
+        "none": 0.002
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 76943,
+      "source": "c-996",
+      "target": "c-948",
+      "source_component_id": 996,
+      "target_component_id": 948,
+      "source_message_id": 103,
+      "target_message_id": 92,
+      "relationType": "support",
+      "confidence": 0.913,
+      "probabilities": {
+        "support": 0.913,
+        "attack": 0.087,
+        "none": 0.001
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 77264,
+      "source": "c-1000",
+      "target": "c-977",
+      "source_component_id": 1000,
+      "target_component_id": 977,
+      "source_message_id": 103,
+      "target_message_id": 99,
+      "relationType": "attack",
+      "confidence": 0.997,
+      "probabilities": {
+        "support": 0.003,
+        "attack": 0.997,
+        "none": 0.0
+      },
+      "distanceTurns": 3,
+      "isLongRange": true
+    }
+  ],
+  "baseline_nodes": [
+    {
+      "data": {
+        "id": "msg-87",
+        "text": "Acceptance Karşıt Browser: Evrensel gelir, gelecekteki işsizlik problemini çözmekten ziyade, onun semptomla...",
+        "kind": "claim",
+        "round": 1,
+        "labelType": "CLAIM"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-90",
+        "text": "Acceptance Savunucu Browser: Evrensel gelir, yapısal işsizliğin kök nedenlerini doğrudan çözmese de, gelecekt...",
+        "kind": "attack",
+        "round": 1,
+        "labelType": "ATTACK"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-92",
+        "text": "Acceptance Karşıt Browser: Savunucu, Finlandiya deneyinde refah iyileşmesine rağmen istihdam artışı olmadığ...",
+        "kind": "rebuttal",
+        "round": 2,
+        "labelType": "REBUTTAL"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-94",
+        "text": "Acceptance Savunucu Browser: Elbette, karşıt görüşün belirttiği gibi evrensel gelir tek başına yapısal işsizl...",
+        "kind": "attack",
+        "round": 2,
+        "labelType": "ATTACK"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-96",
+        "text": "Acceptance Karşıt Browser: Savunucu, Finlandiya deneyinde istihdam artışı olmadığını kabul ederken, UBI’nin...",
+        "kind": "rebuttal",
+        "round": 3,
+        "labelType": "REBUTTAL"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-97",
+        "text": "Acceptance Savunucu Browser: Karşıt görüşün son itirazı, UBI’nin refah etkilerini küçümseyerek yapısal uyumsu...",
+        "kind": "attack",
+        "round": 3,
+        "labelType": "ATTACK"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-99",
+        "text": "Acceptance Karşıt Browser: Savunucunun son argümanı, psikolojik refahın yeniden beceri kazanma için ön koşu...",
+        "kind": "rebuttal",
+        "round": 4,
+        "labelType": "REBUTTAL"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-100",
+        "text": "Acceptance Savunucu Browser: Karşıt görüşün Finlandiya deneyinde istihdam artışı olmadığı yönündeki itirafı, ...",
+        "kind": "attack",
+        "round": 4,
+        "labelType": "ATTACK"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-101",
+        "text": "Acceptance Karşıt Browser: Rakip, Finlandiya deneyinde istihdam artışı olmadığını kabul ederek, yalnızca ps...",
+        "kind": "rebuttal",
+        "round": 5,
+        "labelType": "REBUTTAL"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-103",
+        "text": "Acceptance Savunucu Browser: Karşıt görüşün son itirazı, Finlandiya deneyinde istihdam artışı olmamasını ve K...",
+        "kind": "attack",
+        "round": 5,
+        "labelType": "ATTACK"
+      }
+    }
+  ],
+  "baseline_edges": [
+    {
+      "data": {
+        "id": "edge-msg-90",
+        "source": "msg-90",
+        "target": "msg-87",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-92",
+        "source": "msg-92",
+        "target": "msg-90",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-94",
+        "source": "msg-94",
+        "target": "msg-92",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-96",
+        "source": "msg-96",
+        "target": "msg-94",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-97",
+        "source": "msg-97",
+        "target": "msg-96",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-99",
+        "source": "msg-99",
+        "target": "msg-97",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-100",
+        "source": "msg-100",
+        "target": "msg-99",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-101",
+        "source": "msg-101",
+        "target": "msg-100",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-103",
+        "source": "msg-103",
+        "target": "msg-101",
+        "relationType": "baseline"
+      }
+    }
+  ],
+  "annotations": {
+    "87": [
+      {
+        "id": 929,
+        "type": "evidence",
+        "start": 0,
+        "end": 116,
+        "confidence": 1.0,
+        "text": "Evrensel gelir, gelecekteki işsizlik problemini çözmekten ziyade, onun semptomlarını yüzeysel olarak hafifletebilir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 930,
+        "type": "evidence",
+        "start": 117,
+        "end": 188,
+        "confidence": 0.999,
+        "text": "Temel sorun, otomasyon ve yapay zekanın yol açtığı yapısal işsizliktir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 931,
+        "type": "evidence",
+        "start": 189,
+        "end": 279,
+        "confidence": 1.0,
+        "text": "bu, bireylerin becerilerinin işgücü piyasasının ihtiyaçlarıyla uyuşmamasından kaynaklanır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 932,
+        "type": "evidence",
+        "start": 280,
+        "end": 425,
+        "confidence": 1.0,
+        "text": "Evrensel gelir, insanlara temel bir geçim kaynağı sağlasa da, eğitim, yeniden beceri kazandırma veya iş yaratma gibi uzun vadeli çözümler sunmaz.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 933,
+        "type": "evidence",
+        "start": 426,
+        "end": 586,
+        "confidence": 0.999,
+        "text": "Örneğin, Finlandiya’da 2017-2018 yıllarında yapılan evrensel gelir deneyinde, katılımcıların istihdam oranlarında anlamlı bir artış gözlenmemiştir (Kela, 2019).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.989
+      },
+      {
+        "id": 934,
+        "type": "claim",
+        "start": 587,
+        "end": 736,
+        "confidence": 1.0,
+        "text": "Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma teşviklerini azaltarak ekonomik durgunluğu derinleştirme riski taşır.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu iddia Tur 2 yanıtı tarafından %100 güvenle çürütülüyor: Elbette, karşıt görüşün belirttiği gibi evrensel gelir tek başına yapısal işsizliğin kök nedenlerini ortadan kaldırmaz;",
+          "source_component_id": 950,
+          "source_message_id": 94
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 935,
+        "type": "evidence",
+        "start": 737,
+        "end": 837,
+        "confidence": 1.0,
+        "text": "Gerçek çözüm, teknolojik dönüşüme uyum sağlayacak eğitim politikaları ve esnek işgücü piyasalarıdır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.833
+      }
+    ],
+    "90": [
+      {
+        "id": 936,
+        "type": "evidence",
+        "start": 0,
+        "end": 154,
+        "confidence": 1.0,
+        "text": "Evrensel gelir, yapısal işsizliğin kök nedenlerini doğrudan çözmese de, gelecekteki işsizlik krizine karşı kritik bir güvenlik ağı ve dönüşüm aracı sunar.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.984
+      },
+      {
+        "id": 937,
+        "type": "evidence",
+        "start": 155,
+        "end": 214,
+        "confidence": 1.0,
+        "text": "Otomasyon çağında milyonlarca insan aniden işsiz kalabilir;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 0.999,
+          "text": "Bu parça Tur 4 iddiasını %100 güvenle çürütüyor: Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, Banerjee ve arkadaşlarının (2019) çalışmasında",
+          "target_component_id": 977,
+          "target_message_id": 99
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 938,
+        "type": "evidence",
+        "start": 215,
+        "end": 388,
+        "confidence": 1.0,
+        "text": "evrensel gelir, onların temel geçimini garanti altına alarak yeniden beceri kazanma, girişimcilik veya eğitim gibi uzun vadeli çözümlere zaman ve kaynak ayırmalarını sağlar.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.72
+      },
+      {
+        "id": 939,
+        "type": "evidence",
+        "start": 389,
+        "end": 593,
+        "confidence": 1.0,
+        "text": "Finlandiya deneyinde istihdamda anlamlı artış olmaması, UBI’nin tek başına işe yaramadığını gösterse de, katılımcıların refah ve psikolojik sağlığında iyileşme sağladığı belirtilmiştir (Kangas vd., 2019).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.933
+      },
+      {
+        "id": 940,
+        "type": "evidence",
+        "start": 594,
+        "end": 700,
+        "confidence": 1.0,
+        "text": "Bu da UBI’nin, insanları yeni fırsatlara yönlendirecek esnekliği ve motivasyonu artırabileceğini kanıtlar.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.958
+      },
+      {
+        "id": 941,
+        "type": "evidence",
+        "start": 701,
+        "end": 851,
+        "confidence": 0.995,
+        "text": "Ayrıca Kenya’da yapılan uzun vadeli bir çalışma, UBI’nin girişimcilik ve küçük işletme kurma oranlarını artırdığını göstermiştir (GiveDirectly, 2022).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.845
+      },
+      {
+        "id": 942,
+        "type": "evidence",
+        "start": 852,
+        "end": 984,
+        "confidence": 1.0,
+        "text": "Dolayısıyla evrensel gelir, eğitim ve iş politikalarının tamamlayıcısı olarak, işsizliğin dönüşümünü kolaylaştıran bir katalizördür.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.836
+      }
+    ],
+    "92": [
+      {
+        "id": 943,
+        "type": "evidence",
+        "start": 0,
+        "end": 101,
+        "confidence": 1.0,
+        "text": "Savunucu, Finlandiya deneyinde refah iyileşmesine rağmen istihdam artışı olmadığını kabul etmektedir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.992
+      },
+      {
+        "id": 944,
+        "type": "evidence",
+        "start": 102,
+        "end": 185,
+        "confidence": 1.0,
+        "text": "bu, evrensel gelirin işsizliğin yapısal belirleyicilerine dokunmadığının kanıtıdır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 945,
+        "type": "evidence",
+        "start": 186,
+        "end": 287,
+        "confidence": 1.0,
+        "text": "Kenya'da girişimcilik artışı iddiası ise gelişmiş ekonomilerdeki yapısal işsizlik sorununu açıklamaz;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 946,
+        "type": "evidence",
+        "start": 288,
+        "end": 402,
+        "confidence": 1.0,
+        "text": "zira gelişmemiş bölgelerde informal ekonomi baskın olduğu için sonuçlar taşınabilir değildir (Banerjee vd., 2019).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 947,
+        "type": "evidence",
+        "start": 403,
+        "end": 530,
+        "confidence": 1.0,
+        "text": "Evrensel gelir, eğitim ve iş politikalarının tamamlayıcısı olarak değil, onların yerine geçme riski taşıyan pahalı bir araçtır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 948,
+        "type": "claim",
+        "start": 531,
+        "end": 679,
+        "confidence": 1.0,
+        "text": "Oysa asıl ihtiyaç, otomasyona uyum sağlayacak yeniden beceri kazandırma programlarına yönelik doğrudan kamu yatırımıdır (Acemoglu & Restrepo, 2018).",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "support",
+          "confidence": 0.951,
+          "text": "Bu iddia Tur 5 yanıtı tarafından %95 güvenle destekleniyor: Finnlandiya'da katılımcıların iş arama motivasyonundaki artış, bu dönüşümün ilk sinyalidir (Kangas vd., 2019).",
+          "source_component_id": 997,
+          "source_message_id": 103
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.956
+      },
+      {
+        "id": 949,
+        "type": "evidence",
+        "start": 680,
+        "end": 793,
+        "confidence": 1.0,
+        "text": "Bu nedenle evrensel gelir, işsizliğin semptomlarını hafifletirken kök nedenleri ihmal eden yüzeysel bir çözümdür.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      }
+    ],
+    "94": [
+      {
+        "id": 950,
+        "type": "evidence",
+        "start": 0,
+        "end": 119,
+        "confidence": 1.0,
+        "text": "Elbette, karşıt görüşün belirttiği gibi evrensel gelir tek başına yapısal işsizliğin kök nedenlerini ortadan kaldırmaz;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma teşviklerini azaltarak ekonomik durgunlu",
+          "target_component_id": 934,
+          "target_message_id": 87
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 951,
+        "type": "evidence",
+        "start": 120,
+        "end": 170,
+        "confidence": 1.0,
+        "text": "ancak bu, onun işe yaramaz olduğu anlamına gelmez.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma teşviklerini azaltarak ekonomik durgunlu",
+          "target_component_id": 934,
+          "target_message_id": 87
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 952,
+        "type": "evidence",
+        "start": 171,
+        "end": 400,
+        "confidence": 1.0,
+        "text": "Evrensel gelir, otomasyonun yol açtığı ani iş kayıplarına karşı bir tampon görevi görerek, bireylerin yeniden beceri kazanma veya girişimcilik gibi uzun vadeli çözümlere yönelmesi için gereken zamanı ve finansal güvenceyi sağlar.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 0.997,
+          "text": "Bu parça Tur 4 iddiasını %100 güvenle çürütüyor: Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, Banerjee ve arkadaşlarının (2019) çalışmasında",
+          "target_component_id": 977,
+          "target_message_id": 99
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.983
+      },
+      {
+        "id": 953,
+        "type": "evidence",
+        "start": 401,
+        "end": 501,
+        "confidence": 0.997,
+        "text": "Finlandiya deneyinde istihdam artışı olmaması, UBI’nin tek başına bir istihdam politikası olmadığını",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 0.997,
+          "text": "Bu parça Tur 4 iddiasını %100 güvenle çürütüyor: Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, Banerjee ve arkadaşlarının (2019) çalışmasında",
+          "target_component_id": 977,
+          "target_message_id": 99
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.982
+      },
+      {
+        "id": 954,
+        "type": "evidence",
+        "start": 503,
+        "end": 644,
+        "confidence": 1.0,
+        "text": "ancak refah ve psikolojik sağlığı iyileştirerek bireylerin iş arama motivasyonunu ve esnekliğini artırdığını göstermiştir (Kangas vd., 2019).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.756
+      },
+      {
+        "id": 955,
+        "type": "evidence",
+        "start": 645,
+        "end": 769,
+        "confidence": 0.993,
+        "text": "Ayrıca, Kenya’daki GiveDirectly çalışması, UBI’nin gelişmekte olan ekonomilerde girişimciliği teşvik ettiğini kanıtlamıştır;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.898
+      },
+      {
+        "id": 956,
+        "type": "evidence",
+        "start": 770,
+        "end": 868,
+        "confidence": 0.999,
+        "text": "bu, gelişmiş ekonomilerde de benzer dinamiklerin oluşabileceğine işaret eder (GiveDirectly, 2022).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.926
+      },
+      {
+        "id": 957,
+        "type": "evidence",
+        "start": 869,
+        "end": 970,
+        "confidence": 1.0,
+        "text": "Evrensel gelir, eğitim ve iş politikalarının yerine geçmek değil, onları tamamlayan bir katalizördür;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.99
+      },
+      {
+        "id": 958,
+        "type": "evidence",
+        "start": 971,
+        "end": 1095,
+        "confidence": 1.0,
+        "text": "bu nedenle, işsizliğin semptomlarını hafifletirken aynı zamanda dönüşümü kolaylaştıran bir araç olarak değerlendirilmelidir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 0.998,
+          "text": "Bu parça Tur 4 iddiasını %100 güvenle çürütüyor: Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, Banerjee ve arkadaşlarının (2019) çalışmasında",
+          "target_component_id": 977,
+          "target_message_id": 99
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.986
+      }
+    ],
+    "96": [
+      {
+        "id": 959,
+        "type": "evidence",
+        "start": 0,
+        "end": 173,
+        "confidence": 1.0,
+        "text": "Savunucu, Finlandiya deneyinde istihdam artışı olmadığını kabul ederken, UBI’nin refah ve psikolojik sağlık üzerindeki olumlu etkilerine vurgu yaparak konuyu saptırmaktadır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.982
+      },
+      {
+        "id": 960,
+        "type": "evidence",
+        "start": 174,
+        "end": 251,
+        "confidence": 0.999,
+        "text": "İşsizlik sorununun çözümü, bireylerin moralini yükseltmekten ibaret değildir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.992
+      },
+      {
+        "id": 961,
+        "type": "evidence",
+        "start": 252,
+        "end": 318,
+        "confidence": 0.992,
+        "text": "asıl mesele, işgücü piyasasındaki yapısal uyumsuzluğu gidermektir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.974
+      },
+      {
+        "id": 962,
+        "type": "evidence",
+        "start": 319,
+        "end": 430,
+        "confidence": 1.0,
+        "text": "Kenya’daki girişimcilik artışı ise gelişmiş ekonomilerdeki otomasyon kaynaklı işsizliğe çözüm olarak sunulamaz;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 963,
+        "type": "evidence",
+        "start": 431,
+        "end": 563,
+        "confidence": 0.999,
+        "text": "zira informal ekonominin ağırlıklı olduğu bu bağlam, sanayi sonrası toplumların dinamiklerini yansıtmamaktadır (Banerjee vd., 2019).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 964,
+        "type": "evidence",
+        "start": 564,
+        "end": 686,
+        "confidence": 0.995,
+        "text": "Ayrıca, UBI’nin eğitim ve iş politikalarını tamamladığı iddiası, sınırlı kamu kaynakları düşünüldüğünde gerçekçi değildir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 965,
+        "type": "claim",
+        "start": 687,
+        "end": 872,
+        "confidence": 1.0,
+        "text": "UBI’ye ayrılan devasa bütçe, doğrudan yeniden beceri kazandırma programlarına yapılacak yatırımı engelleyerek yapısal sorunların derinleşmesine yol açabilir (Acemoglu & Restrepo, 2018).",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 0.999,
+          "text": "Bu iddia Tur 4 yanıtı tarafından %100 güvenle çürütülüyor: Karşıt görüşün Finlandiya deneyinde istihdam artışı olmadığı yönündeki itirafı, UBI’nin tek başına bir istihdam politika",
+          "source_component_id": 981,
+          "source_message_id": 100
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.98
+      },
+      {
+        "id": 966,
+        "type": "evidence",
+        "start": 873,
+        "end": 1040,
+        "confidence": 1.0,
+        "text": "Bu nedenle, evrensel gelir semptomları yüzeysel olarak hafifletirken, gerçek çözüm olan teknolojik dönüşüme uyumlu eğitim reformlarının önünü kesen pahalı bir araçtır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      }
+    ],
+    "97": [
+      {
+        "id": 967,
+        "type": "evidence",
+        "start": 0,
+        "end": 178,
+        "confidence": 1.0,
+        "text": "Karşıt görüşün son itirazı, UBI’nin refah etkilerini küçümseyerek yapısal uyumsuzluğa odaklanmakta ve Kenya örneğinin gelişmiş ekonomiler için geçersiz olduğunu iddia etmektedir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 0.999,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma teşviklerini azaltarak ekonomik durgunlu",
+          "target_component_id": 934,
+          "target_message_id": 87
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 968,
+        "type": "evidence",
+        "start": 179,
+        "end": 335,
+        "confidence": 1.0,
+        "text": "Oysa psikolojik sağlık ve refah, işsiz bireylerin yeniden beceri kazanma veya girişimcilik gibi uzun vadeli çözümlere yönelmesi için kritik bir ön koşuldur;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 0.999,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma teşviklerini azaltarak ekonomik durgunlu",
+          "target_component_id": 934,
+          "target_message_id": 87
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 969,
+        "type": "evidence",
+        "start": 336,
+        "end": 463,
+        "confidence": 0.998,
+        "text": "Finlandiya deneyinde katılımcıların refahındaki iyileşme, iş arama motivasyonunu ve esnekliğini artırmıştır (Kangas vd., 2019).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.817
+      },
+      {
+        "id": 970,
+        "type": "evidence",
+        "start": 464,
+        "end": 553,
+        "confidence": 0.851,
+        "text": "Kenya’daki GiveDirectly çalışması ise UBI’nin girişimciliği teşvik ettiğini göstermiştir;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.945,
+          "text": "Bu parça Tur 2 iddiasını %94 güvenle destekliyor: Oysa asıl ihtiyaç, otomasyona uyum sağlayacak yeniden beceri kazandırma programlarına yönelik doğrudan kamu yatırımıdır ",
+          "target_component_id": 948,
+          "target_message_id": 92
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.907
+      },
+      {
+        "id": 971,
+        "type": "evidence",
+        "start": 554,
+        "end": 652,
+        "confidence": 0.999,
+        "text": "bu, gelişmiş ekonomilerde de benzer dinamiklerin oluşabileceğine işaret eder (GiveDirectly, 2022).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.926
+      },
+      {
+        "id": 972,
+        "type": "evidence",
+        "start": 653,
+        "end": 720,
+        "confidence": 0.762,
+        "text": "Ayrıca, UBI’nin eğitim yatırımlarını engellediği iddiası yanlıştır;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.983
+      },
+      {
+        "id": 973,
+        "type": "evidence",
+        "start": 721,
+        "end": 839,
+        "confidence": 1.0,
+        "text": "aksine, UBI bireylere eğitim ve beceri geliştirme için zaman ve kaynak sağlayarak bu programların etkinliğini artırır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.654
+      },
+      {
+        "id": 974,
+        "type": "evidence",
+        "start": 840,
+        "end": 965,
+        "confidence": 0.974,
+        "text": "Örneğin, ABD’de yapılan bir çalışmada UBI alan bireylerin eğitim harcamalarında artış gözlenmiştir (Jones & Marinescu, 2022).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.602
+      },
+      {
+        "id": 975,
+        "type": "evidence",
+        "start": 966,
+        "end": 1100,
+        "confidence": 1.0,
+        "text": "Bu nedenle evrensel gelir, yapısal işsizliğin semptomlarını hafifletirken aynı zamanda dönüşümü kolaylaştıran tamamlayıcı bir araçtır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.96
+      }
+    ],
+    "99": [
+      {
+        "id": 976,
+        "type": "evidence",
+        "start": 0,
+        "end": 230,
+        "confidence": 1.0,
+        "text": "Savunucunun son argümanı, psikolojik refahın yeniden beceri kazanma için ön koşul olduğunu belirtse de, Finlandiya deneyinde istihdam artışı sağlanamaması, UBI’nin yapısal uyumsuzluğu gidermede yetersiz kaldığını teyit etmektedir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.993
+      },
+      {
+        "id": 977,
+        "type": "claim",
+        "start": 231,
+        "end": 465,
+        "confidence": 1.0,
+        "text": "Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, Banerjee ve arkadaşlarının (2019) çalışmasında vurgulandığı gibi, informal ekonominin baskın olduğu bağlamların farklı dinamiklere sahip olmasından kaynaklanır.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 0.999,
+          "text": "Bu iddia Tur 1 yanıtı tarafından %100 güvenle çürütülüyor: Otomasyon çağında milyonlarca insan aniden işsiz kalabilir;",
+          "source_component_id": 937,
+          "source_message_id": 90
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 978,
+        "type": "evidence",
+        "start": 466,
+        "end": 670,
+        "confidence": 1.0,
+        "text": "Ayrıca Jones & Marinescu (2022) tarafından ABD’de gözlemlenen eğitim harcamalarındaki artış, bu harcamaların otomasyon çağında talep edilen ileri düzey becerilerle uyumlu olup olmadığını sorgulatmaktadır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.861
+      },
+      {
+        "id": 979,
+        "type": "evidence",
+        "start": 671,
+        "end": 905,
+        "confidence": 1.0,
+        "text": "Kamu kaynaklarının kıt olduğu bir ortamda, UBI’ye yapılan devasa harcamalar, Acemoglu ve Restrepo’nun (2018) savunduğu gibi, doğrudan yeniden beceri kazandırma ve teknolojik dönüşüme yönelik eğitim yatırımlarını baltalama riski taşır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.984
+      },
+      {
+        "id": 980,
+        "type": "evidence",
+        "start": 906,
+        "end": 1070,
+        "confidence": 1.0,
+        "text": "Bu nedenle evrensel gelir, işsizliğin semptomlarını hafifletirken kök nedenleri ihmal eden ve kaynakları yanlış yönlendiren pahalı bir araç olmaya devam etmektedir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      }
+    ],
+    "100": [
+      {
+        "id": 981,
+        "type": "evidence",
+        "start": 0,
+        "end": 267,
+        "confidence": 1.0,
+        "text": "Karşıt görüşün Finlandiya deneyinde istihdam artışı olmadığı yönündeki itirafı, UBI’nin tek başına bir istihdam politikası olmadığını gösterse de, onun asıl işlevinin otomasyon çağında bireylere geçici bir güvenlik ağı ve dönüşüm fırsatı sunmak olduğunu ortaya koyar.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma teşviklerini azaltarak ekonomik durgunlu",
+          "target_component_id": 934,
+          "target_message_id": 87
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 982,
+        "type": "evidence",
+        "start": 268,
+        "end": 396,
+        "confidence": 1.0,
+        "text": "Psikolojik refah iyileşmesi, yeniden beceri kazanma ve girişimcilik gibi uzun vadeli çözümlere yönelmede kritik bir ön koşuldur;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.85
+      },
+      {
+        "id": 983,
+        "type": "evidence",
+        "start": 397,
+        "end": 491,
+        "confidence": 0.997,
+        "text": "Finlandiya’da katılımcıların iş arama motivasyonundaki artış bu bağlamda değerlendirilmelidir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.73
+      },
+      {
+        "id": 984,
+        "type": "evidence",
+        "start": 492,
+        "end": 732,
+        "confidence": 1.0,
+        "text": "Kenya’daki GiveDirectly çalışması ise UBI’nin gelişmekte olan ekonomilerde girişimciliği teşvik ettiğini kanıtlarken, bu dinamiklerin gelişmiş ekonomilerde de benzer şekilde işleyebileceğine dair güçlü bir öngörü sunar (GiveDirectly, 2022).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.785
+      },
+      {
+        "id": 985,
+        "type": "evidence",
+        "start": 733,
+        "end": 913,
+        "confidence": 1.0,
+        "text": "Ayrıca, Jones ve Marinescu’nun (2022) ABD’de gözlemlediği eğitim harcamalarındaki artış, UBI’nin bireyleri otomasyon çağına uygun beceriler edinmeye yönlendirdiğini göstermektedir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.933,
+          "text": "Bu parça Tur 2 iddiasını %93 güvenle destekliyor: Oysa asıl ihtiyaç, otomasyona uyum sağlayacak yeniden beceri kazandırma programlarına yönelik doğrudan kamu yatırımıdır ",
+          "target_component_id": 948,
+          "target_message_id": 92
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.68
+      },
+      {
+        "id": 986,
+        "type": "evidence",
+        "start": 914,
+        "end": 1085,
+        "confidence": 1.0,
+        "text": "Kaynak kıtlığı iddiasına gelince, UBI’nin yeniden beceri kazandırma programlarını baltalamadığı, aksine bu programların etkinliğini artıran bir tamamlayıcı olduğu açıktır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.888
+      },
+      {
+        "id": 987,
+        "type": "evidence",
+        "start": 1086,
+        "end": 1220,
+        "confidence": 1.0,
+        "text": "Bu nedenle evrensel gelir, yapısal işsizliğin semptomlarını hafifletirken aynı zamanda dönüşümü kolaylaştıran vazgeçilmez bir araçtır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.969
+      }
+    ],
+    "101": [
+      {
+        "id": 988,
+        "type": "evidence",
+        "start": 0,
+        "end": 154,
+        "confidence": 1.0,
+        "text": "Rakip, Finlandiya deneyinde istihdam artışı olmadığını kabul ederek, yalnızca psikolojik refah ve motivasyon artışına vurgu yaparak konuyu saptırmaktadır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 989,
+        "type": "evidence",
+        "start": 155,
+        "end": 206,
+        "confidence": 0.962,
+        "text": "Oysa işsizliğin temel sorunu yapısal uyumsuzluktur;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 990,
+        "type": "evidence",
+        "start": 207,
+        "end": 351,
+        "confidence": 0.999,
+        "text": "moral ne kadar yükselirse yükselsin, bireylerin becerileri otomasyon çağının talepleriyle uyuşmuyorsa iş bulamazlar (Acemoglu & Restrepo, 2018).",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 991,
+        "type": "claim",
+        "start": 352,
+        "end": 569,
+        "confidence": 1.0,
+        "text": "Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, informal ekonominin baskın olduğu bu bağlamın sanayi sonrası toplumlardan farklı dinamiklere sahip olmasından kaynaklanır (Banerjee vd., 2019).",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu iddia Tur 2 yanıtı tarafından %100 güvenle çürütülüyor: ancak bu, onun işe yaramaz olduğu anlamına gelmez.",
+          "source_component_id": 951,
+          "source_message_id": 94
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 992,
+        "type": "evidence",
+        "start": 570,
+        "end": 725,
+        "confidence": 1.0,
+        "text": "ABD’de eğitim harcamalarındaki artış iddiası ise, bu harcamaların otomasyon çağında talep edilen ileri düzey teknik becerilerle uyumlu olduğunu kanıtlamaz.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 993,
+        "type": "evidence",
+        "start": 726,
+        "end": 916,
+        "confidence": 1.0,
+        "text": "Kıt kamu kaynaklarıyla UBI’ye yapılan devasa harcamalar, doğrudan yeniden beceri kazandırma ve teknoloji odaklı eğitim yatırımlarını baltalayarak yapısal sorunları derinleştirme riski taşır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 994,
+        "type": "evidence",
+        "start": 917,
+        "end": 1016,
+        "confidence": 1.0,
+        "text": "Sonuç olarak evrensel gelir, semptomları hafifletirken kök nedenleri ihmal eden pahalı bir araçtır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      }
+    ],
+    "103": [
+      {
+        "id": 995,
+        "type": "evidence",
+        "start": 0,
+        "end": 218,
+        "confidence": 1.0,
+        "text": "Karşıt görüşün son itirazı, Finlandiya deneyinde istihdam artışı olmamasını ve Kenya örneğinin genellenemeyeceğini vurgulasa da, evrensel gelirin asıl gücü, yapısal işsizliğin çözümünde bir katalizör görevi görmesidir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.996
+      },
+      {
+        "id": 996,
+        "type": "evidence",
+        "start": 219,
+        "end": 324,
+        "confidence": 1.0,
+        "text": "Psikolojik refah iyileşmesi, bireylerin yeniden beceri kazanma sürecine başlaması için temel bir adımdır;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.913,
+          "text": "Bu parça Tur 2 iddiasını %91 güvenle destekliyor: Oysa asıl ihtiyaç, otomasyona uyum sağlayacak yeniden beceri kazandırma programlarına yönelik doğrudan kamu yatırımıdır ",
+          "target_component_id": 948,
+          "target_message_id": 92
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.607
+      },
+      {
+        "id": 997,
+        "type": "evidence",
+        "start": 325,
+        "end": 435,
+        "confidence": 0.99,
+        "text": "Finnlandiya'da katılımcıların iş arama motivasyonundaki artış, bu dönüşümün ilk sinyalidir (Kangas vd., 2019).",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.951,
+          "text": "Bu parça Tur 2 iddiasını %95 güvenle destekliyor: Oysa asıl ihtiyaç, otomasyona uyum sağlayacak yeniden beceri kazandırma programlarına yönelik doğrudan kamu yatırımıdır ",
+          "target_component_id": 948,
+          "target_message_id": 92
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.863
+      },
+      {
+        "id": 998,
+        "type": "evidence",
+        "start": 436,
+        "end": 636,
+        "confidence": 1.0,
+        "text": "Kenya'daki GiveDirectly çalışması, UBI'nin girişimciliği teşvik ettiğini gösterirken, gelişmiş ekonomilerde de benzer dinamiklerin ortaya çıkabileceğine dair güçlü kanıtlar sunar (GiveDirectly, 2022).",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.933,
+          "text": "Bu parça Tur 2 iddiasını %93 güvenle destekliyor: Oysa asıl ihtiyaç, otomasyona uyum sağlayacak yeniden beceri kazandırma programlarına yönelik doğrudan kamu yatırımıdır ",
+          "target_component_id": 948,
+          "target_message_id": 92
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.894
+      },
+      {
+        "id": 999,
+        "type": "evidence",
+        "start": 637,
+        "end": 797,
+        "confidence": 0.999,
+        "text": "ABD'de eğitim harcamalarındaki artış ise, UBI'nin bireyleri otomasyon çağına uygun beceriler edinmeye yönlendirdiğini doğrulamaktadır (Jones & Marinescu, 2022).",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.919,
+          "text": "Bu parça Tur 2 iddiasını %92 güvenle destekliyor: Oysa asıl ihtiyaç, otomasyona uyum sağlayacak yeniden beceri kazandırma programlarına yönelik doğrudan kamu yatırımıdır ",
+          "target_component_id": 948,
+          "target_message_id": 92
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.619
+      },
+      {
+        "id": 1000,
+        "type": "evidence",
+        "start": 798,
+        "end": 970,
+        "confidence": 1.0,
+        "text": "Kaynak kıtlığı argümanına gelince, UBI'nin yeniden beceri kazandırma programlarını baltalamaktan ziyade, bu programların etkinliğini artıran bir tamamlayıcı olduğu açıktır;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 0.997,
+          "text": "Bu parça Tur 4 iddiasını %100 güvenle çürütüyor: Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, Banerjee ve arkadaşlarının (2019) çalışmasında",
+          "target_component_id": 977,
+          "target_message_id": 99
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.96
+      },
+      {
+        "id": 1001,
+        "type": "evidence",
+        "start": 971,
+        "end": 1089,
+        "confidence": 1.0,
+        "text": "zira bireyler temel geçim güvencesine sahip olduklarında eğitim ve beceri geliştirmeye daha fazla zaman ayırabilirler.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 0.999,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma teşviklerini azaltarak ekonomik durgunlu",
+          "target_component_id": 934,
+          "target_message_id": 87
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.942
+      },
+      {
+        "id": 1002,
+        "type": "evidence",
+        "start": 1090,
+        "end": 1236,
+        "confidence": 1.0,
+        "text": "Bu nedenle evrensel gelir, yapısal işsizliğin semptomlarını hafifletirken aynı zamanda uzun vadeli dönüşümü kolaylaştıran vazgeçilmez bir araçtır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.955
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "message_id": 87,
+      "round": 1,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 7,
+      "incoming_count": 6,
+      "outgoing_count": 0
+    },
+    {
+      "message_id": 90,
+      "round": 1,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 7,
+      "incoming_count": 0,
+      "outgoing_count": 2
+    },
+    {
+      "message_id": 92,
+      "round": 2,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 7,
+      "incoming_count": 6,
+      "outgoing_count": 0
+    },
+    {
+      "message_id": 94,
+      "round": 2,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 9,
+      "incoming_count": 0,
+      "outgoing_count": 8
+    },
+    {
+      "message_id": 96,
+      "round": 3,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 8,
+      "incoming_count": 1,
+      "outgoing_count": 0
+    },
+    {
+      "message_id": 97,
+      "round": 3,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 9,
+      "incoming_count": 0,
+      "outgoing_count": 5
+    },
+    {
+      "message_id": 99,
+      "round": 4,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 5,
+      "incoming_count": 5,
+      "outgoing_count": 0
+    },
+    {
+      "message_id": 100,
+      "round": 4,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 7,
+      "incoming_count": 0,
+      "outgoing_count": 3
+    },
+    {
+      "message_id": 101,
+      "round": 5,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 7,
+      "incoming_count": 6,
+      "outgoing_count": 0
+    },
+    {
+      "message_id": 103,
+      "round": 5,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 8,
+      "incoming_count": 0,
+      "outgoing_count": 6
+    }
+  ],
+  "findings": [
+    {
+      "type": "unsupported_claim",
+      "title": "Temelsiz İddia",
+      "message_id": 87,
+      "detail": "Tur 1 içinde Acceptance Karşıt Browser tarafından öne sürülen 'Bu nedenle, evrensel gelir işsizliğin kök nedenlerine dokunmadığı gibi, çalışma ...' iddiası için ModernBERT pipeline'ı hiçbir destekleyici kanıt bulamadı.",
+      "confidence": 0.5,
+      "severity": "medium"
+    },
+    {
+      "type": "unsupported_claim",
+      "title": "Temelsiz İddia",
+      "message_id": 96,
+      "detail": "Tur 3 içinde Acceptance Karşıt Browser tarafından öne sürülen 'UBI’ye ayrılan devasa bütçe, doğrudan yeniden beceri kazandırma programlarına ya...' iddiası için ModernBERT pipeline'ı hiçbir destekleyici kanıt bulamadı.",
+      "confidence": 0.5,
+      "severity": "medium"
+    },
+    {
+      "type": "unsupported_claim",
+      "title": "Temelsiz İddia",
+      "message_id": 99,
+      "detail": "Tur 4 içinde Acceptance Karşıt Browser tarafından öne sürülen 'Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, Banerj...' iddiası için ModernBERT pipeline'ı hiçbir destekleyici kanıt bulamadı.",
+      "confidence": 0.5,
+      "severity": "medium"
+    },
+    {
+      "type": "unsupported_claim",
+      "title": "Temelsiz İddia",
+      "message_id": 101,
+      "detail": "Tur 5 içinde Acceptance Karşıt Browser tarafından öne sürülen 'Kenya’daki girişimcilik artışının gelişmiş ekonomilere genellenemeyeceği, inform...' iddiası için ModernBERT pipeline'ı hiçbir destekleyici kanıt bulamadı.",
+      "confidence": 0.5,
+      "severity": "medium"
+    }
+  ],
+  "impact": {
+    "semantic_edges": 24,
+    "raw_relations": 5402,
+    "visible_relations": 24,
+    "none_relations": 0,
+    "filtered_relations": 5378,
+    "filter_reasons": {
+      "target_not_claim": 5037,
+      "graph_cap_or_structural_filter": 194,
+      "same_agent_cross_message": 134,
+      "below_attack_threshold": 13
+    },
+    "baseline_edges": 9,
+    "bert_only_edges": 24,
+    "long_range_edges": 24,
+    "unsupported_claims": 4,
+    "missed_rebuttals": 0,
+    "none_escapes": 0
+  }
+}

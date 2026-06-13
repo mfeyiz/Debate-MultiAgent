@@ -88,4 +88,4 @@ class GoogleFactCheckClient:
             return "support"
         if any(w in text for w in attack_words):
             return "attack"
-        return "neutral"
+        return "none"

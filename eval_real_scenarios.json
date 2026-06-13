@@ -1,0 +1,382 @@
+[
+  {
+    "id": 1,
+    "data": {
+      "text": "Uzay madenciliği, Dünya'daki kıt kaynaklara alternatif sunarak ekonomik büyümeyi tetikleyebilir. Örneğin, bir asteroitten çıkarılacak platin grubu metaller, küresel piyasalarda arz fazlası yaratarak fiyatları düşürebilir. Ancak bu durum, gelişmekte olan ülkelerin maden gelirlerine bağımlı ekonomilerini olumsuz etkileyebilir.",
+      "topic": "Uzay madenciliği ve asteroit sömürüsünün ekonomik/etik boyutları",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "Uzay madenciliği, Dünya'daki kıt kaynaklara alternatif sunarak ekonomik büyümeyi tetikleyebilir."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "Örneğin, bir asteroitten çıkarılacak platin grubu metaller, küresel piyasalarda arz fazlası yaratarak fiyatları düşürebilir."
+        },
+        {
+          "id": "O1",
+          "label": "other",
+          "text": "Ancak bu durum, gelişmekte olan ülkelerin maden gelirlerine bağımlı ekonomilerini olumsuz etkileyebilir."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "O1",
+          "to": "C1",
+          "label": "none"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "data": {
+      "text": "Asteroit sömürüsü, etik açıdan sorgulanması gereken bir alandır çünkü bu kaynakların kime ait olduğu belirsizdir. 1967 tarihli Uzay Anlaşması, gök cisimlerinin ulusal egemenlik altına alınamayacağını belirtir, ancak özel şirketlerin bu kaynakları kullanma hakkını netleştirmez. Bu hukuki boşluk, büyük şirketlerin uzayı sınırsız bir kaynak havuzu olarak görmesine yol açabilir.",
+      "topic": "Uzay madenciliği ve asteroit sömürüsünün ekonomik/etik boyutları",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "Asteroit sömürüsü, etik açıdan sorgulanması gereken bir alandır çünkü bu kaynakların kime ait olduğu belirsizdir."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "1967 tarihli Uzay Anlaşması, gök cisimlerinin ulusal egemenlik altına alınamayacağını belirtir, ancak özel şirketlerin bu kaynakları kullanma hakkını netleştirmez."
+        },
+        {
+          "id": "O1",
+          "label": "other",
+          "text": "Bu hukuki boşluk, büyük şirketlerin uzayı sınırsız bir kaynak havuzu olarak görmesine yol açabilir."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "O1",
+          "to": "C1",
+          "label": "none"
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "data": {
+      "text": "CRISPR teknolojisinin insan embriyoları üzerinde kullanılması, etik açıdan ciddi tartışmalara yol açmaktadır. Birçok bilim insanı, bu teknolojinin kalıtsal hastalıkları ortadan kaldırma potansiyeline dikkat çekiyor. Ancak embriyoların genetik yapısında yapılacak değişikliklerin nesiller boyu aktarılması, öngörülemeyen sonuçlar doğurabilir. Bu nedenle, birçok ülke bu tür çalışmaları yasaklamış durumdadır.",
+      "topic": "İnsan embriyosunda genetik düzenleme (CRISPR) yapılması ve etik sınırlar",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "CRISPR teknolojisinin insan embriyoları üzerinde kullanılması, etik açıdan ciddi tartışmalara yol açmaktadır."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "Birçok ülke bu tür çalışmaları yasaklamış durumdadır."
+        },
+        {
+          "id": "O1",
+          "label": "other",
+          "text": "Birçok bilim insanı, bu teknolojinin kalıtsal hastalıkları ortadan kaldırma potansiyeline dikkat çekiyor."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "O1",
+          "to": "C1",
+          "label": "none"
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "data": {
+      "text": "Genetik düzenleme çalışmalarında etik sınırların belirlenmesi büyük önem taşımaktadır. Özellikle embriyonik dönemde yapılan müdahalelerin sadece tedavi amaçlı olması gerektiği savunulmaktadır. Dünya Sağlık Örgütü, bu konuda kapsamlı bir etik çerçeve oluşturulmasını tavsiye etmektedir. Bununla birlikte, teknolojinin kötüye kullanım riski her zaman mevcuttur.",
+      "topic": "İnsan embriyosunda genetik düzenleme (CRISPR) yapılması ve etik sınırlar",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "Genetik düzenleme çalışmalarında etik sınırların belirlenmesi büyük önem taşımaktadır."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "Dünya Sağlık Örgütü, bu konuda kapsamlı bir etik çerçeve oluşturulmasını tavsiye etmektedir."
+        },
+        {
+          "id": "O1",
+          "label": "other",
+          "text": "Bununla birlikte, teknolojinin kötüye kullanım riski her zaman mevcuttur."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "O1",
+          "to": "C1",
+          "label": "none"
+        }
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "data": {
+      "text": "Evrensel temel gelir uygulamasının iş gücü motivasyonunu azaltacağı yönünde yaygın bir endişe var. Ancak Finlandiya'da yapılan iki yıllık bir pilot çalışma, UBI alan bireylerin istihdam oranlarında kontrol grubuna kıyasla anlamlı bir düşüş olmadığını gösterdi. Hatta temel gelir alanların, daha anlamlı ve yaratıcı işlere yönelme eğiliminde oldukları gözlemlendi.",
+      "topic": "Evrensel temel gelir (UBI) uygulamasının iş gücü motivasyonuna etkisi",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "Evrensel temel gelir uygulamasının iş gücü motivasyonunu azaltacağı yönünde yaygın bir endişe var."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "Ancak Finlandiya'da yapılan iki yıllık bir pilot çalışma, UBI alan bireylerin istihdam oranlarında kontrol grubuna kıyasla anlamlı bir düşüş olmadığını gösterdi."
+        },
+        {
+          "id": "E2",
+          "label": "evidence",
+          "text": "Hatta temel gelir alanların, daha anlamlı ve yaratıcı işlere yönelme eğiliminde oldukları gözlemlendi."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "attack"
+        },
+        {
+          "from": "E2",
+          "to": "C1",
+          "label": "attack"
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "data": {
+      "text": "Eleştirmenler, UBI'nin çalışma isteğini körelteceğini iddia ediyor. Oysa Kenya'da yürütülen uzun vadeli bir deneyde, düzenli nakit transferi alan bireylerin girişimcilik faaliyetlerinde belirgin bir artış olduğu tespit edildi. Bu bulgular, temel gelirin insanları pasifleştirmek yerine üretkenliğe teşvik edebileceğini düşündürüyor.",
+      "topic": "Evrensel temel gelir (UBI) uygulamasının iş gücü motivasyonuna etkisi",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "Eleştirmenler, UBI'nin çalışma isteğini körelteceğini iddia ediyor."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "Oysa Kenya'da yürütülen uzun vadeli bir deneyde, düzenli nakit transferi alan bireylerin girişimcilik faaliyetlerinde belirgin bir artış olduğu tespit edildi."
+        },
+        {
+          "id": "O1",
+          "label": "other",
+          "text": "Bu bulgular, temel gelirin insanları pasifleştirmek yerine üretkenliğe teşvik edebileceğini düşündürüyor."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "attack"
+        },
+        {
+          "from": "O1",
+          "to": "C1",
+          "label": "none"
+        }
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "data": {
+      "text": "Laboratuvarda üretilen yapay et, geleneksel hayvancılığa kıyasla sera gazı emisyonlarını önemli ölçüde azaltıyor. Yapılan bir araştırmaya göre yapay et üretimi, sığır eti üretimine göre %90 daha az sera gazı salınımına neden oluyor. Ancak bu teknolojinin yaygınlaşması için enerji maliyetlerinin düşürülmesi gerekiyor.",
+      "topic": "Laboratuvarda üretilen yapay etin geleneksel hayvancılık sektörü ve çevreyle ilişkisi",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "Laboratuvarda üretilen yapay et, geleneksel hayvancılığa kıyasla sera gazı emisyonlarını önemli ölçüde azaltıyor."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "Yapılan bir araştırmaya göre yapay et üretimi, sığır eti üretimine göre %90 daha az sera gazı salınımına neden oluyor."
+        },
+        {
+          "id": "O1",
+          "label": "other",
+          "text": "Ancak bu teknolojinin yaygınlaşması için enerji maliyetlerinin düşürülmesi gerekiyor."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "O1",
+          "to": "C1",
+          "label": "none"
+        }
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "data": {
+      "text": "Geleneksel hayvancılık sektörü, yapay etin piyasaya girmesiyle büyük bir dönüşüm yaşayabilir. Ekonomistler, yapay etin 2030 yılına kadar küresel et pazarının %10'unu ele geçirebileceğini öngörüyor. Bu durum özellikle küçük ölçekli hayvancılık işletmeleri için tehdit oluşturmaktadır.",
+      "topic": "Laboratuvarda üretilen yapay etin geleneksel hayvancılık sektörü ve çevreyle ilişkisi",
+      "components": [
+        {
+          "id": "C2",
+          "label": "claim",
+          "text": "Geleneksel hayvancılık sektörü, yapay etin piyasaya girmesiyle büyük bir dönüşüm yaşayabilir."
+        },
+        {
+          "id": "E2",
+          "label": "evidence",
+          "text": "Ekonomistler, yapay etin 2030 yılına kadar küresel et pazarının %10'unu ele geçirebileceğini öngörüyor."
+        },
+        {
+          "id": "O2",
+          "label": "other",
+          "text": "Bu durum özellikle küçük ölçekli hayvancılık işletmeleri için tehdit oluşturmaktadır."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E2",
+          "to": "C2",
+          "label": "support"
+        },
+        {
+          "from": "O2",
+          "to": "C2",
+          "label": "none"
+        }
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "data": {
+      "text": "Nükleer füzyon enerjisi araştırmalarına ayrılan bütçenin artırılması, uzun vadeli enerji güvenliği için kritik bir adımdır. Füzyon reaktörleri, teorik olarak neredeyse sınırsız ve karbonsuz enerji üretebilir. Örneğin, ITER projesi gibi uluslararası iş birlikleri, bu teknolojinin fizibilitesini kanıtlamaya odaklanmıştır. Bu nedenle, fosil yakıtlara bağımlılığı azaltmak ve iklim değişikliğiyle mücadele etmek için füzyon yatırımlarına öncelik verilmelidir.",
+      "topic": "Nükleer füzyon enerjisi araştırmalarına ayrılan bütçenin önceliği",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "Nükleer füzyon enerjisi araştırmalarına ayrılan bütçenin artırılması, uzun vadeli enerji güvenliği için kritik bir adımdır."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "Füzyon reaktörleri, teorik olarak neredeyse sınırsız ve karbonsuz enerji üretebilir."
+        },
+        {
+          "id": "E2",
+          "label": "evidence",
+          "text": "Örneğin, ITER projesi gibi uluslararası iş birlikleri, bu teknolojinin fizibilitesini kanıtlamaya odaklanmıştır."
+        },
+        {
+          "id": "O1",
+          "label": "other",
+          "text": "Bu nedenle, fosil yakıtlara bağımlılığı azaltmak ve iklim değişikliğiyle mücadele etmek için füzyon yatırımlarına öncelik verilmelidir."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "E2",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "O1",
+          "to": "C1",
+          "label": "none"
+        }
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "data": {
+      "text": "Füzyon araştırmalarına ayrılan bütçenin önceliklendirilmesi, mevcut enerji krizleri karşısında mantıklı değildir. Son elli yılda yapılan yatırımlara rağmen ticari füzyonun en iyi ihtimalle 2040'ların sonunda mümkün olabileceği tahmin edilmektedir. Bu süre zarfında, güneş ve rüzgar gibi yenilenebilir enerji kaynakları çok daha hızlı ve ucuza devreye alınabilir. Kaynakların sınırlı olduğu bir dünyada, kısa vadede etki yaratacak çözümlere yönelmek daha akılcıdır.",
+      "topic": "Nükleer füzyon enerjisi araştırmalarına ayrılan bütçenin önceliği",
+      "components": [
+        {
+          "id": "C1",
+          "label": "claim",
+          "text": "Füzyon araştırmalarına ayrılan bütçenin önceliklendirilmesi, mevcut enerji krizleri karşısında mantıklı değildir."
+        },
+        {
+          "id": "E1",
+          "label": "evidence",
+          "text": "Son elli yılda yapılan yatırımlara rağmen ticari füzyonun en iyi ihtimalle 2040'ların sonunda mümkün olabileceği tahmin edilmektedir."
+        },
+        {
+          "id": "E2",
+          "label": "evidence",
+          "text": "Bu süre zarfında, güneş ve rüzgar gibi yenilenebilir enerji kaynakları çok daha hızlı ve ucuza devreye alınabilir."
+        },
+        {
+          "id": "O1",
+          "label": "other",
+          "text": "Kaynakların sınırlı olduğu bir dünyada, kısa vadede etki yaratacak çözümlere yönelmek daha akılcıdır."
+        }
+      ],
+      "relations": [
+        {
+          "from": "E1",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "E2",
+          "to": "C1",
+          "label": "support"
+        },
+        {
+          "from": "O1",
+          "to": "C1",
+          "label": "none"
+        }
+      ]
+    }
+  }
+]

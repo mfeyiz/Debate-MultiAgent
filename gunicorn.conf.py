@@ -23,7 +23,7 @@ loglevel = os.environ.get("GUNICORN_LOGLEVEL", "info")
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" %(D)s'
 
 # Process naming
-proc_name = "logicflow"
+proc_name = "logos"
 
 # Server mechanics
 daemon = False

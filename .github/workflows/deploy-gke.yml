@@ -10,11 +10,11 @@ on:
       artifact_repository:
         description: "Artifact Registry repository"
         required: true
-        default: "debate-repo"
+        default: "debate-platform-repository"
       image_name:
         description: "Docker image name"
         required: true
-        default: "debate-app"
+        default: "logos-app"
       cluster_name:
         description: "GKE cluster name"
         required: true
@@ -23,10 +23,6 @@ on:
         description: "GKE cluster region or zone"
         required: true
         default: "europe-west3"
-      namespace:
-        description: "Kubernetes namespace"
-        required: true
-        default: "logicflow"
 
 jobs:
   deploy:
@@ -57,4 +53,4 @@ jobs:
         run: |
           gcloud builds submit \
             --config=cloudbuild.yaml \
-            --substitutions=_REGION=${{ inputs.region }},_ARTIFACT_REPOSITORY=${{ inputs.artifact_repository }},_IMAGE_NAME=${{ inputs.image_name }},_CLUSTER_NAME=${{ inputs.cluster_name }},_CLUSTER_LOCATION=${{ inputs.cluster_location }},_NAMESPACE=${{ inputs.namespace }}
+            --substitutions=_REGION=${{ inputs.region }},_ARTIFACT_REPOSITORY=${{ inputs.artifact_repository }},_IMAGE_NAME=${{ inputs.image_name }},_CLUSTER_NAME=${{ inputs.cluster_name }},_CLUSTER_LOCATION=${{ inputs.cluster_location }}

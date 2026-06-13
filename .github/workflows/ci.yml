@@ -38,4 +38,4 @@ jobs:
         uses: azure/setup-kubectl@v4
 
       - name: Render Kubernetes manifests
-        run: kubectl kustomize k8s >/tmp/logicflow-k8s.yaml
+        run: kubectl kustomize k8s >/tmp/logos-k8s.yaml

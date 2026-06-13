@@ -1,0 +1,4508 @@
+{
+  "status": "ready",
+  "debate": {
+    "id": 14,
+    "topic": "Çocuk yapmak ahlaken doğru bi davranış mı ?",
+    "status": "resolved",
+    "max_rounds": 5,
+    "current_round": 5,
+    "auto_advance": false,
+    "created_at": "2026-06-09T20:38:28.778645",
+    "participant_ids": [
+      4,
+      3
+    ]
+  },
+  "run": {
+    "id": 22,
+    "debate_id": 14,
+    "status": "completed",
+    "relation_threshold": 0.6,
+    "attack_threshold": 0.7,
+    "component_model": "/Users/mfeyiz/Desktop/Debate-MultiAgent/models/component_classifier/final:mtime=1781005250982866039:size=597336940",
+    "relation_model": "/Users/mfeyiz/Desktop/Debate-MultiAgent/models/relation_classifier/final:mtime=1781005251394738609:size=597336940",
+    "created_at": "2026-06-09T20:49:49.150438",
+    "completed_at": "2026-06-09T20:53:12.681445"
+  },
+  "nodes": [
+    {
+      "data": {
+        "id": "c-1003",
+        "messageId": 85,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Çocuk yapmak ahlaken doğru bir davranıştır",
+        "kind": "claim",
+        "round": 1,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.581,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.971
+      }
+    },
+    {
+      "data": {
+        "id": "c-1004",
+        "messageId": 85,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "çünkü insan türünün devamlılığını sağlamak ve yeni nesillere yaşam, sevgi ve bilgi aktarımı yapmak temel bir sorumluluktur.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.996
+      }
+    },
+    {
+      "data": {
+        "id": "c-1005",
+        "messageId": 85,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Felsefi olarak, üreme içgüdüsü doğal bir eğilimdir ve çoğu etik sistem (örneğin, faydacılık) mutluluğu artıran eylemleri destekler;",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1006",
+        "messageId": 85,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "bir çocuğun varlığı, ona bakım verenler ve toplum için uzun vadeli faydalar üretebilir.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.997
+      }
+    },
+    {
+      "data": {
+        "id": "c-1007",
+        "messageId": 85,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Ayrıca, Birleşmiş Milletler İnsan Hakları Evrensel Beyannamesi’nin 16.",
+        "kind": "other",
+        "round": 1,
+        "labelType": "Other",
+        "stance": "con",
+        "confidence": 0.992,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.815
+      }
+    },
+    {
+      "data": {
+        "id": "c-1008",
+        "messageId": 85,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "maddesi, aile kurma hakkını temel bir insan hakkı olarak tanır.",
+        "kind": "claim",
+        "round": 1,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.815,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.806
+      }
+    },
+    {
+      "data": {
+        "id": "c-1009",
+        "messageId": 85,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle, çocuk yapmak, bireysel özgürlük ve toplumsal sürdürülebilirlik açısından ahlaken meşru ve değerlidir.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.96
+      }
+    },
+    {
+      "data": {
+        "id": "c-1010",
+        "messageId": 86,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Çocuk yapmak ahlaken doğru bir davranıştır;",
+        "kind": "claim",
+        "round": 1,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.741,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.946
+      }
+    },
+    {
+      "data": {
+        "id": "c-1011",
+        "messageId": 86,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "çünkü bu eylem, hem bireysel özgürlüğün hem de toplumsal sürdürülebilirliğin temel bir ifadesidir.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.69
+      }
+    },
+    {
+      "data": {
+        "id": "c-1012",
+        "messageId": 86,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Karşıt görüşün de belirttiği gibi, üreme içgüdüsü doğal bir eğilimdir ve faydacı etik çerçevesinde, bir çocuğun varlığı bakım verenler ve toplum için uzun vadeli mutluluk ve fayda üretir.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.994
+      }
+    },
+    {
+      "data": {
+        "id": "c-1013",
+        "messageId": 86,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Ayrıca, Birleşmiş Milletler İnsan Hakları Evrensel Beyannamesi’nin 16.",
+        "kind": "other",
+        "round": 1,
+        "labelType": "Other",
+        "stance": "con",
+        "confidence": 0.992,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.815
+      }
+    },
+    {
+      "data": {
+        "id": "c-1014",
+        "messageId": 86,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "maddesi aile kurma hakkını güvence altına alarak bu eylemi evrensel bir insan hakkı olarak tanır.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.974,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.926
+      }
+    },
+    {
+      "data": {
+        "id": "c-1015",
+        "messageId": 86,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Bu nedenle, çocuk sahibi olmak, bireyin kendi yaşam anlamını inşa etme özgürlüğüyle uyumlu, ahlaken meşru ve değerli bir tercihtir.",
+        "kind": "evidence",
+        "round": 1,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.835
+      }
+    },
+    {
+      "data": {
+        "id": "c-1016",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Çocuk yapmanın ahlaken doğru olduğu iddiası, insan türünün devamlılığını ve faydacı mutluluğu merkeze alsa da, bu argümanlar ciddi etik sorunları göz ardı eder.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1017",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Öncelikle, doğal içgüdülerin ahlaki bir zorunluluk yaratmadığını belirtmek gerekir;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1018",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "biyolojik eğilimler, etik kararlar için yetersiz bir temeldir.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1019",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Faydacılık açısından, bir çocuğun varlığının uzun vadeli fayda sağlayacağı varsayımı, çocuğun rızası olmadan varoluşun getirdiği acı, hastalık ve ölüm risklerini hesaba katmaz.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1020",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Filozof David Benatar’ın \"Hiç Var Olmamış Olmak Daha İyi\" (Better Never to Have Been) adlı eserinde savunduğu gibi, var olmak kaçınılmaz olarak acıyı beraberinde getirir ve bu acıya maruz kalmayı seçmek, çocuğun onayı olmadan onu riske atmak anlamına gelir.",
+        "kind": "claim",
+        "round": 2,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-1021",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Ayrıca, Birleşmiş Milletler İnsan Hakları Evrensel Beyannamesi’nin 16.",
+        "kind": "other",
+        "round": 2,
+        "labelType": "Other",
+        "stance": "con",
+        "confidence": 0.992,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.815
+      }
+    },
+    {
+      "data": {
+        "id": "c-1022",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "maddesi aile kurma hakkını tanısa da, bu hak bireyin özgürlüğünü korur;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.949,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.972
+      }
+    },
+    {
+      "data": {
+        "id": "c-1023",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "ancak bu hak, potansiyel bir çocuğun yaşam kalitesi ve refahı üzerindeki etik sorumluluğu ortadan kaldırmaz.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.997
+      }
+    },
+    {
+      "data": {
+        "id": "c-1024",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Çocuk yapmak, mevcut kaynakların adil dağılımı ve iklim krizi gibi küresel sorunlar bağlamında, yeni bir bireyin dünyaya getirilmesinin yaratacağı ek yükü de göz önünde bulundurmalıdır.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.959
+      }
+    },
+    {
+      "data": {
+        "id": "c-1025",
+        "messageId": 88,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle, çocuk yapmak ahlaken tartışmalıdır ve otomatik olarak doğru kabul edilemez.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1026",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Savunduğunuz antinatalist itirazlar, çocuk yapmanın ahlaken meşruiyetini zayıflatmaz.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-1027",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "İlk olarak, biyolojik eğilimlerin tek başına ahlaki zorunluluk yaratmadığı doğrudur;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-1028",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "ancak bu eğilimler, bireyin kendi yaşam anlamını inşa etme özgürlüğüyle birleştiğinde, çocuk sahibi olma kararı rasyonel ve etik bir tercih haline gelir.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.994
+      }
+    },
+    {
+      "data": {
+        "id": "c-1029",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Benatar'ın “var olmanın acıyı beraberinde getirdiği” argünü, hayatın yalnızca acıdan ibaret olmadığı gerçeğini göz ardı eder: Sevgi, başarı, bilgi ve anlamlı ilişkiler gibi olumlu deneyimler, bireyin yaşam kalitesini belirleyen temel unsurlardır.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-1030",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Ayrıca, çocuğun rızası sorunu yanıltıcıdır;",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.989,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1031",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "var olmayan bir varlığın rızasını almak mantıksal olarak imkânsızdır ve ebeveynler, çocuğun gelecekteki refahını artırmak için sorumluluk üstlenir.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1032",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Küresel kaynak ve iklim krizi argümanı ise sorunu yanlış çerçeveler: Sürdürülebilirlik, üremeyi tamamen reddetmek yerine, bilinçli nüfus politikaları ve ekolojik farkındalıkla dengelenebilir.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-1033",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "BM İnsan Hakları Bildirgesi'nin 16.",
+        "kind": "claim",
+        "round": 2,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.871,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1034",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "maddesi de bu özgürlüğü temel bir hak olarak tanır.",
+        "kind": "claim",
+        "round": 2,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.975,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.645
+      }
+    },
+    {
+      "data": {
+        "id": "c-1035",
+        "messageId": 89,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Sonuç olarak, çocuk yapmak, bireysel özgürlük ve toplumsal sürdürülebilirlik arasında dengeli bir etik çerçevede ahlaken meşru ve değerlidir.",
+        "kind": "evidence",
+        "round": 2,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.938
+      }
+    },
+    {
+      "data": {
+        "id": "c-1036",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Çocuk yapmanın ahlaken meşru olduğu yönündeki son savunma, hayatın olumlu yönlerini vurgulayarak Benatar'ın acı odaklı argümanını geçersiz kılmaya çalışsa da, bu yaklaşım temel bir etik sorunu göz ardı eder: Var olmayan bir bireyin rızası olmadan onu acı ve risk içeren bir varoluşa maruz bırakmak.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1037",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Sevgi ve başarı gibi olumlu deneyimler var olsa da, bunların garantisi yoktur;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1038",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "oysa acı, hastalık ve ölüm kaçınılmazdır.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.992,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1039",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Benatar'ın \"Hiç Var Olmamış Olmak Daha İyi\" eserinde belirttiği gibi, bir varlığı yokluktan getirmek, onu bu kaçınılmaz acılara mahkûm etmek anlamına gelir ve bu, etik olarak savunulamaz.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-1040",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Rıza sorununun \"mantıksal olarak imkânsız\" olduğu iddiası da yanıltıcıdır;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-1041",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "çünkü ebeveynler, çocuğun gelecekteki refahını artırma sorumluluğunu üstlenirken, aynı anda onun potansiyel acılarına neden olma riskini de bilinçli olarak alır.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1042",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "İklim krizi ve kaynak adaletsizliği gibi küresel sorunlar, bilinçli politikalarla dengelenebilir gibi görünse de, mevcut ekolojik kriz ortamında her yeni birey, gezegenin taşıma kapasitesine ek bir yük bindirir.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1043",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "BM İnsan Hakları Bildirgesi'nin 16.",
+        "kind": "claim",
+        "round": 3,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.871,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1044",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "maddesi aile kurma hakkını tanır",
+        "kind": "claim",
+        "round": 3,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.63,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.873
+      }
+    },
+    {
+      "data": {
+        "id": "c-1045",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "ancak bu hak, potansiyel çocuğun yaşam kalitesi üzerindeki etik sorumluluğu ortadan kaldırmaz;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.996,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1046",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "haklar, diğer etik yükümlülüklerle dengelenmelidir.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.948,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.974
+      }
+    },
+    {
+      "data": {
+        "id": "c-1047",
+        "messageId": 91,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle, çocuk yapmak ahlaken tartışmalıdır ve otomatik olarak doğru kabul edilemez.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1048",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Çocuk yapmanın ahlaken doğru olduğunu savunmaya devam ediyorum;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.967,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.908
+      }
+    },
+    {
+      "data": {
+        "id": "c-1049",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "çünkü hayat yalnızca acıdan ibaret değildir ve olumlu deneyimlerin varlığı, bu eylemi etik açıdan meşru kılar.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-1050",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Benatar'ın \"var olmanın acıyı beraberinde getirdiği\" argümanı, hayatın sevgi, başarı, öğrenme ve anlamlı ilişkiler gibi zenginliklerini görmezden gelir;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-1051",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "bu deneyimler, bireyin yaşam kalitesini belirleyen temel unsurlardır ve ebeveynler, çocuklarının bu olumlu yönlere erişimini sağlamak için sorumluluk üstlenir.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.632
+      }
+    },
+    {
+      "data": {
+        "id": "c-1052",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Rıza sorununa gelince, var olmayan bir varlıktan rıza almak mantıksal olarak imkânsızdır ve ebeveynlerin çocuğun gelecekteki refahını artırma niyeti, bu etik açmazı aşar;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1053",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "çoğu insan, yaşamın değerli olduğunu ve var olmanın bir armağan olduğunu düşünür.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1054",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Ayrıca, iklim krizi ve kaynak adaletsizliği gibi küresel sorunlar, üremeyi tamamen reddetmekle değil, bilinçli nüfus politikaları ve sürdürülebilir yaşam tarzlarıyla çözülebilir;",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.978
+      }
+    },
+    {
+      "data": {
+        "id": "c-1055",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "insanlık, bu zorlukları aşma kapasitesine sahiptir.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.923,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-1056",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "BM İnsan Hakları Bildirgesi'nin 16.",
+        "kind": "claim",
+        "round": 3,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.871,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1057",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "maddesi, aile kurma hakkını temel bir özgürlük olarak tanır ve bu hak, bireylerin kendi yaşam anlamlarını inşa etme özgürlüğüyle uyumludur.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.915
+      }
+    },
+    {
+      "data": {
+        "id": "c-1058",
+        "messageId": 93,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Sonuç olarak, çocuk yapmak, bireysel özgürlük, toplumsal sürdürülebilirlik ve insan deneyiminin değeri göz önüne alındığında ahlaken meşru ve değerli bir tercihtir.",
+        "kind": "evidence",
+        "round": 3,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.992
+      }
+    },
+    {
+      "data": {
+        "id": "c-1059",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Karşıt görüşünüz, hayatın olumlu yönlerini vurgulayarak Benatar'ın acı odaklı argümanını geçersiz kılmaya çalışsa da, bu yaklaşım temel bir etik sorunu aşamaz: Var olmayan bir bireyin rızası olmadan onu kaçınılmaz acı, hastalık ve ölüm riskine maruz bırakmak.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1060",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Sevgi ve başarı gibi olumlu deneyimlerin garantisi yoktur;",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1061",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "oysa acı ve ölüm evrenseldir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.511,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1062",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Benatar'ın \"Hiç Var Olmamış Olmak Daha İyi\" eserinde savunduğu asimetri argümanına göre, acının yokluğu iyiyken, sevincin yokluğu kötü değildir;",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-1063",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "bu nedenle bir varlığı yokluktan getirmek, ona gereksiz risk yüklemektir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1064",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Rıza sorununun \"mantıksal olarak imkânsız\" olduğu iddiası da yanıltıcıdır: Ebeveynler, çocuğun gelecekteki refahını artırma sorumluluğunu üstlenirken, aynı anda onun potansiyel acılarına neden olma riskini bilinçli olarak alır.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1065",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "İklim krizi ve kaynak adaletsizliği gibi küresel sorunlar, bilinçli politikalarla dengelenebilir gibi görünse de, mevcut ekolojik kriz ortamında her yeni birey gezegenin taşıma kapasitesine ek bir yük bindirir ve bu yük genellikle en savunmasız olanlara (yeni doğan çocuklara) daha ağır yansır.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1066",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "BM İnsan Hakları Bildirgesi'nin 16.",
+        "kind": "claim",
+        "round": 4,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.871,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1067",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "maddesi aile kurma hakkını tanır",
+        "kind": "claim",
+        "round": 4,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.63,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.873
+      }
+    },
+    {
+      "data": {
+        "id": "c-1068",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "ancak bu hak, potansiyel çocuğun yaşam kalitesi üzerindeki etik sorumluluğu ortadan kaldırmaz;",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.996,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1069",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "haklar, diğer etik yükümlülüklerle dengelenmelidir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.948,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.974
+      }
+    },
+    {
+      "data": {
+        "id": "c-1070",
+        "messageId": 95,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle, çocuk yapmak ahlaken tartışmalıdır ve otomatik olarak doğru kabul edilemez.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1071",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Elbette, Karşıt Browser’ın son itirazını ele alalım.",
+        "kind": "other",
+        "round": 4,
+        "labelType": "Other",
+        "stance": "con",
+        "confidence": 0.999,
+        "topicRelationType": "none",
+        "topicRelationConfidence": 0.755
+      }
+    },
+    {
+      "data": {
+        "id": "c-1072",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Hayatın yalnızca acıdan ibaret olmadığını ve olumlu deneyimlerin varlığının çocuk yapmayı ahlaken meşru kıldığını savunuyorum.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.924
+      }
+    },
+    {
+      "data": {
+        "id": "c-1073",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Benatar’ın asimetri argümanı, acının yokluğunun iyi olduğunu, sevincin yokluğunun ise kötü olmadığını iddia eder;",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1074",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "ancak bu, yaşamın değerini küçümser.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.844,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1075",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Çoğu insan, var olmanın getirdiği sevgi, başarı ve anlamlı ilişkiler gibi deneyimleri, kaçınılmaz acılardan daha ağır basar olarak değerlendirir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1076",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Rıza sorunu mantıksal bir açmazdır: Var olmayan bir varlıktan rıza almak imkânsızdır ve ebeveynler, çocuğun gelecekteki refahını artırma sorumluluğunu üstlenerek bu etik boşluğu doldurur.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1077",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "İklim krizi ve kaynak adaletsizliği, üremeyi tamamen reddetmekle değil, bilinçli nüfus politikaları ve sürdürülebilir yaşam tarzlarıyla çözülebilir;",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.904
+      }
+    },
+    {
+      "data": {
+        "id": "c-1078",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "insanlık, bu zorlukları aşma kapasitesine sahiptir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.923,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-1079",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "BM İnsan Hakları Bildirgesi’nin 16.",
+        "kind": "claim",
+        "round": 4,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.592,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.989
+      }
+    },
+    {
+      "data": {
+        "id": "c-1080",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "maddesi, aile kurma hakkını temel bir özgürlük olarak tanır ve bu hak, bireysel özerklikle uyumludur.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.997,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.904
+      }
+    },
+    {
+      "data": {
+        "id": "c-1081",
+        "messageId": 98,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Sonuç olarak, çocuk yapmak, bireysel özgürlük, toplumsal sürdürülebilirlik ve insan deneyiminin değeri göz önüne alındığında ahlaken meşru ve değerli bir tercihtir.",
+        "kind": "evidence",
+        "round": 4,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.992
+      }
+    },
+    {
+      "data": {
+        "id": "c-1082",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Elbette, Karşıt Browser olarak yanıtlıyorum: Çocuk yapmanın ahlaken doğru olduğu yönündeki son savununuz, hayatın olumlu yönlerini vurgulasa da, temel etik sorunu çözemez: Var olmayan bir bireyin rızası olmadan onu kaçınılmaz acı, hastalık ve ölüm riskine maruz bırakmak.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1083",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Sevgi ve başarı gibi olumlu deneyimlerin garantisi yoktur;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1084",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "oysa acı ve ölüm evrenseldir.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.511,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1085",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Filozof David Benatar’ın “Hiç Var Olmamış Olmak Daha İyi” eserinde savunduğu asimetri argümanına göre, acının yokluğu iyiyken, sevincin yokluğu kötü değildir;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.999
+      }
+    },
+    {
+      "data": {
+        "id": "c-1086",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "bu nedenle bir varlığı yokluktan getirmek, ona gereksiz risk yüklemektir.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1087",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Rıza sorununun “mantıksal olarak imkânsız” olduğu iddiası yanıltıcıdır: Ebeveynler, çocuğun gelecekteki refahını artırma sorumluluğunu üstlenirken, aynı anda onun potansiyel acılarına neden olma riskini bilinçli olarak alır.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1088",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "İklim krizi ve kaynak adaletsizliği, bilinçli politikalarla dengelenebilir gibi görünse de, mevcut ekolojik kriz ortamında her yeni birey gezegenin taşıma kapasitesine ek bir yük bindirir ve bu yük genellikle en savunmasız olanlara (yeni doğan çocuklara) daha ağır yansır.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1089",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "BM İnsan Hakları Bildirgesi’nin 16.",
+        "kind": "claim",
+        "round": 5,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.592,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.989
+      }
+    },
+    {
+      "data": {
+        "id": "c-1090",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "maddesi aile kurma hakkını tanır",
+        "kind": "claim",
+        "round": 5,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.63,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.873
+      }
+    },
+    {
+      "data": {
+        "id": "c-1091",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "ancak bu hak, potansiyel çocuğun yaşam kalitesi üzerindeki etik sorumluluğu ortadan kaldırmaz;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.996,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.995
+      }
+    },
+    {
+      "data": {
+        "id": "c-1092",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "haklar, diğer etik yükümlülüklerle dengelenmelidir.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.948,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.974
+      }
+    },
+    {
+      "data": {
+        "id": "c-1093",
+        "messageId": 102,
+        "agentId": 4,
+        "agentName": "Acceptance Karşıt Browser",
+        "text": "Bu nedenle, çocuk yapmak ahlaken tartışmalıdır ve otomatik olarak doğru kabul edilemez.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1094",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Çocuk yapmak ahlaken doğru bir davranıştır",
+        "kind": "claim",
+        "round": 5,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.581,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.971
+      }
+    },
+    {
+      "data": {
+        "id": "c-1095",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "çünkü insan yaşamı yalnızca acıdan ibaret değildir;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.996,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1096",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "sevgi, başarı, bilgi ve anlamlı ilişkiler gibi olumlu deneyimler, bireylerin çoğunluğu tarafından yaşamaya değer kabul edilir.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-1097",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Benatar'ın asimetri argümanı, acının yokluğunu iyi görürken sevincin yokluğunu kötü saymamakla birlikte, bu soyut mantıksal çerçeve, milyarlarca insanın var olmayı bir armağan olarak değerlendirdiği somut gerçekliği ihmal eder.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1098",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "Rıza sorunu mantıksal bir açmazdır;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.926,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.998
+      }
+    },
+    {
+      "data": {
+        "id": "c-1099",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "var olmayan bir varlıktan rıza almak imkânsızdır ve ebeveynler, çocuğun refahını artırma sorumluluğunu üstlenerek bu boşluğu doldurur.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 1.0
+      }
+    },
+    {
+      "data": {
+        "id": "c-1100",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "İklim krizi ve kaynak adaletsizliği, üremeyi tamamen reddetmekle değil, bilinçli nüfus politikaları ve sürdürülebilir yaşam tarzlarıyla çözülebilir.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.94
+      }
+    },
+    {
+      "data": {
+        "id": "c-1101",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "BM İnsan Hakları Evrensel Beyannamesi’nin 16.",
+        "kind": "claim",
+        "round": 5,
+        "labelType": "Claim",
+        "stance": "con",
+        "confidence": 0.66,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.988
+      }
+    },
+    {
+      "data": {
+        "id": "c-1102",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "maddesi aile kurma hakkını temel bir insan hakkı olarak tanır;",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 0.592,
+        "topicRelationType": "support",
+        "topicRelationConfidence": 0.723
+      }
+    },
+    {
+      "data": {
+        "id": "c-1103",
+        "messageId": 104,
+        "agentId": 3,
+        "agentName": "Acceptance Savunucu Browser",
+        "text": "bu hak, bireysel özgürlük ve toplumsal devamlılıkla uyumlu olup, ahlaken meşru ve değerlidir.",
+        "kind": "evidence",
+        "round": 5,
+        "labelType": "Evidence",
+        "stance": "con",
+        "confidence": 1.0,
+        "topicRelationType": "attack",
+        "topicRelationConfidence": 0.909
+      }
+    }
+  ],
+  "edges": [
+    {
+      "data": {
+        "id": "r-78040",
+        "source": "c-1009",
+        "target": "c-1008",
+        "relationType": "support",
+        "confidence": 0.998,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-77739",
+        "source": "c-1006",
+        "target": "c-1008",
+        "relationType": "support",
+        "confidence": 0.986,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-78542",
+        "source": "c-1014",
+        "target": "c-1010",
+        "relationType": "support",
+        "confidence": 0.996,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-78825",
+        "source": "c-1016",
+        "target": "c-1094",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-79025",
+        "source": "c-1018",
+        "target": "c-1094",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-79125",
+        "source": "c-1019",
+        "target": "c-1094",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-79725",
+        "source": "c-1025",
+        "target": "c-1094",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-80665",
+        "source": "c-1035",
+        "target": "c-1033",
+        "relationType": "support",
+        "confidence": 0.996,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-80666",
+        "source": "c-1035",
+        "target": "c-1034",
+        "relationType": "support",
+        "confidence": 0.992,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-79964",
+        "source": "c-1028",
+        "target": "c-1033",
+        "relationType": "support",
+        "confidence": 0.991,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-82287",
+        "source": "c-1051",
+        "target": "c-1056",
+        "relationType": "support",
+        "confidence": 1.0,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-82888",
+        "source": "c-1057",
+        "target": "c-1056",
+        "relationType": "support",
+        "confidence": 0.999,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-81987",
+        "source": "c-1048",
+        "target": "c-1056",
+        "relationType": "support",
+        "confidence": 0.996,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-82487",
+        "source": "c-1053",
+        "target": "c-1056",
+        "relationType": "support",
+        "confidence": 0.994,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-82587",
+        "source": "c-1054",
+        "target": "c-1056",
+        "relationType": "support",
+        "confidence": 0.989,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-84535",
+        "source": "c-1074",
+        "target": "c-1003",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-84635",
+        "source": "c-1075",
+        "target": "c-1003",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-84735",
+        "source": "c-1076",
+        "target": "c-1003",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-85211",
+        "source": "c-1080",
+        "target": "c-1079",
+        "relationType": "support",
+        "confidence": 0.998,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-84410",
+        "source": "c-1072",
+        "target": "c-1079",
+        "relationType": "support",
+        "confidence": 0.997,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-84910",
+        "source": "c-1077",
+        "target": "c-1079",
+        "relationType": "support",
+        "confidence": 0.99,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-85342",
+        "source": "c-1082",
+        "target": "c-1010",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-85442",
+        "source": "c-1083",
+        "target": "c-1010",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-85542",
+        "source": "c-1084",
+        "target": "c-1010",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-85742",
+        "source": "c-1086",
+        "target": "c-1010",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-85842",
+        "source": "c-1087",
+        "target": "c-1010",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-85942",
+        "source": "c-1088",
+        "target": "c-1010",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-86835",
+        "source": "c-1097",
+        "target": "c-1003",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 9,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-86840",
+        "source": "c-1097",
+        "target": "c-1008",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 9,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-87035",
+        "source": "c-1099",
+        "target": "c-1003",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 9,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-86752",
+        "source": "c-1096",
+        "target": "c-1020",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-87052",
+        "source": "c-1099",
+        "target": "c-1020",
+        "relationType": "attack",
+        "confidence": 1.0,
+        "distanceTurns": 7,
+        "isLongRange": true
+      }
+    },
+    {
+      "data": {
+        "id": "r-87533",
+        "source": "c-1103",
+        "target": "c-1101",
+        "relationType": "support",
+        "confidence": 0.999,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-87426",
+        "source": "c-1102",
+        "target": "c-1094",
+        "relationType": "support",
+        "confidence": 0.995,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-87433",
+        "source": "c-1102",
+        "target": "c-1101",
+        "relationType": "support",
+        "confidence": 0.994,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    },
+    {
+      "data": {
+        "id": "r-87232",
+        "source": "c-1100",
+        "target": "c-1101",
+        "relationType": "support",
+        "confidence": 0.99,
+        "distanceTurns": 0,
+        "isLongRange": false
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": 78040,
+      "source": "c-1009",
+      "target": "c-1008",
+      "source_component_id": 1009,
+      "target_component_id": 1008,
+      "source_message_id": 85,
+      "target_message_id": 85,
+      "relationType": "support",
+      "confidence": 0.998,
+      "probabilities": {
+        "support": 0.998,
+        "attack": 0.002,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 77739,
+      "source": "c-1006",
+      "target": "c-1008",
+      "source_component_id": 1006,
+      "target_component_id": 1008,
+      "source_message_id": 85,
+      "target_message_id": 85,
+      "relationType": "support",
+      "confidence": 0.986,
+      "probabilities": {
+        "support": 0.986,
+        "attack": 0.014,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 78542,
+      "source": "c-1014",
+      "target": "c-1010",
+      "source_component_id": 1014,
+      "target_component_id": 1010,
+      "source_message_id": 86,
+      "target_message_id": 86,
+      "relationType": "support",
+      "confidence": 0.996,
+      "probabilities": {
+        "support": 0.996,
+        "attack": 0.004,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 78825,
+      "source": "c-1016",
+      "target": "c-1094",
+      "source_component_id": 1016,
+      "target_component_id": 1094,
+      "source_message_id": 88,
+      "target_message_id": 104,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 79025,
+      "source": "c-1018",
+      "target": "c-1094",
+      "source_component_id": 1018,
+      "target_component_id": 1094,
+      "source_message_id": 88,
+      "target_message_id": 104,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 79125,
+      "source": "c-1019",
+      "target": "c-1094",
+      "source_component_id": 1019,
+      "target_component_id": 1094,
+      "source_message_id": 88,
+      "target_message_id": 104,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 79725,
+      "source": "c-1025",
+      "target": "c-1094",
+      "source_component_id": 1025,
+      "target_component_id": 1094,
+      "source_message_id": 88,
+      "target_message_id": 104,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 80665,
+      "source": "c-1035",
+      "target": "c-1033",
+      "source_component_id": 1035,
+      "target_component_id": 1033,
+      "source_message_id": 89,
+      "target_message_id": 89,
+      "relationType": "support",
+      "confidence": 0.996,
+      "probabilities": {
+        "support": 0.996,
+        "attack": 0.004,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 80666,
+      "source": "c-1035",
+      "target": "c-1034",
+      "source_component_id": 1035,
+      "target_component_id": 1034,
+      "source_message_id": 89,
+      "target_message_id": 89,
+      "relationType": "support",
+      "confidence": 0.992,
+      "probabilities": {
+        "support": 0.992,
+        "attack": 0.008,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 79964,
+      "source": "c-1028",
+      "target": "c-1033",
+      "source_component_id": 1028,
+      "target_component_id": 1033,
+      "source_message_id": 89,
+      "target_message_id": 89,
+      "relationType": "support",
+      "confidence": 0.991,
+      "probabilities": {
+        "support": 0.991,
+        "attack": 0.009,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 82287,
+      "source": "c-1051",
+      "target": "c-1056",
+      "source_component_id": 1051,
+      "target_component_id": 1056,
+      "source_message_id": 93,
+      "target_message_id": 93,
+      "relationType": "support",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 1.0,
+        "attack": 0.0,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 82888,
+      "source": "c-1057",
+      "target": "c-1056",
+      "source_component_id": 1057,
+      "target_component_id": 1056,
+      "source_message_id": 93,
+      "target_message_id": 93,
+      "relationType": "support",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.999,
+        "attack": 0.0,
+        "none": 0.001
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 81987,
+      "source": "c-1048",
+      "target": "c-1056",
+      "source_component_id": 1048,
+      "target_component_id": 1056,
+      "source_message_id": 93,
+      "target_message_id": 93,
+      "relationType": "support",
+      "confidence": 0.996,
+      "probabilities": {
+        "support": 0.996,
+        "attack": 0.002,
+        "none": 0.001
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 82487,
+      "source": "c-1053",
+      "target": "c-1056",
+      "source_component_id": 1053,
+      "target_component_id": 1056,
+      "source_message_id": 93,
+      "target_message_id": 93,
+      "relationType": "support",
+      "confidence": 0.994,
+      "probabilities": {
+        "support": 0.994,
+        "attack": 0.005,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 82587,
+      "source": "c-1054",
+      "target": "c-1056",
+      "source_component_id": 1054,
+      "target_component_id": 1056,
+      "source_message_id": 93,
+      "target_message_id": 93,
+      "relationType": "support",
+      "confidence": 0.989,
+      "probabilities": {
+        "support": 0.989,
+        "attack": 0.011,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 84535,
+      "source": "c-1074",
+      "target": "c-1003",
+      "source_component_id": 1074,
+      "target_component_id": 1003,
+      "source_message_id": 98,
+      "target_message_id": 85,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 84635,
+      "source": "c-1075",
+      "target": "c-1003",
+      "source_component_id": 1075,
+      "target_component_id": 1003,
+      "source_message_id": 98,
+      "target_message_id": 85,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 84735,
+      "source": "c-1076",
+      "target": "c-1003",
+      "source_component_id": 1076,
+      "target_component_id": 1003,
+      "source_message_id": 98,
+      "target_message_id": 85,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 85211,
+      "source": "c-1080",
+      "target": "c-1079",
+      "source_component_id": 1080,
+      "target_component_id": 1079,
+      "source_message_id": 98,
+      "target_message_id": 98,
+      "relationType": "support",
+      "confidence": 0.998,
+      "probabilities": {
+        "support": 0.998,
+        "attack": 0.0,
+        "none": 0.002
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 84410,
+      "source": "c-1072",
+      "target": "c-1079",
+      "source_component_id": 1072,
+      "target_component_id": 1079,
+      "source_message_id": 98,
+      "target_message_id": 98,
+      "relationType": "support",
+      "confidence": 0.997,
+      "probabilities": {
+        "support": 0.997,
+        "attack": 0.003,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 84910,
+      "source": "c-1077",
+      "target": "c-1079",
+      "source_component_id": 1077,
+      "target_component_id": 1079,
+      "source_message_id": 98,
+      "target_message_id": 98,
+      "relationType": "support",
+      "confidence": 0.99,
+      "probabilities": {
+        "support": 0.99,
+        "attack": 0.01,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 85342,
+      "source": "c-1082",
+      "target": "c-1010",
+      "source_component_id": 1082,
+      "target_component_id": 1010,
+      "source_message_id": 102,
+      "target_message_id": 86,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 85442,
+      "source": "c-1083",
+      "target": "c-1010",
+      "source_component_id": 1083,
+      "target_component_id": 1010,
+      "source_message_id": 102,
+      "target_message_id": 86,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 85542,
+      "source": "c-1084",
+      "target": "c-1010",
+      "source_component_id": 1084,
+      "target_component_id": 1010,
+      "source_message_id": 102,
+      "target_message_id": 86,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 85742,
+      "source": "c-1086",
+      "target": "c-1010",
+      "source_component_id": 1086,
+      "target_component_id": 1010,
+      "source_message_id": 102,
+      "target_message_id": 86,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 85842,
+      "source": "c-1087",
+      "target": "c-1010",
+      "source_component_id": 1087,
+      "target_component_id": 1010,
+      "source_message_id": 102,
+      "target_message_id": 86,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 85942,
+      "source": "c-1088",
+      "target": "c-1010",
+      "source_component_id": 1088,
+      "target_component_id": 1010,
+      "source_message_id": 102,
+      "target_message_id": 86,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 86835,
+      "source": "c-1097",
+      "target": "c-1003",
+      "source_component_id": 1097,
+      "target_component_id": 1003,
+      "source_message_id": 104,
+      "target_message_id": 85,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 9,
+      "isLongRange": true
+    },
+    {
+      "id": 86840,
+      "source": "c-1097",
+      "target": "c-1008",
+      "source_component_id": 1097,
+      "target_component_id": 1008,
+      "source_message_id": 104,
+      "target_message_id": 85,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 9,
+      "isLongRange": true
+    },
+    {
+      "id": 87035,
+      "source": "c-1099",
+      "target": "c-1003",
+      "source_component_id": 1099,
+      "target_component_id": 1003,
+      "source_message_id": 104,
+      "target_message_id": 85,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 9,
+      "isLongRange": true
+    },
+    {
+      "id": 86752,
+      "source": "c-1096",
+      "target": "c-1020",
+      "source_component_id": 1096,
+      "target_component_id": 1020,
+      "source_message_id": 104,
+      "target_message_id": 88,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 87052,
+      "source": "c-1099",
+      "target": "c-1020",
+      "source_component_id": 1099,
+      "target_component_id": 1020,
+      "source_message_id": 104,
+      "target_message_id": 88,
+      "relationType": "attack",
+      "confidence": 1.0,
+      "probabilities": {
+        "support": 0.0,
+        "attack": 1.0,
+        "none": 0.0
+      },
+      "distanceTurns": 7,
+      "isLongRange": true
+    },
+    {
+      "id": 87533,
+      "source": "c-1103",
+      "target": "c-1101",
+      "source_component_id": 1103,
+      "target_component_id": 1101,
+      "source_message_id": 104,
+      "target_message_id": 104,
+      "relationType": "support",
+      "confidence": 0.999,
+      "probabilities": {
+        "support": 0.999,
+        "attack": 0.001,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 87426,
+      "source": "c-1102",
+      "target": "c-1094",
+      "source_component_id": 1102,
+      "target_component_id": 1094,
+      "source_message_id": 104,
+      "target_message_id": 104,
+      "relationType": "support",
+      "confidence": 0.995,
+      "probabilities": {
+        "support": 0.995,
+        "attack": 0.005,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 87433,
+      "source": "c-1102",
+      "target": "c-1101",
+      "source_component_id": 1102,
+      "target_component_id": 1101,
+      "source_message_id": 104,
+      "target_message_id": 104,
+      "relationType": "support",
+      "confidence": 0.994,
+      "probabilities": {
+        "support": 0.994,
+        "attack": 0.0,
+        "none": 0.005
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    },
+    {
+      "id": 87232,
+      "source": "c-1100",
+      "target": "c-1101",
+      "source_component_id": 1100,
+      "target_component_id": 1101,
+      "source_message_id": 104,
+      "target_message_id": 104,
+      "relationType": "support",
+      "confidence": 0.99,
+      "probabilities": {
+        "support": 0.99,
+        "attack": 0.01,
+        "none": 0.0
+      },
+      "distanceTurns": 0,
+      "isLongRange": false
+    }
+  ],
+  "baseline_nodes": [
+    {
+      "data": {
+        "id": "msg-85",
+        "text": "Acceptance Karşıt Browser: Çocuk yapmak ahlaken doğru bir davranıştır, çünkü insan türünün devamlılığını sa...",
+        "kind": "claim",
+        "round": 1,
+        "labelType": "CLAIM"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-86",
+        "text": "Acceptance Savunucu Browser: Çocuk yapmak ahlaken doğru bir davranıştır; çünkü bu eylem, hem bireysel özgürlü...",
+        "kind": "attack",
+        "round": 1,
+        "labelType": "ATTACK"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-88",
+        "text": "Acceptance Karşıt Browser: Çocuk yapmanın ahlaken doğru olduğu iddiası, insan türünün devamlılığını ve fayd...",
+        "kind": "rebuttal",
+        "round": 2,
+        "labelType": "REBUTTAL"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-89",
+        "text": "Acceptance Savunucu Browser: Savunduğunuz antinatalist itirazlar, çocuk yapmanın ahlaken meşruiyetini zayıfla...",
+        "kind": "attack",
+        "round": 2,
+        "labelType": "ATTACK"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-91",
+        "text": "Acceptance Karşıt Browser: Çocuk yapmanın ahlaken meşru olduğu yönündeki son savunma, hayatın olumlu yönler...",
+        "kind": "rebuttal",
+        "round": 3,
+        "labelType": "REBUTTAL"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-93",
+        "text": "Acceptance Savunucu Browser: Çocuk yapmanın ahlaken doğru olduğunu savunmaya devam ediyorum; çünkü hayat yaln...",
+        "kind": "attack",
+        "round": 3,
+        "labelType": "ATTACK"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-95",
+        "text": "Acceptance Karşıt Browser: Elbette. Karşıt görüşünüz, hayatın olumlu yönlerini vurgulayarak Benatar'ın acı ...",
+        "kind": "rebuttal",
+        "round": 4,
+        "labelType": "REBUTTAL"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-98",
+        "text": "Acceptance Savunucu Browser: Elbette, Karşıt Browser’ın son itirazını ele alalım. Hayatın yalnızca acıdan iba...",
+        "kind": "attack",
+        "round": 4,
+        "labelType": "ATTACK"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-102",
+        "text": "Acceptance Karşıt Browser: Elbette, Karşıt Browser olarak yanıtlıyorum: Çocuk yapmanın ahlaken doğru olduğu...",
+        "kind": "rebuttal",
+        "round": 5,
+        "labelType": "REBUTTAL"
+      }
+    },
+    {
+      "data": {
+        "id": "msg-104",
+        "text": "Acceptance Savunucu Browser: Çocuk yapmak ahlaken doğru bir davranıştır, çünkü insan yaşamı yalnızca acıdan i...",
+        "kind": "attack",
+        "round": 5,
+        "labelType": "ATTACK"
+      }
+    }
+  ],
+  "baseline_edges": [
+    {
+      "data": {
+        "id": "edge-msg-86",
+        "source": "msg-86",
+        "target": "msg-85",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-88",
+        "source": "msg-88",
+        "target": "msg-86",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-89",
+        "source": "msg-89",
+        "target": "msg-88",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-91",
+        "source": "msg-91",
+        "target": "msg-89",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-93",
+        "source": "msg-93",
+        "target": "msg-91",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-95",
+        "source": "msg-95",
+        "target": "msg-93",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-98",
+        "source": "msg-98",
+        "target": "msg-95",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-102",
+        "source": "msg-102",
+        "target": "msg-98",
+        "relationType": "baseline"
+      }
+    },
+    {
+      "data": {
+        "id": "edge-msg-104",
+        "source": "msg-104",
+        "target": "msg-102",
+        "relationType": "baseline"
+      }
+    }
+  ],
+  "annotations": {
+    "85": [
+      {
+        "id": 1003,
+        "type": "claim",
+        "start": 0,
+        "end": 42,
+        "confidence": 0.581,
+        "text": "Çocuk yapmak ahlaken doğru bir davranıştır",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu iddia Tur 4 yanıtı tarafından %100 güvenle çürütülüyor: ancak bu, yaşamın değerini küçümser.",
+          "source_component_id": 1074,
+          "source_message_id": 98
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.971
+      },
+      {
+        "id": 1004,
+        "type": "evidence",
+        "start": 44,
+        "end": 167,
+        "confidence": 1.0,
+        "text": "çünkü insan türünün devamlılığını sağlamak ve yeni nesillere yaşam, sevgi ve bilgi aktarımı yapmak temel bir sorumluluktur.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.996
+      },
+      {
+        "id": 1005,
+        "type": "evidence",
+        "start": 168,
+        "end": 299,
+        "confidence": 1.0,
+        "text": "Felsefi olarak, üreme içgüdüsü doğal bir eğilimdir ve çoğu etik sistem (örneğin, faydacılık) mutluluğu artıran eylemleri destekler;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1006,
+        "type": "evidence",
+        "start": 300,
+        "end": 387,
+        "confidence": 1.0,
+        "text": "bir çocuğun varlığı, ona bakım verenler ve toplum için uzun vadeli faydalar üretebilir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.986,
+          "text": "Bu parça Tur 1 iddiasını %99 güvenle destekliyor: maddesi, aile kurma hakkını temel bir insan hakkı olarak tanır.",
+          "target_component_id": 1008,
+          "target_message_id": 85
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.997
+      },
+      {
+        "id": 1007,
+        "type": "other",
+        "start": 388,
+        "end": 458,
+        "confidence": 0.992,
+        "text": "Ayrıca, Birleşmiş Milletler İnsan Hakları Evrensel Beyannamesi’nin 16.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.815
+      },
+      {
+        "id": 1008,
+        "type": "claim",
+        "start": 459,
+        "end": 522,
+        "confidence": 0.815,
+        "text": "maddesi, aile kurma hakkını temel bir insan hakkı olarak tanır.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu iddia Tur 5 yanıtı tarafından %100 güvenle çürütülüyor: Benatar'ın asimetri argümanı, acının yokluğunu iyi görürken sevincin yokluğunu kötü saymamakla birlikte, bu soyut mantık",
+          "source_component_id": 1097,
+          "source_message_id": 104
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.806
+      },
+      {
+        "id": 1009,
+        "type": "evidence",
+        "start": 523,
+        "end": 636,
+        "confidence": 1.0,
+        "text": "Bu nedenle, çocuk yapmak, bireysel özgürlük ve toplumsal sürdürülebilirlik açısından ahlaken meşru ve değerlidir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.998,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle destekliyor: maddesi, aile kurma hakkını temel bir insan hakkı olarak tanır.",
+          "target_component_id": 1008,
+          "target_message_id": 85
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.96
+      }
+    ],
+    "86": [
+      {
+        "id": 1010,
+        "type": "claim",
+        "start": 0,
+        "end": 43,
+        "confidence": 0.741,
+        "text": "Çocuk yapmak ahlaken doğru bir davranıştır;",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu iddia Tur 5 yanıtı tarafından %100 güvenle çürütülüyor: Elbette, Karşıt Browser olarak yanıtlıyorum: Çocuk yapmanın ahlaken doğru olduğu yönündeki son savununuz, hayatın olumlu",
+          "source_component_id": 1082,
+          "source_message_id": 102
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.946
+      },
+      {
+        "id": 1011,
+        "type": "evidence",
+        "start": 44,
+        "end": 142,
+        "confidence": 1.0,
+        "text": "çünkü bu eylem, hem bireysel özgürlüğün hem de toplumsal sürdürülebilirliğin temel bir ifadesidir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.69
+      },
+      {
+        "id": 1012,
+        "type": "evidence",
+        "start": 143,
+        "end": 330,
+        "confidence": 1.0,
+        "text": "Karşıt görüşün de belirttiği gibi, üreme içgüdüsü doğal bir eğilimdir ve faydacı etik çerçevesinde, bir çocuğun varlığı bakım verenler ve toplum için uzun vadeli mutluluk ve fayda üretir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.994
+      },
+      {
+        "id": 1013,
+        "type": "other",
+        "start": 331,
+        "end": 401,
+        "confidence": 0.992,
+        "text": "Ayrıca, Birleşmiş Milletler İnsan Hakları Evrensel Beyannamesi’nin 16.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.815
+      },
+      {
+        "id": 1014,
+        "type": "evidence",
+        "start": 402,
+        "end": 499,
+        "confidence": 0.974,
+        "text": "maddesi aile kurma hakkını güvence altına alarak bu eylemi evrensel bir insan hakkı olarak tanır.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.996,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle destekliyor: Çocuk yapmak ahlaken doğru bir davranıştır;",
+          "target_component_id": 1010,
+          "target_message_id": 86
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.926
+      },
+      {
+        "id": 1015,
+        "type": "evidence",
+        "start": 500,
+        "end": 631,
+        "confidence": 1.0,
+        "text": "Bu nedenle, çocuk sahibi olmak, bireyin kendi yaşam anlamını inşa etme özgürlüğüyle uyumlu, ahlaken meşru ve değerli bir tercihtir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.835
+      }
+    ],
+    "88": [
+      {
+        "id": 1016,
+        "type": "evidence",
+        "start": 0,
+        "end": 160,
+        "confidence": 1.0,
+        "text": "Çocuk yapmanın ahlaken doğru olduğu iddiası, insan türünün devamlılığını ve faydacı mutluluğu merkeze alsa da, bu argümanlar ciddi etik sorunları göz ardı eder.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 5 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1094,
+          "target_message_id": 104
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1017,
+        "type": "evidence",
+        "start": 161,
+        "end": 244,
+        "confidence": 1.0,
+        "text": "Öncelikle, doğal içgüdülerin ahlaki bir zorunluluk yaratmadığını belirtmek gerekir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1018,
+        "type": "evidence",
+        "start": 245,
+        "end": 307,
+        "confidence": 1.0,
+        "text": "biyolojik eğilimler, etik kararlar için yetersiz bir temeldir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 5 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1094,
+          "target_message_id": 104
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1019,
+        "type": "evidence",
+        "start": 308,
+        "end": 484,
+        "confidence": 1.0,
+        "text": "Faydacılık açısından, bir çocuğun varlığının uzun vadeli fayda sağlayacağı varsayımı, çocuğun rızası olmadan varoluşun getirdiği acı, hastalık ve ölüm risklerini hesaba katmaz.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 5 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1094,
+          "target_message_id": 104
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1020,
+        "type": "claim",
+        "start": 485,
+        "end": 742,
+        "confidence": 1.0,
+        "text": "Filozof David Benatar’ın \"Hiç Var Olmamış Olmak Daha İyi\" (Better Never to Have Been) adlı eserinde savunduğu gibi, var olmak kaçınılmaz olarak acıyı beraberinde getirir ve bu acıya maruz kalmayı seçmek, çocuğun onayı olmadan onu riske atmak anlamına gelir.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu iddia Tur 5 yanıtı tarafından %100 güvenle çürütülüyor: sevgi, başarı, bilgi ve anlamlı ilişkiler gibi olumlu deneyimler, bireylerin çoğunluğu tarafından yaşamaya değer kabul e",
+          "source_component_id": 1096,
+          "source_message_id": 104
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 1021,
+        "type": "other",
+        "start": 743,
+        "end": 813,
+        "confidence": 0.992,
+        "text": "Ayrıca, Birleşmiş Milletler İnsan Hakları Evrensel Beyannamesi’nin 16.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.815
+      },
+      {
+        "id": 1022,
+        "type": "evidence",
+        "start": 814,
+        "end": 885,
+        "confidence": 0.949,
+        "text": "maddesi aile kurma hakkını tanısa da, bu hak bireyin özgürlüğünü korur;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.972
+      },
+      {
+        "id": 1023,
+        "type": "evidence",
+        "start": 886,
+        "end": 994,
+        "confidence": 0.999,
+        "text": "ancak bu hak, potansiyel bir çocuğun yaşam kalitesi ve refahı üzerindeki etik sorumluluğu ortadan kaldırmaz.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.997
+      },
+      {
+        "id": 1024,
+        "type": "evidence",
+        "start": 995,
+        "end": 1180,
+        "confidence": 1.0,
+        "text": "Çocuk yapmak, mevcut kaynakların adil dağılımı ve iklim krizi gibi küresel sorunlar bağlamında, yeni bir bireyin dünyaya getirilmesinin yaratacağı ek yükü de göz önünde bulundurmalıdır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.959
+      },
+      {
+        "id": 1025,
+        "type": "evidence",
+        "start": 1181,
+        "end": 1268,
+        "confidence": 1.0,
+        "text": "Bu nedenle, çocuk yapmak ahlaken tartışmalıdır ve otomatik olarak doğru kabul edilemez.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 5 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1094,
+          "target_message_id": 104
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      }
+    ],
+    "89": [
+      {
+        "id": 1026,
+        "type": "evidence",
+        "start": 0,
+        "end": 85,
+        "confidence": 1.0,
+        "text": "Savunduğunuz antinatalist itirazlar, çocuk yapmanın ahlaken meşruiyetini zayıflatmaz.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 1027,
+        "type": "evidence",
+        "start": 86,
+        "end": 170,
+        "confidence": 1.0,
+        "text": "İlk olarak, biyolojik eğilimlerin tek başına ahlaki zorunluluk yaratmadığı doğrudur;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 1028,
+        "type": "evidence",
+        "start": 171,
+        "end": 324,
+        "confidence": 1.0,
+        "text": "ancak bu eğilimler, bireyin kendi yaşam anlamını inşa etme özgürlüğüyle birleştiğinde, çocuk sahibi olma kararı rasyonel ve etik bir tercih haline gelir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.991,
+          "text": "Bu parça Tur 2 iddiasını %99 güvenle destekliyor: BM İnsan Hakları Bildirgesi'nin 16.",
+          "target_component_id": 1033,
+          "target_message_id": 89
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.994
+      },
+      {
+        "id": 1029,
+        "type": "evidence",
+        "start": 325,
+        "end": 571,
+        "confidence": 1.0,
+        "text": "Benatar'ın “var olmanın acıyı beraberinde getirdiği” argünü, hayatın yalnızca acıdan ibaret olmadığı gerçeğini göz ardı eder: Sevgi, başarı, bilgi ve anlamlı ilişkiler gibi olumlu deneyimler, bireyin yaşam kalitesini belirleyen temel unsurlardır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 1030,
+        "type": "evidence",
+        "start": 572,
+        "end": 615,
+        "confidence": 0.989,
+        "text": "Ayrıca, çocuğun rızası sorunu yanıltıcıdır;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1031,
+        "type": "evidence",
+        "start": 616,
+        "end": 763,
+        "confidence": 1.0,
+        "text": "var olmayan bir varlığın rızasını almak mantıksal olarak imkânsızdır ve ebeveynler, çocuğun gelecekteki refahını artırmak için sorumluluk üstlenir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1032,
+        "type": "evidence",
+        "start": 764,
+        "end": 955,
+        "confidence": 1.0,
+        "text": "Küresel kaynak ve iklim krizi argümanı ise sorunu yanlış çerçeveler: Sürdürülebilirlik, üremeyi tamamen reddetmek yerine, bilinçli nüfus politikaları ve ekolojik farkındalıkla dengelenebilir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 1033,
+        "type": "claim",
+        "start": 956,
+        "end": 991,
+        "confidence": 0.871,
+        "text": "BM İnsan Hakları Bildirgesi'nin 16.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "support",
+          "confidence": 0.996,
+          "text": "Bu iddia Tur 2 yanıtı tarafından %100 güvenle destekleniyor: Sonuç olarak, çocuk yapmak, bireysel özgürlük ve toplumsal sürdürülebilirlik arasında dengeli bir etik çerçevede ahlaken",
+          "source_component_id": 1035,
+          "source_message_id": 89
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1034,
+        "type": "claim",
+        "start": 992,
+        "end": 1043,
+        "confidence": 0.975,
+        "text": "maddesi de bu özgürlüğü temel bir hak olarak tanır.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "support",
+          "confidence": 0.992,
+          "text": "Bu iddia Tur 2 yanıtı tarafından %99 güvenle destekleniyor: Sonuç olarak, çocuk yapmak, bireysel özgürlük ve toplumsal sürdürülebilirlik arasında dengeli bir etik çerçevede ahlaken",
+          "source_component_id": 1035,
+          "source_message_id": 89
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.645
+      },
+      {
+        "id": 1035,
+        "type": "evidence",
+        "start": 1044,
+        "end": 1185,
+        "confidence": 1.0,
+        "text": "Sonuç olarak, çocuk yapmak, bireysel özgürlük ve toplumsal sürdürülebilirlik arasında dengeli bir etik çerçevede ahlaken meşru ve değerlidir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.996,
+          "text": "Bu parça Tur 2 iddiasını %100 güvenle destekliyor: BM İnsan Hakları Bildirgesi'nin 16.",
+          "target_component_id": 1033,
+          "target_message_id": 89
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.938
+      }
+    ],
+    "91": [
+      {
+        "id": 1036,
+        "type": "evidence",
+        "start": 0,
+        "end": 298,
+        "confidence": 1.0,
+        "text": "Çocuk yapmanın ahlaken meşru olduğu yönündeki son savunma, hayatın olumlu yönlerini vurgulayarak Benatar'ın acı odaklı argümanını geçersiz kılmaya çalışsa da, bu yaklaşım temel bir etik sorunu göz ardı eder: Var olmayan bir bireyin rızası olmadan onu acı ve risk içeren bir varoluşa maruz bırakmak.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1037,
+        "type": "evidence",
+        "start": 299,
+        "end": 377,
+        "confidence": 1.0,
+        "text": "Sevgi ve başarı gibi olumlu deneyimler var olsa da, bunların garantisi yoktur;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1038,
+        "type": "evidence",
+        "start": 378,
+        "end": 419,
+        "confidence": 0.992,
+        "text": "oysa acı, hastalık ve ölüm kaçınılmazdır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1039,
+        "type": "evidence",
+        "start": 420,
+        "end": 607,
+        "confidence": 1.0,
+        "text": "Benatar'ın \"Hiç Var Olmamış Olmak Daha İyi\" eserinde belirttiği gibi, bir varlığı yokluktan getirmek, onu bu kaçınılmaz acılara mahkûm etmek anlamına gelir ve bu, etik olarak savunulamaz.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 1040,
+        "type": "evidence",
+        "start": 608,
+        "end": 682,
+        "confidence": 0.999,
+        "text": "Rıza sorununun \"mantıksal olarak imkânsız\" olduğu iddiası da yanıltıcıdır;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 1041,
+        "type": "evidence",
+        "start": 683,
+        "end": 844,
+        "confidence": 1.0,
+        "text": "çünkü ebeveynler, çocuğun gelecekteki refahını artırma sorumluluğunu üstlenirken, aynı anda onun potansiyel acılarına neden olma riskini de bilinçli olarak alır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1042,
+        "type": "evidence",
+        "start": 845,
+        "end": 1056,
+        "confidence": 1.0,
+        "text": "İklim krizi ve kaynak adaletsizliği gibi küresel sorunlar, bilinçli politikalarla dengelenebilir gibi görünse de, mevcut ekolojik kriz ortamında her yeni birey, gezegenin taşıma kapasitesine ek bir yük bindirir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1043,
+        "type": "claim",
+        "start": 1057,
+        "end": 1092,
+        "confidence": 0.871,
+        "text": "BM İnsan Hakları Bildirgesi'nin 16.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1044,
+        "type": "claim",
+        "start": 1093,
+        "end": 1125,
+        "confidence": 0.63,
+        "text": "maddesi aile kurma hakkını tanır",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.873
+      },
+      {
+        "id": 1045,
+        "type": "evidence",
+        "start": 1127,
+        "end": 1221,
+        "confidence": 0.996,
+        "text": "ancak bu hak, potansiyel çocuğun yaşam kalitesi üzerindeki etik sorumluluğu ortadan kaldırmaz;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1046,
+        "type": "evidence",
+        "start": 1222,
+        "end": 1273,
+        "confidence": 0.948,
+        "text": "haklar, diğer etik yükümlülüklerle dengelenmelidir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.974
+      },
+      {
+        "id": 1047,
+        "type": "evidence",
+        "start": 1274,
+        "end": 1361,
+        "confidence": 1.0,
+        "text": "Bu nedenle, çocuk yapmak ahlaken tartışmalıdır ve otomatik olarak doğru kabul edilemez.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      }
+    ],
+    "93": [
+      {
+        "id": 1048,
+        "type": "evidence",
+        "start": 0,
+        "end": 63,
+        "confidence": 0.967,
+        "text": "Çocuk yapmanın ahlaken doğru olduğunu savunmaya devam ediyorum;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.996,
+          "text": "Bu parça Tur 3 iddiasını %100 güvenle destekliyor: BM İnsan Hakları Bildirgesi'nin 16.",
+          "target_component_id": 1056,
+          "target_message_id": 93
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.908
+      },
+      {
+        "id": 1049,
+        "type": "evidence",
+        "start": 64,
+        "end": 174,
+        "confidence": 1.0,
+        "text": "çünkü hayat yalnızca acıdan ibaret değildir ve olumlu deneyimlerin varlığı, bu eylemi etik açıdan meşru kılar.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 1050,
+        "type": "evidence",
+        "start": 175,
+        "end": 327,
+        "confidence": 1.0,
+        "text": "Benatar'ın \"var olmanın acıyı beraberinde getirdiği\" argümanı, hayatın sevgi, başarı, öğrenme ve anlamlı ilişkiler gibi zenginliklerini görmezden gelir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 1051,
+        "type": "evidence",
+        "start": 328,
+        "end": 487,
+        "confidence": 1.0,
+        "text": "bu deneyimler, bireyin yaşam kalitesini belirleyen temel unsurlardır ve ebeveynler, çocuklarının bu olumlu yönlere erişimini sağlamak için sorumluluk üstlenir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 3 iddiasını %100 güvenle destekliyor: BM İnsan Hakları Bildirgesi'nin 16.",
+          "target_component_id": 1056,
+          "target_message_id": 93
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.632
+      },
+      {
+        "id": 1052,
+        "type": "evidence",
+        "start": 488,
+        "end": 658,
+        "confidence": 1.0,
+        "text": "Rıza sorununa gelince, var olmayan bir varlıktan rıza almak mantıksal olarak imkânsızdır ve ebeveynlerin çocuğun gelecekteki refahını artırma niyeti, bu etik açmazı aşar;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1053,
+        "type": "evidence",
+        "start": 659,
+        "end": 740,
+        "confidence": 1.0,
+        "text": "çoğu insan, yaşamın değerli olduğunu ve var olmanın bir armağan olduğunu düşünür.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.994,
+          "text": "Bu parça Tur 3 iddiasını %99 güvenle destekliyor: BM İnsan Hakları Bildirgesi'nin 16.",
+          "target_component_id": 1056,
+          "target_message_id": 93
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1054,
+        "type": "evidence",
+        "start": 741,
+        "end": 919,
+        "confidence": 1.0,
+        "text": "Ayrıca, iklim krizi ve kaynak adaletsizliği gibi küresel sorunlar, üremeyi tamamen reddetmekle değil, bilinçli nüfus politikaları ve sürdürülebilir yaşam tarzlarıyla çözülebilir;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.989,
+          "text": "Bu parça Tur 3 iddiasını %99 güvenle destekliyor: BM İnsan Hakları Bildirgesi'nin 16.",
+          "target_component_id": 1056,
+          "target_message_id": 93
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.978
+      },
+      {
+        "id": 1055,
+        "type": "evidence",
+        "start": 920,
+        "end": 971,
+        "confidence": 0.923,
+        "text": "insanlık, bu zorlukları aşma kapasitesine sahiptir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 1056,
+        "type": "claim",
+        "start": 972,
+        "end": 1007,
+        "confidence": 0.871,
+        "text": "BM İnsan Hakları Bildirgesi'nin 16.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "support",
+          "confidence": 1.0,
+          "text": "Bu iddia Tur 3 yanıtı tarafından %100 güvenle destekleniyor: bu deneyimler, bireyin yaşam kalitesini belirleyen temel unsurlardır ve ebeveynler, çocuklarının bu olumlu yönlere erişi",
+          "source_component_id": 1051,
+          "source_message_id": 93
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1057,
+        "type": "evidence",
+        "start": 1008,
+        "end": 1147,
+        "confidence": 1.0,
+        "text": "maddesi, aile kurma hakkını temel bir özgürlük olarak tanır ve bu hak, bireylerin kendi yaşam anlamlarını inşa etme özgürlüğüyle uyumludur.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.999,
+          "text": "Bu parça Tur 3 iddiasını %100 güvenle destekliyor: BM İnsan Hakları Bildirgesi'nin 16.",
+          "target_component_id": 1056,
+          "target_message_id": 93
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.915
+      },
+      {
+        "id": 1058,
+        "type": "evidence",
+        "start": 1148,
+        "end": 1312,
+        "confidence": 1.0,
+        "text": "Sonuç olarak, çocuk yapmak, bireysel özgürlük, toplumsal sürdürülebilirlik ve insan deneyiminin değeri göz önüne alındığında ahlaken meşru ve değerli bir tercihtir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.992
+      }
+    ],
+    "95": [
+      {
+        "id": 1059,
+        "type": "evidence",
+        "start": 9,
+        "end": 268,
+        "confidence": 1.0,
+        "text": "Karşıt görüşünüz, hayatın olumlu yönlerini vurgulayarak Benatar'ın acı odaklı argümanını geçersiz kılmaya çalışsa da, bu yaklaşım temel bir etik sorunu aşamaz: Var olmayan bir bireyin rızası olmadan onu kaçınılmaz acı, hastalık ve ölüm riskine maruz bırakmak.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1060,
+        "type": "evidence",
+        "start": 269,
+        "end": 327,
+        "confidence": 1.0,
+        "text": "Sevgi ve başarı gibi olumlu deneyimlerin garantisi yoktur;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1061,
+        "type": "evidence",
+        "start": 328,
+        "end": 357,
+        "confidence": 0.511,
+        "text": "oysa acı ve ölüm evrenseldir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1062,
+        "type": "evidence",
+        "start": 358,
+        "end": 502,
+        "confidence": 1.0,
+        "text": "Benatar'ın \"Hiç Var Olmamış Olmak Daha İyi\" eserinde savunduğu asimetri argümanına göre, acının yokluğu iyiyken, sevincin yokluğu kötü değildir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 1063,
+        "type": "evidence",
+        "start": 503,
+        "end": 576,
+        "confidence": 1.0,
+        "text": "bu nedenle bir varlığı yokluktan getirmek, ona gereksiz risk yüklemektir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1064,
+        "type": "evidence",
+        "start": 577,
+        "end": 804,
+        "confidence": 1.0,
+        "text": "Rıza sorununun \"mantıksal olarak imkânsız\" olduğu iddiası da yanıltıcıdır: Ebeveynler, çocuğun gelecekteki refahını artırma sorumluluğunu üstlenirken, aynı anda onun potansiyel acılarına neden olma riskini bilinçli olarak alır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1065,
+        "type": "evidence",
+        "start": 805,
+        "end": 1099,
+        "confidence": 1.0,
+        "text": "İklim krizi ve kaynak adaletsizliği gibi küresel sorunlar, bilinçli politikalarla dengelenebilir gibi görünse de, mevcut ekolojik kriz ortamında her yeni birey gezegenin taşıma kapasitesine ek bir yük bindirir ve bu yük genellikle en savunmasız olanlara (yeni doğan çocuklara) daha ağır yansır.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1066,
+        "type": "claim",
+        "start": 1100,
+        "end": 1135,
+        "confidence": 0.871,
+        "text": "BM İnsan Hakları Bildirgesi'nin 16.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1067,
+        "type": "claim",
+        "start": 1136,
+        "end": 1168,
+        "confidence": 0.63,
+        "text": "maddesi aile kurma hakkını tanır",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.873
+      },
+      {
+        "id": 1068,
+        "type": "evidence",
+        "start": 1170,
+        "end": 1264,
+        "confidence": 0.996,
+        "text": "ancak bu hak, potansiyel çocuğun yaşam kalitesi üzerindeki etik sorumluluğu ortadan kaldırmaz;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1069,
+        "type": "evidence",
+        "start": 1265,
+        "end": 1316,
+        "confidence": 0.948,
+        "text": "haklar, diğer etik yükümlülüklerle dengelenmelidir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.974
+      },
+      {
+        "id": 1070,
+        "type": "evidence",
+        "start": 1317,
+        "end": 1404,
+        "confidence": 1.0,
+        "text": "Bu nedenle, çocuk yapmak ahlaken tartışmalıdır ve otomatik olarak doğru kabul edilemez.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      }
+    ],
+    "98": [
+      {
+        "id": 1071,
+        "type": "other",
+        "start": 0,
+        "end": 52,
+        "confidence": 0.999,
+        "text": "Elbette, Karşıt Browser’ın son itirazını ele alalım.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "none",
+        "topic_relation_confidence": 0.755
+      },
+      {
+        "id": 1072,
+        "type": "evidence",
+        "start": 53,
+        "end": 179,
+        "confidence": 1.0,
+        "text": "Hayatın yalnızca acıdan ibaret olmadığını ve olumlu deneyimlerin varlığının çocuk yapmayı ahlaken meşru kıldığını savunuyorum.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.997,
+          "text": "Bu parça Tur 4 iddiasını %100 güvenle destekliyor: BM İnsan Hakları Bildirgesi’nin 16.",
+          "target_component_id": 1079,
+          "target_message_id": 98
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.924
+      },
+      {
+        "id": 1073,
+        "type": "evidence",
+        "start": 180,
+        "end": 293,
+        "confidence": 1.0,
+        "text": "Benatar’ın asimetri argümanı, acının yokluğunun iyi olduğunu, sevincin yokluğunun ise kötü olmadığını iddia eder;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1074,
+        "type": "evidence",
+        "start": 294,
+        "end": 330,
+        "confidence": 0.844,
+        "text": "ancak bu, yaşamın değerini küçümser.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1003,
+          "target_message_id": 85
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1075,
+        "type": "evidence",
+        "start": 331,
+        "end": 476,
+        "confidence": 1.0,
+        "text": "Çoğu insan, var olmanın getirdiği sevgi, başarı ve anlamlı ilişkiler gibi deneyimleri, kaçınılmaz acılardan daha ağır basar olarak değerlendirir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1003,
+          "target_message_id": 85
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1076,
+        "type": "evidence",
+        "start": 477,
+        "end": 664,
+        "confidence": 1.0,
+        "text": "Rıza sorunu mantıksal bir açmazdır: Var olmayan bir varlıktan rıza almak imkânsızdır ve ebeveynler, çocuğun gelecekteki refahını artırma sorumluluğunu üstlenerek bu etik boşluğu doldurur.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1003,
+          "target_message_id": 85
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1077,
+        "type": "evidence",
+        "start": 665,
+        "end": 813,
+        "confidence": 1.0,
+        "text": "İklim krizi ve kaynak adaletsizliği, üremeyi tamamen reddetmekle değil, bilinçli nüfus politikaları ve sürdürülebilir yaşam tarzlarıyla çözülebilir;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.99,
+          "text": "Bu parça Tur 4 iddiasını %99 güvenle destekliyor: BM İnsan Hakları Bildirgesi’nin 16.",
+          "target_component_id": 1079,
+          "target_message_id": 98
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.904
+      },
+      {
+        "id": 1078,
+        "type": "evidence",
+        "start": 814,
+        "end": 865,
+        "confidence": 0.923,
+        "text": "insanlık, bu zorlukları aşma kapasitesine sahiptir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 1079,
+        "type": "claim",
+        "start": 866,
+        "end": 901,
+        "confidence": 0.592,
+        "text": "BM İnsan Hakları Bildirgesi’nin 16.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "support",
+          "confidence": 0.998,
+          "text": "Bu iddia Tur 4 yanıtı tarafından %100 güvenle destekleniyor: maddesi, aile kurma hakkını temel bir özgürlük olarak tanır ve bu hak, bireysel özerklikle uyumludur.",
+          "source_component_id": 1080,
+          "source_message_id": 98
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.989
+      },
+      {
+        "id": 1080,
+        "type": "evidence",
+        "start": 902,
+        "end": 1003,
+        "confidence": 0.997,
+        "text": "maddesi, aile kurma hakkını temel bir özgürlük olarak tanır ve bu hak, bireysel özerklikle uyumludur.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.998,
+          "text": "Bu parça Tur 4 iddiasını %100 güvenle destekliyor: BM İnsan Hakları Bildirgesi’nin 16.",
+          "target_component_id": 1079,
+          "target_message_id": 98
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.904
+      },
+      {
+        "id": 1081,
+        "type": "evidence",
+        "start": 1004,
+        "end": 1168,
+        "confidence": 1.0,
+        "text": "Sonuç olarak, çocuk yapmak, bireysel özgürlük, toplumsal sürdürülebilirlik ve insan deneyiminin değeri göz önüne alındığında ahlaken meşru ve değerli bir tercihtir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.992
+      }
+    ],
+    "102": [
+      {
+        "id": 1082,
+        "type": "evidence",
+        "start": 0,
+        "end": 271,
+        "confidence": 1.0,
+        "text": "Elbette, Karşıt Browser olarak yanıtlıyorum: Çocuk yapmanın ahlaken doğru olduğu yönündeki son savununuz, hayatın olumlu yönlerini vurgulasa da, temel etik sorunu çözemez: Var olmayan bir bireyin rızası olmadan onu kaçınılmaz acı, hastalık ve ölüm riskine maruz bırakmak.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır;",
+          "target_component_id": 1010,
+          "target_message_id": 86
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1083,
+        "type": "evidence",
+        "start": 272,
+        "end": 330,
+        "confidence": 1.0,
+        "text": "Sevgi ve başarı gibi olumlu deneyimlerin garantisi yoktur;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır;",
+          "target_component_id": 1010,
+          "target_message_id": 86
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1084,
+        "type": "evidence",
+        "start": 331,
+        "end": 360,
+        "confidence": 0.511,
+        "text": "oysa acı ve ölüm evrenseldir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır;",
+          "target_component_id": 1010,
+          "target_message_id": 86
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1085,
+        "type": "evidence",
+        "start": 361,
+        "end": 519,
+        "confidence": 1.0,
+        "text": "Filozof David Benatar’ın “Hiç Var Olmamış Olmak Daha İyi” eserinde savunduğu asimetri argümanına göre, acının yokluğu iyiyken, sevincin yokluğu kötü değildir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.999
+      },
+      {
+        "id": 1086,
+        "type": "evidence",
+        "start": 520,
+        "end": 593,
+        "confidence": 1.0,
+        "text": "bu nedenle bir varlığı yokluktan getirmek, ona gereksiz risk yüklemektir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır;",
+          "target_component_id": 1010,
+          "target_message_id": 86
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1087,
+        "type": "evidence",
+        "start": 594,
+        "end": 818,
+        "confidence": 1.0,
+        "text": "Rıza sorununun “mantıksal olarak imkânsız” olduğu iddiası yanıltıcıdır: Ebeveynler, çocuğun gelecekteki refahını artırma sorumluluğunu üstlenirken, aynı anda onun potansiyel acılarına neden olma riskini bilinçli olarak alır.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır;",
+          "target_component_id": 1010,
+          "target_message_id": 86
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1088,
+        "type": "evidence",
+        "start": 819,
+        "end": 1091,
+        "confidence": 1.0,
+        "text": "İklim krizi ve kaynak adaletsizliği, bilinçli politikalarla dengelenebilir gibi görünse de, mevcut ekolojik kriz ortamında her yeni birey gezegenin taşıma kapasitesine ek bir yük bindirir ve bu yük genellikle en savunmasız olanlara (yeni doğan çocuklara) daha ağır yansır.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır;",
+          "target_component_id": 1010,
+          "target_message_id": 86
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1089,
+        "type": "claim",
+        "start": 1092,
+        "end": 1127,
+        "confidence": 0.592,
+        "text": "BM İnsan Hakları Bildirgesi’nin 16.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.989
+      },
+      {
+        "id": 1090,
+        "type": "claim",
+        "start": 1128,
+        "end": 1160,
+        "confidence": 0.63,
+        "text": "maddesi aile kurma hakkını tanır",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.873
+      },
+      {
+        "id": 1091,
+        "type": "evidence",
+        "start": 1162,
+        "end": 1256,
+        "confidence": 0.996,
+        "text": "ancak bu hak, potansiyel çocuğun yaşam kalitesi üzerindeki etik sorumluluğu ortadan kaldırmaz;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.995
+      },
+      {
+        "id": 1092,
+        "type": "evidence",
+        "start": 1257,
+        "end": 1308,
+        "confidence": 0.948,
+        "text": "haklar, diğer etik yükümlülüklerle dengelenmelidir.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.974
+      },
+      {
+        "id": 1093,
+        "type": "evidence",
+        "start": 1309,
+        "end": 1396,
+        "confidence": 1.0,
+        "text": "Bu nedenle, çocuk yapmak ahlaken tartışmalıdır ve otomatik olarak doğru kabul edilemez.",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      }
+    ],
+    "104": [
+      {
+        "id": 1094,
+        "type": "claim",
+        "start": 0,
+        "end": 42,
+        "confidence": 0.581,
+        "text": "Çocuk yapmak ahlaken doğru bir davranıştır",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu iddia Tur 2 yanıtı tarafından %100 güvenle çürütülüyor: Çocuk yapmanın ahlaken doğru olduğu iddiası, insan türünün devamlılığını ve faydacı mutluluğu merkeze alsa da, bu argüma",
+          "source_component_id": 1016,
+          "source_message_id": 88
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.971
+      },
+      {
+        "id": 1095,
+        "type": "evidence",
+        "start": 44,
+        "end": 95,
+        "confidence": 0.996,
+        "text": "çünkü insan yaşamı yalnızca acıdan ibaret değildir;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1096,
+        "type": "evidence",
+        "start": 96,
+        "end": 222,
+        "confidence": 1.0,
+        "text": "sevgi, başarı, bilgi ve anlamlı ilişkiler gibi olumlu deneyimler, bireylerin çoğunluğu tarafından yaşamaya değer kabul edilir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 2 iddiasını %100 güvenle çürütüyor: Filozof David Benatar’ın \"Hiç Var Olmamış Olmak Daha İyi\" (Better Never to Have Been) adlı eserinde savunduğu gibi, var ",
+          "target_component_id": 1020,
+          "target_message_id": 88
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 1097,
+        "type": "evidence",
+        "start": 223,
+        "end": 450,
+        "confidence": 1.0,
+        "text": "Benatar'ın asimetri argümanı, acının yokluğunu iyi görürken sevincin yokluğunu kötü saymamakla birlikte, bu soyut mantıksal çerçeve, milyarlarca insanın var olmayı bir armağan olarak değerlendirdiği somut gerçekliği ihmal eder.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1003,
+          "target_message_id": 85
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1098,
+        "type": "evidence",
+        "start": 451,
+        "end": 486,
+        "confidence": 0.926,
+        "text": "Rıza sorunu mantıksal bir açmazdır;",
+        "stance": "con",
+        "relation": null,
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.998
+      },
+      {
+        "id": 1099,
+        "type": "evidence",
+        "start": 487,
+        "end": 621,
+        "confidence": 1.0,
+        "text": "var olmayan bir varlıktan rıza almak imkânsızdır ve ebeveynler, çocuğun refahını artırma sorumluluğunu üstlenerek bu boşluğu doldurur.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "attack",
+          "confidence": 1.0,
+          "text": "Bu parça Tur 1 iddiasını %100 güvenle çürütüyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1003,
+          "target_message_id": 85
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 1.0
+      },
+      {
+        "id": 1100,
+        "type": "evidence",
+        "start": 622,
+        "end": 770,
+        "confidence": 1.0,
+        "text": "İklim krizi ve kaynak adaletsizliği, üremeyi tamamen reddetmekle değil, bilinçli nüfus politikaları ve sürdürülebilir yaşam tarzlarıyla çözülebilir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.99,
+          "text": "Bu parça Tur 5 iddiasını %99 güvenle destekliyor: BM İnsan Hakları Evrensel Beyannamesi’nin 16.",
+          "target_component_id": 1101,
+          "target_message_id": 104
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.94
+      },
+      {
+        "id": 1101,
+        "type": "claim",
+        "start": 771,
+        "end": 816,
+        "confidence": 0.66,
+        "text": "BM İnsan Hakları Evrensel Beyannamesi’nin 16.",
+        "stance": "con",
+        "relation": {
+          "role": "target",
+          "relation_type": "support",
+          "confidence": 0.999,
+          "text": "Bu iddia Tur 5 yanıtı tarafından %100 güvenle destekleniyor: bu hak, bireysel özgürlük ve toplumsal devamlılıkla uyumlu olup, ahlaken meşru ve değerlidir.",
+          "source_component_id": 1103,
+          "source_message_id": 104
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.988
+      },
+      {
+        "id": 1102,
+        "type": "evidence",
+        "start": 817,
+        "end": 879,
+        "confidence": 0.592,
+        "text": "maddesi aile kurma hakkını temel bir insan hakkı olarak tanır;",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.995,
+          "text": "Bu parça Tur 5 iddiasını %100 güvenle destekliyor: Çocuk yapmak ahlaken doğru bir davranıştır",
+          "target_component_id": 1094,
+          "target_message_id": 104
+        },
+        "topic_relation_type": "support",
+        "topic_relation_confidence": 0.723
+      },
+      {
+        "id": 1103,
+        "type": "evidence",
+        "start": 880,
+        "end": 973,
+        "confidence": 1.0,
+        "text": "bu hak, bireysel özgürlük ve toplumsal devamlılıkla uyumlu olup, ahlaken meşru ve değerlidir.",
+        "stance": "con",
+        "relation": {
+          "role": "source",
+          "relation_type": "support",
+          "confidence": 0.999,
+          "text": "Bu parça Tur 5 iddiasını %100 güvenle destekliyor: BM İnsan Hakları Evrensel Beyannamesi’nin 16.",
+          "target_component_id": 1101,
+          "target_message_id": 104
+        },
+        "topic_relation_type": "attack",
+        "topic_relation_confidence": 0.909
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "message_id": 85,
+      "round": 1,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 7,
+      "incoming_count": 8,
+      "outgoing_count": 2
+    },
+    {
+      "message_id": 86,
+      "round": 1,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 6,
+      "incoming_count": 7,
+      "outgoing_count": 1
+    },
+    {
+      "message_id": 88,
+      "round": 2,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 10,
+      "incoming_count": 2,
+      "outgoing_count": 4
+    },
+    {
+      "message_id": 89,
+      "round": 2,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 10,
+      "incoming_count": 3,
+      "outgoing_count": 3
+    },
+    {
+      "message_id": 91,
+      "round": 3,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 12,
+      "incoming_count": 0,
+      "outgoing_count": 0
+    },
+    {
+      "message_id": 93,
+      "round": 3,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 11,
+      "incoming_count": 5,
+      "outgoing_count": 5
+    },
+    {
+      "message_id": 95,
+      "round": 4,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 12,
+      "incoming_count": 0,
+      "outgoing_count": 0
+    },
+    {
+      "message_id": 98,
+      "round": 4,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 11,
+      "incoming_count": 3,
+      "outgoing_count": 6
+    },
+    {
+      "message_id": 102,
+      "round": 5,
+      "agent_name": "Acceptance Karşıt Browser",
+      "component_count": 12,
+      "incoming_count": 0,
+      "outgoing_count": 6
+    },
+    {
+      "message_id": 104,
+      "round": 5,
+      "agent_name": "Acceptance Savunucu Browser",
+      "component_count": 10,
+      "incoming_count": 8,
+      "outgoing_count": 9
+    }
+  ],
+  "findings": [
+    {
+      "type": "missed_rebuttal",
+      "title": "Iskalanan Karşı Tez",
+      "message_id": 86,
+      "detail": "Tur 1 saldırısında Acceptance Savunucu Browser, karşı tarafın 'maddesi, aile kurma hakkını temel bir insan hakkı olarak tanır....' iddiasını doğrudan hedef alan yapısal bir çürütme sunamadı.",
+      "confidence": 0.72,
+      "severity": "high"
+    },
+    {
+      "type": "unsupported_claim",
+      "title": "Temelsiz İddia",
+      "message_id": 88,
+      "detail": "Tur 2 içinde Acceptance Karşıt Browser tarafından öne sürülen 'Filozof David Benatar’ın \"Hiç Var Olmamış Olmak Daha İyi\" (Better Never to Have ...' iddiası için ModernBERT pipeline'ı hiçbir destekleyici kanıt bulamadı.",
+      "confidence": 0.5,
+      "severity": "medium"
+    }
+  ],
+  "impact": {
+    "semantic_edges": 36,
+    "raw_relations": 10100,
+    "visible_relations": 36,
+    "none_relations": 231,
+    "filtered_relations": 10064,
+    "filter_reasons": {
+      "target_not_claim": 8330,
+      "graph_cap_or_structural_filter": 805,
+      "same_agent_cross_message": 575,
+      "none_relation": 231,
+      "below_attack_threshold": 82,
+      "below_support_threshold": 41
+    },
+    "baseline_edges": 9,
+    "bert_only_edges": 36,
+    "long_range_edges": 18,
+    "unsupported_claims": 1,
+    "missed_rebuttals": 1,
+    "none_escapes": 0
+  }
+}

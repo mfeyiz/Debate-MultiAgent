@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+import anyio
 from fastapi import APIRouter, Body, Depends, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy import select
@@ -149,11 +150,16 @@ async def start_debate(
     request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
 ) -> Any:
     svc: DebateService = request.app.state.debate_svc
+    lock = None
     try:
+        lock = await svc.acquire_operation_lock(debate_id, "start")
         await svc.start_debate(db, debate_id)
         return {"started": True}
     except Exception as exc:
         return _json_error(str(exc), 400)
+    finally:
+        if lock and lock.locked():
+            lock.release()
 
 
 @router.post("/debates/{debate_id}/advance")
@@ -161,11 +167,16 @@ async def advance_debate(
     request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
 ) -> Any:
     svc: DebateService = request.app.state.debate_svc
+    lock = None
     try:
+        lock = await svc.acquire_operation_lock(debate_id, "advance")
         await svc.advance_debate(db, debate_id)
         return {"advanced": True}
     except Exception as exc:
         return _json_error(str(exc), 400)
+    finally:
+        if lock and lock.locked():
+            lock.release()
 
 
 @router.post("/debates/{debate_id}/resolve")
@@ -173,11 +184,16 @@ async def resolve_debate(
     request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
 ) -> Any:
     svc: DebateService = request.app.state.debate_svc
+    lock = None
     try:
+        lock = await svc.acquire_operation_lock(debate_id, "resolve")
         await svc.force_resolution(db, debate_id)
         return {"resolved": True}
     except Exception as exc:
         return _json_error(str(exc), 400)
+    finally:
+        if lock and lock.locked():
+            lock.release()
 
 
 @router.post("/debates/{debate_id}/analyze")
@@ -185,11 +201,16 @@ async def analyze_debate(
     request: Request, debate_id: int, db: AsyncSession = Depends(get_db)
 ) -> Any:
     svc: DebateService = request.app.state.debate_svc
+    lock = None
     try:
+        lock = await svc.acquire_operation_lock(debate_id, "analyze")
         res = await svc.analyze_debate(db, debate_id)
         return res
     except Exception as exc:
         return _json_error(str(exc), 400)
+    finally:
+        if lock and lock.locked():
+            lock.release()
 
 
 @router.get("/debates/{debate_id}/argument-map")
@@ -212,11 +233,16 @@ async def regenerate_message(
     db: AsyncSession = Depends(get_db),
 ) -> Any:
     svc: DebateService = request.app.state.debate_svc
+    lock = None
     try:
+        lock = await svc.acquire_operation_lock(debate_id, "regenerate")
         res = await svc.regenerate_message(db, debate_id, message_id)
         return res
     except Exception as exc:
         return _json_error(str(exc), 400)
+    finally:
+        if lock and lock.locked():
+            lock.release()
 
 
 @router.post("/debates/{debate_id}/auto-advance")
@@ -242,11 +268,16 @@ async def run_full_debate(
     db: AsyncSession = Depends(get_db),
 ) -> Any:
     svc: DebateService = request.app.state.debate_svc
+    lock = None
     try:
+        lock = await svc.acquire_operation_lock(debate_id, "run-full")
         await svc.run_full_debate(db, debate_id)
         return {"status": "running", "message": "Tartışma otomatik olarak ilerletiliyor"}
     except Exception as exc:
         return _json_error(str(exc), 400)
+    finally:
+        if lock and lock.locked():
+            lock.release()
 
 
 # ------------------------------------------------------------------
@@ -342,10 +373,32 @@ async def compare_modernbert(
         if not target_text or not source_text:
             return _json_error("Hedef iddia ve yanıt metinleri boş olamaz.", 400)
             
-        res = svc.bert.compare_models(source_text=source_text, target_text=target_text)
+        res = await anyio.to_thread.run_sync(
+            svc.bert.compare_models,
+            source_text,
+            target_text,
+        )
         return res
     except Exception as exc:
         return _json_error(str(exc), 400)
+
+
+# ------------------------------------------------------------------
+# Config Status for UI settings
+# ------------------------------------------------------------------
+
+
+@router.get("/config-status")
+async def get_config_status() -> dict:
+    from app.config import Config
+    return {
+        "OPENROUTER_API_KEY": bool(Config.OPENROUTER_API_KEY),
+        "TAVILY_API_KEY": bool(Config.TAVILY_API_KEY),
+        "GOOGLE_FACTCHECK_API_KEY": bool(Config.GOOGLE_FACTCHECK_API_KEY),
+        "TCMB_EVDS_API_KEY": bool(Config.TCMB_EVDS_API_KEY),
+        "TUIK_API_KEY": bool(Config.TUIK_API_KEY),
+        "default_model": Config.DEFAULT_MODEL
+    }
 
 
 # ------------------------------------------------------------------

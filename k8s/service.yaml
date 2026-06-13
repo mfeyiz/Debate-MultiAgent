@@ -1,12 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: logicflow-service
-  namespace: logicflow
+  name: logos-service
 spec:
   type: ClusterIP
   selector:
-    app: logicflow
+    app: logos
   ports:
     - name: http
       port: 8080

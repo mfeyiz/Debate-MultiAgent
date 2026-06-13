@@ -50,8 +50,8 @@ class FakeBert:
         evidence_text: str,
     ) -> tuple[str, float, dict[str, float]]:
         if "desteklemektedir" in evidence_text.lower() or "verimlilik" in evidence_text.lower():
-            return "support", 0.93, {"support": 0.93, "attack": 0.03, "neutral": 0.04}
-        return "neutral", 0.80, {"support": 0.10, "attack": 0.10, "neutral": 0.80}
+            return "support", 0.93, {"support": 0.93, "attack": 0.03, "none": 0.04}
+        return "none", 0.80, {"support": 0.10, "attack": 0.10, "none": 0.80}
 
     def analyze(self, source_text: str, target_text: str, source_type: str, target_type: str):
         from app.services.bert_service import AnalysisResult, RelationPrediction
@@ -63,7 +63,7 @@ class FakeBert:
                 target_text=target_text,
                 relation_type="support",
                 confidence=0.85,
-                probabilities={"support": 0.85, "attack": 0.05, "neutral": 0.10}
+                probabilities={"support": 0.85, "attack": 0.05, "none": 0.10}
             )],
             feedback="İyi bir destekleme kurulmuş."
         )
@@ -87,6 +87,37 @@ class FakeSearchClient:
                 score=0.87,
             )
         ]
+
+
+class RescueBert:
+    """Tiny BERT double for claim rescue unit tests."""
+
+    MAX_COMPONENT_CHARS = 360
+
+    def extract_components(self, text: str, default_type: str) -> list[ArgumentComponent]:
+        return [
+            ArgumentComponent(
+                text="Kaynaklara göre herkes bu gerçeği saklıyor ve medya bunu yayınlamıyor.",
+                component_type="evidence",
+                start_idx=text.index("Kaynaklara"),
+                end_idx=text.index("Kaynaklara") + len("Kaynaklara göre herkes bu gerçeği saklıyor ve medya bunu yayınlamıyor."),
+                confidence=0.99,
+            )
+        ]
+
+    def _text_units(self, text: str):
+        import re
+        for match in re.finditer(r"[^.!?]+(?:[.!?]+|$)", text):
+            start, end = match.span()
+            while start < end and text[start].isspace():
+                start += 1
+            while end > start and text[end - 1].isspace():
+                end -= 1
+            if end > start:
+                yield start, end
+
+    def _is_meaningful_component(self, text: str) -> bool:
+        return len(text) >= 24 and len(text.split()) >= 4
 
 
 @pytest.fixture(scope="function")
@@ -223,3 +254,53 @@ def test_article_parser_prefers_news_body_over_market_widgets() -> None:
     assert "sessiz çalışma ortamı" in parser.text
     assert "Dolar kuru" not in parser.text
     assert "En çok okunan" not in parser.text
+
+
+def test_fact_check_rescues_statistical_and_official_claims() -> None:
+    old_bert = FactCheckService._bert_instance
+    FactCheckService._bert_instance = RescueBert()
+    try:
+        svc = FactCheckService(search_client=FakeSearchClient())
+        text = (
+            "Türkiye ekonomisi 2024 yılında yüzde 10 büyüdü. "
+            "TÜİK verilerine göre yıllık enflasyon 2024 sonunda yüzde 44,38 oldu. "
+            "Kaynaklara göre herkes bu gerçeği saklıyor ve medya bunu yayınlamıyor."
+        )
+        components = svc._enrich_components(svc._extract_article_components(text), text)
+        rescued = [component for component in components if component.component_type == "claim"]
+
+        assert len(rescued) >= 2
+        assert any("yüzde 10" in component.text for component in rescued)
+        assert any("enflasyon" in component.text.lower() for component in rescued)
+        assert {getattr(component, "_extraction_reason", "") for component in rescued} >= {
+            "statistical_rescue"
+        }
+    finally:
+        FactCheckService._bert_instance = old_bert
+
+
+def test_source_quality_gate_rejects_boilerplate_homepages() -> None:
+    scored = FactCheckService._score_source_candidate(
+        "Buna rağmen haberde uzman görüşü veya karşı görüş yer almıyor.",
+        title="PolitiFact",
+        url="https://www.politifact.com",
+        snippet="[Menu](https://www.politifact.com/#). [Sign up](https://www.politifact.com/). [Read More](https://www.politifact.com/article/list/).",
+        search_score=0.32,
+        source_domain="politifact.com",
+        is_archive=True,
+    )
+
+    assert scored["accepted_for_verdict"] is False
+    assert scored["source_quality"] in {"homepage", "boilerplate", "low_relevance", "archive_low_coverage"}
+
+
+def test_public_data_patterns_detect_turkish_percentage_claims() -> None:
+    from app.services.public_data_client import PublicDataSourceClient
+
+    stats = PublicDataSourceClient.detect_statistical_patterns(
+        "Türkiye ekonomisi 2024 yılında yüzde 10 büyüdü ve enflasyon yüzde 44,38 oldu."
+    )
+
+    assert stats["is_statistical"] is True
+    assert "büyüme" in stats["extracted_values"]
+    assert "enflasyon_yuzde" in stats["extracted_values"]

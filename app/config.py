@@ -69,8 +69,33 @@ class Config:
     )
 
     # ModernBERT pipeline thresholds
-    COMPONENT_MODEL_DIR = os.environ.get("COMPONENT_MODEL_DIR", str(BASE_DIR / "models/component_classifier/final"))
-    RELATION_MODEL_DIR = os.environ.get("RELATION_MODEL_DIR", str(BASE_DIR / "models/relation_classifier/final"))
+    MODEL_BASE_DIR = os.environ.get("MODEL_BASE_DIR", str(BASE_DIR / "models"))
+    COMPONENT_MODEL_DIR = os.environ.get(
+        "COMPONENT_MODEL_DIR",
+        str(Path(MODEL_BASE_DIR) / "component_classifier/final"),
+    )
+    RELATION_MODEL_DIR = os.environ.get(
+        "RELATION_MODEL_DIR",
+        str(Path(MODEL_BASE_DIR) / "relation_classifier/final"),
+    )
+    MODEL_GCS_BUCKET = os.environ.get("MODEL_GCS_BUCKET", "")
+    MODEL_GCS_PREFIX = os.environ.get("MODEL_GCS_PREFIX", "modernbert")
+    COMPONENT_MODEL_GCS_PREFIX = os.environ.get(
+        "COMPONENT_MODEL_GCS_PREFIX",
+        f"{MODEL_GCS_PREFIX.rstrip('/')}/component_classifier/final",
+    )
+    RELATION_MODEL_GCS_PREFIX = os.environ.get(
+        "RELATION_MODEL_GCS_PREFIX",
+        f"{MODEL_GCS_PREFIX.rstrip('/')}/relation_classifier/final",
+    )
+    MODEL_REQUIRED_FILES = tuple(
+        file_name.strip()
+        for file_name in os.environ.get(
+            "MODEL_REQUIRED_FILES",
+            "config.json,model.safetensors,tokenizer.json,tokenizer_config.json",
+        ).split(",")
+        if file_name.strip()
+    )
     EVIDENCE_STRENGTH_THRESHOLD = float(os.environ.get("EVIDENCE_STRENGTH_THRESHOLD", "0.65"))
     PIPELINE_EVAL_INTERVAL = int(os.environ.get("PIPELINE_EVAL_INTERVAL", "2"))
 
@@ -78,7 +103,9 @@ class Config:
     MAX_DEBATE_ROUNDS = int(os.environ.get("MAX_DEBATE_ROUNDS", "5"))
 
     # Server / infrastructure
-    PORT = int(os.environ.get("PORT", "5000"))
+    PORT = int(os.environ.get("PORT", "8080"))
+    GOOGLE_CLOUD_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get("GCP_PROJECT", "")
+    SQLITE_BUSY_TIMEOUT_MS = int(os.environ.get("SQLITE_BUSY_TIMEOUT_MS", "30000"))
 
     # Redis (for multi-pod SSE)
     REDIS_URL = os.environ.get("REDIS_URL", "")

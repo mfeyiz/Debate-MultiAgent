@@ -1,70 +1,69 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: logicflow-app
-  namespace: logicflow
+  name: logos-app
   labels:
-    app: logicflow
+    app: logos
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: logicflow
+      app: logos
   template:
     metadata:
       labels:
-        app: logicflow
+        app: logos
     spec:
-      serviceAccountName: logicflow-app
+      serviceAccountName: logos-app
       containers:
         - name: app
-          image: logicflow-image-placeholder
+          image: logos-image-placeholder
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
               name: http
           envFrom:
             - configMapRef:
-                name: logicflow-config
+                name: logos-config
           env:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: logicflow-secrets
+                  name: logos-secrets
                   key: DATABASE_URL
             - name: REDIS_URL
               valueFrom:
                 secretKeyRef:
-                  name: logicflow-secrets
+                  name: logos-secrets
                   key: REDIS_URL
                   optional: true
             - name: OPENROUTER_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: logicflow-secrets
+                  name: logos-secrets
                   key: OPENROUTER_API_KEY
                   optional: true
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: logicflow-secrets
+                  name: logos-secrets
                   key: SECRET_KEY
             - name: GOOGLE_FACTCHECK_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: logicflow-secrets
+                  name: logos-secrets
                   key: GOOGLE_FACTCHECK_API_KEY
                   optional: true
             - name: TCMB_EVDS_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: logicflow-secrets
+                  name: logos-secrets
                   key: TCMB_EVDS_API_KEY
                   optional: true
             - name: TUIK_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: logicflow-secrets
+                  name: logos-secrets
                   key: TUIK_API_KEY
                   optional: true
           resources:

@@ -1,13 +1,12 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: logicflow-hpa
-  namespace: logicflow
+  name: logos-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: logicflow-app
+    name: logos-app
   minReplicas: 1
   maxReplicas: 4
   metrics:

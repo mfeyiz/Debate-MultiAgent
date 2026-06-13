@@ -15,53 +15,53 @@
             theme: {
                 extend: {
                     colors: {
-                        "tertiary-container": "#e8f1dd",
-                        "tertiary": "#5c6f2b",
-                        "surface-tint": "#0f5c58",
-                        "on-error-container": "#7f1d1d",
-                        "on-error": "#ffffff",
-                        "on-primary-container": "#063f3f",
-                        "inverse-primary": "#9edbd0",
-                        "primary-fixed": "#d9f1ea",
-                        "secondary": "#0c7c6b",
-                        "on-primary": "#ffffff",
-                        "on-primary-fixed": "#062f2f",
-                        "surface": "#f7f9f4",
-                        "primary-container": "#d9f1ea",
-                        "secondary-fixed": "#caeee5",
-                        "surface-container-high": "#e7eee7",
-                        "on-secondary-fixed-variant": "#07564b",
-                        "inverse-surface": "#263230",
-                        "error": "#b4473f",
-                        "surface-container-low": "#f0f5ef",
-                        "secondary-fixed-dim": "#9edbd0",
-                        "on-tertiary-container": "#2d3b11",
-                        "on-tertiary": "#ffffff",
-                        "surface-container-highest": "#dfe8df",
-                        "secondary-container": "#bde9df",
-                        "tertiary-fixed": "#e8f1dd",
-                        "on-tertiary-fixed-variant": "#4a5f1f",
-                        "on-surface-variant": "#4c5a56",
-                        "surface-container": "#eaf1ea",
-                        "on-secondary-container": "#053f37",
-                        "on-secondary": "#ffffff",
-                        "surface-bright": "#fbfdf8",
-                        "outline-variant": "#c6d3cc",
-                        "tertiary-fixed-dim": "#cadab8",
-                        "on-primary-fixed-variant": "#0b5b58",
-                        "surface-dim": "#d8e1d8",
-                        "primary": "#064848",
-                        "background": "#f4f8f1",
-                        "on-tertiary-fixed": "#223006",
-                        "surface-variant": "#e1e9e0",
-                        "on-surface": "#17211f",
-                        "surface-container-lowest": "#ffffff",
-                        "primary-fixed-dim": "#afdcd3",
-                        "outline": "#6f8079",
-                        "inverse-on-surface": "#edf4ef",
-                        "error-container": "#ffe0dc",
-                        "on-secondary-fixed": "#00201b",
-                        "on-background": "#17211f"
+                        "tertiary-container": "var(--color-tertiary-container)",
+                        "tertiary": "var(--color-tertiary)",
+                        "surface-tint": "var(--color-surface-tint)",
+                        "on-error-container": "var(--color-on-error-container)",
+                        "on-error": "var(--color-on-error)",
+                        "on-primary-container": "var(--color-on-primary-container)",
+                        "inverse-primary": "var(--color-inverse-primary)",
+                        "primary-fixed": "var(--color-primary-fixed)",
+                        "secondary": "var(--color-secondary)",
+                        "on-primary": "var(--color-on-primary)",
+                        "on-primary-fixed": "var(--color-on-primary-fixed)",
+                        "surface": "var(--color-surface)",
+                        "primary-container": "var(--color-primary-container)",
+                        "secondary-fixed": "var(--color-secondary-fixed)",
+                        "surface-container-high": "var(--color-surface-container-high)",
+                        "on-secondary-fixed-variant": "var(--color-on-secondary-fixed-variant)",
+                        "inverse-surface": "var(--color-inverse-surface)",
+                        "error": "var(--color-error)",
+                        "surface-container-low": "var(--color-surface-container-low)",
+                        "secondary-fixed-dim": "var(--color-secondary-fixed-dim)",
+                        "on-tertiary-container": "var(--color-on-tertiary-container)",
+                        "on-tertiary": "var(--color-on-tertiary)",
+                        "surface-container-highest": "var(--color-surface-container-highest)",
+                        "secondary-container": "var(--color-secondary-container)",
+                        "tertiary-fixed": "var(--color-tertiary-fixed)",
+                        "on-tertiary-fixed-variant": "var(--color-on-tertiary-fixed-variant)",
+                        "on-surface-variant": "var(--color-on-surface-variant)",
+                        "surface-container": "var(--color-surface-container)",
+                        "on-secondary-container": "var(--color-on-secondary-container)",
+                        "on-secondary": "var(--color-on-secondary)",
+                        "surface-bright": "var(--color-surface-bright)",
+                        "outline-variant": "var(--color-outline-variant)",
+                        "tertiary-fixed-dim": "var(--color-tertiary-fixed-dim)",
+                        "on-primary-fixed-variant": "var(--color-on-primary-fixed-variant)",
+                        "surface-dim": "var(--color-surface-dim)",
+                        "primary": "var(--color-primary)",
+                        "background": "var(--color-background)",
+                        "on-tertiary-fixed": "var(--color-on-tertiary-fixed)",
+                        "surface-variant": "var(--color-surface-variant)",
+                        "on-surface": "var(--color-on-surface)",
+                        "surface-container-lowest": "var(--color-surface-container-lowest)",
+                        "primary-fixed-dim": "var(--color-primary-fixed-dim)",
+                        "outline": "var(--color-outline)",
+                        "inverse-on-surface": "var(--color-inverse-on-surface)",
+                        "error-container": "var(--color-error-container)",
+                        "on-secondary-fixed": "var(--color-on-secondary-fixed)",
+                        "on-background": "var(--color-on-background)"
                     },
                     borderRadius: {
                         DEFAULT: "0.5rem",
@@ -101,13 +101,113 @@
         }
     </script>
     <style>
+        :root {
+            --color-primary: #064848;
+            --color-secondary: #0c7c6b;
+            --color-background: #f4f8f1;
+            --color-surface: #f7f9f4;
+            --color-on-surface: #17211f;
+            --color-on-surface-variant: #4c5a56;
+            --color-surface-container-lowest: #ffffff;
+            --color-surface-container-low: #f0f5ef;
+            --color-surface-container: #eaf1ea;
+            --color-surface-container-high: #e7eee7;
+            --color-surface-container-highest: #dfe8df;
+            --color-outline: #6f8079;
+            --color-outline-variant: #c6d3cc;
+            --color-primary-container: #d9f1ea;
+            --color-on-primary-container: #063f3f;
+            --color-secondary-container: #bde9df;
+            --color-on-secondary-container: #053f37;
+            --color-tertiary-container: #e8f1dd;
+            --color-on-tertiary-container: #2d3b11;
+            --color-tertiary: #5c6f2b;
+            --color-error: #b4473f;
+            --color-error-container: #ffe0dc;
+            --color-on-error-container: #7f1d1d;
+            --color-on-primary: #ffffff;
+            --color-on-secondary: #ffffff;
+            --color-on-tertiary: #ffffff;
+            --color-surface-bright: #fbfdf8;
+            --color-surface-tint: #0f5c58;
+            --color-on-error: #ffffff;
+            --color-inverse-primary: #9edbd0;
+            --color-primary-fixed: #d9f1ea;
+            --color-on-primary-fixed: #062f2f;
+            --color-secondary-fixed: #caeee5;
+            --color-on-secondary-fixed-variant: #07564b;
+            --color-inverse-surface: #263230;
+            --color-secondary-fixed-dim: #9edbd0;
+            --color-tertiary-fixed: #e8f1dd;
+            --color-on-tertiary-fixed-variant: #4a5f1f;
+            --color-tertiary-fixed-dim: #cadab8;
+            --color-on-primary-fixed-variant: #0b5b58;
+            --color-surface-dim: #d8e1d8;
+            --color-on-tertiary-fixed: #223006;
+            --color-surface-variant: #e1e9e0;
+            --color-primary-fixed-dim: #afdcd3;
+            --color-inverse-on-surface: #edf4ef;
+            --color-on-secondary-fixed: #00201b;
+            --color-on-background: #17211f;
+        }
+
+        .dark {
+            --color-primary: #38bdf8;
+            --color-secondary: #0ea5e9;
+            --color-background: #090d16;
+            --color-surface: #0f172a;
+            --color-on-surface: #f8fafc;
+            --color-on-surface-variant: #94a3b8;
+            --color-surface-container-lowest: #0d1320;
+            --color-surface-container-low: #131b2e;
+            --color-surface-container: #1e293b;
+            --color-surface-container-high: #334155;
+            --color-surface-container-highest: #475569;
+            --color-outline: #64748b;
+            --color-outline-variant: #1e293b;
+            --color-primary-container: #0369a1;
+            --color-on-primary-container: #e0f2fe;
+            --color-secondary-container: #0c4a6e;
+            --color-on-secondary-container: #bae6fd;
+            --color-tertiary-container: #312e81;
+            --color-on-tertiary-container: #e0e7ff;
+            --color-tertiary: #818cf8;
+            --color-error: #f87171;
+            --color-error-container: #7f1d1d;
+            --color-on-error-container: #fee2e2;
+            --color-on-primary: #0f172a;
+            --color-on-secondary: #0f172a;
+            --color-on-tertiary: #0f172a;
+            --color-surface-bright: #1e293b;
+            --color-surface-tint: #38bdf8;
+            --color-on-error: #450a0a;
+            --color-inverse-primary: #0284c7;
+            --color-primary-fixed: #0369a1;
+            --color-on-primary-fixed: #38bdf8;
+            --color-secondary-fixed: #0c4a6e;
+            --color-on-secondary-fixed-variant: #0ea5e9;
+            --color-inverse-surface: #f8fafc;
+            --color-secondary-fixed-dim: #0284c7;
+            --color-tertiary-fixed: #312e81;
+            --color-on-tertiary-fixed-variant: #818cf8;
+            --color-tertiary-fixed-dim: #4f46e5;
+            --color-on-primary-fixed-variant: #38bdf8;
+            --color-surface-dim: #0d1320;
+            --color-on-tertiary-fixed: #e0e7ff;
+            --color-surface-variant: #1e293b;
+            --color-primary-fixed-dim: #0284c7;
+            --color-inverse-on-surface: #090d16;
+            --color-on-secondary-fixed: #0ea5e9;
+            --color-on-background: #f8fafc;
+        }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #e4e2e4; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #c6c6cd; }
+        ::-webkit-scrollbar-thumb { background: var(--color-outline-variant); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-outline); }
         .fill-icon { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .brand-mark {
             background:
@@ -123,12 +223,16 @@
             box-shadow: 0 14px 44px rgba(18, 42, 36, 0.08);
             backdrop-filter: blur(18px);
         }
+        /* Custom styles for popups & modals */
+        kbd {
+            font-family: monospace;
+        }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-background text-on-surface font-body-md text-body-md h-screen flex overflow-hidden antialiased">
     <!-- SideNavBar -->
-    <nav class="nav-island bg-surface-container-lowest/90 border border-outline-variant h-[calc(100vh-32px)] m-md rounded-[28px] left-0 w-64 flex flex-col justify-between py-lg z-20 flex-shrink-0 overflow-hidden">
+    <nav class="nav-island bg-surface-container-lowest border border-outline-variant h-[calc(100vh-32px)] m-md rounded-[28px] left-0 w-64 flex flex-col justify-between py-lg z-20 flex-shrink-0 overflow-hidden">
         <div class="px-lg">
             <div class="flex items-center gap-sm mb-lg">
                 <div class="brand-mark w-10 h-10 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
@@ -210,26 +314,71 @@
         <header class="top-island bg-surface/80 border border-outline-variant flex justify-between items-center mx-md mt-md rounded-[24px] px-lg h-xl flex-shrink-0 z-10 relative">
             <div class="flex-1 max-w-md flex items-center">
                 <div class="relative w-full" id="global-search-container">
-                    <span class="material-symbols-outlined absolute left-sm top-1/2 transform -translate-y-1/2 text-on-surface-variant">search</span>
-                    <input type="text" id="global-search-input" placeholder="Tartışma veya ajan ara..." class="w-full bg-surface-container-lowest/90 border border-outline-variant rounded-full pl-[36px] pr-sm py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors h-10">
-                    <div id="global-search-results" class="absolute top-full left-0 right-0 mt-sm bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg hidden z-50 max-h-64 overflow-y-auto"></div>
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant">search</span>
+                    <input type="text" id="global-search-input" placeholder="Tartışma veya ajan ara..." class="w-full bg-surface-container-lowest/90 border border-outline-variant rounded-full pl-[36px] pr-[36px] py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/40 transition-all h-10 shadow-sm focus:shadow-[0_0_12px_rgba(12,124,107,0.15)]">
+                    <kbd class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-surface-container-high border border-outline-variant rounded px-1.5 py-0.5 text-[10px] font-code-mono text-on-surface-variant shadow-sm pointer-events-none">/</kbd>
+                    <div id="global-search-results" class="absolute top-full left-0 right-0 mt-sm bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg hidden z-50 max-h-64 overflow-y-auto divide-y divide-outline-variant"></div>
                 </div>
             </div>
             <div class="flex items-center gap-lg">
                 <div class="flex items-center gap-xs">
-                    <div class="w-2 h-2 rounded-full bg-secondary"></div>
+                    <div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
                     <span class="font-label-caps text-label-caps text-on-surface-variant">Oturum: Aktif</span>
                 </div>
                 <div class="flex items-center gap-sm">
-                    <button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors scale-100 active:scale-[0.98] duration-150 flex items-center justify-center">
-                        <span class="material-symbols-outlined">notifications</span>
-                    </button>
-                    <button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors scale-100 active:scale-[0.98] duration-150 flex items-center justify-center">
+                    <!-- Notifications Button -->
+                    <div class="relative" id="notification-container">
+                        <button id="notification-bell-btn" class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors scale-100 active:scale-[0.98] duration-150 flex items-center justify-center relative">
+                            <span class="material-symbols-outlined">notifications</span>
+                            <span id="notification-badge" class="absolute top-[6px] right-[6px] w-2 h-2 bg-error rounded-full hidden"></span>
+                        </button>
+                        <div id="notification-dropdown" class="absolute right-0 mt-sm w-80 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg hidden z-50 py-sm">
+                            <div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50 rounded-t-xl">
+                                <span class="font-headline-md text-[14px] text-on-surface font-bold">Bildirimler</span>
+                                <button id="notification-clear-btn" class="text-[11px] text-error hover:underline font-label-caps">Temizle</button>
+                            </div>
+                            <div id="notification-list" class="max-h-64 overflow-y-auto divide-y divide-outline-variant/50">
+                                <!-- Dynamic -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Button -->
+                    <button id="settings-trigger-btn" class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors scale-100 active:scale-[0.98] duration-150 flex items-center justify-center">
                         <span class="material-symbols-outlined">settings</span>
                     </button>
                 </div>
-                <div class="w-10 h-10 rounded-full border border-outline-variant overflow-hidden cursor-pointer hover:border-outline transition-colors">
-                    <img src="https://ui-avatars.com/api/?name=Logos&background=064848&color=fff" alt="User Profile" class="w-full h-full object-cover">
+                
+                <!-- Profile Avatar Button -->
+                <div class="relative" id="profile-container">
+                    <div id="profile-trigger-btn" class="w-10 h-10 rounded-full border border-outline-variant overflow-hidden cursor-pointer hover:border-outline transition-colors">
+                        <img src="https://ui-avatars.com/api/?name=Logos&background=064848&color=fff" alt="User Profile" class="w-full h-full object-cover">
+                    </div>
+                    <div id="profile-dropdown" class="absolute right-0 mt-sm w-64 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg hidden z-50 p-md space-y-sm">
+                        <div class="flex items-center gap-sm pb-sm border-b border-outline-variant">
+                            <div class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-[14px] border border-secondary/20">
+                                LG
+                            </div>
+                            <div>
+                                <h4 class="font-body-md font-bold text-on-surface">logos Admin</h4>
+                                <span class="text-[10px] text-on-surface-variant font-label-caps">Sistem Yöneticisi</span>
+                            </div>
+                        </div>
+                        <div class="space-y-xs pt-xs font-body-md text-[12px] text-on-surface-variant">
+                            <div class="flex justify-between">
+                                <span>Oturum Süresi:</span>
+                                <span id="session-timer" class="font-code-mono font-bold text-secondary">00:00:00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Toplam Ajan:</span>
+                                <span id="profile-agents-count" class="font-bold text-on-surface">-</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Toplam Tartışma:</span>
+                                <span id="profile-debates-count" class="font-bold text-on-surface">-</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -240,38 +389,295 @@
         </main>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm hidden z-50 flex items-center justify-center transition-all duration-200">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl w-full max-w-lg p-lg shadow-xl relative m-md">
+            <button id="settings-close-btn" class="absolute top-md right-md text-on-surface-variant hover:text-on-surface flex items-center justify-center p-xs rounded-full hover:bg-surface-container-low transition-colors">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+            <h3 class="font-headline-lg text-headline-lg text-primary mb-md">Sistem Ayarları</h3>
+            
+            <div class="space-y-lg">
+                <!-- Theme Option -->
+                <div class="flex items-center justify-between pb-md border-b border-outline-variant">
+                    <div>
+                        <h4 class="font-body-md font-bold text-on-surface">Koyu Tema (Dark Mode)</h4>
+                        <p class="text-[12px] text-on-surface-variant">Arayüz renk şemasını değiştirin.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer select-none">
+                        <input type="checkbox" id="dark-mode-toggle" class="sr-only peer">
+                        <div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+                    </label>
+                </div>
+
+                <!-- API Key Statuses -->
+                <div>
+                    <h4 class="font-body-md font-bold text-on-surface mb-xs">API Entegrasyon Durumu</h4>
+                    <p class="text-[12px] text-on-surface-variant mb-md">Sistem özellikleri için kullanılan API anahtarlarının varlığı:</p>
+                    <div id="api-status-list" class="space-y-xs">
+                        <div class="flex items-center justify-between p-sm bg-surface-container-low/50 rounded-lg border border-outline-variant/40 animate-pulse">
+                            <span class="font-code-mono text-[12px] text-on-surface font-semibold">Yükleniyor...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Guidance -->
+                <div class="bg-surface-container border border-outline-variant/60 rounded-xl p-md">
+                    <h5 class="font-label-caps text-label-caps text-secondary font-bold mb-xs flex items-center gap-xs">
+                        <span class="material-symbols-outlined text-[16px]">info</span>
+                        Nasıl Anahtar Ekler veya Değiştiririm?
+                    </h5>
+                    <p class="text-[11px] text-on-surface-variant leading-relaxed">
+                        API anahtarlarını projenizin kök dizinindeki <code>.env</code> dosyasına ekleyerek aktifleştirebilirsiniz. Değişikliklerin geçerli olması için sunucuyu yeniden başlatmanız gerekir.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-    // Global search functionality
+    // Global search, theme, notifications, settings, and profile functionality
     (function() {
+        // --- 1. Global Search ---
         const searchInput = document.getElementById('global-search-input');
         const searchResults = document.getElementById('global-search-results');
-        if (!searchInput || !searchResults) return;
+        if (searchInput && searchResults) {
+            let searchTimeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                const query = e.target.value.trim().toLowerCase();
+                if (query.length < 2) {
+                    searchResults.classList.add('hidden');
+                    return;
+                }
+                searchTimeout = setTimeout(() => performSearch(query), 300);
+            });
 
-        let searchTimeout;
-        searchInput.addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            const query = e.target.value.trim().toLowerCase();
-            if (query.length < 2) {
-                searchResults.classList.add('hidden');
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    searchResults.classList.add('hidden');
+                    searchInput.blur();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!document.getElementById('global-search-container').contains(e.target)) {
+                    searchResults.classList.add('hidden');
+                }
+            });
+
+            async function performSearch(query) {
+                try {
+                    const [debatesRes, agentsRes] = await Promise.all([
+                        fetch('/api/debates'),
+                        fetch('/api/agents')
+                    ]);
+                    const debates = await debatesRes.json();
+                    const agents = await agentsRes.json();
+
+                    const matchedDebates = (debates || []).filter(d =>
+                        d.topic.toLowerCase().includes(query) ||
+                        d.status.toLowerCase().includes(query)
+                    ).slice(0, 4);
+
+                    const matchedAgents = (agents || []).filter(a =>
+                        a.name.toLowerCase().includes(query) ||
+                        a.role.toLowerCase().includes(query)
+                    ).slice(0, 3);
+
+                    renderResults(matchedDebates, matchedAgents);
+                } catch (err) {
+                    console.error('Search error:', err);
+                }
+            }
+
+            function renderResults(debates, agents) {
+                if (!debates.length && !agents.length) {
+                    searchResults.innerHTML = '<div class="p-md text-on-surface-variant font-body-md text-body-md">Sonuç bulunamadı</div>';
+                    searchResults.classList.remove('hidden');
+                    return;
+                }
+
+                let html = '';
+                if (debates.length) {
+                    html += '<div class="p-sm border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant bg-surface-container-low/50">Tartışmalar</div>';
+                    debates.forEach(d => {
+                        html += `
+                            <a href="/debate/${d.id}" class="flex items-center gap-sm p-md hover:bg-surface-container transition-colors">
+                                <span class="material-symbols-outlined text-on-surface-variant text-[18px]">forum</span>
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-body-md text-body-md text-on-surface truncate">${escapeHtml(d.topic)}</div>
+                                    <div class="font-body-md text-[12px] text-on-surface-variant">${d.status.toUpperCase()} · Tur ${d.current_round}/${d.max_rounds}</div>
+                                </div>
+                            </a>
+                        `;
+                    });
+                }
+                if (agents.length) {
+                    html += '<div class="p-sm border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant bg-surface-container-low/50">Ajanlar</div>';
+                    agents.forEach(a => {
+                        html += `
+                            <a href="/agents" class="flex items-center gap-sm p-md hover:bg-surface-container transition-colors">
+                                <span class="material-symbols-outlined text-on-surface-variant text-[18px]">smart_toy</span>
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-body-md text-body-md text-on-surface truncate">${escapeHtml(a.name)}</div>
+                                    <div class="font-body-md text-[12px] text-on-surface-variant">${a.role.toUpperCase()}</div>
+                                </div>
+                            </a>
+                        `;
+                    });
+                }
+                searchResults.innerHTML = html;
+                searchResults.classList.remove('hidden');
+            }
+        }
+
+        // Keyboard shortcut for search
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/' && document.activeElement !== searchInput && 
+                document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                if (searchInput) {
+                    searchInput.focus();
+                    searchInput.select();
+                }
+            }
+        });
+
+        // --- 2. Dark Mode Toggle ---
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+            if (darkModeToggle) darkModeToggle.checked = true;
+        } else {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+            if (darkModeToggle) darkModeToggle.checked = false;
+        }
+
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.classList.remove('light');
+                    localStorage.setItem('theme', 'dark');
+                    window.addNotification && window.addNotification('Koyu tema aktif edildi.', 'info');
+                } else {
+                    document.documentElement.classList.add('light');
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    window.addNotification && window.addNotification('Açık tema aktif edildi.', 'info');
+                }
+            });
+        }
+
+        // --- 3. Notifications Dropdown ---
+        const notificationBell = document.getElementById('notification-bell-btn');
+        const notificationDropdown = document.getElementById('notification-dropdown');
+        const notificationBadge = document.getElementById('notification-badge');
+        const notificationList = document.getElementById('notification-list');
+        const notificationClear = document.getElementById('notification-clear-btn');
+
+        // Add Notification Globally
+        window.addNotification = function(title, type = 'info') {
+            const list = JSON.parse(localStorage.getItem('logos_notifications') || '[]');
+            list.unshift({
+                id: Date.now(),
+                title,
+                type,
+                time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+            });
+            if (list.length > 8) list.pop();
+            localStorage.setItem('logos_notifications', JSON.stringify(list));
+            updateNotificationBadge();
+            renderNotifications();
+        };
+
+        function updateNotificationBadge() {
+            const list = JSON.parse(localStorage.getItem('logos_notifications') || '[]');
+            if (list.length > 0) {
+                notificationBadge.classList.remove('hidden');
+            } else {
+                notificationBadge.classList.add('hidden');
+            }
+        }
+
+        function renderNotifications() {
+            if (!notificationList) return;
+            const list = JSON.parse(localStorage.getItem('logos_notifications') || '[]');
+            if (list.length === 0) {
+                notificationList.innerHTML = `
+                    <div class="p-lg text-center text-on-surface-variant font-body-md">
+                        <span class="material-symbols-outlined text-[32px] text-outline-variant block mb-sm">notifications_off</span>
+                        Yeni bildirim yok.
+                    </div>
+                `;
                 return;
             }
-            searchTimeout = setTimeout(() => performSearch(query), 300);
-        });
+            
+            const typeIcons = {
+                info: 'info',
+                success: 'check_circle',
+                error: 'error',
+                warning: 'warning'
+            };
+            
+            const typeColors = {
+                info: 'text-secondary',
+                success: 'text-secondary',
+                error: 'text-error',
+                warning: 'text-tertiary'
+            };
 
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                searchResults.classList.add('hidden');
-                searchInput.blur();
-            }
-        });
+            notificationList.innerHTML = list.map(item => `
+                <div class="p-md hover:bg-surface-container-low transition-colors flex items-start gap-sm">
+                    <span class="material-symbols-outlined ${typeColors[item.type || 'info']} text-[18px] mt-[2px]">${typeIcons[item.type || 'info']}</span>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-body-md text-on-surface text-[13px] leading-relaxed break-words">${escapeHtml(item.title)}</p>
+                        <span class="font-code-mono text-[10px] text-on-surface-variant block mt-1">${item.time}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-        document.addEventListener('click', (e) => {
-            if (!document.getElementById('global-search-container').contains(e.target)) {
-                searchResults.classList.add('hidden');
-            }
-        });
+        if (notificationBell && notificationDropdown) {
+            notificationBell.addEventListener('click', (e) => {
+                e.stopPropagation();
+                notificationDropdown.classList.toggle('hidden');
+                closeDropdownsExcept('notification');
+                renderNotifications();
+                // Clear badge on open
+                notificationBadge.classList.add('hidden');
+            });
+        }
 
-        async function performSearch(query) {
+        if (notificationClear) {
+            notificationClear.addEventListener('click', (e) => {
+                e.stopPropagation();
+                localStorage.setItem('logos_notifications', '[]');
+                updateNotificationBadge();
+                renderNotifications();
+            });
+        }
+
+        // --- 4. Profile Dropdown & Session Timer ---
+        const profileTrigger = document.getElementById('profile-trigger-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        
+        let sessionSeconds = 0;
+        const timerEl = document.getElementById('session-timer');
+        setInterval(() => {
+            sessionSeconds++;
+            const hours = String(Math.floor(sessionSeconds / 3600)).padStart(2, '0');
+            const minutes = String(Math.floor((sessionSeconds % 3600) / 60)).padStart(2, '0');
+            const seconds = String(sessionSeconds % 60).padStart(2, '0');
+            if (timerEl) timerEl.textContent = `${hours}:${minutes}:${seconds}`;
+        }, 1000);
+
+        async function fetchProfileStats() {
             try {
                 const [debatesRes, agentsRes] = await Promise.all([
                     fetch('/api/debates'),
@@ -279,62 +685,116 @@
                 ]);
                 const debates = await debatesRes.json();
                 const agents = await agentsRes.json();
-
-                const matchedDebates = (debates || []).filter(d =>
-                    d.topic.toLowerCase().includes(query) ||
-                    d.status.toLowerCase().includes(query)
-                ).slice(0, 4);
-
-                const matchedAgents = (agents || []).filter(a =>
-                    a.name.toLowerCase().includes(query) ||
-                    a.role.toLowerCase().includes(query)
-                ).slice(0, 3);
-
-                renderResults(matchedDebates, matchedAgents);
+                
+                const debatesCountEl = document.getElementById('profile-debates-count');
+                const agentsCountEl = document.getElementById('profile-agents-count');
+                
+                if (debatesCountEl) debatesCountEl.textContent = debates.length;
+                if (agentsCountEl) agentsCountEl.textContent = agents.length;
             } catch (err) {
-                console.error('Search error:', err);
+                console.error("Stats error:", err);
             }
         }
 
-        function renderResults(debates, agents) {
-            if (!debates.length && !agents.length) {
-                searchResults.innerHTML = '<div class="p-md text-on-surface-variant font-body-md text-body-md">Sonuç bulunamadı</div>';
-                searchResults.classList.remove('hidden');
-                return;
-            }
-
-            let html = '';
-            if (debates.length) {
-                html += '<div class="p-sm border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant">Tartışmalar</div>';
-                debates.forEach(d => {
-                    html += `
-                        <a href="/debate/${d.id}" class="flex items-center gap-sm p-md hover:bg-surface-container transition-colors">
-                            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">forum</span>
-                            <div class="flex-1 min-w-0">
-                                <div class="font-body-md text-body-md text-on-surface truncate">${escapeHtml(d.topic)}</div>
-                                <div class="font-body-md text-[12px] text-on-surface-variant">${d.status.toUpperCase()} · Tur ${d.current_round}/${d.max_rounds}</div>
-                            </div>
-                        </a>
-                    `;
-                });
-            }
-            if (agents.length) {
-                html += '<div class="p-sm border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant">Ajanlar</div>';
-                agents.forEach(a => {
-                    html += `
-                        <a href="/agents" class="flex items-center gap-sm p-md hover:bg-surface-container transition-colors">
-                            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">smart_toy</span>
-                            <div class="flex-1 min-w-0">
-                                <div class="font-body-md text-body-md text-on-surface truncate">${escapeHtml(a.name)}</div>
-                                <div class="font-body-md text-[12px] text-on-surface-variant">${a.role.toUpperCase()}</div>
-                            </div>
-                        </a>
-                    `;
-                });
-            }
-            searchResults.innerHTML = html;
-            searchResults.classList.remove('hidden');
+        if (profileTrigger && profileDropdown) {
+            profileTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('hidden');
+                closeDropdownsExcept('profile');
+                if (!profileDropdown.classList.contains('hidden')) {
+                    fetchProfileStats();
+                }
+            });
         }
+
+        // --- 5. Settings Modal & API Config ---
+        const settingsTrigger = document.getElementById('settings-trigger-btn');
+        const settingsModal = document.getElementById('settings-modal');
+        const settingsClose = document.getElementById('settings-close-btn');
+        const apiStatusList = document.getElementById('api-status-list');
+
+        async function fetchApiStatuses() {
+            if (!apiStatusList) return;
+            try {
+                const res = await fetch('/api/config-status');
+                if (!res.ok) throw new Error("Anahtar durumu alınamadı.");
+                const status = await res.json();
+                
+                const apiKeys = [
+                    { name: 'OPENROUTER_API_KEY', label: 'OpenRouter / LLM', configured: status.OPENROUTER_API_KEY, required: true },
+                    { name: 'TAVILY_API_KEY', label: 'Tavily Arama', configured: status.TAVILY_API_KEY, required: false },
+                    { name: 'GOOGLE_FACTCHECK_API_KEY', label: 'Google Fact Check', configured: status.GOOGLE_FACTCHECK_API_KEY, required: false },
+                    { name: 'TCMB_EVDS_API_KEY', label: 'TCMB EVDS', configured: status.TCMB_EVDS_API_KEY, required: false },
+                    { name: 'TUIK_API_KEY', label: 'TÜİK Bülten', configured: status.TUIK_API_KEY, required: false }
+                ];
+                
+                apiStatusList.innerHTML = apiKeys.map(key => {
+                    const icon = key.configured ? 'check_circle' : 'cancel';
+                    const iconColor = key.configured ? 'text-secondary' : 'text-error';
+                    const text = key.configured ? 'Aktif' : (key.required ? 'Zorunlu Eksik' : 'Devre Dışı');
+                    const badgeClass = key.configured ? 'bg-secondary-container text-on-secondary-container' : 'bg-error-container text-on-error-container';
+                    return `
+                        <div class="flex items-center justify-between p-sm bg-surface-container-low/50 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low transition-all">
+                            <div>
+                                <span class="font-body-md font-bold text-on-surface block text-[13px]">${key.label}</span>
+                                <span class="font-code-mono text-[10px] text-on-surface-variant block mt-xs">${key.name}</span>
+                            </div>
+                            <span class="inline-flex items-center gap-xs px-2 py-0.5 rounded text-[10px] font-label-caps font-bold ${badgeClass}">
+                                <span class="material-symbols-outlined ${iconColor} text-[14px] fill-icon">${icon}</span>
+                                ${text}
+                            </span>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error("API status load error:", err);
+                apiStatusList.innerHTML = `<div class="p-sm text-error bg-error-container rounded-lg font-body-md">${escapeHtml(err.message)}</div>`;
+            }
+        }
+
+        if (settingsTrigger && settingsModal) {
+            settingsTrigger.addEventListener('click', (e) => {
+                settingsModal.classList.remove('hidden');
+                closeDropdownsExcept(null);
+                fetchApiStatuses();
+            });
+        }
+
+        if (settingsClose && settingsModal) {
+            settingsClose.addEventListener('click', () => {
+                settingsModal.classList.add('hidden');
+            });
+        }
+
+        if (settingsModal) {
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.classList.add('hidden');
+                }
+            });
+        }
+
+        // Helper to close other dropdowns when opening one
+        function closeDropdownsExcept(type) {
+            if (type !== 'notification' && notificationDropdown) notificationDropdown.classList.add('hidden');
+            if (type !== 'profile' && profileDropdown) profileDropdown.classList.add('hidden');
+        }
+
+        // Global click handler to close dropdowns
+        document.addEventListener('click', (e) => {
+            if (notificationDropdown && !notificationDropdown.classList.contains('hidden') && 
+                !notificationBell.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                notificationDropdown.classList.add('hidden');
+            }
+            if (profileDropdown && !profileDropdown.classList.contains('hidden') && 
+                !profileTrigger.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize notification badge on load
+        updateNotificationBadge();
 
         function escapeHtml(text) {
             const div = document.createElement('div');

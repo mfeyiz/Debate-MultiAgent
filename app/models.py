@@ -274,10 +274,10 @@ class Analysis(Base):
     )
     component_type: Mapped[str] = mapped_column(
         String(20), default="evidence"
-    )  # claim | evidence
+    )  # claim | evidence | other
     relation_type: Mapped[str] = mapped_column(
-        String(20), default="neutral"
-    )  # support | attack | neutral
+        String(20), default="none"
+    )  # support | attack | none
     confidence: Mapped[float] = mapped_column(Float, default=0.0)
     feedback_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime.datetime] = mapped_column(
@@ -413,7 +413,7 @@ class ArgumentComponent(Base):
 
 
 class ArgumentRelation(Base):
-    """A ModernBERT support/attack/neutral relation between two components."""
+    """A ModernBERT support/attack/none relation between two components."""
 
     __tablename__ = "argument_relations"
 
@@ -558,6 +558,7 @@ class FactClaim(Base):
     statistical_data_json: Mapped[str | None] = mapped_column(Text, nullable=True)
     manipulation_score: Mapped[float | None] = mapped_column(Float, nullable=True)
     quote_data_json: Mapped[str | None] = mapped_column(Text, nullable=True)
+    extraction_reason: Mapped[str] = mapped_column(String(80), default="model_claim")
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=datetime.datetime.utcnow
     )
@@ -580,6 +581,7 @@ class FactClaim(Base):
             "statistical_data": json.loads(self.statistical_data_json or "{}"),
             "manipulation_score": self.manipulation_score,
             "quote_data": json.loads(self.quote_data_json or "{}"),
+            "extraction_reason": self.extraction_reason,
             "created_at": self.created_at.isoformat() if self.created_at else None,
         }
 
@@ -601,6 +603,9 @@ class FactEvidence(Base):
     score: Mapped[float] = mapped_column(Float, default=0.0)
     credibility_score: Mapped[float | None] = mapped_column(Float, nullable=True)
     source_bias: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    relevance_score: Mapped[float] = mapped_column(Float, default=0.0)
+    source_quality: Mapped[str] = mapped_column(String(40), default="unscored")
+    accepted_for_verdict: Mapped[bool] = mapped_column(Boolean, default=False)
     is_turkish_archive: Mapped[bool] = mapped_column(Boolean, default=False)
     is_public_data_source: Mapped[bool] = mapped_column(Boolean, default=False)
     archive_match_claim_text: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -633,6 +638,9 @@ class FactEvidence(Base):
             "score": self.score,
             "credibility_score": self.credibility_score,
             "source_bias": self.source_bias,
+            "relevance_score": self.relevance_score,
+            "source_quality": self.source_quality,
+            "accepted_for_verdict": self.accepted_for_verdict,
             "is_turkish_archive": self.is_turkish_archive,
             "is_public_data_source": self.is_public_data_source,
             "archive_match_claim_text": self.archive_match_claim_text,
@@ -653,7 +661,7 @@ class FactRelation(Base):
     evidence_id: Mapped[int | None] = mapped_column(ForeignKey("fact_evidence.id"), nullable=True)
     target_claim_id: Mapped[int] = mapped_column(ForeignKey("fact_claims.id"), nullable=False)
     relation_scope: Mapped[str] = mapped_column(String(20), default="internal")
-    relation_type: Mapped[str] = mapped_column(String(20), default="neutral")
+    relation_type: Mapped[str] = mapped_column(String(20), default="none")
     confidence: Mapped[float] = mapped_column(Float, default=0.0)
     probabilities_json: Mapped[str] = mapped_column(Text, default="{}")
     created_at: Mapped[datetime.datetime] = mapped_column(

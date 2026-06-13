@@ -2,101 +2,106 @@
 {% block title %}logos - Teyit Laboratuvarı{% endblock %}
 {% block extra_head %}
 <style>
+    /* Styling system for Teyit Lab */
     .fact-shell {
         background: #f4f8f1;
     }
     .fact-panel {
         background: #ffffff;
         border: 1px solid #c6d3cc;
+        box-shadow: 0 4px 20px rgba(6, 72, 72, 0.03);
+        transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .fact-panel:hover {
+        box-shadow: 0 8px 30px rgba(6, 72, 72, 0.06);
     }
     .article-mark {
         position: relative;
-        border-radius: 5px;
-        padding: 1px 3px;
+        border-radius: 4px;
+        padding: 2px 4px;
         box-decoration-break: clone;
         -webkit-box-decoration-break: clone;
         cursor: pointer;
-        transition: opacity 160ms ease, background 160ms ease, box-shadow 160ms ease;
+        transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     .article-mark.claim {
-        background: rgba(12, 124, 107, 0.14);
-        box-shadow: inset 0 -2px 0 rgba(12, 124, 107, 0.42);
+        background: rgba(6, 72, 72, 0.08);
+        box-shadow: inset 0 -2px 0 rgba(6, 72, 72, 0.35);
     }
     .article-mark.support {
-        background: rgba(20, 138, 86, 0.24);
-        box-shadow: inset 0 -2px 0 rgba(20, 138, 86, 0.76);
+        background: rgba(12, 124, 107, 0.12);
+        box-shadow: inset 0 -2px 0 rgba(12, 124, 107, 0.70);
     }
     .article-mark.attack {
-        background: rgba(180, 71, 63, 0.22);
-        box-shadow: inset 0 -2px 0 rgba(180, 71, 63, 0.78);
-        color: #7f1111;
+        background: rgba(180, 71, 63, 0.12);
+        box-shadow: inset 0 -2px 0 rgba(180, 71, 63, 0.70);
+        color: #7f1d1d;
     }
-    .article-mark.neutral {
+    .article-mark.none {
         background: transparent;
-        box-shadow: inset 0 -1px 0 rgba(86, 94, 116, 0.20);
+        box-shadow: inset 0 -1px 0 rgba(86, 94, 116, 0.15);
     }
     .article-mark.selected {
-        outline: 2px solid #064848;
-        outline-offset: 2px;
+        background: rgba(12, 124, 107, 0.22) !important;
+        box-shadow: 0 0 0 2px #064848, inset 0 -2px 0 #064848 !important;
+        font-weight: 500;
     }
     .article-mark.dimmed {
-        opacity: 0.24;
-        background: rgba(118, 119, 125, 0.06);
+        opacity: 0.35;
+        background: transparent;
         box-shadow: none;
     }
     .article-mark.statistical {
         border-bottom: 2px dashed #c2410c;
     }
     .article-mark.support-focus {
-        background: rgba(20, 138, 86, 0.24);
-        box-shadow: inset 0 -2px 0 rgba(20, 138, 86, 0.76);
+        background: rgba(12, 124, 107, 0.18);
+        box-shadow: inset 0 -2px 0 #0c7c6b;
     }
     .article-mark.attack-focus {
-        background: rgba(186, 26, 26, 0.24);
-        box-shadow: inset 0 -2px 0 rgba(186, 26, 26, 0.8);
-        color: #7f1111;
-    }
-    .article-mark.dimmed {
-        opacity: 0.24;
-        background: rgba(118, 119, 125, 0.06);
-        box-shadow: none;
+        background: rgba(180, 71, 63, 0.18);
+        box-shadow: inset 0 -2px 0 #b4473f;
+        color: #7f1d1d;
     }
     .graph-modal {
         position: fixed;
         inset: 0;
         z-index: 60;
-        background: rgba(19, 27, 46, 0.64);
-        backdrop-filter: blur(10px);
+        background: rgba(19, 27, 46, 0.65);
+        backdrop-filter: blur(8px);
     }
     .graph-modal[hidden] {
         display: none;
     }
     #graph-modal-container {
-        height: calc(100vh - 220px);
-        min-height: 560px;
+        height: calc(100vh - 200px);
+        min-height: 520px;
     }
     .verdict-pill {
         border-radius: 999px;
-        padding: 4px 9px;
+        padding: 3px 8px;
         font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.03em;
+        font-weight: 700;
+        letter-spacing: 0.04em;
         text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
     }
     .credibility-bar {
-        height: 4px;
-        border-radius: 2px;
+        height: 6px;
+        border-radius: 99px;
         background: #e2e8f0;
         overflow: hidden;
     }
     .credibility-fill {
         height: 100%;
-        border-radius: 2px;
-        transition: width 300ms ease;
+        border-radius: 99px;
+        transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     #fact-graph {
-        height: 420px;
-        min-height: 320px;
+        height: 380px;
+        min-height: 280px;
     }
     .metric-grid {
         display: grid;
@@ -108,178 +113,332 @@
             grid-template-columns: repeat(2, 1fr);
         }
     }
+    /* Two column split dashboard layout */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 1.5rem;
+    }
+    @media (max-width: 1024px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    /* Glassmorphism styles */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(198, 211, 204, 0.5);
+    }
+    .dark .glass-card {
+        background: rgba(17, 26, 25, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(63, 81, 77, 0.4);
+    }
+    /* Fallacy visual warning cards */
+    .fallacy-card {
+        transition: transform 150ms ease;
+    }
+    .fallacy-card:hover {
+        transform: translateY(-2px);
+    }
+    .fallacy-high {
+        border-left: 4px solid #b4473f;
+        background: #fff5f5;
+    }
+    .fallacy-medium {
+        border-left: 4px solid #c2410c;
+        background: #fffaf5;
+    }
+    .fallacy-low {
+        border-left: 4px solid #5c6f2b;
+        background: #fcfdf9;
+    }
+    .dark .fallacy-high {
+        background: #271413;
+    }
+    .dark .fallacy-medium {
+        background: #251b0f;
+    }
+    .dark .fallacy-low {
+        background: #1c2111;
+    }
 </style>
 {% endblock %}
 {% block content %}
 <div class="fact-shell min-h-full overflow-auto">
-    <div class="max-w-[1540px] mx-auto p-lg md:p-xl space-y-lg">
-        <section class="fact-panel rounded-xl p-lg">
-            <div class="flex flex-col xl:flex-row gap-lg justify-between">
+    <div class="max-w-[1600px] mx-auto p-md md:p-lg space-y-md">
+        <!-- Dashboard Header -->
+        <section class="fact-panel rounded-2xl p-lg">
+            <div class="flex flex-col xl:flex-row gap-lg justify-between items-start">
                 <div class="max-w-3xl">
                     <div class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-[#e2f6ed] text-[#064848] font-label-caps text-[11px] mb-sm">
-                        <span class="material-symbols-outlined text-[16px]">fact_check</span>
-                        ENHANCED FACT-CHECK
+                        <span class="material-symbols-outlined text-[16px] fill-icon">analytics</span>
+                        ARGÜMAN MADENCİLİĞİ & FACT-CHECK
                     </div>
                     <h2 class="font-headline-lg text-headline-lg text-on-surface">Teyit Laboratuvarı</h2>
                     <p class="font-body-md text-body-md text-on-surface-variant mt-xs leading-relaxed">
-                        Haber metnindeki doğrulanabilir iddiaları ModernBERT ile çıkarır, Türk doğrulama arşivlerini, kamu veri kaynaklarını ve güvenilirlik skorlarını entegre ederek kapsamlı teyit raporu üretir.
+                        Haber metinlerini ve dezenformasyon iddialarını ModernBERT ile analiz edin. Doğrulama arşivleri (Teyit.org, Doğruluk Payı, Malumatfuruş), kamu veri tabanları (TÜİK, TCMB) ve LLM mantıksal çözümleme entegrasyonu ile tam teşekküllü teyit raporları üretin.
                     </p>
                 </div>
-                <div class="metric-grid min-w-[480px]">
-                    <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
-                        <div class="font-label-caps text-[10px] text-on-surface-variant">İddia</div>
-                        <div id="metric-claims" class="font-headline-lg text-headline-lg text-primary">0</div>
+                <div class="metric-grid min-w-full sm:min-w-[480px]">
+                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant p-md">
+                        <div class="font-label-caps text-[10px] text-on-surface-variant">Çıkarılan İddia</div>
+                        <div id="metric-claims" class="font-headline-lg text-headline-lg text-primary font-bold">0</div>
                     </div>
-                    <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
-                        <div class="font-label-caps text-[10px] text-on-surface-variant">Kaynak</div>
-                        <div id="metric-sources" class="font-headline-lg text-headline-lg text-secondary">0</div>
+                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant p-md">
+                        <div class="font-label-caps text-[10px] text-on-surface-variant">Sorgulanan Kaynak</div>
+                        <div id="metric-sources" class="font-headline-lg text-headline-lg text-secondary font-bold">0</div>
                     </div>
-                    <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
-                        <div class="font-label-caps text-[10px] text-on-surface-variant">Bayrak</div>
-                        <div id="metric-flags" class="font-headline-lg text-headline-lg text-error">0</div>
+                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant p-md">
+                        <div class="font-label-caps text-[10px] text-on-surface-variant">Tespit Edilen Safsata</div>
+                        <div id="metric-flags" class="font-headline-lg text-headline-lg text-error font-bold">0</div>
                     </div>
-                    <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
-                        <div class="font-label-caps text-[10px] text-on-surface-variant">Mantık Skoru</div>
-                        <div id="metric-score" class="font-headline-lg text-headline-lg text-primary">0%</div>
+                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant p-md">
+                        <div class="font-label-caps text-[10px] text-on-surface-variant font-bold">Objektiflik Skoru</div>
+                        <div id="metric-score" class="font-headline-lg text-headline-lg text-primary font-bold">0%</div>
                     </div>
-                    <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
-                        <div class="font-label-caps text-[10px] text-on-surface-variant">Türk Arşivi</div>
-                        <div id="metric-turkish" class="font-headline-lg text-headline-lg text-tertiary">0</div>
+                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant p-md">
+                        <div class="font-label-caps text-[10px] text-on-surface-variant">Teyit Arşivleri</div>
+                        <div id="metric-turkish" class="font-headline-lg text-headline-lg text-tertiary font-bold">0</div>
                     </div>
-                    <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
-                        <div class="font-label-caps text-[10px] text-on-surface-variant">Kamu Verisi</div>
-                        <div id="metric-public" class="font-headline-lg text-headline-lg text-tertiary">0</div>
+                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant p-md">
+                        <div class="font-label-caps text-[10px] text-on-surface-variant">Resmi Kamu Verisi</div>
+                        <div id="metric-public" class="font-headline-lg text-headline-lg text-tertiary font-bold">0</div>
                     </div>
-                    <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
-                        <div class="font-label-caps text-[10px] text-on-surface-variant">Denge Skoru</div>
-                        <div id="metric-balance" class="font-headline-lg text-headline-lg text-secondary">0</div>
+                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant p-md">
+                        <div class="font-label-caps text-[10px] text-on-surface-variant font-bold">Dengeli Habercilik</div>
+                        <div id="metric-balance" class="font-headline-lg text-headline-lg text-secondary font-bold">0%</div>
                     </div>
-                    <div class="rounded-lg bg-surface-container-lowest border border-outline-variant p-md">
-                        <div class="font-label-caps text-[10px] text-on-surface-variant">Manipülasyon</div>
-                        <div id="metric-manip" class="font-headline-lg text-headline-lg text-error">0</div>
+                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant p-md">
+                        <div class="font-label-caps text-[10px] text-on-surface-variant">Dil Manipülasyonu</div>
+                        <div id="metric-manip" class="font-headline-lg text-headline-lg text-error font-bold">0</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="fact-panel rounded-xl p-lg">
-            <form id="fact-form" class="grid lg:grid-cols-[1fr_1.6fr_auto] gap-md items-end">
-                <label class="block">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">Haber URL</span>
-                    <input id="fact-url" type="url" placeholder="https://..." class="mt-xs w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-sm font-body-md text-body-md focus:outline-none focus:border-secondary">
-                </label>
-                <label class="block">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">Haber Metni</span>
-                    <textarea id="fact-text" rows="3" placeholder="URL boşsa haber metnini buraya yapıştırın..." class="mt-xs w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-sm font-body-md text-body-md focus:outline-none focus:border-secondary"></textarea>
-                </label>
-                <button id="fact-submit" type="submit" class="h-11 inline-flex items-center justify-center gap-xs rounded-lg bg-primary text-on-primary px-lg font-label-caps text-label-caps hover:bg-secondary transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">travel_explore</span>
-                    Analiz Et
-                </button>
-            </form>
-            <div id="fact-error" class="hidden mt-md rounded-lg border border-error/30 bg-error-container/40 text-on-error-container p-md font-body-md text-body-md"></div>
-        </section>
+        <!-- View Tabs -->
+        <div class="flex flex-wrap gap-sm border-b border-outline-variant pb-sm" role="tablist" aria-label="Teyit Lab Sekmeleri">
+            <button id="tab-btn-input" class="px-md py-sm font-label-caps text-label-caps font-bold border-b-2 border-secondary text-primary transition-all flex items-center gap-xs" role="tab" aria-selected="true" aria-controls="section-input">
+                <span class="material-symbols-outlined text-[18px]">travel_explore</span>
+                Analiz Girdisi
+            </button>
+            <button id="tab-btn-article" class="px-md py-sm font-label-caps text-label-caps font-bold border-b-2 border-transparent text-on-surface-variant/40 cursor-not-allowed transition-all flex items-center gap-xs" role="tab" aria-selected="false" aria-controls="section-article" disabled>
+                <span class="material-symbols-outlined text-[18px]">dashboard</span>
+                Analiz Paneli
+            </button>
+            <!-- Hidden backward-compatible tab -->
+            <button id="tab-btn-details" style="display:none;" disabled></button>
+        </div>
 
-        <section id="empty-state" class="fact-panel rounded-xl p-xl text-center">
-            <span class="material-symbols-outlined text-[48px] text-secondary">newspaper</span>
-            <h3 class="font-headline-md text-headline-md text-on-surface mt-sm">Bir haber metniyle başlayın</h3>
-            <p class="font-body-md text-body-md text-on-surface-variant mt-xs max-w-2xl mx-auto">
-                Demo dış dünyada kesin hüküm vermez; ModernBERT'in bulduğu argüman yapısını, Türk doğrulama arşivlerini, kamu verilerini ve kaynak güvenilirlik skorlarını görünür kılar.
-            </p>
-        </section>
+        <!-- SECTION 1: Analiz Girişi -->
+        <div id="section-input" class="space-y-lg transition-opacity duration-200" role="tabpanel" aria-labelledby="tab-btn-input">
+            <section class="fact-panel rounded-2xl p-lg">
+                <form id="fact-form" class="grid lg:grid-cols-[1.2fr_1.6fr_auto] gap-md items-end">
+                    <label class="block">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant">Haber URL'si (Otomatik Metin Çekme)</span>
+                        <input id="fact-url" type="url" placeholder="https://..." class="mt-xs w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-sm font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20">
+                    </label>
+                    <label class="block">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant">Haber Metni (Pasted News Content)</span>
+                        <textarea id="fact-text" rows="3" placeholder="Haber metnini doğrudan buraya yapıştırın veya yukarıya URL girin..." class="mt-xs w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-sm font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20"></textarea>
+                    </label>
+                    <button id="fact-submit" type="submit" class="h-11 inline-flex items-center justify-center gap-xs rounded-lg bg-primary text-on-primary px-lg font-label-caps text-label-caps hover:bg-secondary transition-colors shadow-sm">
+                        <span class="material-symbols-outlined text-[18px]">travel_explore</span>
+                        Analiz Et
+                    </button>
+                </form>
+                <div id="fact-error" class="hidden mt-md rounded-lg border border-error/30 bg-error-container/40 text-on-error-container p-md font-body-md text-body-md"></div>
+            </section>
 
-        <section id="result-grid" class="hidden grid xl:grid-cols-[1.2fr_0.8fr] gap-lg">
-            <div class="space-y-lg">
-                <article class="fact-panel rounded-xl p-lg">
-                    <div class="flex flex-wrap items-center justify-between gap-md mb-md">
-                        <div>
-                            <h3 id="run-title" class="font-headline-md text-headline-md text-on-surface">Haber Analizi</h3>
-                            <p id="run-summary" class="font-body-md text-body-md text-on-surface-variant mt-xs"></p>
-                        </div>
-                        <div class="flex gap-sm">
-                            <button id="refresh-btn" class="inline-flex items-center gap-xs rounded-lg border border-outline-variant px-md py-sm font-label-caps text-[11px] hover:border-secondary">
-                                <span class="material-symbols-outlined text-[17px]">refresh</span>
-                                Kaynakları Yenile
-                            </button>
-                            <button id="export-btn" class="inline-flex items-center gap-xs rounded-lg border border-outline-variant px-md py-sm font-label-caps text-[11px] hover:border-secondary">
-                                <span class="material-symbols-outlined text-[17px]">download</span>
-                                JSON İndir
-                            </button>
-                            <button id="share-btn" class="inline-flex items-center gap-xs rounded-lg border border-outline-variant px-md py-sm font-label-caps text-[11px] hover:border-secondary">
-                                <span class="material-symbols-outlined text-[17px]">share</span>
-                                Paylaş
-                            </button>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap items-center gap-sm mb-md font-label-caps text-[11px] text-on-surface-variant">
-                        <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-primary/30"></span> Claim</span>
-                        <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-[#2f9b75]"></span> SUPPORT</span>
-                        <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-error"></span> ATTACK</span>
-                        <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-[#7d4f19]"></span> Teyit/KB Kaynağı</span>
-                        <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-[#c2410c]"></span> İstatistiksel</span>
-                        <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-outline-variant"></span> Nötr</span>
-                    </div>
-                    <div id="article-text" class="rounded-lg border border-outline-variant bg-surface-container-lowest p-lg font-body-md text-body-md leading-8 text-on-surface whitespace-pre-wrap"></div>
-                </article>
+            <section id="empty-state" class="fact-panel rounded-2xl p-xl text-center">
+                <span class="material-symbols-outlined text-[56px] text-secondary">explore</span>
+                <h3 class="font-headline-md text-headline-md text-on-surface mt-sm">Yeni bir haber analiziyle başlayın</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-xs max-w-2xl mx-auto">
+                    Analiz etmek istediğiniz haber metnini veya URL'sini yukarıya girin. ModernBERT ve LLM entegrasyonu iddiaları ayrıştırıp doğruluk durumlarını denetlerken, ağ yapısı mantıksal tutarlılığı modelleyecektir.
+                </p>
+            </section>
+        </div>
 
-                <article class="fact-panel rounded-xl p-lg">
-                    <div class="flex items-center justify-between mb-md">
-                        <h3 class="font-headline-md text-headline-md text-on-surface">Argüman Ağı</h3>
-                        <div class="flex items-center gap-sm">
-                            <p id="graph-subtitle" class="font-code-mono text-code-mono text-on-surface-variant"></p>
-                            <button id="expand-graph-btn" class="inline-flex items-center gap-xs rounded-lg border border-outline-variant px-md py-sm font-label-caps text-[11px] hover:border-secondary">
-                                <span class="material-symbols-outlined text-[17px]">open_in_full</span>
-                                Büyüt
-                            </button>
-                        </div>
-                    </div>
-                    <div id="fact-graph" class="rounded-lg border border-outline-variant bg-surface-container-lowest overflow-hidden flex items-center justify-center text-on-surface-variant">Analiz bekleniyor...</div>
-                </article>
+        <!-- SECTION 2: Unified Two-Column Dashboard -->
+        <div id="section-article" class="hidden space-y-md transition-opacity duration-200" role="tabpanel" aria-labelledby="tab-btn-article">
+            <!-- Header bar for Run -->
+            <div class="fact-panel rounded-xl p-md flex flex-wrap items-center justify-between gap-md">
+                <div>
+                    <h3 id="run-title" class="font-headline-md text-headline-md text-on-surface">Analiz Sonucu</h3>
+                    <p id="run-summary" class="font-body-md text-body-md text-on-surface-variant mt-[2px]"></p>
+                </div>
+                <div class="flex gap-sm">
+                    <button id="refresh-btn" class="inline-flex items-center gap-xs rounded-lg border border-outline-variant px-md py-sm font-label-caps text-[11px] hover:border-secondary hover:bg-surface-container-low transition-colors">
+                        <span class="material-symbols-outlined text-[17px]">refresh</span>
+                        Yeniden Sorgula
+                    </button>
+                    <button id="export-btn" class="inline-flex items-center gap-xs rounded-lg border border-outline-variant px-md py-sm font-label-caps text-[11px] hover:border-secondary hover:bg-surface-container-low transition-colors">
+                        <span class="material-symbols-outlined text-[17px]">download</span>
+                        JSON İndir
+                    </button>
+                    <button id="share-btn" class="inline-flex items-center gap-xs rounded-lg border border-outline-variant px-md py-sm font-label-caps text-[11px] hover:border-secondary hover:bg-surface-container-low transition-colors">
+                        <span class="material-symbols-outlined text-[17px]">share</span>
+                        Paylaş
+                    </button>
+                </div>
+            </div>
 
-                <!-- Full-screen graph modal -->
-                <div id="graph-modal" class="graph-modal" hidden>
-                    <div class="max-w-[1600px] mx-auto w-full h-full p-lg flex flex-col gap-md">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-headline-md text-headline-md text-white">Argüman Ağı — Detaylı Görünüm</h3>
-                            <button id="close-graph-modal" class="inline-flex items-center gap-xs rounded-lg bg-white/10 text-white px-md py-sm font-label-caps text-[11px] hover:bg-white/20 transition-colors">
-                                <span class="material-symbols-outlined text-[17px]">close</span>
-                                Kapat
+            <!-- Two-Column Grid -->
+            <div class="dashboard-grid">
+                
+                <!-- LEFT COLUMN: News Highlights & Cy Graph -->
+                <div class="space-y-md">
+                    <!-- News Text Highlight panel -->
+                    <article class="fact-panel rounded-xl p-lg flex flex-col">
+                        <div class="flex justify-between items-center mb-sm">
+                            <h4 class="font-label-caps text-label-caps text-primary">Haber Metni & İddia Çıkarımı</h4>
+                            <span class="text-[11px] text-on-surface-variant">Metindeki iddiaları seçmek veya kaynaklarını görmek için üzerlerine tıklayın</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-sm mb-md font-label-caps text-[10px] text-on-surface-variant">
+                            <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-primary/20 border border-primary/40"></span> İddia</span>
+                            <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-[#127c6b]/20 border border-[#127c6b]/60"></span> Desteklenen</span>
+                            <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-[#b4473f]/20 border border-[#b4473f]/60"></span> Çelişen</span>
+                            <span class="inline-flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-[#c2410c]/20 border border-[#c2410c]/60"></span> İstatistiksel</span>
+                        </div>
+                        <div id="article-text" class="rounded-lg border border-outline-variant bg-surface-container-lowest p-lg font-body-md text-[15px] leading-8 text-on-surface whitespace-pre-wrap max-h-[460px] overflow-y-auto"></div>
+                    </article>
+
+                    <!-- Argument Graph Network panel -->
+                    <article class="fact-panel rounded-xl p-lg flex flex-col">
+                        <div class="flex items-center justify-between mb-sm">
+                            <h4 class="font-label-caps text-label-caps text-primary">ModernBERT Argüman Ağı</h4>
+                            <div class="flex items-center gap-sm">
+                                <p id="graph-subtitle" class="font-code-mono text-code-mono text-on-surface-variant text-[11px]"></p>
+                                <button id="expand-graph-btn" class="inline-flex items-center gap-xs rounded-lg border border-outline-variant px-sm py-1 text-[10px] font-label-caps hover:border-secondary">
+                                    <span class="material-symbols-outlined text-[15px]">open_in_full</span>
+                                    Genişlet
+                                </button>
+                            </div>
+                        </div>
+                        <div id="fact-graph" class="rounded-lg border border-outline-variant bg-surface-container-lowest overflow-hidden flex items-center justify-center text-on-surface-variant">Graph yükleniyor...</div>
+                    </article>
+                </div>
+
+                <!-- RIGHT COLUMN: Console Card (Tabs & Detailed Panel) -->
+                <div class="space-y-md lg:sticky lg:top-[16px] max-h-[calc(100vh-220px)] overflow-y-auto pr-[2px]">
+                    <div class="fact-panel rounded-xl p-lg flex flex-col space-y-md glass-card">
+                        <!-- Console Tabs Switch -->
+                        <div class="flex border-b border-outline-variant pb-xs">
+                            <button id="console-btn-logical" class="flex-1 py-sm font-label-caps text-[12px] font-bold border-b-2 border-secondary text-primary transition-all flex items-center justify-center gap-xs">
+                                <span class="material-symbols-outlined text-[16px]">psychology</span>
+                                Mantıksal Analiz
+                            </button>
+                            <button id="console-btn-claims" class="flex-1 py-sm font-label-caps text-[12px] font-bold border-b-2 border-transparent text-on-surface-variant/40 transition-all flex items-center justify-center gap-xs">
+                                <span class="material-symbols-outlined text-[16px]">fact_check</span>
+                                Kanıt Eşleşmesi
                             </button>
                         </div>
-                        <div class="flex gap-md flex-1 min-h-0">
-                            <div id="graph-modal-container" class="flex-1 rounded-xl border border-white/10 bg-surface overflow-hidden"></div>
-                            <div id="graph-detail-panel" class="w-[360px] rounded-xl border border-white/10 bg-surface p-lg overflow-auto text-on-surface">
-                                <p class="text-on-surface-variant">Bir node veya edge seçin…</p>
+
+                        <!-- PANEL 1: MANTIKSAL ANALİZ -->
+                        <div id="console-pane-logical" class="space-y-md">
+                            <!-- Main Thesis Card -->
+                            <div class="rounded-xl border border-primary/20 bg-primary-container/20 p-md relative overflow-hidden">
+                                <span class="absolute -right-3 -bottom-5 text-[92px] font-headline-xl text-primary/5 select-none pointer-events-none">”</span>
+                                <div class="font-label-caps text-[10px] text-primary mb-xs flex items-center gap-xs font-bold">
+                                    <span class="material-symbols-outlined text-[14px]">format_quote</span>
+                                    Metnin Ana Tezi / Çekirdek Argüman
+                                </div>
+                                <p id="logic-thesis" class="font-body-md text-on-surface font-semibold text-[14px] leading-relaxed">Analiz ediliyor...</p>
+                            </div>
+
+                            <!-- Objectivity and Rhetoric Analysis -->
+                            <div class="grid grid-cols-2 gap-sm">
+                                <div class="rounded-xl border border-outline-variant bg-surface p-md">
+                                    <div class="font-label-caps text-[9px] text-on-surface-variant">Retorik Ton</div>
+                                    <div id="logic-tone" class="font-headline-md text-[14px] text-primary font-bold truncate mt-xs">-</div>
+                                </div>
+                                <div class="rounded-xl border border-outline-variant bg-surface p-md">
+                                    <div class="font-label-caps text-[9px] text-on-surface-variant">Kaynak Çeşitliliği</div>
+                                    <div id="logic-diversity" class="font-headline-md text-[14px] text-secondary font-bold mt-xs">0 Kaynak</div>
+                                </div>
+                            </div>
+
+                            <!-- Balanced Reporting Card -->
+                            <div class="rounded-xl border border-outline-variant bg-surface p-md">
+                                <div class="flex justify-between text-[11px] mb-xs">
+                                    <span class="font-label-caps text-on-surface-variant">Medya Denge Skoru (Balanced Reporting)</span>
+                                    <span id="logic-balance-pct" class="font-code-mono font-bold">0%</span>
+                                </div>
+                                <div class="credibility-bar">
+                                    <div id="logic-balance-bar" class="credibility-fill bg-secondary" style="width:0%"></div>
+                                </div>
+                                <div id="logic-balance-list" class="mt-sm space-y-1 text-[11px] text-on-surface-variant"></div>
+                            </div>
+
+                            <!-- Logical Fallacies warning cards container -->
+                            <div>
+                                <h4 class="font-label-caps text-label-caps text-primary mb-sm flex items-center gap-xs">
+                                    <span class="material-symbols-outlined text-[16px] text-error">gavel</span>
+                                    Tespit Edilen Mantıksal Safsatalar (Fallacies)
+                                </h4>
+                                <div id="logic-fallacy-list" class="space-y-sm">
+                                    <!-- Fallacies rendered dynamic -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PANEL 2: KANIT EŞLEŞMESİ (CLAIMS & SOURCES) -->
+                        <div id="console-pane-claims" class="hidden space-y-md">
+                            <!-- Instruction / Selected claim header -->
+                            <div id="selected-claim-header" class="rounded-xl border border-outline-variant bg-surface p-md hidden">
+                                <div class="flex justify-between items-start gap-sm">
+                                    <span id="selected-claim-id-badge" class="font-label-caps text-[9px] text-primary bg-primary-container px-2 py-0.5 rounded">Claim #1</span>
+                                    <button class="text-[10px] text-error hover:underline flex items-center gap-[2px]" onclick="selectClaim(null)">
+                                        <span class="material-symbols-outlined text-[13px]">close</span>Seçimi Kaldır
+                                    </button>
+                                </div>
+                                <p id="selected-claim-text" class="font-body-md text-on-surface text-[13px] font-semibold mt-xs leading-relaxed"></p>
+                            </div>
+
+                            <!-- Claims List -->
+                            <div>
+                                <h4 class="font-label-caps text-label-caps text-primary mb-sm">Haberdeki İddialar</h4>
+                                <div id="claim-list" class="space-y-sm max-h-[300px] overflow-y-auto pr-1"></div>
+                            </div>
+
+                            <!-- Sources Card (Linked to the selected claim or all) -->
+                            <div class="border-t border-outline-variant pt-md">
+                                <div class="flex items-center justify-between mb-sm">
+                                    <h4 id="sources-title-label" class="font-label-caps text-label-caps text-primary">Kaynak Belgeler</h4>
+                                    <span id="sources-count-badge" class="font-code-mono text-[10px] text-on-surface-variant">0 kaynak</span>
+                                </div>
+                                <div id="evidence-list" class="space-y-sm max-h-[340px] overflow-y-auto pr-1">
+                                    <p class="text-on-surface-variant text-[12px] text-center py-md">Detayları görmek için listeden bir iddia seçin.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
-            <aside class="space-y-lg">
-                <section class="fact-panel rounded-xl p-lg">
-                    <h3 class="font-headline-md text-headline-md text-on-surface mb-md">İddia Kartları</h3>
-                    <div id="claim-list" class="space-y-sm"></div>
-                </section>
-
-                <section class="fact-panel rounded-xl p-lg">
-                    <h3 class="font-headline-md text-headline-md text-on-surface mb-md">Kırmızı Bayraklar</h3>
-                    <div id="finding-list" class="space-y-sm"></div>
-                </section>
-
-                <section class="fact-panel rounded-xl p-lg">
-                    <h3 class="font-headline-md text-headline-md text-on-surface mb-md">Dengeli Habercilik Analizi</h3>
-                    <div id="balance-panel" class="space-y-sm">
-                        <p class="text-on-surface-variant">Analiz bekleniyor...</p>
+            <!-- Full-screen graph modal -->
+            <div id="graph-modal" class="graph-modal" hidden>
+                <div class="max-w-[1600px] mx-auto w-full h-full p-lg flex flex-col gap-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-headline-md text-headline-md text-white">Detaylı Argüman İlişki Haritası</h3>
+                        <button id="close-graph-modal" class="inline-flex items-center gap-xs rounded-lg bg-white/10 text-white px-md py-sm font-label-caps text-[11px] hover:bg-white/20 transition-colors">
+                            <span class="material-symbols-outlined text-[17px]">close</span>
+                            Kapat
+                        </button>
                     </div>
-                </section>
+                    <div class="flex gap-md flex-1 min-h-0">
+                        <div id="graph-modal-container" class="flex-1 rounded-xl border border-white/10 bg-surface overflow-hidden"></div>
+                        <div id="graph-detail-panel" class="w-[360px] rounded-xl border border-white/10 bg-surface p-lg overflow-auto text-on-surface">
+                            <p class="text-on-surface-variant">Bir node veya edge seçin…</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <section class="fact-panel rounded-xl p-lg">
-                    <h3 class="font-headline-md text-headline-md text-on-surface mb-md">Kaynak Kartları</h3>
-                    <div id="evidence-list" class="space-y-sm"></div>
-                </section>
-            </aside>
-        </section>
     </div>
 </div>
 {% endblock %}
@@ -296,8 +455,6 @@ window.onerror = function (message, source, lineno, colno, error) {
     if (errEl) {
         errEl.textContent = errorMsg;
         errEl.classList.remove('hidden');
-    } else {
-        alert(errorMsg);
     }
     return false;
 };
@@ -311,11 +468,8 @@ let cyModal = null;
 
 try {
     const form = document.getElementById('fact-form');
-    if (!form) {
-        console.error("fact-form element not found in DOM.");
-    } else {
+    if (form) {
         form.addEventListener('submit', async event => {
-            console.log("Submit event captured on fact-form!");
             event.preventDefault();
             try {
                 await startFactCheck();
@@ -324,13 +478,68 @@ try {
                 showError(err.message || String(err));
             }
         });
-        console.log("Submit event listener registered successfully.");
     }
 } catch (e) {
     console.error("Failed to register submit listener:", e);
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // --- Page-level Tab Switching Logic ---
+    const pageTabs = [
+        { btn: 'tab-btn-input', sec: 'section-input' },
+        { btn: 'tab-btn-article', sec: 'section-article' }
+    ];
+
+    pageTabs.forEach(t => {
+        const btnEl = document.getElementById(t.btn);
+        if (btnEl) {
+            btnEl.addEventListener('click', () => {
+                if (btnEl.hasAttribute('disabled')) return;
+                pageTabs.forEach(x => {
+                    const b = document.getElementById(x.btn);
+                    const s = document.getElementById(x.sec);
+                    if (x.btn === t.btn) {
+                        b.classList.remove('border-transparent', 'text-on-surface-variant/40');
+                        b.classList.add('border-secondary', 'text-primary');
+                        b.setAttribute('aria-selected', 'true');
+                        s.classList.remove('hidden');
+                    } else {
+                        b.classList.remove('border-secondary', 'text-primary');
+                        b.classList.add('border-transparent', 'text-on-surface-variant/40');
+                        b.setAttribute('aria-selected', 'false');
+                        s.classList.add('hidden');
+                    }
+                });
+            });
+        }
+    });
+
+    // --- Right Console Tab Switching Logic ---
+    const consoleBtnLogical = document.getElementById('console-btn-logical');
+    const consoleBtnClaims = document.getElementById('console-btn-claims');
+    const consolePaneLogical = document.getElementById('console-pane-logical');
+    const consolePaneClaims = document.getElementById('console-pane-claims');
+
+    if (consoleBtnLogical && consoleBtnClaims) {
+        consoleBtnLogical.addEventListener('click', () => {
+            consoleBtnLogical.classList.remove('border-transparent', 'text-on-surface-variant/40');
+            consoleBtnLogical.classList.add('border-secondary', 'text-primary');
+            consoleBtnClaims.classList.remove('border-secondary', 'text-primary');
+            consoleBtnClaims.classList.add('border-transparent', 'text-on-surface-variant/40');
+            consolePaneLogical.classList.remove('hidden');
+            consolePaneClaims.classList.add('hidden');
+        });
+
+        consoleBtnClaims.addEventListener('click', () => {
+            consoleBtnClaims.classList.remove('border-transparent', 'text-on-surface-variant/40');
+            consoleBtnClaims.classList.add('border-secondary', 'text-primary');
+            consoleBtnLogical.classList.remove('border-secondary', 'text-primary');
+            consoleBtnLogical.classList.add('border-transparent', 'text-on-surface-variant/40');
+            consolePaneClaims.classList.remove('hidden');
+            consolePaneLogical.classList.add('hidden');
+        });
+    }
+
     const params = new URLSearchParams(window.location.search);
     const runId = params.get('run_id');
     const runToken = params.get('run_token');
@@ -352,10 +561,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.getElementById('refresh-btn').addEventListener('click', async () => {
     if (!currentRun) return;
     setBusy(true);
+    if (window.addNotification) {
+        window.addNotification("Kaynaklar yenileniyor...", "info");
+    }
     const response = await fetch(`/api/fact-checks/${currentRun.run.id}/refresh`, { method: 'POST' });
     const payload = await response.json();
     setBusy(false);
-    if (!response.ok) return showError(payload.error || 'Kaynak yenileme başarısız.');
+    if (!response.ok) {
+        if (window.addNotification) window.addNotification("Kaynak yenileme başarısız oldu.", "error");
+        return showError(payload.error || 'Kaynak yenileme başarısız.');
+    }
+    if (window.addNotification) {
+        window.addNotification("Kaynaklar başarıyla yenilendi.", "success");
+    }
     renderFactCheck(payload);
 });
 
@@ -386,25 +604,23 @@ document.getElementById('close-graph-modal').addEventListener('click', () => {
 });
 
 async function startFactCheck() {
-    console.log("startFactCheck execution started.");
     hideError();
-    
     const urlInput = document.getElementById('fact-url');
     const textInput = document.getElementById('fact-text');
     const urlVal = urlInput ? urlInput.value.trim() : '';
     const textVal = textInput ? textInput.value.trim() : '';
     
-    console.log("Analyzing inputs:", { url: urlVal, textLength: textVal.length });
-    
     if (!urlVal && !textVal) {
         showError("Lütfen bir haber URL'si girin veya haber metnini yapıştırın.");
-        console.warn("Both URL and text fields are empty.");
         return;
     }
     
     setBusy(true);
+    if (window.addNotification) {
+        window.addNotification("Haber analizi başlatıldı.", "info");
+    }
+    
     try {
-        console.log("Sending POST /api/fact-checks request...");
         const response = await fetch('/api/fact-checks', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -414,47 +630,68 @@ async function startFactCheck() {
             }),
         });
         
-        console.log("Received response status:", response.status);
         const payload = await response.json();
-        console.log("Received response payload:", payload);
-        
         setBusy(false);
         if (!response.ok) {
-            console.error("API returned error status:", response.status, payload);
+            if (window.addNotification) {
+                window.addNotification("Haber analizi başarısız oldu.", "error");
+            }
             return showError(payload.error || 'Analiz tamamlanamadı.');
         }
         
-        console.log("Rendering fact check results...");
         renderFactCheck(payload);
-        console.log("Fact check results rendered successfully.");
+        if (window.addNotification) {
+            window.addNotification("Haber analizi tamamlandı. Sonuçlar yüklendi.", "success");
+        }
     } catch (fetchErr) {
-        console.error("Network or parsing error during fact-check fetch:", fetchErr);
         setBusy(false);
         showError("Ağ hatası veya sunucuya bağlanılamadı: " + fetchErr.message);
+        if (window.addNotification) {
+            window.addNotification("Ağ hatası nedeniyle analiz yapılamadı.", "error");
+        }
     }
 }
 
 function renderFactCheck(payload) {
     currentRun = payload;
     selectedClaimId = null;
-    document.getElementById('empty-state').classList.add('hidden');
-    document.getElementById('result-grid').classList.remove('hidden');
+    
+    // Hide empty state inside Section 1
+    const emptyState = document.getElementById('empty-state');
+    if (emptyState) emptyState.classList.add('hidden');
+    
+    // Enable results tab
+    const tabArticle = document.getElementById('tab-btn-article');
+    if (tabArticle) {
+        tabArticle.removeAttribute('disabled');
+        tabArticle.classList.remove('cursor-not-allowed', 'text-on-surface-variant/40');
+        tabArticle.classList.add('text-on-surface-variant', 'hover:text-primary', 'hover:border-outline-variant');
+    }
+
     document.getElementById('run-title').textContent = payload.run.title || 'Haber Analizi';
     document.getElementById('run-summary').textContent = payload.run.summary || '';
+    
+    // Fill metrics
     document.getElementById('metric-claims').textContent = payload.impact.claim_count || 0;
     document.getElementById('metric-sources').textContent = payload.impact.source_count || 0;
-    document.getElementById('metric-flags').textContent = payload.findings.length || 0;
-    document.getElementById('metric-score').textContent = `${payload.impact.logic_score ?? 0}%`;
+    
+    const fallacies = payload.run.manipulation_findings?.fallacies || [];
+    document.getElementById('metric-flags').textContent = fallacies.length || 0;
+    document.getElementById('metric-score').textContent = `${payload.run.balanced_reporting?.objectivity_score ?? payload.impact.logic_score ?? 0}%`;
     document.getElementById('metric-turkish').textContent = payload.impact.turkish_archive_count || 0;
     document.getElementById('metric-public').textContent = payload.impact.public_data_count || 0;
-    document.getElementById('metric-balance').textContent = `${payload.impact.balance_score ?? 0}%`;
+    document.getElementById('metric-balance').textContent = `${payload.run.balanced_reporting?.balance_score ?? payload.impact.balance_score ?? 0}%`;
     document.getElementById('metric-manip').textContent = payload.impact.manipulation_flagged || 0;
+    
+    // Render UI Panels
     renderArticle();
+    renderLogicalAnalysis();
     renderClaims();
-    renderFindings();
-    renderBalance();
     renderEvidence();
     renderGraph();
+    
+    // Automatically switch to Section 2: Analiz Raporu
+    if (tabArticle) tabArticle.click();
 }
 
 function renderArticle() {
@@ -487,7 +724,7 @@ function classForAnnotation(ann) {
     if (ann.component_type === 'claim') classes.push('claim');
     if (ann.relation_type === 'support') classes.push('support');
     if (ann.relation_type === 'attack') classes.push('attack');
-    if (!classes.length) classes.push('neutral');
+    if (!classes.length) classes.push('none');
     if (ann.is_statistical) classes.push('statistical');
     return classes.join(' ');
 }
@@ -497,114 +734,184 @@ function tooltipForAnnotation(ann) {
     if (ann.relation_type) {
         parts.push(`${ann.relation_type.toUpperCase()} ${Math.round((ann.relation_confidence || 0) * 100)}%`);
     }
-    parts.push(`${ann.component_type === 'claim' ? 'Claim' : 'Metin bileşeni'} ${Math.round((ann.confidence || 0) * 100)}%`);
+    parts.push(`${ann.component_type === 'claim' ? 'İddia' : 'Metin kanıtı'} ${Math.round((ann.confidence || 0) * 100)}%`);
     if (ann.is_statistical) parts.push('İSTATİSTİKSEL');
     if (ann.manipulation_score > 0.3) parts.push(`Manipülasyon: ${Math.round(ann.manipulation_score * 100)}%`);
     return parts.join(' | ');
+}
+
+function renderLogicalAnalysis() {
+    const balanced = currentRun.run.balanced_reporting || {};
+    const manip = currentRun.run.manipulation_findings || {};
+    
+    // 1. Thesis
+    document.getElementById('logic-thesis').textContent = balanced.main_thesis || "Çıkarılamadı.";
+    
+    // 2. Rhetoric Tone & Source diversity
+    document.getElementById('logic-tone').textContent = balanced.dialectic_tone || "Bilinmiyor";
+    document.getElementById('logic-diversity').textContent = `${balanced.source_diversity_count || 0} Kaynak Atıfı`;
+    
+    // 3. Balance score progress
+    const balanceScore = balanced.balance_score || 0;
+    document.getElementById('logic-balance-pct').textContent = `${balanceScore}%`;
+    const balanceBar = document.getElementById('logic-balance-bar');
+    balanceBar.style.width = `${balanceScore}%`;
+    balanceBar.className = `credibility-fill ${balanceScore >= 70 ? 'bg-secondary' : balanceScore >= 40 ? 'bg-tertiary' : 'bg-error'}`;
+    
+    // 4. Balance details list
+    const balanceList = document.getElementById('logic-balance-list');
+    if (balanced.findings && balanced.findings.length) {
+        balanceList.innerHTML = balanced.findings.map(f => `<div>• ${escapeHtml(f)}</div>`).join('');
+    } else {
+        balanceList.innerHTML = `<div class="text-secondary">• Medya dengesi kriterlerine uygun biçimde hazırlanmış görünüyor.</div>`;
+    }
+    
+    // 5. Logical Fallacies
+    const fallacyList = document.getElementById('logic-fallacy-list');
+    const fallacies = manip.fallacies || [];
+    if (fallacies.length === 0) {
+        fallacyList.innerHTML = `
+            <div class="rounded-xl border border-secondary/20 bg-secondary-container/10 p-md flex items-start gap-sm">
+                <span class="material-symbols-outlined text-secondary fill-icon">check_circle</span>
+                <div>
+                    <h5 class="font-bold text-[13px] text-primary">Mantıksal Tutarlılık Yüksek</h5>
+                    <p class="text-[11px] text-on-surface-variant mt-xs">Haber metninde doğrudan safsata veya retorik manipülasyon hatası tespit edilmemiştir.</p>
+                </div>
+            </div>
+        `;
+    } else {
+        fallacyList.innerHTML = fallacies.map(f => {
+            const severityClass = `fallacy-${f.severity || 'medium'}`;
+            const severityColor = f.severity === 'high' ? 'bg-error-container text-on-error-container' 
+                                : f.severity === 'medium' ? 'bg-tertiary-container text-on-tertiary-container'
+                                : 'bg-secondary-container text-on-secondary-container';
+            return `
+                <div class="fallacy-card ${severityClass} rounded-lg p-md border border-outline-variant/60 space-y-xs">
+                    <div class="flex justify-between items-center gap-xs">
+                        <span class="font-bold text-[13px] text-on-surface">${escapeHtml(f.title)}</span>
+                        <span class="verdict-pill text-[9px] ${severityColor}">${escapeHtml(f.severity)}</span>
+                    </div>
+                    <p class="text-[11px] text-on-surface-variant leading-relaxed">${escapeHtml(f.detail)}</p>
+                    <div class="text-[10px] text-outline font-code-mono flex justify-between pt-xs border-t border-outline-variant/30">
+                        <span>Güven: %${Math.round((f.confidence || 0) * 100)}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
 }
 
 function renderClaims() {
     const claims = currentRun.claims.filter(item => item.component_type === 'claim');
     document.getElementById('claim-list').innerHTML = claims.map(claim => {
         const manipBadge = claim.manipulation_score >= 0.35
-            ? `<span class="verdict-pill bg-error-container text-on-error-container ml-xs">⚠️ ${Math.round(claim.manipulation_score * 100)}%</span>`
+            ? `<span class="verdict-pill bg-error-container text-on-error-container ml-xs">⚠️ %${Math.round(claim.manipulation_score * 100)} Manip</span>`
             : '';
         const statBadge = claim.is_statistical
-            ? `<span class="verdict-pill bg-tertiary-container text-on-tertiary-container ml-xs">📊</span>`
+            ? `<span class="verdict-pill bg-tertiary-container text-on-tertiary-container ml-xs">📊 İstatistiksel</span>`
+            : '';
+        const rescueBadge = claim.extraction_reason && !String(claim.extraction_reason).startsWith('model_')
+            ? `<span class="verdict-pill bg-secondary-container text-on-secondary-container ml-xs">${escapeHtml(claim.extraction_reason)}</span>`
             : '';
         return `
-        <button class="w-full text-left rounded-lg border ${selectedClaimId === claim.id ? 'border-primary bg-primary-container/30' : 'border-outline-variant bg-surface-container-lowest'} p-md hover:border-primary transition-colors" onclick="selectClaim(${claim.id})">
+        <button class="w-full text-left rounded-lg border ${selectedClaimId === claim.id ? 'border-primary bg-primary-container/20 shadow-sm' : 'border-outline-variant bg-surface-container-lowest'} p-md hover:border-primary transition-colors" onclick="selectClaim(${claim.id})">
             <div class="flex items-start justify-between gap-sm flex-wrap">
                 <div class="flex items-center gap-xs">
-                    <span class="font-label-caps text-[10px] text-primary">Claim #${claim.id}</span>
+                    <span class="font-label-caps text-[9px] text-primary font-bold">İddia #${claim.id}</span>
                     ${statBadge}
                     ${manipBadge}
+                    ${rescueBadge}
                 </div>
                 ${verdictPill(claim.verdict_status)}
             </div>
-            <p class="font-body-md text-body-md text-on-surface mt-xs leading-relaxed">${escapeHtml(claim.text)}</p>
-            <p class="font-body-md text-[12px] text-on-surface-variant mt-xs">${escapeHtml(claim.explanation || '')}</p>
+            <p class="font-body-md text-on-surface text-[13px] font-semibold mt-xs leading-relaxed">${escapeHtml(claim.text)}</p>
+            <p class="font-body-md text-[11px] text-on-surface-variant mt-sm leading-relaxed">${escapeHtml(claim.explanation || '')}</p>
         </button>
-    `}).join('') || '<p class="text-on-surface-variant">Claim bulunamadı.</p>';
-}
-
-function renderFindings() {
-    const findings = currentRun.findings || [];
-    document.getElementById('finding-list').innerHTML = findings.map(finding => `
-        <button class="w-full text-left rounded-lg border border-error/25 bg-error-container/20 p-md hover:border-error transition-colors" ${finding.claim_id ? 'onclick="selectClaim(' + finding.claim_id + ')"' : ''}>
-            <div class="flex items-center justify-between gap-sm">
-                <span class="font-label-caps text-[10px] text-error">${escapeHtml(finding.title)}</span>
-                <span class="font-code-mono text-[11px] text-on-surface-variant">${Math.round((finding.confidence || 0) * 100)}%</span>
-            </div>
-            <p class="font-body-md text-body-md text-on-surface-variant mt-xs">${escapeHtml(finding.detail)}</p>
-        </button>
-    `).join('') || '<p class="text-on-surface-variant">Kırmızı bayrak yok.</p>';
-}
-
-function renderBalance() {
-    const balanced = currentRun.run.balanced_reporting || {};
-    const manip = currentRun.run.manipulation_findings || {};
-    let html = '';
-
-    const balanceScore = balanced.balance_score || 0;
-    html += `<div class="mb-md">`;
-    html += `<div class="flex justify-between text-[11px] mb-xs"><span class="font-label-caps text-on-surface-variant">Dengeli Habercilik</span><span class="font-code-mono">${balanceScore}/100</span></div>`;
-    html += `<div class="credibility-bar"><div class="credibility-fill ${balanceScore >= 70 ? 'bg-secondary' : balanceScore >= 40 ? 'bg-tertiary' : 'bg-error'}" style="width:${balanceScore}%"></div></div>`;
-    html += `</div>`;
-
-    if (balanced.findings && balanced.findings.length) {
-        html += `<div class="space-y-xs">`;
-        balanced.findings.forEach(f => {
-            html += `<div class="text-[12px] text-on-surface-variant">• ${escapeHtml(f)}</div>`;
-        });
-        html += `</div>`;
-    } else {
-        html += `<p class="text-[12px] text-on-surface-variant">Dengeli habercilik bulgusu yok.</p>`;
-    }
-
-    const manipCount = manip.flagged_count || 0;
-    if (manipCount > 0) {
-        html += `<div class="mt-md pt-md border-t border-outline-variant">`;
-        html += `<div class="font-label-caps text-[10px] text-error mb-xs">Manipülasyon Sinyalleri: ${manipCount}</div>`;
-        html += `</div>`;
-    }
-
-    document.getElementById('balance-panel').innerHTML = html;
+    `}).join('') || '<p class="text-on-surface-variant text-[12px] text-center">İddia çıkarılamadı.</p>';
 }
 
 function renderEvidence() {
+    const listContainer = document.getElementById('evidence-list');
+    const sourcesTitle = document.getElementById('sources-title-label');
+    const sourcesCount = document.getElementById('sources-count-badge');
+    
     const evidence = selectedClaimId
         ? currentRun.evidence.filter(item => item.claim_id === selectedClaimId)
-        : currentRun.evidence.slice(0, 8);
-    document.getElementById('evidence-list').innerHTML = evidence.map(item => {
-        const credScore = item.credibility_score;
-        const credBar = credScore !== null && credScore !== undefined
-            ? `<div class="mt-xs"><div class="flex justify-between text-[10px] mb-xs"><span class="text-on-surface-variant">Güvenilirlik</span><span class="font-code-mono">${Math.round(credScore)}%</span></div><div class="credibility-bar"><div class="credibility-fill ${credScore >= 75 ? 'bg-secondary' : credScore >= 50 ? 'bg-tertiary' : 'bg-error'}" style="width:${credScore}%"></div></div></div>`
-            : '';
-        const biasBadge = item.source_bias && item.source_bias !== 'unknown'
-            ? `<span class="verdict-pill text-[9px] bg-surface-container text-on-surface-variant ml-xs">${escapeHtml(item.source_bias)}</span>`
-            : '';
-        const archiveBadge = item.is_turkish_archive
-            ? `<span class="verdict-pill text-[9px] bg-tertiary-container text-on-tertiary-container ml-xs">🇹🇷 Arşiv</span>`
-            : '';
-        const publicBadge = item.is_public_data_source
-            ? `<span class="verdict-pill text-[9px] bg-secondary-container text-on-secondary-container ml-xs">📊 Kamu</span>`
-            : '';
-        const gcBadge = item.search_query && item.search_query.includes('google_factcheck:')
-            ? `<span class="verdict-pill text-[9px] bg-primary-container text-on-primary-container ml-xs">🔍 GFC</span>`
-            : '';
-        return `
-        <a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer" class="block rounded-lg border border-outline-variant bg-surface-container-lowest p-md hover:border-secondary transition-colors">
-            <div class="flex items-center gap-xs flex-wrap">
-                <div class="font-label-caps text-[10px] text-secondary">${escapeHtml(item.source_domain || 'Kaynak')}</div>
-                ${biasBadge}${archiveBadge}${publicBadge}${gcBadge}
+        : currentRun.evidence;
+        
+    sourcesCount.textContent = `${evidence.length} kaynak`;
+    sourcesTitle.textContent = selectedClaimId ? `Claim #${selectedClaimId} Kanıtları` : "Tüm Kaynak Belgeler";
+    
+    if (evidence.length === 0) {
+        listContainer.innerHTML = `<p class="text-on-surface-variant text-[12px] text-center py-md">Bu iddiayla ilişkilendirilmiş doğrulanabilir dış kaynak bulunamadı.</p>`;
+        return;
+    }
+    
+    // Group sources dynamically by categories
+    const categories = {
+        archives: { label: "Teyit Platformları Arşiv Kayıtları", items: [] },
+        public: { label: "Resmi Kamu Verileri", items: [] },
+        web: { label: "Diğer Web ve Medya Kaynakları", items: [] }
+    };
+    
+    evidence.forEach(item => {
+        if (item.is_turkish_archive || (item.source_query && item.search_query?.includes('google_factcheck:')) || item.source_type === 'fact_check_archive') {
+            categories.archives.items.push(item);
+        } else if (item.is_public_data_source || item.source_type === 'knowledge_base') {
+            categories.public.items.push(item);
+        } else {
+            categories.web.items.push(item);
+        }
+    });
+    
+    let html = '';
+    
+    Object.keys(categories).forEach(catKey => {
+        const cat = categories[catKey];
+        if (cat.items.length === 0) return;
+        
+        html += `
+            <div class="space-y-xs pt-xs">
+                <div class="font-label-caps text-[9px] text-secondary font-bold pl-xs border-l-2 border-secondary/55 mb-xs">${cat.label} (${cat.items.length})</div>
+                <div class="space-y-sm">
+        `;
+        
+        cat.items.forEach(item => {
+            const credScore = item.credibility_score;
+            const credBar = credScore !== null && credScore !== undefined
+                ? `<div class="mt-sm"><div class="flex justify-between text-[9px] mb-xs"><span class="text-on-surface-variant">Güvenilirlik Skoru</span><span class="font-code-mono font-bold">${Math.round(credScore)}%</span></div><div class="credibility-bar"><div class="credibility-fill ${credScore >= 75 ? 'bg-secondary' : credScore >= 50 ? 'bg-tertiary' : 'bg-error'}" style="width:${credScore}%"></div></div></div>`
+                : '';
+            const biasBadge = item.source_bias && item.source_bias !== 'unknown'
+                ? `<span class="verdict-pill text-[9px] bg-surface-container text-on-surface-variant ml-xs">${escapeHtml(item.source_bias)}</span>`
+                : '';
+            const relevance = item.relevance_score !== null && item.relevance_score !== undefined
+                ? `<div class="mt-[6px]"><div class="flex justify-between text-[9px] mb-xs"><span class="text-on-surface-variant">Alaka Skoru</span><span class="font-code-mono font-bold">${Math.round(item.relevance_score * 100)}%</span></div><div class="credibility-bar"><div class="credibility-fill ${item.accepted_for_verdict ? 'bg-secondary' : 'bg-error'}" style="width:${Math.round(item.relevance_score * 100)}%"></div></div></div>`
+                : '';
+            const qualityBadge = item.accepted_for_verdict
+                ? `<span class="verdict-pill text-[9px] bg-secondary-container text-on-secondary-container ml-xs"><span class="material-symbols-outlined text-[12px] fill-icon">check_circle</span>Verdict</span>`
+                : `<span class="verdict-pill text-[9px] bg-error-container text-on-error-container ml-xs">Filtre: ${escapeHtml(item.source_quality || 'low')}</span>`;
+            
+            html += `
+                <a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer" class="block rounded-lg border ${item.accepted_for_verdict ? 'border-outline-variant/60' : 'border-error/25 opacity-80'} bg-surface-container-lowest p-md hover:border-secondary transition-colors space-y-xs">
+                    <div class="flex items-center gap-xs flex-wrap">
+                        <div class="font-label-caps text-[9px] text-secondary font-bold">${escapeHtml(item.source_domain || 'Kaynak')}</div>
+                        ${biasBadge}${qualityBadge}
+                    </div>
+                    <div class="font-body-md text-on-surface text-[12px] font-semibold">${escapeHtml(item.title || item.url)}</div>
+                    <p class="font-body-md text-[11px] text-on-surface-variant leading-relaxed line-clamp-3">${escapeHtml(item.snippet || '')}</p>
+                    ${relevance}
+                    ${credBar}
+                </a>
+            `;
+        });
+        
+        html += `
+                </div>
             </div>
-            <div class="font-code-mono text-[10px] text-on-surface-variant">${sourceTypeLabel(item.source_type)}</div>
-            <div class="font-body-md text-body-md text-on-surface mt-xs">${escapeHtml(item.title || item.url)}</div>
-            <p class="font-body-md text-[12px] text-on-surface-variant mt-xs leading-relaxed">${escapeHtml(item.snippet || '')}</p>
-            ${credBar}
-        </a>
-    `}).join('') || '<p class="text-on-surface-variant">Kaynak bulunamadı.</p>';
+        `;
+    });
+    
+    listContainer.innerHTML = html;
 }
 
 function renderGraph() {
@@ -613,11 +920,11 @@ function renderGraph() {
     document.getElementById('graph-subtitle').textContent = `${graph.nodes.length} node · ${graph.edges.length} ilişki`;
     if (cyMini) cyMini.destroy();
     if (!graph.nodes.length) {
-        container.textContent = 'Graph için veri yok.';
+        container.textContent = 'Ağ grafiği için veri bulunamadı.';
         return;
     }
     container.textContent = '';
-    // Mini view: only top 16 strongest edges
+    // Mini view: only top 16 strongest edges for rendering stability
     const strongestEdges = [...graph.edges]
         .sort((a, b) => (b.data.confidence || 0) - (a.data.confidence || 0))
         .slice(0, 16);
@@ -798,6 +1105,26 @@ function renderGraphDetails(ele) {
 
 function selectClaim(id) {
     selectedClaimId = selectedClaimId === id ? null : id;
+    
+    // Switch to Claims & Sources Tab when a claim is clicked (if not already there)
+    if (selectedClaimId) {
+        const consoleBtnClaims = document.getElementById('console-btn-claims');
+        if (consoleBtnClaims) consoleBtnClaims.click();
+    }
+    
+    // Show/hide selected claim header in Console Tab 2
+    const header = document.getElementById('selected-claim-header');
+    if (header) {
+        if (selectedClaimId) {
+            const claim = currentRun.claims.find(c => c.id === selectedClaimId);
+            document.getElementById('selected-claim-id-badge').textContent = `Claim #${selectedClaimId}`;
+            document.getElementById('selected-claim-text').textContent = claim ? claim.text : '';
+            header.classList.remove('hidden');
+        } else {
+            header.classList.add('hidden');
+        }
+    }
+    
     renderArticle();
     renderClaims();
     renderEvidence();
@@ -856,36 +1183,30 @@ document.addEventListener('click', event => {
 });
 
 function verdictPill(status) {
-    const color = status.includes('çeliş') || status.includes('çürüt') ? 'bg-error-container text-on-error-container'
-        : status.includes('destek') || status.includes('doğrulanmış') ? 'bg-secondary-container text-on-secondary-container'
-        : status.includes('önbellek') ? 'bg-tertiary-container text-on-tertiary-container'
-        : 'bg-surface-container text-on-surface-variant';
+    const color = status.includes('çeliş') || status.includes('çürüt') ? 'bg-error-container text-on-error-container border border-error/20'
+        : status.includes('destek') || status.includes('doğrulanmış') ? 'bg-secondary-container text-on-secondary-container border border-secondary/20'
+        : status.includes('önbellek') ? 'bg-tertiary-container text-on-tertiary-container border border-tertiary/20'
+        : 'bg-surface-container text-on-surface-variant border border-outline-variant/30';
     return `<span class="verdict-pill ${color}">${escapeHtml(status)}</span>`;
 }
 
 function nodeColor(kind, data) {
     if (kind === 'claim') {
         if (data && data.is_statistical) return '#c2410c';
-        return '#0c7c6b';
+        return '#064848';
     }
     if (kind === 'source') {
         if (data && data.is_turkish_archive) return '#7c3aed';
         if (data && data.is_public_data_source) return '#0369a1';
-        return '#6f3b00';
+        return '#854d0e';
     }
     if (kind === 'finding') return '#7f1d1d';
-    return '#2f9b75';
-}
-
-function sourceTypeLabel(type) {
-    if (type === 'fact_check_archive') return 'Teyit platformu arşivi';
-    if (type === 'knowledge_base') return 'Güvenilir bilgi tabanı';
-    return 'Genel web kaynağı';
+    return '#127c6b';
 }
 
 function edgeColor(type) {
     if (type === 'attack' || type === 'unsupported') return '#b4473f';
-    return '#2f9b75';
+    return '#127c6b';
 }
 
 function edgeWidth(ele, detailed) {
@@ -910,6 +1231,7 @@ function edgeLabel(ele) {
 
 function setBusy(isBusy) {
     const button = document.getElementById('fact-submit');
+    if (!button) return;
     button.disabled = isBusy;
     button.classList.toggle('opacity-60', isBusy);
     button.querySelector('span').textContent = isBusy ? 'hourglass_top' : 'travel_explore';
@@ -917,12 +1239,16 @@ function setBusy(isBusy) {
 
 function showError(message) {
     const el = document.getElementById('fact-error');
-    el.textContent = message;
-    el.classList.remove('hidden');
+    if (el) {
+        el.textContent = message;
+        el.classList.remove('hidden');
+    }
 }
 
+// Global notification trigger logic
 function hideError() {
-    document.getElementById('fact-error').classList.add('hidden');
+    const el = document.getElementById('fact-error');
+    if (el) el.classList.add('hidden');
 }
 
 function escapeHtml(value) {

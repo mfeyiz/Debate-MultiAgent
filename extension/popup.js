@@ -28,7 +28,7 @@ async function analyze(mode) {
       throw new Error("Yeterli haber metni bulunamadı. Metni seçip tekrar deneyin.");
     }
 
-    setBusy(true, "LogicFlow analiz ediyor...");
+    setBusy(true, "Logos analiz ediyor...");
     const response = await fetch(`${normalizedBase()}/api/fact-checks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

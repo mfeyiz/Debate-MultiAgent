@@ -1,4 +1,4 @@
-# LogicFlow Teyit Chrome Extension
+# Logos Teyit Chrome Extension
 
 Bu klasör unpacked Chrome extension olarak kullanılabilir.
 

@@ -1,8 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: logicflow-config
-  namespace: logicflow
+  name: logos-config
 data:
   PORT: "8080"
   DEFAULT_MODEL: "openai/gpt-4o-mini"

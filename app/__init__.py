@@ -3,20 +3,15 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from starlette.templating import Jinja2Templates
 
 from app.config import Config
 from app.database import async_session_factory, init_db
 from app.models import Agent
 from app.services.debate_service import DebateService
 from app.services.fact_check_service import FactCheckService
-
-
-templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 
 
 @asynccontextmanager
@@ -65,7 +60,7 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application instance."""
-    app = FastAPI(title="LogicFlow", version="0.1.0", lifespan=lifespan)
+    app = FastAPI(title="Logos", version="0.1.0", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origin_regex=Config.CORS_ALLOW_ORIGIN_REGEX,
@@ -75,6 +70,11 @@ def create_app() -> FastAPI:
 
     app.state.debate_svc = DebateService()
     app.state.fact_svc = FactCheckService()
+
+    @app.get("/health", include_in_schema=False)
+    async def health() -> dict[str, str]:
+        """Lightweight load balancer health check."""
+        return {"status": "ok"}
 
     # Register modular routes
     from app.routers.api import router as api_router

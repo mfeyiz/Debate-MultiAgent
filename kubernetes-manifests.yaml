@@ -1,9 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: debate-app
+  name: debate-app-deployment
+  labels:
+    app: debate-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: debate-app
@@ -13,22 +15,89 @@ spec:
         app: debate-app
     spec:
       containers:
-      - name: debate-app
-        image: debate-app-image # Updated by Cloud Build
-        ports:
-        - containerPort: 5000
+        - name: debate-app-container
+          image: europe-west3-docker.pkg.dev/project-2b7e04f8-32a9-4c3a-9a4/debate-platform-repository/debate-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: PORT
+              value: "8080"
+            - name: GUNICORN_WORKERS
+              value: "1"
+            - name: GUNICORN_TIMEOUT
+              value: "180"
+            - name: MODEL_BASE_DIR
+              value: "/models/modernbert"
+            - name: COMPONENT_MODEL_DIR
+              value: "/models/modernbert/component_classifier/final"
+            - name: RELATION_MODEL_DIR
+              value: "/models/modernbert/relation_classifier/final"
+            - name: MODEL_GCS_BUCKET
+              value: "project-2b7e04f8-32a9-4c3a-9a4-modernbert-models"
+            - name: MODEL_GCS_PREFIX
+              value: "modernbert"
+            - name: GOOGLE_CLOUD_PROJECT
+              value: "project-2b7e04f8-32a9-4c3a-9a4"
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "4Gi"
+              ephemeral-storage: "4Gi"
+            limits:
+              ephemeral-storage: "4Gi"
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: debate-service
+  name: debate-app-service-v3
+  annotations:
+    cloud.google.com/backend-config: '{"default": "debate-backend-config"}'
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   type: NodePort
   selector:
     app: debate-app
   ports:
-  - port: 80
-    targetPort: 5000
+    - name: http
+      port: 80
+      targetPort: 8080
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: debate-backend-config
+spec:
+  timeoutSec: 300
+  healthCheck:
+    type: HTTP
+    requestPath: /health
+    checkIntervalSec: 15
+    timeoutSec: 5
+    healthyThreshold: 1
+    unhealthyThreshold: 3
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
@@ -43,18 +112,23 @@ kind: Ingress
 metadata:
   name: debate-ingress
   annotations:
+    kubernetes.io/ingress.allow-http: "true"
     kubernetes.io/ingress.global-static-ip-name: "debate-ip"
     networking.gke.io/managed-certificates: "debate-ssl-cert"
-    kubernetes.io/ingress.class: "gce"
 spec:
+  defaultBackend:
+    service:
+      name: debate-app-service-v3
+      port:
+        number: 80
   rules:
-  - host: chat.mammas.studio
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: debate-service
-            port:
-              number: 80
+    - host: chat.mammas.studio
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: debate-app-service-v3
+                port:
+                  number: 80

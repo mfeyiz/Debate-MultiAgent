@@ -1,0 +1,23 @@
+{
+  "debate_id": 15,
+  "component_accuracy": 0.4189189189189189,
+  "component_correct": 31,
+  "component_total": 74,
+  "claim_recall": 0.10416666666666667,
+  "evidence_precision": 0.37681159420289856,
+  "graph_edge_accuracy": 0.0,
+  "graph_edge_correct": 0,
+  "graph_edge_total": 24,
+  "node_counts": {
+    "evidence": 69,
+    "claim": 5
+  },
+  "oracle_counts": {
+    "claim": 48,
+    "evidence": 26
+  },
+  "visible_edge_counts": {
+    "attack": 18,
+    "support": 6
+  }
+}

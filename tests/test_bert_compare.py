@@ -5,7 +5,7 @@ from main import app
 
 
 def test_compare_models_direct():
-    """Test compare_models direct execution in ModernBERTPipeline."""
+    """Test real-only compare execution in ModernBERTPipeline."""
     pipeline = ModernBERTPipeline()
     res = pipeline.compare_models(
         source_text="Çünkü yapay zeka, insanların saatler süren tasarım süreçlerini saniyeler içinde tamamlayabiliyor.",
@@ -15,21 +15,16 @@ def test_compare_models_direct():
     assert "target_text" in res
     assert "source_text" in res
     assert "models" in res
-    
-    models = res["models"]
-    for model_key in ["model_1", "model_2", "model_3"]:
-        assert model_key in models
-        model = models[model_key]
-        assert "name" in model
-        assert "description" in model
-        assert "tokens_target" in model
-        assert "tokens_source" in model
-        assert "components" in model
-        assert "relations" in model
-        assert "overall_strength" in model
-        assert "feedback" in model
-        assert "f1_components" in model
-        assert "f1_relations" in model
+    assert "model" in res
+    assert "tokens_target" in res
+    assert "tokens_source" in res
+    assert "components" in res
+    assert "relations" in res
+    assert "overall_strength" in res
+    assert "feedback" in res
+    assert "warnings" in res
+    assert all(c["component_type"] in {"claim", "evidence", "other"} for c in res["components"])
+    assert all(r["relation_type"] in {"attack", "support", "none"} for r in res["relations"])
 
 
 def test_compare_models_api():
@@ -46,8 +41,6 @@ def test_compare_models_api():
         assert "target_text" in res
         assert "source_text" in res
         assert "models" in res
-        
-        models = res["models"]
-        assert "model_1" in models
-        assert "model_2" in models
-        assert "model_3" in models
+        assert "model" in res
+        assert "components" in res
+        assert "relations" in res

@@ -1,10 +1,14 @@
-FROM python:3.13-slim
+FROM python:3.11-slim
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    UV_INDEX_URL=https://download.pytorch.org/whl/cpu \
+    UV_EXTRA_INDEX_URL=https://pypi.org/simple \
+    UV_INDEX_STRATEGY=unsafe-best-match \
+    UV_CACHE_DIR=/tmp/uv-cache \
+    HF_HOME=/tmp/huggingface \
+    TRANSFORMERS_CACHE=/tmp/huggingface
 
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
@@ -14,26 +18,23 @@ WORKDIR /app
 # Copy dependency metadata
 COPY pyproject.toml uv.lock README.md ./
 
-# Install locked production dependencies with CPU-only torch.
-# `uv pip install -e .` intentionally is not used here because it bypasses
-# uv.lock resolution and can pick incompatible newest transitive releases.
-ENV UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu
-RUN uv sync --frozen --no-dev --no-install-project
+# Install locked production dependencies with CPU-only torch and no caches.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && uv sync --frozen --no-dev --no-install-project --no-cache \
+    && rm -rf /tmp/uv-cache /tmp/huggingface /root/.cache
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Copy application code
 COPY app/ ./app/
 COPY main.py ./
 COPY gunicorn.conf.py ./
-COPY scripts/check_model_artifacts.py ./scripts/check_model_artifacts.py
-
-# Copy only the production model weights (~1.14 GB)
-COPY models/component_classifier/final/ ./models/component_classifier/final/
-COPY models/relation_classifier/final/ ./models/relation_classifier/final/
-RUN python scripts/check_model_artifacts.py
 
 # Create non-root user
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+RUN useradd -m -u 1000 appuser \
+    && mkdir -p /models/modernbert \
+    && chown -R appuser:appuser /app /models
 USER appuser
 
 # Expose the port GKE expects

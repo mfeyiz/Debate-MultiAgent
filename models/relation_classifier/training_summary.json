@@ -1,0 +1,59 @@
+{
+  "model_name": "ytu-ce-cosmos/modernbert-tr-base-1k",
+  "output_dir": "/Users/mfeyiz/Desktop/Debate-MultiAgent/models/candidate/relation_classifier/final",
+  "dataset_counts": {
+    "support": 1180,
+    "attack": 1184,
+    "neutral": 6872
+  },
+  "train_counts": {
+    "neutral": 4975,
+    "support": 853,
+    "attack": 851
+  },
+  "validation_counts": {
+    "neutral": 994,
+    "attack": 166,
+    "support": 161
+  },
+  "test_counts": {
+    "neutral": 903,
+    "attack": 167,
+    "support": 166
+  },
+  "split_strategy": "topic_group_holdout",
+  "eval": {
+    "eval_loss": 0.6560375690460205,
+    "eval_accuracy": 0.9454958364875095,
+    "eval_precision": 0.9069245767702506,
+    "eval_recall": 0.9010720513055634,
+    "eval_f1": 0.9039749908725812,
+    "eval_support_recall": 0.8819875776397516,
+    "eval_support_precision": 0.8930817610062893,
+    "eval_attack_recall": 0.8493975903614458,
+    "eval_attack_precision": 0.8597560975609756,
+    "eval_neutral_recall": 0.971830985915493,
+    "eval_neutral_precision": 0.9679358717434869,
+    "eval_runtime": 14.9124,
+    "eval_samples_per_second": 88.584,
+    "eval_steps_per_second": 5.566,
+    "epoch": 1.0
+  },
+  "test": {
+    "test_loss": 0.8812304139137268,
+    "test_accuracy": 0.9215210355987055,
+    "test_precision": 0.8905616226603231,
+    "test_recall": 0.8728363097951184,
+    "test_f1": 0.8812324614566015,
+    "test_support_recall": 0.8734939759036144,
+    "test_support_precision": 0.8734939759036144,
+    "test_attack_recall": 0.7904191616766467,
+    "test_attack_precision": 0.8571428571428571,
+    "test_neutral_recall": 0.9545957918050941,
+    "test_neutral_precision": 0.9410480349344978,
+    "test_runtime": 14.113,
+    "test_samples_per_second": 87.579,
+    "test_steps_per_second": 5.527,
+    "epoch": 1.0
+  }
+}

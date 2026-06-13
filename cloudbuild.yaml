@@ -4,7 +4,6 @@ substitutions:
   _IMAGE_NAME: debate-app
   _CLUSTER_NAME: debate-cluster
   _CLUSTER_LOCATION: europe-west3
-  _NAMESPACE: logicflow
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -13,30 +12,8 @@ options:
 timeout: 3600s
 
 steps:
-  - id: "restore-lfs-models"
-    name: "gcr.io/cloud-builders/gcloud"
-    entrypoint: "bash"
-    args:
-      - "-ceu"
-      - |
-        if python3 scripts/check_model_artifacts.py; then
-          exit 0
-        fi
-
-        if [ ! -d .git ]; then
-          echo "Model files are unresolved LFS pointers and Cloud Build source has no .git directory."
-          echo "Use a Cloud Build GitHub trigger with LFS support, or run git lfs pull before gcloud builds submit."
-          exit 1
-        fi
-
-        apt-get update
-        apt-get install -y --no-install-recommends git-lfs
-        git lfs install --local
-        git lfs pull --include="models/**"
-        python3 scripts/check_model_artifacts.py
-
   - id: "tests"
-    name: "python:3.13"
+    name: "python:3.11"
     entrypoint: "bash"
     args:
       - "-ceu"
@@ -54,7 +31,7 @@ steps:
     args:
       - "-ceu"
       - |
-        kubectl kustomize k8s >/workspace/rendered-k8s.yaml
+        cp kubernetes-manifests.yaml /workspace/rendered-k8s.yaml
 
   - id: "build-image"
     name: "gcr.io/cloud-builders/docker"
@@ -86,7 +63,6 @@ steps:
       - "--image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${SHORT_SHA}"
       - "--location=${_CLUSTER_LOCATION}"
       - "--cluster=${_CLUSTER_NAME}"
-      - "--namespace=${_NAMESPACE}"
 
   - id: "rollout-status"
     name: "gcr.io/cloud-builders/kubectl"
@@ -96,9 +72,7 @@ steps:
     args:
       - "rollout"
       - "status"
-      - "deployment/logicflow-app"
-      - "-n"
-      - "${_NAMESPACE}"
+      - "deployment/debate-app-deployment"
       - "--timeout=600s"
 
 images:

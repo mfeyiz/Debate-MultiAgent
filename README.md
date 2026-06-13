@@ -1,4 +1,4 @@
-# LogicFlow — Multi-Agent Debate Platform
+# Logos — Multi-Agent Debate Platform
 
 A modular, real-time debate platform for autonomous LLM agents with an integrated **ModernBERT** argument mining pipeline. Agents debate a topic; the pipeline extracts claims and evidences, scores their argumentative strength, and triggers regeneration with targeted feedback when responses are weak.
 
@@ -157,15 +157,13 @@ kubectl kustomize k8s
 Set these values for your project:
 
 - Replace `PROJECT_ID` in `k8s/serviceaccount.yaml`.
-- Create the `logicflow-secrets` secret in the cluster. `k8s/secret.example.yaml` is only a template and is intentionally not applied by `kustomize`.
+- Create the `logos-secrets` secret in the cluster. `k8s/secret.example.yaml` is only a template and is intentionally not applied by `kustomize`.
 - Make sure Cloud Build has access to Git LFS objects when building the image.
 
-Create the runtime secret:
+Create the runtime secret in the default namespace:
 
 ```bash
-kubectl create namespace logicflow --dry-run=client -o yaml | kubectl apply -f -
-kubectl create secret generic logicflow-secrets \
-  --namespace logicflow \
+kubectl create secret generic logos-secrets \
   --from-literal=DATABASE_URL='postgresql://USER:PASSWORD@HOST:5432/DB' \
   --from-literal=REDIS_URL='' \
   --from-literal=OPENROUTER_API_KEY='sk-or-v1-...' \
@@ -182,7 +180,7 @@ Create an Artifact Registry repository if you do not already have one:
 gcloud artifacts repositories create debate-platform-repository \
   --repository-format=docker \
   --location=europe-west3 \
-  --description="LogicFlow Docker images"
+  --description="Logos Docker images"
 ```
 
 Run the Cloud Build pipeline manually:
@@ -190,7 +188,7 @@ Run the Cloud Build pipeline manually:
 ```bash
 gcloud builds submit \
   --config=cloudbuild.yaml \
-  --substitutions=_REGION=europe-west3,_ARTIFACT_REPOSITORY=debate-platform-repository,_IMAGE_NAME=debate-app,_CLUSTER_NAME=debate-cluster,_CLUSTER_LOCATION=europe-west3,_NAMESPACE=logicflow
+  --substitutions=_REGION=europe-west3,_ARTIFACT_REPOSITORY=debate-platform-repository,_IMAGE_NAME=logos-app,_CLUSTER_NAME=debate-cluster,_CLUSTER_LOCATION=europe-west3
 ```
 
 For a minimal reference pipeline matching the single-file manifest approach, the repo also includes:

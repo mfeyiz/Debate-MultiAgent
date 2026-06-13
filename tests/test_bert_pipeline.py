@@ -9,6 +9,29 @@ from app.services.bert_service import ModernBERTPipeline
 class ModernBERTPipelineSmokeTest(unittest.TestCase):
     """Checks that the bundled model emits usable, non-empty spans."""
 
+    def test_text_units_do_not_split_numeric_or_roman_citations(self) -> None:
+        pipeline = object.__new__(ModernBERTPipeline)
+        text = (
+            "UNICEF verilerine göre her gün 15.000 çocuk önlenebilir nedenlerle ölüyor. "
+            "Treatise III. II. I bölümünde ebeveyn sevgisi tartışılır. "
+            "Sonuç cümlesi burada biter."
+        )
+
+        units = [text[start:end] for start, end in pipeline._text_units(text)]
+
+        self.assertEqual(len(units), 3)
+        self.assertIn("15.000 çocuk", units[0])
+        self.assertIn("III. II. I", units[1])
+
+    def test_clean_unit_text_removes_markdown_list_chrome(self) -> None:
+        pipeline = object.__new__(ModernBERTPipeline)
+        text = "1. **BM verileriyle çelişki**: Bölgesel nüfus düşüşü küresel üreme yükümlülüğü doğurmaz."
+
+        start, cleaned = pipeline._clean_unit_text(text, 0, len(text))
+
+        self.assertGreater(start, 0)
+        self.assertEqual(cleaned, "Bölgesel nüfus düşüşü küresel üreme yükümlülüğü doğurmaz.")
+
     @unittest.skipUnless(
         Path("models/component_classifier/final").exists()
         and Path("models/relation_classifier/final").exists(),
@@ -72,6 +95,24 @@ class ModernBERTPipelineSmokeTest(unittest.TestCase):
 
         self.assertEqual(len(units), 2)
         self.assertEqual(text[units[1][0] : units[1][0] + 5].lower(), "ancak")
+
+    @unittest.skipUnless(
+        Path("models/component_classifier/final").exists()
+        and Path("models/relation_classifier/final").exists(),
+        "Bundled ModernBERT weights are not available.",
+    )
+    def test_parenthood_claim_hard_cases_are_not_dropped_as_other(self) -> None:
+        pipeline = ModernBERTPipeline()
+        text = (
+            "Agent Alpha'nın savındaki temel zayıflık, doğal olanın ahlaken doğru sayılması "
+            "yanılgısına dayanmasıdır. Sonuç olarak bilinçli ebeveynlik argümanı, ahlaki "
+            "bir seçimin değil bir ayrıcalığın savunusudur."
+        )
+
+        components = pipeline.extract_components(text, default_type="claim")
+
+        self.assertGreaterEqual(len(components), 1)
+        self.assertTrue(any(component.component_type == "claim" for component in components))
 
 
 if __name__ == "__main__":
