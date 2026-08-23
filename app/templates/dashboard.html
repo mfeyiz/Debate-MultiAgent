@@ -14,6 +14,13 @@
             <div class="flex-1 w-full">
                 <label class="block font-label-caps text-label-caps text-primary mb-sm">Konu</label>
                 <input type="text" id="debate-topic" required placeholder="Örn. Sentetik Biyolojinin Ekonomik Etkisi" class="w-full px-md py-sm border border-outline-variant rounded bg-surface font-body-md text-body-md focus:outline-none focus:border-secondary transition-colors">
+                <div class="flex flex-wrap gap-xs mt-sm" id="topic-suggestions" aria-label="Önerilen demo konuları">
+                    <span class="font-label-caps text-label-caps text-on-surface-variant mr-xs self-center">Demo için önerilen:</span>
+                    <button type="button" class="topic-chip px-sm py-0.5 rounded-full border border-outline-variant bg-surface-container-low text-[12px] text-on-surface hover:border-secondary hover:text-secondary transition-colors">Uzaktan çalışma çalışan verimliliğini artırır</button>
+                    <button type="button" class="topic-chip px-sm py-0.5 rounded-full border border-outline-variant bg-surface-container-low text-[12px] text-on-surface hover:border-secondary hover:text-secondary transition-colors">Yenilenebilir enerji yatırımları ekonomik büyümeyi destekler</button>
+                    <button type="button" class="topic-chip px-sm py-0.5 rounded-full border border-outline-variant bg-surface-container-low text-[12px] text-on-surface hover:border-secondary hover:text-secondary transition-colors">Düzenli egzersiz zihinsel sağlığı iyileştirir</button>
+                    <button type="button" class="topic-chip px-sm py-0.5 rounded-full border border-outline-variant bg-surface-container-low text-[12px] text-on-surface hover:border-secondary hover:text-secondary transition-colors">Erken yaşta kodlama eğitimi problem çözme becerisini geliştirir</button>
+                </div>
             </div>
             <div class="w-full md:w-48">
                 <label class="block font-label-caps text-label-caps text-primary mb-sm">Ajan 1</label>
@@ -155,6 +162,15 @@ document.getElementById('create-debate-form').addEventListener('submit', async (
     } else {
         alert(data.error || 'Tartışma oluşturulamadı');
     }
+});
+
+// Demo topic chips: fill the topic input on click.
+document.querySelectorAll('#topic-suggestions .topic-chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+        const input = document.getElementById('debate-topic');
+        input.value = chip.textContent.trim();
+        input.focus();
+    });
 });
 </script>
 {% endblock %}

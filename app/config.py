@@ -106,6 +106,12 @@ class Config:
     PORT = int(os.environ.get("PORT", "8080"))
     GOOGLE_CLOUD_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get("GCP_PROJECT", "")
     SQLITE_BUSY_TIMEOUT_MS = int(os.environ.get("SQLITE_BUSY_TIMEOUT_MS", "30000"))
+    # Cap PyTorch intra-op threads so a single BERT inference cannot peg every
+    # CPU core and starve the async event loop (causes slow pages + pool timeouts).
+    TORCH_NUM_THREADS = int(os.environ.get("TORCH_NUM_THREADS", "2"))
+    # Async DB connection pool sizing.
+    DB_POOL_SIZE = int(os.environ.get("DB_POOL_SIZE", "20"))
+    DB_MAX_OVERFLOW = int(os.environ.get("DB_MAX_OVERFLOW", "40"))
 
     # Redis (for multi-pod SSE)
     REDIS_URL = os.environ.get("REDIS_URL", "")

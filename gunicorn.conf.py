@@ -29,7 +29,7 @@ proc_name = "logos"
 daemon = False
 pidfile = None
 
-# SSL (terminated at GKE Ingress)
+# SSL is expected to be terminated by the outer reverse proxy.
 forwarded_allow_ips = "*"
 secure_scheme_headers = {
     "X-FORWARDED-PROTOCOL": "ssl",

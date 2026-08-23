@@ -1,0 +1,77 @@
+{
+  "component_examples": [
+    {
+      "text": "Türkiye ekonomisi 2024 yılında yüzde 10 büyüdü.",
+      "label": "claim",
+      "topic": "economic_numeric_claim"
+    },
+    {
+      "text": "TÜİK verilerine göre yıllık enflasyon 2024 sonunda yüzde 44,38 oldu.",
+      "label": "claim",
+      "topic": "official_statistical_claim"
+    },
+    {
+      "text": "Merkez Bankası politika faizini yüzde 50 seviyesinde tuttu.",
+      "label": "claim",
+      "topic": "official_statistical_claim"
+    },
+    {
+      "text": "Kaynaklara göre herkes bu gerçeği saklıyor ve medya bunu yayınlamıyor.",
+      "label": "background",
+      "topic": "manipulative_unsupported_language"
+    },
+    {
+      "text": "Bu konuda hiç kimse konuşmuyor ama gerçekler çok yakında ortaya çıkacak.",
+      "label": "background",
+      "topic": "manipulative_unsupported_language"
+    },
+    {
+      "text": "Yapay zeka öğrencilerin eksiklerini hızlı tespit eder.",
+      "label": "evidence",
+      "topic": "mixed_relation"
+    },
+    {
+      "text": "Ancak yanlış veriyle hatalı yönlendirme yapabilir.",
+      "label": "evidence",
+      "topic": "mixed_relation"
+    }
+  ],
+  "relation_examples": [
+    {
+      "claim_text": "Türkiye ekonomisi 2024 yılında yüzde 10 büyüdü.",
+      "evidence_text": "TÜİK verilerine göre Türkiye ekonomisi 2024 yılında yüzde 3,2 büyüdü.",
+      "label": "attack",
+      "topic": "numeric_contradiction"
+    },
+    {
+      "claim_text": "Yıllık enflasyon 2024 sonunda yüzde 44,38 oldu.",
+      "evidence_text": "TÜİK açıklaması yıllık enflasyonun 2024 sonunda yüzde 44,38 olduğunu bildirdi.",
+      "label": "support",
+      "topic": "numeric_match"
+    },
+    {
+      "claim_text": "Haberde uzman görüşü veya karşı görüş yer almıyor.",
+      "evidence_text": "PolitiFact ana sayfasındaki menü, üyelik ve son haber bağlantıları.",
+      "label": "neutral",
+      "topic": "irrelevant_source"
+    },
+    {
+      "claim_text": "Aşılar toplum sağlığını korur.",
+      "evidence_text": "Kaynaklara göre herkes bu gerçeği saklıyor ve medya bunu yayınlamıyor.",
+      "label": "neutral",
+      "topic": "manipulative_unsupported_language"
+    },
+    {
+      "claim_text": "Yapay zeka eğitimde başarıyı artırır.",
+      "evidence_text": "Yapay zeka öğrencilerin eksiklerini hızlı tespit eder.",
+      "label": "support",
+      "topic": "mixed_relation"
+    },
+    {
+      "claim_text": "Yapay zeka eğitimde başarıyı artırır.",
+      "evidence_text": "Yanlış veriyle çalışan sistemler öğrenciyi hatalı yönlendirebilir.",
+      "label": "attack",
+      "topic": "mixed_relation"
+    }
+  ]
+}

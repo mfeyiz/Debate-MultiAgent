@@ -432,7 +432,9 @@ class DebateService:
         await db.flush()
 
         try:
+            bert = self.bert
             components_by_message: dict[int, list[ArgumentComponentModel]] = defaultdict(list)
+            topic_relation_jobs: list[tuple[ArgumentComponentModel, str, str]] = []
 
             for msg in messages:
                 version = msg.current_version
@@ -440,7 +442,7 @@ class DebateService:
                     continue
                 default_type = self._default_component_type(msg.message_type)
                 extracted_components = await asyncio.to_thread(
-                    self.bert.extract_components,
+                    bert.extract_components,
                     version.content,
                     default_type=default_type,
                 )
@@ -461,18 +463,30 @@ class DebateService:
                         end_idx=extracted.end_idx,
                         confidence=extracted.confidence,
                     )
-                    topic_relation_type, topic_confidence, topic_probabilities = await asyncio.to_thread(
-                        self.bert.classify_relation,
-                        debate.topic,
-                        extracted.text,
+                    db.add(component)
+                    components_by_message[msg.id].append(component)
+                    topic_relation_jobs.append((component, debate.topic, extracted.text))
+
+            await db.flush()
+            if topic_relation_jobs:
+                if hasattr(bert, "classify_relations_batch"):
+                    topic_predictions = await asyncio.to_thread(
+                        bert.classify_relations_batch,
+                        ((topic, text) for _, topic, text in topic_relation_jobs),
                     )
+                else:
+                    topic_predictions = [
+                        await asyncio.to_thread(bert.classify_relation, topic, text)
+                        for _, topic, text in topic_relation_jobs
+                    ]
+                for (component, _, _), (
+                    topic_relation_type,
+                    topic_confidence,
+                    topic_probabilities,
+                ) in zip(topic_relation_jobs, topic_predictions):
                     component.topic_relation_type = topic_relation_type
                     component.topic_relation_confidence = topic_confidence
                     component.topic_relation_probabilities_json = json.dumps(topic_probabilities)
-                    db.add(component)
-                    components_by_message[msg.id].append(component)
-
-            await db.flush()
             await self._classify_full_debate_relations(db, run, messages, components_by_message)
             await db.flush()
             await self._update_full_debate_strengths(db, run, messages)
@@ -777,7 +791,7 @@ class DebateService:
             if relation.confidence < run.attack_threshold:
                 return False
             if same_message:
-                return source.component_type == "evidence" and target.component_type == "claim"
+                return source.component_type == "premise" and target.component_type == "claim"
             if same_agent:
                 return False
             return target.component_type == "claim"
@@ -785,7 +799,7 @@ class DebateService:
         if relation.confidence < run.relation_threshold:
             return False
         if same_message:
-            return source.component_type == "evidence" and target.component_type == "claim"
+            return source.component_type == "premise" and target.component_type == "claim"
         return target.component_type == "claim"
 
     async def _update_full_debate_strengths(
@@ -879,14 +893,15 @@ class DebateService:
     def _default_component_type(message_type: str) -> str:
         if message_type in ("claim", "rebuttal"):
             return "claim"
-        return "evidence"
+        return "premise"
 
     def _component_node(self, component: ArgumentComponentModel) -> dict:
         msg = component.message
         round_number = ((msg.position or 0) // 2) + 1
         label_type = {
             "claim": "Claim",
-            "evidence": "Evidence",
+            "premise": "Premise",
+            "evidence": "Premise",  # legacy rows from pre-v8 runs
             "other": "Other",
         }.get(component.component_type, component.component_type.title())
         agent_name = component.agent.name if component.agent else "Sistem"
@@ -1139,7 +1154,7 @@ class DebateService:
             if not parent:
                 continue
             parent_claims = [c for c in components_by_msg[parent.id] if c.component_type == "claim"]
-            attack_evidences = [c for c in components_by_msg[msg.id] if c.component_type == "evidence"]
+            attack_evidences = [c for c in components_by_msg[msg.id] if c.component_type == "premise"]
             
             for pc in parent_claims:
                 has_attack = False
@@ -1379,7 +1394,7 @@ class DebateService:
                 self.bert.analyze,
                 source_text=current_version.content,
                 target_text=parent_msg.current_version.content,
-                source_type="evidence",
+                source_type="premise",
                 target_type="claim",
             )
 
@@ -1388,7 +1403,7 @@ class DebateService:
             analysis = Analysis(
                 message_version_id=current_version.id,
                 target_message_version_id=parent_msg.current_version.id,
-                component_type="evidence",
+                component_type="premise",
                 relation_type=top_relation.relation_type if top_relation else "none",
                 confidence=top_relation.confidence if top_relation else 0.0,
                 feedback_text=result.feedback,
@@ -1591,7 +1606,7 @@ class DebateService:
             self.bert.analyze,
             source_text=current_version.content,
             target_text=parent_content,
-            source_type="evidence" if msg.parent_id else "claim",
+            source_type="premise" if msg.parent_id else "claim",
             target_type="claim" if msg.parent_id else "topic",
         )
 
@@ -1600,7 +1615,7 @@ class DebateService:
         analysis = Analysis(
             message_version_id=current_version.id,
             target_message_version_id=parent_version_id,
-            component_type="evidence" if msg.parent_id else "claim",
+            component_type="premise" if msg.parent_id else "claim",
             relation_type=top_relation.relation_type if top_relation else "none",
             confidence=top_relation.confidence if top_relation else 0.0,
             feedback_text=result.feedback,

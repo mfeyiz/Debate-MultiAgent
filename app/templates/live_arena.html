@@ -923,7 +923,7 @@ function createGraphInstance(container, nodes, edges, options) {
             {
                 selector: 'node',
                 style: {
-                    'shape': ele => ele.data('kind') === 'evidence' ? 'ellipse' : 'round-rectangle',
+                    'shape': ele => ['evidence','premise'].includes(ele.data('kind')) ? 'ellipse' : 'round-rectangle',
                     'background-color': ele => nodeTopicColor(ele),
                     'background-opacity': ele => graphMode === 'bert' ? 0.92 : 0.78,
                     'label': ele => detailed ? nodeLabel(ele) : shortNodeLabel(ele),
@@ -935,15 +935,15 @@ function createGraphInstance(container, nodes, edges, options) {
                     'text-margin-y': 0,
                     'text-wrap': 'wrap',
                     'text-max-width': ele => {
-                        if (ele.data('kind') === 'evidence') return detailed ? 120 : 60;
+                        if (['evidence','premise'].includes(ele.data('kind'))) return detailed ? 120 : 60;
                         return detailed ? 210 : 88;
                     },
                     'width': ele => {
-                        if (ele.data('kind') === 'evidence') return detailed ? 150 : 70;
+                        if (['evidence','premise'].includes(ele.data('kind'))) return detailed ? 150 : 70;
                         return detailed ? 230 : 98;
                     },
                     'height': ele => {
-                        if (ele.data('kind') === 'evidence') return detailed ? 70 : 42;
+                        if (['evidence','premise'].includes(ele.data('kind'))) return detailed ? 70 : 42;
                         return detailed ? 74 : 42;
                     },
                     'border-width': 2,
@@ -1242,7 +1242,7 @@ function highlightHtml(text, spans) {
         const selection = selectedComponentId ? selectionRole(componentId) : null;
         const type = selection ? selection.className : defaultHighlightClass(span);
         const style = selection ? '' : topicHighlightStyle(span);
-    const baseLabel = span.type === 'claim' ? 'CLAIM' : span.type === 'evidence' ? 'EVIDENCE' : 'OTHER';
+    const baseLabel = span.type === 'claim' ? 'CLAIM' : (span.type === 'premise' || span.type === 'evidence') ? 'PREMISE' : 'OTHER';
         const tooltip = selection && selection.tooltip
             ? selection.tooltip
             : topicTooltip(span, baseLabel);

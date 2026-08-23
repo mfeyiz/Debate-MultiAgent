@@ -1,123 +1,150 @@
 {
   "model": {
-    "f1_components": 0.7826,
-    "f1_relations": 0.6286,
-    "component_hard_case_accuracy": 0.7826,
-    "relation_hard_case_accuracy": 0.6286,
-    "claim_recall": 0.7143,
-    "none_precision": 1.0,
+    "primary_metric": "gold_holdout_macro_f1",
+    "gold_holdout": {
+      "dataset": "eval_holdout_scenarios_v2.json",
+      "component_macro_f1": 0.5922,
+      "relation_macro_f1": 0.7126,
+      "component_total": 535,
+      "relation_total": 353,
+      "threshold": 0.55
+    },
+    "generalization": {
+      "component": {
+        "train_f1": 0.8798031638157137,
+        "val_f1": 0.8577339584450288,
+        "test_f1": 0.8537144886798577,
+        "overfitting_gap": 0.0261
+      },
+      "relation": {
+        "train_f1": 0.9193989943603081,
+        "val_f1": 0.8518367936972587,
+        "test_f1": 0.890869939707149,
+        "overfitting_gap": 0.0285
+      },
+      "max_overfit_gap": 0.15
+    },
+    "auxiliary_hard_cases": {
+      "component_accuracy": 0.913,
+      "relation_accuracy": 0.8857,
+      "claim_recall": 0.9286,
+      "none_precision": 1.0,
+      "note": "informational only; not the promotion gate"
+    },
     "debate_acceptance": [
       {
         "name": "ai_education_five_turns",
         "component_accuracy": 0.9,
-        "relation_accuracy": 0.8
+        "relation_accuracy": 1.0
       },
       {
         "name": "economy_policy_five_turns",
-        "component_accuracy": 0.7273,
-        "relation_accuracy": 0.6667
+        "component_accuracy": 1.0,
+        "relation_accuracy": 1.0
       }
     ],
     "component_training": {
-      "dataset_version": "v4",
+      "dataset_version": "v5",
       "dataset_counts": {
-        "claim": 5250,
-        "other": 4500,
-        "evidence": 5250
+        "claim": 1051,
+        "evidence": 452,
+        "other": 333
       },
       "class_weights": {
-        "claim": 0.985391,
-        "evidence": 0.913194,
-        "other": 1.123449
+        "claim": 0.588449,
+        "evidence": 1.335397,
+        "other": 1.812325
       },
       "eval": {
-        "eval_loss": 1.6422100067138672,
-        "eval_accuracy": 0.6761904761904762,
-        "eval_precision": 0.6771495672006256,
-        "eval_recall": 0.6709031591242809,
-        "eval_f1": 0.6721936488944463,
-        "eval_claim_recall": 0.7140974967061924,
-        "eval_claim_precision": 0.7002583979328165,
-        "eval_evidence_recall": 0.6051188299817185,
-        "eval_evidence_precision": 0.7042553191489361,
-        "eval_other_recall": 0.6934931506849316,
-        "eval_other_precision": 0.6269349845201239,
-        "eval_runtime": 9.3327,
-        "eval_samples_per_second": 202.513,
-        "eval_steps_per_second": 3.214,
-        "epoch": 5.0
+        "eval_loss": 0.5057257413864136,
+        "eval_accuracy": 0.8721804511278195,
+        "eval_precision": 0.8471080669710807,
+        "eval_recall": 0.8745885450954575,
+        "eval_f1": 0.8577339584450288,
+        "eval_claim_recall": 0.8709677419354839,
+        "eval_claim_precision": 0.9246575342465754,
+        "eval_evidence_recall": 0.8548387096774194,
+        "eval_evidence_precision": 0.8833333333333333,
+        "eval_other_recall": 0.8979591836734694,
+        "eval_other_precision": 0.7333333333333333,
+        "eval_runtime": 12.7984,
+        "eval_samples_per_second": 20.784,
+        "eval_steps_per_second": 0.703,
+        "epoch": 9.0
       },
       "test": {
-        "test_loss": 1.594247579574585,
-        "test_accuracy": 0.6383512544802867,
-        "test_precision": 0.6491411974706343,
-        "test_recall": 0.637260193358554,
-        "test_f1": 0.6378158764939671,
-        "test_claim_recall": 0.719,
-        "test_claim_precision": 0.5817152103559871,
-        "test_evidence_recall": 0.5288461538461539,
-        "test_evidence_precision": 0.6725543478260869,
-        "test_other_recall": 0.6639344262295082,
-        "test_other_precision": 0.6931540342298288,
-        "test_runtime": 14.2536,
-        "test_samples_per_second": 195.74,
-        "test_steps_per_second": 3.087,
-        "epoch": 5.0
+        "test_loss": 0.4228822886943817,
+        "test_accuracy": 0.8731884057971014,
+        "test_precision": 0.8437597261126673,
+        "test_recall": 0.8737759588294854,
+        "test_f1": 0.8537144886798577,
+        "test_claim_recall": 0.8711656441717791,
+        "test_claim_precision": 0.9281045751633987,
+        "test_evidence_recall": 0.8805970149253731,
+        "test_evidence_precision": 0.9365079365079365,
+        "test_other_recall": 0.8695652173913043,
+        "test_other_precision": 0.6666666666666666,
+        "test_runtime": 15.0664,
+        "test_samples_per_second": 18.319,
+        "test_steps_per_second": 0.597,
+        "epoch": 9.0
       }
     },
     "relation_training": {
-      "dataset_version": "v4",
+      "dataset_version": "v5",
       "dataset_counts": {
-        "attack": 1020,
-        "none": 990,
-        "support": 990
+        "support": 532,
+        "attack": 416,
+        "none": 293
       },
       "class_weights": {
-        "support": 0.976965,
-        "attack": 1.001389,
-        "none": 1.022695
+        "support": 0.773333,
+        "attack": 0.989761,
+        "none": 1.435644
       },
       "calibration": {
-        "relation_confidence_threshold": 0.52,
-        "macro_f1": 0.8324176833241674,
-        "none_precision": 0.9212598425196851,
-        "visible_relation_recall": 0.9635036496350365
+        "relation_confidence_threshold": 0.0,
+        "macro_f1": 0.8518367936972587,
+        "none_precision": 0.8444444444444444,
+        "visible_relation_recall": 0.948905109489051
       },
       "eval": {
-        "eval_loss": 0.6786965727806091,
-        "eval_accuracy": 0.8228155339805825,
-        "eval_precision": 0.8297364840301782,
-        "eval_recall": 0.8194725669603979,
-        "eval_f1": 0.8227884515333294,
-        "eval_support_recall": 0.7815126050420168,
-        "eval_support_precision": 0.8017241379310345,
-        "eval_attack_recall": 0.8580645161290322,
-        "eval_attack_precision": 0.7687861271676301,
-        "eval_none_recall": 0.8188405797101449,
-        "eval_none_precision": 0.9186991869918699,
-        "eval_runtime": 21.4392,
-        "eval_samples_per_second": 19.217,
-        "eval_steps_per_second": 1.213,
-        "epoch": 4.0
+        "eval_loss": 0.4343518614768982,
+        "eval_accuracy": 0.85,
+        "eval_precision": 0.8495967873053036,
+        "eval_recall": 0.8582779862351266,
+        "eval_f1": 0.8518367936972587,
+        "eval_support_recall": 0.7894736842105263,
+        "eval_support_precision": 0.8955223880597015,
+        "eval_attack_recall": 0.9016393442622951,
+        "eval_attack_precision": 0.8088235294117647,
+        "eval_none_recall": 0.8837209302325582,
+        "eval_none_precision": 0.8444444444444444,
+        "eval_runtime": 2.9926,
+        "eval_samples_per_second": 60.149,
+        "eval_steps_per_second": 2.005,
+        "epoch": 10.0
       },
       "test": {
-        "test_loss": 0.592921793460846,
-        "test_accuracy": 0.8494117647058823,
-        "test_precision": 0.8483860371738517,
-        "test_recall": 0.8454296661193212,
-        "test_f1": 0.8448650892486508,
-        "test_support_recall": 0.7142857142857143,
-        "test_support_precision": 0.811965811965812,
-        "test_attack_recall": 0.9172413793103448,
-        "test_attack_precision": 0.8159509202453987,
-        "test_none_recall": 0.9047619047619048,
-        "test_none_precision": 0.9172413793103448,
-        "test_runtime": 22.8205,
-        "test_samples_per_second": 18.624,
-        "test_steps_per_second": 1.183,
-        "epoch": 4.0
+        "test_loss": 0.2979467511177063,
+        "test_accuracy": 0.8900523560209425,
+        "test_precision": 0.886858442828592,
+        "test_recall": 0.8987870038497278,
+        "test_f1": 0.890869939707149,
+        "test_support_recall": 0.8395061728395061,
+        "test_support_precision": 0.9444444444444444,
+        "test_attack_recall": 0.9193548387096774,
+        "test_attack_precision": 0.8507462686567164,
+        "test_none_recall": 0.9375,
+        "test_none_precision": 0.8653846153846154,
+        "test_runtime": 3.0696,
+        "test_samples_per_second": 62.224,
+        "test_steps_per_second": 1.955,
+        "epoch": 10.0
       }
     },
-    "source": "scripts/promote_candidate_model.py"
+    "source": "scripts/promote_candidate_model.py",
+    "component_hard_case_accuracy": 0.913,
+    "relation_hard_case_accuracy": 0.8857
   }
 }

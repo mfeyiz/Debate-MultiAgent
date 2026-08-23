@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import tempfile
 from pathlib import Path
 import pytest
@@ -10,7 +9,6 @@ from httpx import ASGITransport, AsyncClient
 
 from app import create_app
 import app.database
-from app.config import Config
 from app.models import Agent, Debate, DebateParticipant, Message, MessageVersion
 from app.services.bert_service import ArgumentComponent
 from app.services.debate_service import DebateService

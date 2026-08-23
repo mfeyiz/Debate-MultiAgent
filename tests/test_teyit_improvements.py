@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
 from app.services.turkish_archive_scraper import TurkishArchiveScraper
 from app.services.fact_check_service import FactCheckService
 

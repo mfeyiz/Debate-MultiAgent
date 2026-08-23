@@ -27,7 +27,7 @@
             </div>
             <h2 class="font-headline-xl text-headline-xl text-on-surface mb-unit">ModernBERT Dil Laboratuvarı</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
-                Türkçe argüman madenciliği için fine-tune edilmiş gerçek Logos-BERT modelinin Claim/Evidence/Other ve Attack/Support/None çıktılarını canlı test edin.
+                Türkçe argüman madenciliği için fine-tune edilmiş gerçek Logos-BERT modelinin Claim/Premise/Other ve Attack/Support/None çıktılarını canlı test edin.
             </p>
         </div>
         <div class="flex items-center gap-sm z-10">
@@ -71,6 +71,7 @@
                 <div>
                     <label class="font-label-caps text-label-caps text-on-surface-variant block mb-sm">Hazır Örnekler</label>
                     <select id="preset-selector" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:border-secondary">
+                        <option value="preset-4" selected>Örnek 4: Uzaktan Çalışma ve Verimlilik (Destekleyici Kanıt → Support)</option>
                         <option value="preset-1">Örnek 1: Yapay Zeka ve Sanat (Tartışma)</option>
                         <option value="preset-2">Örnek 2: Yenilenebilir Enerji Yatırımları (Tez/Anti-tez)</option>
                         <option value="preset-3">Örnek 3: Sosyal Medya Algoritmaları (İddia/Neden-Sonuç)</option>
@@ -102,7 +103,7 @@
         <div class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between shadow-sm relative overflow-hidden">
             <div>
                 <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Eğitim & Model Metrikleri</h3>
-                <p class="font-body-md text-body-md text-on-surface-variant mb-lg">Referans profiller kıyas için gösterilir; canlı çıkarım yalnızca production Logos-BERT artifact üzerinde çalışır.</p>
+                <p class="font-body-md text-body-md text-on-surface-variant mb-lg">Referans profiller (mock) akademik kıyas içindir; canlı çıkarım yalnızca production Logos-BERT artifact üzerinde çalışır. Logos-BERT satırı gerçek v8 test-set macro-F1'ini, referanslar ise temsili F1 skorlarını gösterir.</p>
                 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse font-body-md">
@@ -201,7 +202,7 @@
             <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
                 <div class="flex justify-between items-center mb-lg border-b border-outline-variant pb-sm">
                     <div>
-                        <h3 class="font-headline-md text-headline-md text-on-surface">2. Argüman Bileşeni Çıkarımı (Claim / Evidence / Other)</h3>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">2. Argüman Bileşeni Çıkarımı (Claim / Premise / Other)</h3>
                         <p class="font-body-md text-body-md text-on-surface-variant">Propozisyon seviyesinde iddia ve kanıt spans'lerini tespit etme yeteneği.</p>
                     </div>
                     <span class="material-symbols-outlined text-secondary">label_important</span>
@@ -237,6 +238,10 @@
 {% block scripts %}
 <script>
     const PRESETS = {
+        "preset-4": {
+            target: "Uzaktan çalışma, çalışan verimliliğini artırır.",
+            source: "Stanford Üniversitesi araştırmasına göre evden çalışanların verimliliği yüzde 13 artmış, işten ayrılma oranı yarı yarıya azalmıştır."
+        },
         "preset-1": {
             target: "Yapay zeka sistemleri insan yaratıcılığının yerini tamamen alacaktır.",
             source: "Çünkü yapay zeka, insanların saatler süren tasarım süreçlerini saniyeler içinde tamamlayabiliyor; ancak duygu ve özgünlük konusunda hala insan sanatçıların gerisinde kalıyor."
@@ -303,7 +308,7 @@
             loadPreset(e.target.value);
         });
 
-        loadPreset("preset-1");
+        loadPreset("preset-4");
 
         compareBtn.addEventListener("click", async () => {
             const targetText = targetInput.value.trim();
@@ -413,7 +418,7 @@
                         <span class="material-symbols-outlined text-[16px] ${isReal ? "text-secondary" : "text-outline"} fill-icon">${icon}</span>
                         ${escapeHtml(model.name || "Model")}
                     </td>
-                    <td class="p-sm font-code-mono text-[11px] ${isReal ? "text-secondary font-bold" : "text-on-surface-variant"}">Claim/Evidence/Other · Attack/Support/None</td>
+                    <td class="p-sm font-code-mono text-[11px] ${isReal ? "text-secondary font-bold" : "text-on-surface-variant"}">Claim/Premise/Other · Attack/Support/None</td>
                     <td ${isReal ? 'id="metric-component-f1"' : ""} class="p-sm text-center ${isReal ? "text-secondary font-bold" : "text-on-surface-variant"}">${typeof componentF1 === "number" ? `${(componentF1 * 100).toFixed(1)}%` : "-"}</td>
                     <td ${isReal ? 'id="metric-relation-f1"' : ""} class="p-sm text-center ${isReal ? "text-secondary font-bold" : "text-on-surface-variant"}">${typeof relationF1 === "number" ? `${(relationF1 * 100).toFixed(1)}%` : "-"}</td>
                     <td class="p-sm text-center"><span class="px-2 py-0.5 rounded text-[10px] font-label-caps ${badgeClass}">${badgeText}</span></td>
@@ -441,9 +446,20 @@
         targetContainer.innerHTML = "";
         sourceContainer.innerHTML = "";
 
-        const modelName = data.model?.name || "Logos-BERT";
-        targetContainer.appendChild(createTokenCard(modelName, data.tokens_target || []));
-        sourceContainer.appendChild(createTokenCard(modelName, data.tokens_source || []));
+        // One token card per ModernBERT variant so the tokenizer comparison is
+        // populated for all models. Fall back to the single real model if a
+        // variant carries no token data.
+        const models = data.models ? Object.values(data.models) : [];
+        if (models.length) {
+            models.forEach(model => {
+                targetContainer.appendChild(createTokenCard(model.name, model.tokens_target || data.tokens_target || []));
+                sourceContainer.appendChild(createTokenCard(model.name, model.tokens_source || data.tokens_source || []));
+            });
+        } else {
+            const modelName = data.model?.name || "Logos-BERT";
+            targetContainer.appendChild(createTokenCard(modelName, data.tokens_target || []));
+            sourceContainer.appendChild(createTokenCard(modelName, data.tokens_source || []));
+        }
     }
 
     function createTokenCard(modelName, tokens) {
@@ -496,10 +512,10 @@
         card.className = "md:col-span-3 bg-surface-container-lowest border border-secondary/40 rounded-xl p-lg flex flex-col justify-between hover:shadow-md transition-all duration-300 shadow-sm ring-1 ring-secondary/10";
         const model = data.model || {};
         const targetHtml = highlightText(data.target_text, data.components, "claim");
-        const sourceHtml = highlightText(data.source_text, data.components, "evidence");
+        const sourceHtml = highlightText(data.source_text, data.components, "premise");
         const otherHtml = highlightText(`${data.target_text}\n${data.source_text}`, data.components, "other");
         const targetCount = countComponentsForText(data.target_text, data.components, "claim");
-        const sourceCount = countComponentsForText(data.source_text, data.components, "evidence");
+        const sourceCount = countComponentsForText(data.source_text, data.components, "premise");
         const otherCount = (data.components || []).filter(c => c.component_type === "other").length;
 
         const headerHtml = `
@@ -520,7 +536,7 @@
                     </div>
                     <div>
                         <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant mb-1">
-                            <span>Evidence Highlights</span>
+                            <span>Premise Highlights</span>
                             ${sourceCount ? `<span class="text-secondary font-bold">${sourceCount} Tespit</span>` : '<span>0 Tespit</span>'}
                         </div>
                         ${sourceHtml}
@@ -572,7 +588,7 @@
             const spanText = text.substring(comp.start_idx, comp.end_idx);
             const colorClass = comp.component_type === "claim" 
                 ? "bg-secondary-container/40 text-on-secondary-container border-[#0c7c6b]/30"
-                : comp.component_type === "evidence"
+                : comp.component_type === "premise"
                     ? "bg-tertiary-container/50 text-on-tertiary-container border-tertiary/30"
                     : "bg-surface-container-high text-on-surface-variant border-outline-variant";
             

@@ -1,0 +1,141 @@
+{
+  "component_examples": [
+    {
+      "text": "Agent Alpha'nın savındaki temel zayıflık, doğal olanın ahlaken doğru sayılması yanılgısına dayanmasıdır.",
+      "label": "claim",
+      "topic": "ethics_parenthood_hardcase"
+    },
+    {
+      "text": "Hume'un doğal erdemler kavramı, üreme içgüdüsünü ahlaki bir zorunluluk olarak sunmaz.",
+      "label": "claim",
+      "topic": "ethics_parenthood_hardcase"
+    },
+    {
+      "text": "Doğal eğilimlerimizin her zaman ahlaki olmadığını saldırganlık örneği açıkça gösterir.",
+      "label": "evidence",
+      "topic": "ethics_parenthood_hardcase"
+    },
+    {
+      "text": "Sonuç olarak bilinçli ebeveynlik argümanı, ahlaki bir seçimin değil bir ayrıcalığın savunusudur.",
+      "label": "claim",
+      "topic": "ethics_parenthood_hardcase"
+    },
+    {
+      "text": "Türün devamlılığı kolektif bir sorumluluk olabilir, ancak bu bireysel üremeyi ahlaki yükümlülük haline getirmez.",
+      "label": "claim",
+      "topic": "ethics_parenthood_hardcase"
+    },
+    {
+      "text": "Bu koşullarda yeni bireyler üretmek, ahlaki bir sorumluluk değil mevcut adaletsizliklere kayıtsızlıktır.",
+      "label": "claim",
+      "topic": "ethics_parenthood_hardcase"
+    },
+    {
+      "text": "Bilinçli ebeveynlik, çocuklara bakım ve eğitim sağlayarak toplumsal dayanıklılığı artırır.",
+      "label": "evidence",
+      "topic": "ethics_parenthood_hardcase"
+    },
+    {
+      "text": "Yeni nesiller daha yeşil teknolojiler ve politikalar geliştirme potansiyeline sahiptir.",
+      "label": "claim",
+      "topic": "ethics_parenthood_hardcase"
+    },
+    {
+      "text": "UNICEF verilerine göre her gün 15.000 çocuk önlenebilir nedenlerle ölüyor.",
+      "label": "claim",
+      "topic": "numeric_sentence_split_hardcase"
+    },
+    {
+      "text": "UNICEF verilerine göre 2022'de 5,3 milyon çocuk beş yaşından önce öldü.",
+      "label": "claim",
+      "topic": "numeric_sentence_split_hardcase"
+    },
+    {
+      "text": "Treatise III. II. I bölümünde ebeveyn sevgisinin toplumsal faydayla ilişkisi tartışılır.",
+      "label": "background",
+      "topic": "citation_sentence_split_hardcase"
+    },
+    {
+      "text": "1. Hume'un yanlış yorumlanması iddiası, metindeki temel felsefi ayrımı hedefler.",
+      "label": "claim",
+      "topic": "markdown_cleanup_hardcase"
+    },
+    {
+      "text": "**BM verileriyle çelişki**: Bölgesel nüfus düşüşü, küresel üreme yükümlülüğü doğurmaz.",
+      "label": "claim",
+      "topic": "markdown_cleanup_hardcase"
+    },
+    {
+      "text": "Ana sayfa, üyelik, çerez tercihleri ve son haberler bağlantıları gösteriliyor.",
+      "label": "background",
+      "topic": "boilerplate_background_hardcase"
+    },
+    {
+      "text": "Kaynaklara göre herkes bu gerçeği saklıyor ve medya bunu yayınlamıyor.",
+      "label": "background",
+      "topic": "manipulative_background_hardcase"
+    }
+  ],
+  "relation_examples": [
+    {
+      "claim_text": "Çocuk sahibi olmak ahlaken doğru bir davranıştır çünkü insan türünün devamlılığını sağlar.",
+      "evidence_text": "Türün devamlılığı kolektif bir sorumluluk olabilir, ancak bu bireysel üremeyi ahlaki yükümlülük haline getirmez.",
+      "label": "attack",
+      "topic": "ethics_parenthood_relation_hardcase"
+    },
+    {
+      "claim_text": "Çocuk sahibi olmak ahlaken doğru bir davranıştır çünkü insan türünün devamlılığını sağlar.",
+      "evidence_text": "Oysa ahlaki seçim, var olanları korumak ve gelecekteki çocukların yaşanabilir bir dünyaya doğmasını sağlamak olmalıdır.",
+      "label": "attack",
+      "topic": "ethics_parenthood_relation_hardcase"
+    },
+    {
+      "claim_text": "Bilinçli ebeveynlik çocuklara bakım ve eğitim sağlayarak toplumsal dayanıklılığı artırır.",
+      "evidence_text": "Bilinçli ebeveynler çocuklarını tıp, mühendislik ve politika gibi alanlarda eğiterek uzun vadeli çözümler üretir.",
+      "label": "support",
+      "topic": "ethics_parenthood_relation_hardcase"
+    },
+    {
+      "claim_text": "Yeni nesiller daha yeşil teknolojiler geliştirme potansiyeline sahiptir.",
+      "evidence_text": "Mevcut çocukları çevre bilinciyle yetiştirmek, yeni bireyler üretmekten çok daha az kaynak tüketir.",
+      "label": "attack",
+      "topic": "ethics_parenthood_relation_hardcase"
+    },
+    {
+      "claim_text": "Üremeyi bir zorunluluk olarak tanımlamaz.",
+      "evidence_text": "Yeni nesiller yenilenebilir enerji ve karbon yakalama teknolojileri geliştirme potansiyeline sahiptir.",
+      "label": "neutral",
+      "topic": "ethics_parenthood_relation_hardcase"
+    },
+    {
+      "claim_text": "UNICEF verilerine göre her gün 15.000 çocuk önlenebilir nedenlerle ölüyor.",
+      "evidence_text": "UNICEF raporu önlenebilir çocuk ölümlerinin yetersiz beslenme ve temiz su eksikliğiyle ilişkili olduğunu açıklar.",
+      "label": "support",
+      "topic": "numeric_relation_hardcase"
+    },
+    {
+      "claim_text": "UNICEF verilerine göre her gün 15.000 çocuk önlenebilir nedenlerle ölüyor.",
+      "evidence_text": "Japonya'da çalışan nüfusun yaşlanması sosyal güvenlik sistemleri üzerinde baskı yaratıyor.",
+      "label": "neutral",
+      "topic": "same_topic_different_metric_hardcase"
+    },
+    {
+      "claim_text": "Japonya ve Almanya'da göç ve otomasyon nüfus sorununu tamamen çözememiştir.",
+      "evidence_text": "UNICEF verilerine göre 2022'de 5,3 milyon çocuk beş yaşından önce öldü.",
+      "label": "neutral",
+      "topic": "same_topic_different_metric_hardcase"
+    },
+    {
+      "claim_text": "Bilinçli ebeveynlik karbon ayak izini yüzde 50 azaltabilir.",
+      "evidence_text": "Wynes ve Nicholas çalışması bir çocuğun karbon ayak izinin yılda ortalama 58,6 ton CO2 olduğunu hesaplar.",
+      "label": "attack",
+      "topic": "climate_parenthood_relation_hardcase"
+    },
+    {
+      "claim_text": "Ahlaki doğruluk var olan insanların ve gezegenin refahını öncelemeyi gerektirir.",
+      "evidence_text": "Ana sayfa, üyelik, çerez tercihleri ve son haberler bağlantıları gösteriliyor.",
+      "label": "neutral",
+      "topic": "boilerplate_relation_hardcase"
+    }
+  ]
+}

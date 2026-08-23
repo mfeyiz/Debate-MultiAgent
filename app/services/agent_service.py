@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import random
 from typing import Dict, List
 
@@ -12,7 +11,7 @@ from pydantic_ai.providers.openai import OpenAIProvider
 
 from app.config import Config
 from app.models import Agent as AgentModel
-from app.models import Message, MessageVersion
+from app.models import Message
 
 
 class AgentService:

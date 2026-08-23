@@ -13,7 +13,7 @@ import numpy as np
 import torch
 from datasets import Dataset as HFDataset
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer, TrainingArguments
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer, TrainingArguments, EarlyStoppingCallback
 
 from quality_training_examples import relation_examples
 
@@ -24,11 +24,12 @@ MODEL_NAME = os.getenv("MODEL_NAME", "ytu-ce-cosmos/modernbert-tr-base-1k")
 TOPIC_PATH = ROOT / "data" / "gold_400_topics.json"
 QUALITY_REGRESSION_PATH = ROOT / "data" / "quality_regression_examples.json"
 V3_HARD_CASE_PATH = ROOT / "data" / "v3_hard_cases.json"
+V5_RELATION_JSONL = ROOT / "data" / "v5" / "relation_pairs.jsonl"
 V4_RELATION_JSONL = ROOT / "data" / "v4" / "relation_pairs.jsonl"
 V3_RELATION_JSONL = ROOT / "data" / "v3" / "relation_pairs.jsonl"
 OUTPUT_DIR = PROJECT_ROOT / "models" / "candidate" / "relation_classifier"
 MAX_LENGTH = int(os.getenv("RELATION_MAX_LENGTH", "256"))
-SEED = 42
+SEED = int(os.getenv("SEED", "42"))
 ID2LABEL = {0: "support", 1: "attack", 2: "none"}
 LABEL2ID = {label: idx for idx, label in ID2LABEL.items()}
 
@@ -50,18 +51,13 @@ def device() -> torch.device:
 
 
 def load_pairs() -> list[dict]:
-    if V4_RELATION_JSONL.exists():
-        return [
-            json.loads(line)
-            for line in V4_RELATION_JSONL.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
-    if V3_RELATION_JSONL.exists():
-        return [
-            json.loads(line)
-            for line in V3_RELATION_JSONL.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
+    for path in (V5_RELATION_JSONL, V4_RELATION_JSONL, V3_RELATION_JSONL):
+        if path.exists():
+            return [
+                json.loads(line)
+                for line in path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
 
     topics = json.loads(TOPIC_PATH.read_text(encoding="utf-8"))
     pairs: list[dict] = []
@@ -123,8 +119,11 @@ def split_pairs(
 
 
 def encode(pairs: list[dict], tokenizer) -> HFDataset:
-    texts = [f"{p['claim_text']} [SEP] {p['evidence_text']}" for p in pairs]
-    enc = tokenizer(texts, truncation=True, max_length=MAX_LENGTH, padding=False)
+    # Cross-encoder: proper text-pair input so the model sees both segments
+    # with correct boundaries — avoids naive string concat with literal [SEP].
+    claims = [p["claim_text"] for p in pairs]
+    evidences = [p["evidence_text"] for p in pairs]
+    enc = tokenizer(claims, evidences, truncation="only_second", max_length=MAX_LENGTH, padding=False)
     return HFDataset.from_list(
         [
             {
@@ -240,11 +239,30 @@ def class_weights(pairs: list[dict]) -> torch.Tensor:
     return torch.tensor(weights, dtype=torch.float)
 
 
+def freeze_lower_layers(model, num_unfrozen: int = 6) -> None:
+    """Freeze all transformer layers except the top `num_unfrozen`.
+
+    This reduces overfitting when training data is limited.
+    """
+    # Freeze embeddings
+    for param in model.base_model.embeddings.parameters():
+        param.requires_grad = False
+    # Freeze lower encoder layers
+    encoder_layers = model.base_model.layers
+    num_layers = len(encoder_layers)
+    freeze_until = max(0, num_layers - num_unfrozen)
+    for layer_idx in range(freeze_until):
+        for param in encoder_layers[layer_idx].parameters():
+            param.requires_grad = False
+    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    total = sum(p.numel() for p in model.parameters())
+    print(f"Froze {freeze_until}/{num_layers} layers. Trainable: {trainable:,}/{total:,} params ({100*trainable/total:.1f}%)")
+
+
 def main() -> None:
     seed_all()
     pairs = load_pairs()
     train_pairs, val_pairs, test_pairs = split_pairs(pairs)
-    save_checkpoints = os.getenv("SAVE_CHECKPOINTS", "0") == "1"
     print(f"Dataset counts: {Counter(pair['label'] for pair in pairs)}")
     print(f"Train counts: {Counter(pair['label'] for pair in train_pairs)}")
     print(f"Validation counts: {Counter(pair['label'] for pair in val_pairs)}")
@@ -255,21 +273,31 @@ def main() -> None:
         num_labels=len(ID2LABEL),
         id2label=ID2LABEL,
         label2id=LABEL2ID,
+        mlp_dropout=float(os.getenv("HIDDEN_DROPOUT", "0.2")),
+        attention_dropout=float(os.getenv("ATTN_DROPOUT", "0.15")),
+        classifier_dropout=float(os.getenv("CLASSIFIER_DROPOUT", "0.3")),
     )
+    # Freeze lower layers for better generalization
+    num_unfrozen = int(os.getenv("NUM_UNFROZEN_LAYERS", "6"))
+    freeze_lower_layers(model, num_unfrozen)
     model.to(device())
     args = TrainingArguments(
         output_dir=str(OUTPUT_DIR / "checkpoints"),
-        num_train_epochs=float(os.getenv("TRAIN_EPOCHS", "8")),
-        per_device_train_batch_size=int(os.getenv("TRAIN_BATCH_SIZE", "8")),
-        per_device_eval_batch_size=int(os.getenv("EVAL_BATCH_SIZE", "8")),
-        learning_rate=float(os.getenv("TRAIN_LR", "8e-6")),
+        num_train_epochs=float(os.getenv("TRAIN_EPOCHS", "12")),
+        per_device_train_batch_size=int(os.getenv("TRAIN_BATCH_SIZE", "16")),
+        per_device_eval_batch_size=int(os.getenv("EVAL_BATCH_SIZE", "32")),
+        gradient_accumulation_steps=int(os.getenv("GRAD_ACCUM", "2")),
+        learning_rate=float(os.getenv("TRAIN_LR", "2e-5")),
         weight_decay=0.01,
+        warmup_ratio=float(os.getenv("WARMUP_RATIO", "0.1")),
+        lr_scheduler_type=os.getenv("LR_SCHEDULER", "cosine"),
+        label_smoothing_factor=float(os.getenv("LABEL_SMOOTHING", "0.1")),
         eval_strategy="epoch",
-        save_strategy="epoch" if save_checkpoints else "no",
-        save_total_limit=1,
+        save_strategy="epoch",
+        save_total_limit=2,
         logging_steps=10,
-        load_best_model_at_end=save_checkpoints,
-        metric_for_best_model="f1",
+        load_best_model_at_end=True,
+        metric_for_best_model="eval_f1",
         greater_is_better=True,
         max_grad_norm=1.0,
         seed=SEED,
@@ -287,10 +315,22 @@ def main() -> None:
         data_collator=DataCollatorWithPadding(tokenizer=tokenizer),
         compute_metrics=metrics,
         class_weights=weights,
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=2)],
     )
     trainer.train()
     eval_metrics = trainer.evaluate()
     test_metrics = trainer.evaluate(test_dataset, metric_key_prefix="test")
+    train_eval_dataset = train_dataset
+    if len(train_pairs) > 800:
+        train_eval_dataset = encode(random.sample(train_pairs, 800), tokenizer)
+    train_metrics = trainer.evaluate(train_eval_dataset, metric_key_prefix="train")
+    overfitting_gap = round(
+        float(train_metrics.get("train_f1", 0.0)) - float(test_metrics.get("test_f1", 0.0)), 4
+    )
+    print(
+        f"Overfitting gap (train_f1 - test_f1): {overfitting_gap} "
+        f"(train_f1={train_metrics.get('train_f1'):.4f}, test_f1={test_metrics.get('test_f1'):.4f})"
+    )
     val_predictions = trainer.predict(val_dataset)
     calibration = calibrate_relation_thresholds(
         np.asarray(val_predictions.predictions),
@@ -307,7 +347,8 @@ def main() -> None:
     summary = {
         "model_name": MODEL_NAME,
         "output_dir": str(artifact),
-        "dataset_version": "v4" if V4_RELATION_JSONL.exists() else "v3",
+        "dataset_version": "v5" if V5_RELATION_JSONL.exists() else ("v4" if V4_RELATION_JSONL.exists() else "v3"),
+        "seed": SEED,
         "dataset_counts": dict(Counter(pair["label"] for pair in pairs)),
         "train_counts": dict(Counter(pair["label"] for pair in train_pairs)),
         "validation_counts": dict(Counter(pair["label"] for pair in val_pairs)),
@@ -320,6 +361,8 @@ def main() -> None:
         "calibration": calibration,
         "eval": eval_metrics,
         "test": test_metrics,
+        "train": train_metrics,
+        "overfitting_gap": overfitting_gap,
     }
     (OUTPUT_DIR / "training_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2),

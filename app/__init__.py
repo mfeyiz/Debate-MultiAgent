@@ -55,6 +55,15 @@ async def lifespan(app: FastAPI):
             db.add_all(defaults)
             await db.commit()
 
+    # Seed presentation/demo data (idempotent) and cache handles for nav links.
+    app.state.demo = {}
+    try:
+        from app.services.demo_seed import ensure_demo
+        async with async_session_factory() as db:
+            app.state.demo = await ensure_demo(db, app.state.debate_svc)
+    except Exception:
+        app.state.demo = {}
+
     yield
 
 

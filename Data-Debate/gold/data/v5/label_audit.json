@@ -1,0 +1,37 @@
+{
+  "judges": [
+    "meta-llama/llama-3.3-70b-instruct",
+    "qwen/qwen-2.5-72b-instruct"
+  ],
+  "paragraphs": 369,
+  "component_agreement": {
+    "agree": 1972,
+    "disagree": 45,
+    "incomplete": 3
+  },
+  "relation_agreement": {
+    "agree": 1459,
+    "disagree": 108,
+    "incomplete": 2
+  },
+  "component_kept_labels": {
+    "claim": 1050,
+    "evidence": 502,
+    "other": 420
+  },
+  "relation_kept_labels": {
+    "support": 594,
+    "none": 388,
+    "attack": 400
+  },
+  "relation_schema": {
+    "keep": 1382,
+    "drop_endpoint_no_consensus": 38,
+    "drop": 39
+  },
+  "component_agreement_rate": 0.9777,
+  "relation_agreement_rate": 0.9311,
+  "kept_paragraphs": 369,
+  "kept_components": 1972,
+  "kept_relations": 1382
+}

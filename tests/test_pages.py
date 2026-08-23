@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import pytest
 from httpx import ASGITransport, AsyncClient
-from tests.test_debate_lifecycle import test_env
+
+from tests.test_debate_lifecycle import test_env as test_env  # noqa: F401
+
 
 @pytest.mark.asyncio
 async def test_dashboard_renders(test_env):
@@ -33,6 +35,5 @@ async def test_live_arena_renders(test_env):
         res = await ac.get(f"/debate/{debate_id}")
         assert res.status_code == 200
         assert "Akademik Münazara Analiz Kokpiti" in res.text
-
 
 

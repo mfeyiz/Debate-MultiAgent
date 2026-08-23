@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.templating import Jinja2Templates
@@ -26,6 +26,13 @@ def _template(
     status_code: int = 200,
 ) -> HTMLResponse:
     payload = context or {}
+    # Demo (presentation) mode: a cookie toggle that re-points the live debate
+    # and fact-check nav links to pre-seeded, fully-analyzed demo data so the
+    # real pages render instantly with no model/API calls.
+    demo_state = getattr(request.app.state, "demo", None) or {}
+    payload.setdefault("demo_active", request.cookies.get("demo_mode") == "1")
+    payload.setdefault("demo_debate_id", demo_state.get("debate_id"))
+    payload.setdefault("demo_fact_token", demo_state.get("fact_token"))
     return templates.TemplateResponse(request, name, payload, status_code=status_code)
 
 
@@ -149,3 +156,16 @@ async def modernbert_lab(request: Request, db: AsyncSession = Depends(get_db)) -
             "active_page": "modernbert_lab",
         },
     )
+
+
+@router.get("/demo", name="pages.demo")
+async def demo_toggle(request: Request) -> RedirectResponse:
+    """Toggle presentation/demo mode (a cookie). When on, the real Canlı Tartışma
+    and Teyit Lab tabs render the pre-seeded, fully-analyzed demo data."""
+    currently_on = request.cookies.get("demo_mode") == "1"
+    response = RedirectResponse(url=str(request.url_for("pages.dashboard")), status_code=303)
+    if currently_on:
+        response.delete_cookie("demo_mode")
+    else:
+        response.set_cookie("demo_mode", "1", max_age=60 * 60 * 24 * 7, samesite="lax")
+    return response

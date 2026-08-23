@@ -1,0 +1,62 @@
+{
+  "version": "v5",
+  "source_paragraphs": 775,
+  "components": {
+    "total": 3808,
+    "labels": {
+      "claim": 2101,
+      "evidence": 954,
+      "other": 753
+    },
+    "splits": {
+      "train": 2665,
+      "test": 628,
+      "validation": 515
+    },
+    "generators": {
+      "moonshotai/kimi-k2.6": 620,
+      "deepseek/deepseek-v4-pro": 1882,
+      "minimax/minimax-m3": 537,
+      "openai/gpt-4o-mini": 769
+    }
+  },
+  "relations": {
+    "total": 2623,
+    "labels": {
+      "support": 1126,
+      "none": 681,
+      "attack": 816
+    },
+    "splits": {
+      "train": 1844,
+      "test": 431,
+      "validation": 348
+    },
+    "generators": {
+      "moonshotai/kimi-k2.6": 419,
+      "deepseek/deepseek-v4-pro": 1322,
+      "minimax/minimax-m3": 395,
+      "openai/gpt-4o-mini": 487
+    }
+  },
+  "component_dedup": {
+    "label:claim": 2101,
+    "label:evidence": 954,
+    "label:other": 753,
+    "unique_texts": 3808,
+    "kept": 3808
+  },
+  "relation_dedup": {
+    "label:support": 1126,
+    "label:none": 681,
+    "label:attack": 816,
+    "unique_pairs": 2623,
+    "kept": 2623
+  },
+  "leakage_texts_in_multiple_splits": {
+    "components": 0,
+    "relations": 0
+  },
+  "bad_component_labels": [],
+  "bad_relation_labels": []
+}

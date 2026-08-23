@@ -1,6 +1,5 @@
 """Asynchronous database configuration using SQLAlchemy 2.0."""
 
-import os
 from collections.abc import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import (
@@ -30,11 +29,19 @@ connect_args = {}
 if "sqlite" in database_url:
     connect_args["timeout"] = max(1, Config.SQLITE_BUSY_TIMEOUT_MS / 1000)
 
-engine = create_async_engine(
-    database_url,
-    connect_args=connect_args,
-    echo=False,
-)
+engine_kwargs = {
+    "connect_args": connect_args,
+    "echo": False,
+    "pool_pre_ping": True,
+}
+# SQLite uses an async-adapted pool; a larger pool + overflow prevents request
+# pile-ups (SSE streams, in-flight debate turns) from exhausting connections and
+# timing out reads after 30s.
+if "sqlite" in database_url:
+    engine_kwargs["pool_size"] = Config.DB_POOL_SIZE
+    engine_kwargs["max_overflow"] = Config.DB_MAX_OVERFLOW
+
+engine = create_async_engine(database_url, **engine_kwargs)
 
 async_session_factory = async_sessionmaker(
     bind=engine,
@@ -65,6 +72,10 @@ async def init_db() -> None:
         await conn.run_sync(Base.metadata.create_all)
         if "sqlite" in database_url:
             await conn.execute(text(f"PRAGMA busy_timeout={Config.SQLITE_BUSY_TIMEOUT_MS}"))
+            # WAL allows concurrent readers while a write is in progress, which
+            # keeps page loads responsive during debate writes/analysis.
+            await conn.execute(text("PRAGMA journal_mode=WAL"))
+            await conn.execute(text("PRAGMA synchronous=NORMAL"))
             result = await conn.execute(text("PRAGMA table_info(argument_components)"))
             columns = {row[1] for row in result.fetchall()}
             if "topic_relation_type" not in columns:

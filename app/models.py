@@ -125,9 +125,13 @@ class Debate(Base):
         order_by="Message.position.asc()",
         collection_class=QueryList,
     )
+    # NOT selectin: eager-loading analysis runs cascades into every run's
+    # components + relations (can be ~2k rows per debate), making simple Debate
+    # queries (dashboard, list pages) crawl. Runs are loaded via explicit
+    # select() where needed (get_argument_map), so on-demand loading is safe.
     analysis_runs: Mapped[List["AnalysisRun"]] = relationship(
         back_populates="debate",
-        lazy="selectin",
+        lazy="select",
         order_by="AnalysisRun.created_at.desc()",
         collection_class=QueryList,
     )
@@ -327,15 +331,18 @@ class AnalysisRun(Base):
     )
 
     debate: Mapped[Debate] = relationship(back_populates="analysis_runs", lazy="selectin")
+    # NOT selectin: a run can hold ~2k relations; eager-loading them whenever an
+    # AnalysisRun is touched is the main source of page slowness. Loaded via
+    # explicit select() in get_argument_map.
     components: Mapped[List["ArgumentComponent"]] = relationship(
         back_populates="analysis_run",
-        lazy="selectin",
+        lazy="select",
         cascade="all, delete-orphan",
         collection_class=QueryList,
     )
     relations: Mapped[List["ArgumentRelation"]] = relationship(
         back_populates="analysis_run",
-        lazy="selectin",
+        lazy="select",
         cascade="all, delete-orphan",
         foreign_keys="ArgumentRelation.analysis_run_id",
         collection_class=QueryList,

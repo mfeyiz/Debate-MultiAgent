@@ -23,3 +23,6 @@ k8s/secret.yaml
 
 # Trained model artifacts are stored with Git LFS.
 models/.DS_Store
+
+*.db-shm
+*.db-wal

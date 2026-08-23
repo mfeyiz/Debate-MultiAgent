@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: Tests and manifests
+    name: Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,9 +33,3 @@ jobs:
 
       - name: Run tests
         run: uv run pytest -q
-
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
-
-      - name: Render Kubernetes manifests
-        run: kubectl kustomize k8s >/tmp/logos-k8s.yaml

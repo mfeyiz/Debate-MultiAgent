@@ -696,6 +696,8 @@ class FactCheckService:
     async def _classify_internal_relations(self, db: AsyncSession, run: FactCheckRun, components: list[FactClaim]) -> None:
         claims = [component for component in components if component.component_type == "claim"]
         sources = components[:]
+        jobs: list[tuple[FactClaim, FactClaim]] = []
+        pairs: list[tuple[str, str]] = []
         for target in claims:
             for source in sources:
                 if source.id == target.id:
@@ -704,28 +706,37 @@ class FactCheckService:
                     continue
                 if self._should_skip_internal_source(source):
                     continue
-                relation_type, confidence, probabilities = await asyncio.to_thread(
-                    self.bert.classify_relation,
-                    target.text,
-                    source.text,
+                jobs.append((source, target))
+                pairs.append((target.text, source.text))
+
+        if not pairs:
+            return
+
+        if hasattr(self.bert, "classify_relations_batch"):
+            predictions = await asyncio.to_thread(self.bert.classify_relations_batch, pairs)
+        else:
+            predictions = [
+                await asyncio.to_thread(self.bert.classify_relation, claim, evidence)
+                for claim, evidence in pairs
+            ]
+        for (source, target), (relation_type, confidence, probabilities) in zip(jobs, predictions):
+            if relation_type in {"neutral", "none"} or confidence < self.RELATION_THRESHOLD:
+                continue
+            probabilities = {
+                ("none" if key == "neutral" else key): value
+                for key, value in (probabilities or {}).items()
+            }
+            db.add(
+                FactRelation(
+                    run_id=run.id,
+                    source_claim_id=source.id,
+                    target_claim_id=target.id,
+                    relation_scope="internal",
+                    relation_type=relation_type,
+                    confidence=confidence,
+                    probabilities_json=json.dumps(probabilities),
                 )
-                if relation_type in {"neutral", "none"} or confidence < self.RELATION_THRESHOLD:
-                    continue
-                probabilities = {
-                    ("none" if key == "neutral" else key): value
-                    for key, value in (probabilities or {}).items()
-                }
-                db.add(
-                    FactRelation(
-                        run_id=run.id,
-                        source_claim_id=source.id,
-                        target_claim_id=target.id,
-                        relation_scope="internal",
-                        relation_type=relation_type,
-                        confidence=confidence,
-                        probabilities_json=json.dumps(probabilities),
-                    )
-                )
+            )
 
     @classmethod
     def _should_skip_internal_source(cls, source: FactClaim) -> bool:
@@ -891,6 +902,7 @@ class FactCheckService:
         for claim in claims[: Config.FACT_CHECK_MAX_CLAIMS]:
             seen_urls: set[str] = set()
             query_cache: dict[str, list[SearchResult]] = {}
+            relation_jobs: list[tuple[FactEvidence, str, str]] = []
             for query, query_scope in self._query_plan_for_claim(claim.text):
                 if query not in query_cache:
                     query_cache[query] = await asyncio.to_thread(self.search_client.search, query, Config.FACT_CHECK_SEARCH_RESULTS)
@@ -929,22 +941,34 @@ class FactCheckService:
                     db.add(evidence)
                     await db.flush()
                     if result.snippet.strip() and evidence.accepted_for_verdict:
-                        relation_type, confidence, probabilities = await asyncio.to_thread(
-                            self.bert.classify_relation,
-                            claim.text,
-                            result.snippet,
+                        relation_jobs.append((evidence, claim.text, result.snippet))
+
+            if relation_jobs:
+                if hasattr(self.bert, "classify_relations_batch"):
+                    predictions = await asyncio.to_thread(
+                        self.bert.classify_relations_batch,
+                        ((claim_text, snippet) for _, claim_text, snippet in relation_jobs),
+                    )
+                else:
+                    predictions = [
+                        await asyncio.to_thread(self.bert.classify_relation, claim_text, snippet)
+                        for _, claim_text, snippet in relation_jobs
+                    ]
+                for (evidence, _, _), (relation_type, confidence, probabilities) in zip(
+                    relation_jobs,
+                    predictions,
+                ):
+                    db.add(
+                        FactRelation(
+                            run_id=run.id,
+                            evidence_id=evidence.id,
+                            target_claim_id=claim.id,
+                            relation_scope="external",
+                            relation_type=relation_type,
+                            confidence=confidence,
+                            probabilities_json=json.dumps(probabilities),
                         )
-                        db.add(
-                            FactRelation(
-                                run_id=run.id,
-                                evidence_id=evidence.id,
-                                target_claim_id=claim.id,
-                                relation_scope="external",
-                                relation_type=relation_type,
-                                confidence=confidence,
-                                probabilities_json=json.dumps(probabilities),
-                            )
-                        )
+                    )
 
     @classmethod
     def _score_source_candidate(

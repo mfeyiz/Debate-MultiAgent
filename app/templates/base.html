@@ -251,8 +251,9 @@
                     </a>
                 </li>
                 <li>
-                    {% if debates %}
-                    <a href="{{ url_for('pages.live_arena', debate_id=debates[0].id) }}" class="flex items-center gap-md px-md py-sm rounded-lg {% if active_page == 'live_arena' %}text-primary font-bold bg-secondary-container shadow-sm{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
+                    {% set canli_id = demo_debate_id if (demo_active and demo_debate_id) else (debates[0].id if debates else None) %}
+                    {% if canli_id %}
+                    <a href="{{ url_for('pages.live_arena', debate_id=canli_id) }}" class="flex items-center gap-md px-md py-sm rounded-lg {% if active_page == 'live_arena' %}text-primary font-bold bg-secondary-container shadow-sm{% else %}text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200{% endif %}">
                         <span class="material-symbols-outlined {% if active_page == 'live_arena' %}fill-icon{% endif %}">forum</span>
                         <span class="font-label-caps text-label-caps">Canlı Tartışma</span>
                     </a>
@@ -282,7 +283,8 @@
                     </a>
                 </li>
                 <li class="pt-sm">
-                    <a href="{{ url_for('pages.fact_check_lab') }}" class="relative flex items-center gap-md px-md py-sm rounded-xl border {% if active_page == 'fact_check_lab' %}text-[#064848] font-bold border-[#0c7c6b]/30 bg-[#e2f6ed] shadow-sm{% else %}text-on-surface-variant border-[#0c7c6b]/20 bg-[#f5fbf7] hover:bg-[#e2f6ed] transition-all hover:translate-x-1 duration-200{% endif %}">
+                    {% set teyit_href = (url_for('pages.fact_check_lab') ~ '?run_token=' ~ demo_fact_token) if (demo_active and demo_fact_token) else url_for('pages.fact_check_lab') %}
+                    <a href="{{ teyit_href }}" class="relative flex items-center gap-md px-md py-sm rounded-xl border {% if active_page == 'fact_check_lab' %}text-[#064848] font-bold border-[#0c7c6b]/30 bg-[#e2f6ed] shadow-sm{% else %}text-on-surface-variant border-[#0c7c6b]/20 bg-[#f5fbf7] hover:bg-[#e2f6ed] transition-all hover:translate-x-1 duration-200{% endif %}">
                         <span class="material-symbols-outlined {% if active_page == 'fact_check_lab' %}fill-icon{% endif %}">fact_check</span>
                         <span class="font-label-caps text-label-caps">Teyit Lab</span>
                         <span class="ml-auto px-xs py-[2px] rounded-full bg-[#064848] text-white font-label-caps text-[9px]">BETA</span>
@@ -302,6 +304,13 @@
                     <a href="{{ url_for('pages.pipeline_analytics') }}" class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all hover:translate-x-1 duration-200">
                         <span class="material-symbols-outlined">terminal</span>
                         <span class="font-label-caps text-label-caps">Günlükler</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('pages.demo') }}" class="flex items-center gap-md px-md py-sm rounded-xl border {% if demo_active %}text-white font-bold border-transparent bg-secondary shadow-md{% else %}text-secondary font-bold border-secondary/40 bg-secondary/10 hover:bg-secondary/20 transition-all hover:translate-x-1 duration-200{% endif %}" title="Sunum modu — Canlı Tartışma ve Teyit Lab sekmeleri hazır, tamamlanmış analizle dolu gelir. Hiçbir model/API çalışmaz.">
+                        <span class="material-symbols-outlined {% if demo_active %}fill-icon{% endif %}">slideshow</span>
+                        <span class="font-label-caps text-label-caps">{% if demo_active %}Demo: Açık{% else %}Demo Modu{% endif %}</span>
+                        {% if demo_active %}<span class="ml-auto w-2 h-2 rounded-full bg-white animate-pulse"></span>{% endif %}
                     </a>
                 </li>
             </ul>

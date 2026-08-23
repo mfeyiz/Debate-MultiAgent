@@ -7,7 +7,6 @@ from typing import Any
 import anyio
 from fastapi import APIRouter, Body, Depends, Request
 from fastapi.responses import JSONResponse
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db

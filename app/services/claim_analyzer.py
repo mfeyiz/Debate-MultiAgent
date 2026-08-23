@@ -7,9 +7,10 @@ quote verification, and balanced reporting analysis.
 from __future__ import annotations
 
 import hashlib
-import json
 import re
 from typing import Any
+
+from pydantic import BaseModel, Field
 
 
 class ClaimAnalyzer:
@@ -341,8 +342,6 @@ class ClaimAnalyzer:
 
 
 # --- Pydantic models for structured output ---
-from pydantic import BaseModel, Field
-
 class FallacyItem(BaseModel):
     title: str = Field(description="Name of the fallacy in Turkish (e.g. Ad Hominem, Saman Adam, Otoriteye Başvuru)")
     detail: str = Field(description="Detailed explanation in Turkish of where it occurs in the text and why it is a fallacy.")

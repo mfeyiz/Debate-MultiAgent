@@ -18,7 +18,6 @@ A modular, real-time debate platform for autonomous LLM agents with an integrate
   - **Source Credibility Scoring** — Hand-curated Turkish media bias & credibility database.
   - **Manipulation Detection** — Clickbait, emotional language, generalization, and missing-source heuristics.
   - **Balanced Reporting Analysis** — Detects one-sided journalism and missing counter-arguments.
-  - **Chrome Extension** — One-click analysis from any news page.
 
 ## Tech Stack
 
@@ -62,14 +61,6 @@ A modular, real-time debate platform for autonomous LLM agents with an integrate
    ```
 
 4. **Open the dashboard** at http://127.0.0.1:5000
-
-## Chrome Extension
-
-The unpacked extension lives in `extension/`.
-
-1. Start the API with `uv run python main.py`.
-2. Open `chrome://extensions`, enable Developer mode, and load the `extension/` folder.
-3. Use the popup on a news page to analyze the page or selected text. The popup links back to `/fact-check?run_id=...` for the full graph.
 
 > **Note:** If `OPENROUTER_API_KEY` is missing or set to the placeholder value, the app falls back to deterministic mock responses so you can explore the UI and pipeline logic without an API key.
 
@@ -117,7 +108,7 @@ models/component_classifier/final/
 models/relation_classifier/final/
 ```
 
-Large `model.safetensors` and tokenizer files are stored through Git LFS. The Docker build copies these directories into the image, so Cloud Build/GKE builds must run from a checkout where LFS objects are available.
+Large `model.safetensors` and tokenizer files are stored through Git LFS. Run `git lfs pull` before building or running a fresh checkout so the real model files are available locally.
 
 ## Key Configuration
 
@@ -136,89 +127,6 @@ Large `model.safetensors` and tokenizer files are stored through Git LFS. The Do
 | `EVIDENCE_STRENGTH_THRESHOLD` | `0.70` | Strength below which regeneration triggers |
 | `MAX_DEBATE_ROUNDS` | `5` | Maximum rounds per debate |
 | `DATABASE_URL` | `sqlite:///<project>/debate_platform.db` | SQLite connection URI |
-
-## GKE Deployment Notes
-
-The `k8s/` directory contains GKE-ready manifests and `cloudbuild.yaml` runs the full CI/CD path:
-
-1. verifies Git LFS model artifacts,
-2. runs the test suite,
-3. renders Kubernetes manifests,
-4. builds and pushes the Docker image to Artifact Registry,
-5. deploys to GKE and waits for rollout.
-
-Before deploying:
-
-```bash
-git lfs pull
-kubectl kustomize k8s
-```
-
-Set these values for your project:
-
-- Replace `PROJECT_ID` in `k8s/serviceaccount.yaml`.
-- Create the `logos-secrets` secret in the cluster. `k8s/secret.example.yaml` is only a template and is intentionally not applied by `kustomize`.
-- Make sure Cloud Build has access to Git LFS objects when building the image.
-
-Create the runtime secret in the default namespace:
-
-```bash
-kubectl create secret generic logos-secrets \
-  --from-literal=DATABASE_URL='postgresql://USER:PASSWORD@HOST:5432/DB' \
-  --from-literal=REDIS_URL='' \
-  --from-literal=OPENROUTER_API_KEY='sk-or-v1-...' \
-  --from-literal=SECRET_KEY='replace-with-a-long-random-secret' \
-  --from-literal=GOOGLE_FACTCHECK_API_KEY='' \
-  --from-literal=TCMB_EVDS_API_KEY='' \
-  --from-literal=TUIK_API_KEY='' \
-  --dry-run=client -o yaml | kubectl apply -f -
-```
-
-Create an Artifact Registry repository if you do not already have one:
-
-```bash
-gcloud artifacts repositories create debate-platform-repository \
-  --repository-format=docker \
-  --location=europe-west3 \
-  --description="Logos Docker images"
-```
-
-Run the Cloud Build pipeline manually:
-
-```bash
-gcloud builds submit \
-  --config=cloudbuild.yaml \
-  --substitutions=_REGION=europe-west3,_ARTIFACT_REPOSITORY=debate-platform-repository,_IMAGE_NAME=logos-app,_CLUSTER_NAME=debate-cluster,_CLUSTER_LOCATION=europe-west3
-```
-
-For a minimal reference pipeline matching the single-file manifest approach, the repo also includes:
-
-```bash
-gcloud builds submit --config=cloudbuild.simple.yaml
-```
-
-That simple pipeline deploys `kubernetes-manifests.yaml` directly. The production path remains `cloudbuild.yaml` + `k8s/` because it also runs tests, verifies Git LFS model artifacts, avoids applying placeholder secrets, and waits for rollout.
-
-### GitHub Actions
-
-Two workflows are included:
-
-- `.github/workflows/ci.yml` runs tests, verifies LFS model artifacts, and renders manifests on PRs and pushes.
-- `.github/workflows/deploy-gke.yml` manually submits `cloudbuild.yaml` from GitHub Actions.
-
-For the manual deploy workflow, configure these GitHub repository secrets:
-
-```text
-GCP_WORKLOAD_IDENTITY_PROVIDER
-GCP_SERVICE_ACCOUNT
-```
-
-The service account used by GitHub/Cloud Build needs permissions for Cloud Build, Artifact Registry push, and GKE deploy. At minimum, grant the appropriate project/cluster-scoped roles for:
-
-- Cloud Build execution
-- Artifact Registry writer
-- Kubernetes Engine developer or a narrower deploy role
-- Service account user, if your build/deploy service account impersonates another account
 
 ## API Overview
 

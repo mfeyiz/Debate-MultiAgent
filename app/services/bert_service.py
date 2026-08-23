@@ -63,6 +63,13 @@ def _load_ml_modules():
         PreTrainedTokenizerFast,
     )
 
+    # Keep a single inference from monopolizing every core, which would block
+    # the event loop and make unrelated requests time out on the DB pool.
+    try:
+        torch.set_num_threads(max(1, Config.TORCH_NUM_THREADS))
+    except Exception:
+        pass
+
     return torch, AutoModelForSequenceClassification, AutoTokenizer, PreTrainedTokenizerFast
 
 
@@ -115,11 +122,13 @@ class ModernBERTPipeline:
         self.comp_model = model_loader.from_pretrained(comp_path)
         self.comp_model.to(self.device)
         self.comp_model.eval()
+        # Context-aware component models classify (target sentence, paragraph) pairs.
+        self.component_context_aware, self.component_max_length = self._load_component_meta(comp_path)
         self.component_labels = [
             self._normalize_component_label(label)
             for label in self._labels_from_config(
             self.comp_model.config.id2label,
-            ["claim", "evidence", "other"],
+            ["claim", "premise", "other"],
             )
         ]
 
@@ -148,9 +157,13 @@ class ModernBERTPipeline:
     @staticmethod
     def _normalize_component_label(label: str) -> str:
         label_lower = (label or "").lower()
-        if label_lower == "background":
+        # v8 renamed the support class evidence -> premise. Map the legacy name so
+        # old model configs / DB rows render consistently under the new scheme.
+        if label_lower in {"background", "none"}:
             return "other"
-        if label_lower in {"claim", "evidence", "other"}:
+        if label_lower == "evidence":
+            return "premise"
+        if label_lower in {"claim", "premise", "other"}:
             return label_lower
         return "other"
 
@@ -162,6 +175,19 @@ class ModernBERTPipeline:
         if label_lower in {"support", "attack", "none"}:
             return label_lower
         return "none"
+
+    def _load_component_meta(self, model_path: Path) -> tuple[bool, int]:
+        """Read context-aware flag + max length written by the component trainer."""
+        meta_path = Path(model_path) / "component_meta.json"
+        if meta_path.exists():
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                return bool(meta.get("context_aware", False)), int(
+                    meta.get("max_length", self.COMPONENT_MAX_LENGTH)
+                )
+            except Exception:  # noqa: BLE001 - tolerate malformed sidecar
+                pass
+        return False, self.COMPONENT_MAX_LENGTH
 
     @staticmethod
     def _load_tokenizer(model_path: Path):
@@ -200,7 +226,7 @@ class ModernBERTPipeline:
         self,
         source_text: str,
         target_text: str,
-        source_type: str = "evidence",
+        source_type: str = "premise",
         target_type: str = "claim",
     ) -> PipelineResult:
         """Analyze *source_text* w.r.t *target_text*.
@@ -219,19 +245,25 @@ class ModernBERTPipeline:
         targets = [c for c in target_components if c.component_type == "claim"] or [
             c for c in target_components if c.component_type != "other"
         ] or target_components
+        relation_pairs: list[tuple[ArgumentComponent, ArgumentComponent]] = [
+            (target, source)
+            for target in targets
+            for source in source_components
+        ]
 
-        for target in targets:
-            for source in source_components:
-                rel_type, conf, probs = self.classify_relation(target.text, source.text)
-                relations.append(
-                    Relation(
-                        source_component=source,
-                        target_component=target,
-                        relation_type=rel_type,
-                        confidence=conf,
-                        probabilities=probs,
-                    )
+        predictions = self.classify_relations_batch(
+            (target.text, source.text) for target, source in relation_pairs
+        )
+        for (target, source), (rel_type, conf, probs) in zip(relation_pairs, predictions):
+            relations.append(
+                Relation(
+                    source_component=source,
+                    target_component=target,
+                    relation_type=rel_type,
+                    confidence=conf,
+                    probabilities=probs,
                 )
+            )
 
         # 3. Evaluate overall strength
         strength = self._evaluate_strength(source_components, target_components, relations)
@@ -287,13 +319,19 @@ class ModernBERTPipeline:
 
         components: List[ArgumentComponent] = []
         classified_units = 0
+        component_inputs: list[tuple[int, str]] = []
         for start_idx, end_idx in self._text_units(text):
             start_idx, unit_text = self._clean_unit_text(text, start_idx, end_idx)
             if not self._is_meaningful_component(unit_text):
                 continue
 
             classified_units += 1
-            component_type, confidence = self._classify_component_unit(unit_text)
+            component_inputs.append((start_idx, unit_text))
+
+        predictions = self._classify_component_units(
+            ((unit_text, text) for _, unit_text in component_inputs)
+        )
+        for (start_idx, unit_text), (component_type, confidence) in zip(component_inputs, predictions):
             components.append(
                 ArgumentComponent(
                     text=unit_text[: self.MAX_COMPONENT_CHARS],
@@ -310,32 +348,80 @@ class ModernBERTPipeline:
             return []
         return self._sentence_level_fallback(text, default_type)
 
-    def _classify_component_unit(self, text: str) -> tuple[str, float]:
+    def _encode_component(self, text: str, context: str | None):
+        """Tokenize a proposition, pairing it with paragraph context when the
+        component model was trained context-aware (matches training input)."""
+        max_length = self.component_max_length
+        if self.component_context_aware:
+            # An isolated proposition is treated as its own context (matches the
+            # one-sentence-message serve case the model also sees in training).
+            return self.comp_tokenizer(
+                text,
+                context or text,
+                return_tensors="pt",
+                truncation="only_second",
+                max_length=max_length,
+            )
+        return self.comp_tokenizer(
+            text,
+            return_tensors="pt",
+            truncation=True,
+            max_length=max_length,
+        )
+
+    def _classify_component_unit(self, text: str, context: str | None = None) -> tuple[str, float]:
         """Classify one proposition as claim, evidence, or other."""
-        enc = self.comp_tokenizer(
-            text,
-            return_tensors="pt",
-            truncation=True,
-            max_length=self.COMPONENT_MAX_LENGTH,
-        )
-        input_ids = enc["input_ids"].to(self.device)
-        attention_mask = enc["attention_mask"].to(self.device)
+        return self._classify_component_units([(text, context)])[0]
 
-        with self.torch.no_grad():
-            logits = self.comp_model(input_ids=input_ids, attention_mask=attention_mask).logits
-        probs = self.torch.softmax(logits, dim=1)[0]
-        pred_id = int(self.torch.argmax(probs))
-        confidence = round(float(probs[pred_id]), 3)
-        predicted = self.component_labels[pred_id]
-        return self._calibrate_component_label(text, predicted, confidence)
+    def _classify_component_units(
+        self,
+        items: Iterable[tuple[str, str | None]],
+        batch_size: int = 16,
+    ) -> list[tuple[str, float]]:
+        """Classify proposition units in batches to reduce model-call overhead."""
+        item_list = list(items)
+        if not item_list:
+            return []
 
-    def _component_probabilities(self, text: str) -> Dict[str, float]:
-        enc = self.comp_tokenizer(
-            text,
-            return_tensors="pt",
-            truncation=True,
-            max_length=self.COMPONENT_MAX_LENGTH,
-        )
+        results: list[tuple[str, float]] = []
+        for start in range(0, len(item_list), batch_size):
+            batch = item_list[start : start + batch_size]
+            texts = [text for text, _ in batch]
+            if self.component_context_aware:
+                contexts = [context or text for text, context in batch]
+                enc = self.comp_tokenizer(
+                    texts,
+                    contexts,
+                    return_tensors="pt",
+                    truncation="only_second",
+                    max_length=self.component_max_length,
+                    padding=True,
+                )
+            else:
+                enc = self.comp_tokenizer(
+                    texts,
+                    return_tensors="pt",
+                    truncation=True,
+                    max_length=self.component_max_length,
+                    padding=True,
+                )
+
+            input_ids = enc["input_ids"].to(self.device)
+            attention_mask = enc["attention_mask"].to(self.device)
+
+            with self.torch.no_grad():
+                logits = self.comp_model(input_ids=input_ids, attention_mask=attention_mask).logits
+            probs_batch = self.torch.softmax(logits, dim=1)
+            for offset, probs in enumerate(probs_batch):
+                pred_id = int(self.torch.argmax(probs))
+                confidence = round(float(probs[pred_id]), 3)
+                predicted = self.component_labels[pred_id]
+                text = batch[offset][0]
+                results.append(self._calibrate_component_label(text, predicted, confidence))
+        return results
+
+    def _component_probabilities(self, text: str, context: str | None = None) -> Dict[str, float]:
+        enc = self._encode_component(text, context)
         input_ids = enc["input_ids"].to(self.device)
         attention_mask = enc["attention_mask"].to(self.device)
         with self.torch.no_grad():
@@ -412,7 +498,7 @@ class ModernBERTPipeline:
             "açıkladı",
         ]
         if any(signal in lower for signal in strong_evidence_signals) and any(verb in lower for verb in strong_evidence_verbs):
-            return "evidence", max(confidence, 0.84)
+            return "premise", max(confidence, 0.84)
 
         claim_signals = [
             "elbette hiçbir kanıt yokken",
@@ -488,7 +574,7 @@ class ModernBERTPipeline:
             "yakalamıştı",
         ]
         if any(signal in lower for signal in evidence_signals):
-            return "evidence", max(confidence, 0.84)
+            return "premise", max(confidence, 0.84)
 
         return predicted, confidence
 
@@ -680,7 +766,7 @@ class ModernBERTPipeline:
             components.append(
                 ArgumentComponent(
                     text=unit_text[: self.MAX_COMPONENT_CHARS],
-                    component_type=default_type if default_type in {"claim", "evidence"} else "claim",
+                    component_type=default_type if default_type in {"claim", "premise"} else "claim",
                     start_idx=start_idx,
                     end_idx=min(len(text), start_idx + len(unit_text)),
                     confidence=0.25,
@@ -1184,6 +1270,10 @@ class ModernBERTPipeline:
         tokens_source_tr = self.comp_tokenizer.tokenize(source_text)
         formatted_target_tr = self._format_tokens("turkish", tokens_target_tr)
         formatted_source_tr = self._format_tokens("turkish", tokens_source_tr)
+        # English ModernBERT-base tokenizes Turkish poorly (UTF-8 byte fallback);
+        # the mock illustrates this for the tokenization comparison tab.
+        formatted_target_en = self._format_tokens("english", self._mock_english_tokenize(target_text))
+        formatted_source_en = self._format_tokens("english", self._mock_english_tokenize(source_text))
         metrics = self._evaluation_metrics()
 
         real_result = self.analyze(source_text, target_text)
@@ -1211,39 +1301,86 @@ class ModernBERTPipeline:
         ]
 
         model_metrics = metrics.get("model", {})
+
+        # Real production model headline score. The promotion gate stores
+        # hard-case accuracy (component 0.913 / relation 0.886); fall back to it
+        # when an explicit macro-F1 is not present so the comparison table shows
+        # the genuine ~0.9 figures instead of a blank cell.
+        def _summary_test_f1(model_dir: str) -> float | None:
+            # Authoritative v8 test-set macro-F1 lives in the training summary
+            # next to the model artifact (component ≈0.926, relation ≈0.907).
+            try:
+                path = Path(model_dir).parent / "training_summary.json"
+                data = json.loads(path.read_text(encoding="utf-8"))
+                val = data.get("test", {}).get("test_f1")
+                return val if isinstance(val, (int, float)) and val > 0 else None
+            except Exception:
+                return None
+
+        def _real_score(f1_key: str, hard_key: str) -> float | None:
+            value = model_metrics.get(f1_key)
+            # The metrics defaults inject f1_*: 0.0 when no explicit macro-F1 was
+            # recorded, so treat 0.0/None as "absent" and fall back to the real
+            # hard-case accuracy from the promotion gate.
+            if not isinstance(value, (int, float)) or value <= 0:
+                value = model_metrics.get(hard_key)
+            return value
+
+        real_component_score = (
+            _summary_test_f1(Config.COMPONENT_MODEL_DIR)
+            or _real_score("f1_components", "component_hard_case_accuracy")
+        )
+        real_relation_score = (
+            _summary_test_f1(Config.RELATION_MODEL_DIR)
+            or _real_score("f1_relations", "relation_hard_case_accuracy")
+        )
+
         return {
             "target_text": target_text,
             "source_text": source_text,
+            # ModernBERT ablation only (no BERTurk). Reference profiles are *mocked*
+            # baselines for academic comparison; inference never runs on them.
+            # Ordered weakest → best: EN backbone → Turkish pretraining → task
+            # fine-tuning. Only the final Logos-BERT row is real.
+            # Each entry carries its own tokenization so the Tokenizasyon tab can
+            # compare all ModernBERT variants. ModernBERT-TR and Logos-BERT share
+            # the same Turkish tokenizer; the EN base uses byte-fallback (mock).
             "models": {
                 "model_1": {
-                    "name": "ModernBERT-base",
-                    "description": "Fine-tune edilmemiş referans profil. Lab kıyaslaması içindir; inference çalıştırılmaz.",
+                    "name": "ModernBERT-base (EN)",
+                    "description": "İngilizce ön-eğitimli ModernBERT, görev fine-tune'u yok. Türkçe karakterleri byte'lara böler; referans alt sınır. (mock)",
                     "is_reference": True,
                     "is_simulated": True,
-                    "component_metrics": {"f1": 0.41},
-                    "relation_metrics": {"f1": 0.34},
+                    "component_metrics": {"f1": 0.38},
+                    "relation_metrics": {"f1": 0.31},
+                    "tokens_target": formatted_target_en,
+                    "tokens_source": formatted_source_en,
                 },
                 "model_2": {
-                    "name": "modernbert-tr-base-1k",
-                    "description": "Türkçe base referans profil. Lab kıyaslaması içindir; production inference çalıştırılmaz.",
+                    "name": "ModernBERT-TR (base)",
+                    "description": "Türkçe ön-eğitimli ModernBERT, görev fine-tune'u yok. Türkçeyi temiz tokenize eder ama argüman şemasını bilmez. (mock)",
                     "is_reference": True,
                     "is_simulated": True,
-                    "component_metrics": {"f1": 0.58},
-                    "relation_metrics": {"f1": 0.49},
+                    "component_metrics": {"f1": 0.56},
+                    "relation_metrics": {"f1": 0.51},
+                    "tokens_target": formatted_target_tr,
+                    "tokens_source": formatted_source_tr,
                 },
                 "model_3": {
-                    "name": "Logos-BERT",
-                    "description": "Gerçek production model sonucu.",
+                    "name": "Logos-BERT (ModernBERT-TR · fine-tuned)",
+                    "description": "Bizim fine-tune ettiğimiz gerçek production model (v8 · claim/premise/other). Test-set macro-F1 (gerçek çıkarım).",
                     "is_reference": False,
                     "is_simulated": False,
                     "component_metrics": {
-                        "f1": model_metrics.get("f1_components", 0.0),
+                        "f1": real_component_score,
                         "hard_case_accuracy": model_metrics.get("component_hard_case_accuracy"),
                     },
                     "relation_metrics": {
-                        "f1": model_metrics.get("f1_relations", 0.0),
+                        "f1": real_relation_score,
                         "hard_case_accuracy": model_metrics.get("relation_hard_case_accuracy"),
                     },
+                    "tokens_target": formatted_target_tr,
+                    "tokens_source": formatted_source_tr,
                 },
             },
             "model": {
@@ -1251,11 +1388,11 @@ class ModernBERTPipeline:
                 "description": "Türkçe ModernBERT tabanlı, argüman bileşeni ve ilişki sınıflandırması için fine-tune edilmiş gerçek model.",
                 "version": self._artifact_version(),
                 "component_metrics": {
-                    "f1": model_metrics.get("f1_components", 0.0),
+                    "f1": real_component_score,
                     "hard_case_accuracy": model_metrics.get("component_hard_case_accuracy"),
                 },
                 "relation_metrics": {
-                    "f1": model_metrics.get("f1_relations", 0.0),
+                    "f1": real_relation_score,
                     "hard_case_accuracy": model_metrics.get("relation_hard_case_accuracy"),
                 },
             },

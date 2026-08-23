@@ -37,7 +37,7 @@ RUN useradd -m -u 1000 appuser \
     && chown -R appuser:appuser /app /models
 USER appuser
 
-# Expose the port GKE expects
+# Expose the application port
 EXPOSE 8080
 
 # Run ASGI app with gunicorn + Uvicorn workers

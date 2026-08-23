@@ -1,4 +1,3 @@
-import pytest
 from fastapi.testclient import TestClient
 from app.services.bert_service import ModernBERTPipeline
 from main import app
@@ -23,7 +22,7 @@ def test_compare_models_direct():
     assert "overall_strength" in res
     assert "feedback" in res
     assert "warnings" in res
-    assert all(c["component_type"] in {"claim", "evidence", "other"} for c in res["components"])
+    assert all(c["component_type"] in {"claim", "premise", "evidence", "other"} for c in res["components"])
     assert all(r["relation_type"] in {"attack", "support", "none"} for r in res["relations"])
 
 

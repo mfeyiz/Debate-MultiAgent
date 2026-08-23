@@ -1,0 +1,6 @@
+{
+  "relation_confidence_threshold": 0.0,
+  "macro_f1": 0.9446356982341979,
+  "none_precision": 0.9787234042553191,
+  "visible_relation_recall": 0.9927536231884058
+}

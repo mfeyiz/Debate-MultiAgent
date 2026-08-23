@@ -22,7 +22,7 @@ import numpy as np
 import torch
 from datasets import Dataset as HFDataset
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer, TrainingArguments
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer, TrainingArguments, EarlyStoppingCallback
 
 from quality_training_examples import component_examples
 
@@ -33,13 +33,29 @@ MODEL_NAME = os.getenv("MODEL_NAME", "ytu-ce-cosmos/modernbert-tr-base-1k")
 TOPIC_PATH = ROOT / "data" / "gold_400_topics.json"
 QUALITY_REGRESSION_PATH = ROOT / "data" / "quality_regression_examples.json"
 V3_HARD_CASE_PATH = ROOT / "data" / "v3_hard_cases.json"
+V5_COMPONENT_JSONL = ROOT / "data" / "v5" / "component_examples.jsonl"
 V4_COMPONENT_JSONL = ROOT / "data" / "v4" / "component_examples.jsonl"
 V3_COMPONENT_JSONL = ROOT / "data" / "v3" / "component_examples.jsonl"
 OUTPUT_DIR = PROJECT_ROOT / "models" / "candidate" / "component_classifier"
-MAX_LENGTH = 192
-SEED = 42
-ID2LABEL = {0: "claim", 1: "evidence", 2: "other"}
+MAX_LENGTH = int(os.getenv("COMPONENT_MAX_LENGTH", "288"))
+# Context-aware input: classify the target sentence together with its paragraph.
+# This lets the model use discourse role (claim vs evidence often depends on context).
+CONTEXT_AWARE = os.getenv("COMPONENT_CONTEXT_AWARE", "1") == "1"
+SEED = int(os.getenv("SEED", "42"))
+# v8 scheme: the support class is named "premise" (was "evidence" in v5–v7).
+ID2LABEL = {0: "claim", 1: "premise", 2: "other"}
 LABEL2ID = {label: idx for idx, label in ID2LABEL.items()}
+
+# Map legacy/source labels onto the v8 scheme so existing v5 data trains as-is.
+LABEL_REMAP = {"evidence": "premise", "background": "other"}
+
+
+def _remap_labels(examples: list[dict[str, str]]) -> list[dict[str, str]]:
+    for example in examples:
+        label = example.get("label")
+        if label in LABEL_REMAP:
+            example["label"] = LABEL_REMAP[label]
+    return examples
 
 
 def seed_all() -> None:
@@ -57,18 +73,13 @@ def device() -> torch.device:
 
 
 def load_examples() -> list[dict[str, str]]:
-    if V4_COMPONENT_JSONL.exists():
-        return [
-            json.loads(line)
-            for line in V4_COMPONENT_JSONL.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
-    if V3_COMPONENT_JSONL.exists():
-        return [
-            json.loads(line)
-            for line in V3_COMPONENT_JSONL.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
+    for path in (V5_COMPONENT_JSONL, V4_COMPONENT_JSONL, V3_COMPONENT_JSONL):
+        if path.exists():
+            return _remap_labels([
+                json.loads(line)
+                for line in path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ])
 
     topics = json.loads(TOPIC_PATH.read_text(encoding="utf-8"))
     examples: list[dict[str, str]] = []
@@ -86,10 +97,7 @@ def load_examples() -> list[dict[str, str]]:
         v3 = json.loads(V3_HARD_CASE_PATH.read_text(encoding="utf-8"))
         examples.extend(v3.get("component_examples", []))
     examples.extend(component_examples())
-    for example in examples:
-        if example.get("label") == "background":
-            example["label"] = "other"
-    return examples
+    return _remap_labels(examples)
 
 
 def split_examples(
@@ -127,12 +135,25 @@ def split_examples(
 
 
 def encode(examples: list[dict[str, str]], tokenizer) -> HFDataset:
-    enc = tokenizer(
-        [example["text"] for example in examples],
-        truncation=True,
-        max_length=MAX_LENGTH,
-        padding=False,
-    )
+    texts = [example["text"] for example in examples]
+    contexts = [example.get("context") for example in examples]
+    if CONTEXT_AWARE and any(contexts):
+        # Pair encoding: [CLS] target [SEP] paragraph-context [SEP].
+        # truncation="only_second" keeps the full target sentence, trims context.
+        enc = tokenizer(
+            texts,
+            [ctx or txt for ctx, txt in zip(contexts, texts)],
+            truncation="only_second",
+            max_length=MAX_LENGTH,
+            padding=False,
+        )
+    else:
+        enc = tokenizer(
+            texts,
+            truncation=True,
+            max_length=MAX_LENGTH,
+            padding=False,
+        )
     return HFDataset.from_list(
         [
             {
@@ -193,18 +214,43 @@ def class_weights(examples: list[dict[str, str]]) -> torch.Tensor:
     return torch.tensor(weights, dtype=torch.float)
 
 
+def freeze_lower_layers(model, num_unfrozen: int = 6) -> None:
+    """Freeze all transformer layers except the top `num_unfrozen`.
+
+    This reduces overfitting when training data is limited.
+    """
+    # Freeze embeddings
+    for param in model.base_model.embeddings.parameters():
+        param.requires_grad = False
+    # Freeze lower encoder layers
+    encoder_layers = model.base_model.layers
+    num_layers = len(encoder_layers)
+    freeze_until = max(0, num_layers - num_unfrozen)
+    for layer_idx in range(freeze_until):
+        for param in encoder_layers[layer_idx].parameters():
+            param.requires_grad = False
+    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    total = sum(p.numel() for p in model.parameters())
+    print(f"Froze {freeze_until}/{num_layers} layers. Trainable: {trainable:,}/{total:,} params ({100*trainable/total:.1f}%)")
+
+
 def main() -> None:
     seed_all()
     examples = load_examples()
     train_examples, val_examples, test_examples = split_examples(examples)
-    save_checkpoints = os.getenv("SAVE_CHECKPOINTS", "0") == "1"
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     model = AutoModelForSequenceClassification.from_pretrained(
         MODEL_NAME,
         num_labels=len(ID2LABEL),
         id2label=ID2LABEL,
         label2id=LABEL2ID,
+        mlp_dropout=float(os.getenv("HIDDEN_DROPOUT", "0.2")),
+        attention_dropout=float(os.getenv("ATTN_DROPOUT", "0.15")),
+        classifier_dropout=float(os.getenv("CLASSIFIER_DROPOUT", "0.3")),
     )
+    # Freeze lower layers for better generalization
+    num_unfrozen = int(os.getenv("NUM_UNFROZEN_LAYERS", "6"))
+    freeze_lower_layers(model, num_unfrozen)
     model.to(device())
 
     print(f"Dataset counts: {Counter(example['label'] for example in examples)}")
@@ -214,17 +260,21 @@ def main() -> None:
 
     args = TrainingArguments(
         output_dir=str(OUTPUT_DIR / "checkpoints"),
-        num_train_epochs=float(os.getenv("TRAIN_EPOCHS", "8")),
-        per_device_train_batch_size=int(os.getenv("TRAIN_BATCH_SIZE", "8")),
-        per_device_eval_batch_size=int(os.getenv("EVAL_BATCH_SIZE", "8")),
-        learning_rate=float(os.getenv("TRAIN_LR", "8e-6")),
+        num_train_epochs=float(os.getenv("TRAIN_EPOCHS", "12")),
+        per_device_train_batch_size=int(os.getenv("TRAIN_BATCH_SIZE", "16")),
+        per_device_eval_batch_size=int(os.getenv("EVAL_BATCH_SIZE", "32")),
+        gradient_accumulation_steps=int(os.getenv("GRAD_ACCUM", "2")),
+        learning_rate=float(os.getenv("TRAIN_LR", "2e-5")),
         weight_decay=0.01,
+        warmup_ratio=float(os.getenv("WARMUP_RATIO", "0.1")),
+        lr_scheduler_type=os.getenv("LR_SCHEDULER", "cosine"),
+        label_smoothing_factor=float(os.getenv("LABEL_SMOOTHING", "0.1")),
         eval_strategy="epoch",
-        save_strategy="epoch" if save_checkpoints else "no",
-        save_total_limit=1,
+        save_strategy="epoch",
+        save_total_limit=2,
         logging_steps=10,
-        load_best_model_at_end=save_checkpoints,
-        metric_for_best_model="f1",
+        load_best_model_at_end=True,
+        metric_for_best_model="eval_f1",
         greater_is_better=True,
         max_grad_norm=1.0,
         seed=SEED,
@@ -239,19 +289,40 @@ def main() -> None:
         data_collator=DataCollatorWithPadding(tokenizer=tokenizer),
         compute_metrics=metrics,
         class_weights=weights,
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=2)],
     )
     trainer.train()
     eval_metrics = trainer.evaluate()
     test_metrics = trainer.evaluate(encode(test_examples, tokenizer), metric_key_prefix="test")
+    # Train-set metrics expose the overfitting gap (train_f1 - test_f1).
+    # Sample to bound memory/time on low-RAM machines; a sample estimates the gap well.
+    train_sample = train_examples if len(train_examples) <= 800 else random.sample(train_examples, 800)
+    train_metrics = trainer.evaluate(encode(train_sample, tokenizer), metric_key_prefix="train")
+    overfitting_gap = round(
+        float(train_metrics.get("train_f1", 0.0)) - float(test_metrics.get("test_f1", 0.0)), 4
+    )
+    print(
+        f"Overfitting gap (train_f1 - test_f1): {overfitting_gap} "
+        f"(train_f1={train_metrics.get('train_f1'):.4f}, test_f1={test_metrics.get('test_f1'):.4f})"
+    )
 
     artifact = OUTPUT_DIR / "artifact"
     artifact.mkdir(parents=True, exist_ok=True)
     model.save_pretrained(artifact)
     tokenizer.save_pretrained(artifact)
+    context_aware_flag = bool(CONTEXT_AWARE and any(e.get("context") for e in examples))
+    # Serve-time marker so bert_service feeds the same (target, context) pair input.
+    (artifact / "component_meta.json").write_text(
+        json.dumps({"context_aware": context_aware_flag, "max_length": MAX_LENGTH}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     summary = {
         "model_name": MODEL_NAME,
         "output_dir": str(artifact),
-        "dataset_version": "v4" if V4_COMPONENT_JSONL.exists() else "v3",
+        "dataset_version": "v8",
+        "label_scheme": list(ID2LABEL.values()),
+        "context_aware": context_aware_flag,
+        "seed": SEED,
         "dataset_counts": dict(Counter(example["label"] for example in examples)),
         "train_counts": dict(Counter(example["label"] for example in train_examples)),
         "validation_counts": dict(Counter(example["label"] for example in val_examples)),
@@ -263,6 +334,8 @@ def main() -> None:
         },
         "eval": eval_metrics,
         "test": test_metrics,
+        "train": train_metrics,
+        "overfitting_gap": overfitting_gap,
     }
     (OUTPUT_DIR / "training_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2),

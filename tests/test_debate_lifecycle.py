@@ -10,7 +10,7 @@ from httpx import ASGITransport, AsyncClient
 from app import create_app
 import app.database
 from app.config import Config
-from app.models import Agent, Debate, DebateParticipant, Message, MessageVersion
+from app.models import Agent
 from app.services.bert_service import ArgumentComponent
 from app.services.debate_service import DebateService
 

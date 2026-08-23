@@ -9,7 +9,6 @@ Provides real API-backed verification via:
 from __future__ import annotations
 
 import asyncio
-import json
 import re
 from typing import Any
 import httpx
